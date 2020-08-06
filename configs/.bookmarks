@@ -23,8 +23,7 @@ curl ifconfig.co
 curl ifconfig.co/city
 
 # backup script
-tar -zcvf /home/ashish/Documents/backup/arbackup.tar.gz /media/storage/.configs /media/storage/.locals /media/storage/.scripts /media/storage/.temporary/timeshift/timeshift.txt && sudo tar -zcvf /home/ashish/Documents/backup/arsysbackup.tar.gz /etc /root@ both
-tar -zcvf /home/ashish/Documents/backup/arbackup.tar.gz /media/storage/.configs /media/storage/.locals /media/storage/.scripts /media/storage/.temporary/timeshift/timeshift.txt@ nsudo
+sudo tar -zcvf /home/ashish/Documents/arbackup.tar.gz /etc/ /root/ /media/storage/.backup/
 
 # escape dinner/sleep sleep
 read -r PID </tmp/sleep_dine.pid && { rm -f /tmp/sleep_dine.pid; [[ -n $PID ]] && rkill "$PID" ;}
