@@ -1,4 +1,5 @@
 #!/bin/sh
+#export DIFFPROG="nvim -d"
 export BROWSER=brave
 #export EDITOR=nvim
 export ESCDELAY=0
