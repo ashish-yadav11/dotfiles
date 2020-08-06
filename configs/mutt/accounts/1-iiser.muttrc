@@ -1,0 +1,33 @@
+# vim: filetype=neomuttrc
+# muttrc file for account iiser
+set realname = "Ashish Kumar Yadav"
+set from = "ashishkumar.yadav@students.iiserpune.ac.in"
+set sendmail = "msmtp -a iiser"
+alias me Ashish Kumar Yadav <ashishkumar.yadav@students.iiserpune.ac.in>
+set folder = "/home/ashish/.local/share/mail/iiser"
+set header_cache = /home/ashish/.cache/mutt/iiser/headers
+set message_cachedir = /home/ashish/.cache/mutt/iiser/bodies
+set mbox_type = Maildir
+
+# group reply
+bind index,pager,attach g noop
+# show log
+bind index M noop
+# copy message
+bind index,pager C noop
+
+unmailboxes *
+
+set spoolfile = "+INBOX"
+set record = "+[Gmail].Sent\ Mail"
+set postponed = "+[Gmail].Drafts"
+set trash = "+[Gmail].Trash"
+mailboxes "=INBOX" "=[Gmail].Sent\ Mail" "=[Gmail].Spam" "=[Gmail].Trash" 
+macro index,pager gi "<change-folder>=INBOX<Enter>" "go to inbox"
+macro index,pager Mi "<tag-prefix><save-message>=INBOX<Enter>" "move mail to inbox"
+macro index,pager Ci "<tag-prefix><copy-message>=INBOX<Enter>" "copy mail to inbox"
+macro index,pager gs "<change-folder>=[Gmail].Sent\ Mail<Enter>" "go to sent"
+macro index,pager gS "<change-folder>=[Gmail].Spam<Enter>" "go to spam"
+macro index,pager MS "<tag-prefix><save-message>=[Gmail].Spam<Enter>" "move mail to spam"
+macro index,pager CS "<tag-prefix><copy-message>=[Gmail].Spam<Enter>" "copy mail to spam"
+macro index,pager gt "<change-folder>=[Gmail].Trash<Enter>" "go to trash"

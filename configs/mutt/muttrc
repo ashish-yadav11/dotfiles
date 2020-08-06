@@ -1,0 +1,581 @@
+# vim: filetype=neomuttrc
+source /home/ashish/.config/mutt/accounts/1-iiser.muttrc
+source /home/ashish/.config/mutt/colorscheme.muttrc
+bind index,pager,attach,compose \cb noop
+bind index,pager,browser y noop
+
+# index   - the main menu showing messages in a folder
+# pager   - where the contents of the message are displayed
+# attach  - menu showing attachments
+# compose - menu after saving written message while sending
+# browser - file/directory browser
+# editor  - single line editor for `To:', `Subject:' prompts.
+
+# unbind escape stuff
+bind index,editor               <Esc>b          noop
+bind index,pager,editor         <Esc>c          noop
+bind editor                     <Esc>d          noop
+bind compose,editor             <Esc>f          noop
+bind index,pager                <Esc>i          noop
+bind editor                     <Esc>l          noop
+bind index,pager,attach         <Esc>P          noop
+bind editor                     <Esc>u          noop
+bind index                      <Esc>V          noop
+bind index                      <Esc>v          noop
+bind index,pager                <Esc>C          noop
+bind index,pager                <Esc>s          noop
+bind index,pager                <Esc>d          noop
+bind index,pager,compose        <Esc>k          noop
+bind index,pager                <Esc>n          noop
+bind index                      <Esc>d          noop
+bind index                      <Esc><Tab>      noop
+bind index,pager                <Esc>p          noop
+bind index,pager                <Esc>r          noop
+bind index,pager,attach         <Esc>e          noop
+bind index                      <Esc>l          noop
+bind index                      <Esc>t          noop
+bind generic,pager              <Esc>/          noop
+bind index,pager                <Esc>u          noop
+
+#----------------------------------------------------------------------------------------------------------------------------------#
+# generic+
+#----------------------------------------------------------------------------------------------------------------------------------#
+
+#<first-entry>          =               move to the first entry
+#<half-down>            ]               scroll down 1/2 page
+#<half-up>              [               scroll up 1/2 page
+#<help>                 ?               this screen
+#<last-entry>           *               move to the last entry
+#<next-entry>           j               move to the next entry
+#<next-line>            >               scroll down one line
+#<previous-entry>       k               move to the previous entry
+#<previous-line>        <               scroll up one line
+#<select-entry>         <Return>        select the current entry
+#<shell-escape>         !               invoke a command in a subshell
+#<tag-entry>            t               tag the current entry
+#<tag-prefix>           ;               apply next function to tagged messages
+
+# page-movement
+bind generic z noop
+bind generic Z noop
+
+bind generic \Cl noop
+bind generic <F5> refresh
+
+bind generic,index,browser <Space> tag-entry
+
+# movement
+bind generic gg first-entry
+bind generic M noop
+bind generic gm middle-page
+bind generic,index,compose G last-entry
+bind generic,index,pager,attach,compose \Ce next-line
+bind generic,pager \Cy previous-line
+bind generic,index,pager,attach,compose \Cf next-page
+bind generic,index,pager \Cb previous-page
+bind generic zb current-bottom
+bind generic zz current-middle
+bind generic zt current-top
+
+# previous match
+bind generic,index,pager,browser N search-opposite
+
+# bottom page
+bind generic L noop
+bind generic ,/ search-reverse
+
+# ^J is Enter
+bind generic,attach,compose <Enter> noop
+
+# top page
+bind generic H noop
+
+#----------------------------------------------------------------------------------------------------------------------------------#
+# index+
+#----------------------------------------------------------------------------------------------------------------------------------#
+
+#<bounce-message>       b               remail a message to another user
+#<break-thread>         #               break the thread in two
+#<forward-message>      f               forward a message with comments
+#<link-threads>         &               link tagged message to the current one
+#<mailbox-list>         .               list mailboxes with new mail
+#<mark-message>         ~               create a hotkey macro for the current message
+#<next-new-then-unread> <Tab>           jump to the next new or unread message
+#<next-thread>          ^N              jump to the next thread
+#<previous-thread>      ^P              jump to previous thread
+#<query>                Q               query external program for addresses
+#<tag-pattern>          T               tag messages matching a pattern
+#<toggle-write>         %               toggle whether the mailbox will be rewritten
+
+# manage autocrypt accounts
+bind index A noop
+bind index \\a autocrypt-acct-menu
+
+bind index,pager,attach c compose-to-sender
+
+macro index,pager gf "<change-folder>?" "go to another folder"
+macro index,pager gF "<change-folder-readonly>?" "go to another folder in readonly mode"
+macro index,pager,attach,compose gx "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message> urlscan<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "call urlview to extract URLs out of a message"
+
+# newsgroup stuff
+bind index,pager i noop
+#macro index,pager i1 '<sync-mailbox><enter-command>source /home/ashish/.config/mutt/accounts/1-iiser.muttrc<Enter><change-folder>!<Enter>;<check-stats>' "switch to ashishkumar.yadav@students.iiserpune.ac.in"
+
+macro index \Cs "<check-stats><refresh>" "refresh stats without warnings"
+
+# classic pgp
+bind index,pager,attach \\P check-traditional-pgp
+
+bind index za collapse-thread
+bind index zA collapse-all
+
+macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<return><pipe-message>abook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<return>" "add the sender address to abook"
+
+# deleting messages
+bind index d noop
+bind index D noop
+bind index dd delete-message
+bind index dD delete-pattern
+bind index dp delete-pattern
+bind index dt delete-subthread
+bind index dT delete-thread
+
+# undeleting messages
+bind index u noop
+bind index U noop
+bind index ud undelete-message
+bind index uu undelete-message
+bind index uD undelete-pattern
+bind index uU undelete-pattern
+bind index up undelete-pattern
+bind index ut undelete-subthread
+bind index uT undelete-thread
+
+# display message and toggle header weed
+bind index h noop
+bind index <Left> noop
+bind index l display-message
+bind index <Right> display-message
+
+# editing stuff
+bind index,pager Y noop
+bind index,pager e noop
+bind index,pager el edit-label
+bind index,pager er edit-or-view-raw-message
+bind index,pager,attach et edit-type
+
+# exit
+bind index,pager x noop
+
+# extract supported public keys
+bind attach \Ck noop
+bind index,pager,attach \\k extract-keys
+
+bind index,pager,attach,compose \\f forget-passphrase
+
+# read thread
+bind index,pager \Cr noop
+
+# reply stuff
+bind index,pager,attach r noop
+bind index,pager,attach rr reply
+bind index,pager,attach rg group-reply
+bind index,pager,attach rG group-chat-reply
+bind pager,attach L noop
+bind index,pager,attach rl list-reply
+# use the current message as a template for a new one
+bind index,pager,attach rt resend-message
+
+bind index L limit
+macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -p 'Enter a search term to find with notmuch: ' x; echo \$x >~/.cache/mutt_terms<Enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;s/\^id:// for@a;$,=\"|\";print@a' | perl -le '@a=<>; chomp@a; s/\\+/\\\\+/ for@a;print@a' \`\"<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "show only messages matching a notmuch pattern"
+macro index ,a "<limit>all\n" "show all messages"
+macro index ,n "<limit>~N<Enter><refresh>" "show all unread messages"
+macro index ,f "<limit>~F<Enter><refresh>" "show all flagged messages"
+
+# mail pgp key
+bind index,pager \\m mail-key
+
+# toggle read
+bind index R toggle-new
+
+bind index,pager <BackTab> previous-new-then-unread
+
+# parent message
+bind index,pager P noop
+bind index,pager gp parent-message
+
+# recall postponed
+bind index,pager gd recall-message
+
+# movement
+bind index j next-entry
+bind index <Down> next-entry
+bind index k previous-entry
+bind index <Up> previous-entry
+bind index,pager \Cd half-down
+bind index,pager \Cu half-up
+bind index J next-thread
+bind index K previous-thread
+bind index,pager } next-thread
+bind index,pager { previous-thread
+
+# printing
+bind index,pager p noop
+
+bind index ,l show-limit
+
+# sorting
+bind index O noop
+bind index Oo sort-mailbox
+bind index OO sort-reverse
+
+bind index \Ct tag-thread
+bind index ,t untag-pattern
+macro index ,T "<untag-pattern>~T<Enter>" "untag all tagged messages"
+
+# sidebar
+bind index,pager \Ck sidebar-prev
+bind index,pager \Cj sidebar-next
+bind index,pager \Co sidebar-open
+bind index,pager B sidebar-toggle-visible
+
+macro index,pager s "<enter-command>set my_delete=\$delete delete=yes<Enter><sync-mailbox><enter-command>set delete=\$my_delete my_wait_key=\$wait_key wait_key=no; unset my_delete<Enter><shell-escape>/home/ashish/.scripts/mailsync.sh &<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "sync mail"
+
+macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap_o<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter><clear-flag>N" "open html in browser otherwise text to less with url highlighting"
+macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap_o<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter>" "open html in browser otherwise text to less with url highlighting"
+
+macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>cat >/tmp/neomutt-tmp/mail<Enter><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter><shell-escape>/home/ashish/.config/mutt/scripts/url_highlight_less.sh /tmp/neomutt-tmp/mail<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter><clear-flag>N" "pipe message to less with url highlighting"
+macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>cat >/tmp/neomutt-tmp/mail<Enter><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter><shell-escape>/home/ashish/.config/mutt/scripts/url_highlight_less.sh /tmp/neomutt-tmp/mail<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "pipe message to less with url highlighting"
+
+#----------------------------------------------------------------------------------------------------------------------------------#
+# pager+
+#----------------------------------------------------------------------------------------------------------------------------------#
+
+#<bounce-message>       b               remail a message to another user
+#<break-thread>         #               break the thread in two
+#<forward-message>      f               forward a message with comments
+#<link-threads>         &               link tagged message to the current one
+#<mailbox-list>         .               list mailboxes with new mail
+#<next-new-then-unread> <Tab>           jump to the next new or unread message
+#<next-entry>           J               move to the next entry
+#<next-thread>          ^N              jump to the next thread
+#<previous-entry>       K               move to the previous entry
+#<previous-thread>      ^P              jump to previous thread
+#<search-toggle>        \\              toggle search pattern coloring
+#<skip-quoted>          S               skip beyond quoted text
+#<toggle-write>         %               toggle whether the mailbox will be rewritten
+
+bind pager d noop
+macro pager dd "<enter-command>set resolve=no<Enter><delete-message><enter-command>set resolve=yes<Enter>" "delete message"
+macro pager dt "<enter-command>set resolve=no<Enter><delete-subthread><enter-command>set resolve=yes<Enter>" "delete subthread"
+macro pager dT "<enter-command>set resolve=no<Enter><delete-thread><enter-command>set resolve=yes<Enter>" "delete thread"
+
+bind pager u noop
+macro pager ud "<enter-command>set resolve=no<Enter><undelete-message><enter-command>set resolve=yes<Enter>" "undelete message"
+macro pager uu "<enter-command>set resolve=no<Enter><undelete-message><enter-command>set resolve=yes<Enter>" "undelete message"
+macro pager ut "<enter-command>set resolve=no<Enter><undelete-subthread><enter-command>set resolve=yes<Enter>" "undelete subthread"
+macro pager uT "<enter-command>set resolve=no<Enter><undelete-thread><enter-command>set resolve=yes<Enter>" "undelete thread"
+
+macro pager F "<enter-command>set resolve=no<Enter><flag-message><enter-command>set resolve=yes<Enter>" "toggle a message's important flag"
+
+# movement
+bind pager j next-line
+bind pager <Down> next-line
+bind pager k previous-line
+bind pager <Up> previous-line
+bind pager gg top
+bind pager G bottom
+bind pager,attach h exit
+bind pager,attach <Left> exit
+bind pager l view-attachments
+bind pager <Right> view-attachments
+bind pager <Return> view-attachments
+bind pager ] half-down
+bind pager [ half-up
+
+# page-movement
+bind pager <Space> noop
+bind pager - noop
+
+macro pager \Cs "<check-stats><redraw-screen>" "refresh stats without warnings"
+
+macro pager R "<enter-command>set resolve=no<Enter><mark-as-new><enter-command>set resolve=yes<Enter>" "toggle a message's new flag"
+
+# top
+bind pager ^ noop
+
+bind pager <F5> redraw-screen
+
+# toggle display of quoted text
+bind pager T noop
+bind pager za toggle-quoted
+bind pager zA toggle-quoted
+
+#----------------------------------------------------------------------------------------------------------------------------------#
+# attachment+
+#----------------------------------------------------------------------------------------------------------------------------------#
+
+#<bounce-message>       b               remail a message to another user
+#<collapse-parts>       v               toggle display of subparts
+#<delete-entry>         d               delete the current entry
+#<forward-message>      f               forward a message with comments
+#<view-mailcap>         m               force viewing of attachment using mailcap
+#<save-entry>           s               save message/attachment to a mailbox/file
+#<undelete-entry>       u               undelete the current entry
+#<view-text>            T               view attachment as text
+#<view-attach>          <Return>        view attachment using mailcap entry if necessary
+
+# printing
+bind attach p noop
+
+bind attach l view-attach
+bind attach <Right> view-attach
+
+#----------------------------------------------------------------------------------------------------------------------------------#
+# compose
+#----------------------------------------------------------------------------------------------------------------------------------#
+
+#<copy-file>            C               save message/attachment to a mailbox/file
+#<edit-bcc>             b               edit the BCC list
+#<edit-cc>              c               edit the CC list
+#<edit-fcc>             f               enter a file to save a copy of this message in
+#<edit-subject>         s               edit the subject of this message
+#<group-alternatives>   &               group tagged attachments as 'multipart/alternative'
+#<group-multilingual>   ^               group tagged attachments as 'multipart/multilingual'
+#<ispell>               i               run ispell on the message
+#<postpone-message>     P               save this message to send later
+#<send-message>         y               send the message
+#<toggle-disposition>   ^D              toggle disposition between inline/attachment
+#<view-attach>          <Return>        view attachment using mailcap entry if necessary
+#<toggle-unlink>        u               toggle whether to delete file after sending it
+#<update-encoding>      U               update an attachment's encoding info
+#<write-fcc>            w               write the message to a folder
+
+bind compose o attach-file
+bind compose O attach-message
+
+# movement
+bind compose h exit
+bind compose <Left> exit
+bind compose l view-attach
+bind compose <Right> view-attach
+
+# attach PGP public key
+bind compose \\k attach-key
+
+# autocrypt compose menu options
+bind compose \\a autocrypt-menu
+
+# delete the entry
+bind compose D noop
+bind compose d detach-file
+
+# editing stuff
+bind compose e noop
+bind compose ee edit-message
+# edit attachment description
+bind compose ed edit-description
+# edit attachment transfer-encoding
+bind compose \Ce noop
+bind compose eE edit-encoding
+# edit attachment using editor
+bind compose \Cxe noop
+bind compose eF edit-file
+# edit message with header
+bind compose E noop
+bind compose eh edit-headers
+# edit content language of the attachment
+bind compose el edit-language
+# edit attachment using mailcap entry
+bind compose m noop
+bind compose ef edit-mime
+# edit attachment content type
+bind compose \Ct noop
+bind compose et edit-type
+# new attachment
+bind compose n noop
+bind compose en new-mime
+
+bind compose F edit-from
+bind compose r noop
+bind compose R edit-reply-to
+bind compose T edit-to
+
+# filter attachment through shell command
+bind compose \Cl filter-entry
+
+# get a temporary copy of the attachment
+bind compose S get-attachment
+
+# send through mixmaster remailer chain
+#bind compose M noop
+#bind compose \Cm mix
+
+bind compose + move-up
+bind compose - move-down
+
+# PGP options
+bind compose p noop
+bind compose \\p pgp-menu
+
+# send attachment with different name
+bind compose \Co noop
+bind compose a rename-attachment
+# rename/move attached file
+bind compose A rename-file
+
+# S/MIME options
+bind compose \\s smime-menu
+
+#----------------------------------------------------------------------------------------------------------------------------------#
+# browser
+#----------------------------------------------------------------------------------------------------------------------------------#
+
+#<change-dir>           c               change directories
+#<display-filename>     @               display the currently selected file's name
+#<enter-mask>           m               enter a file mask
+#<goto-folder>          =               swap the current folder position with $folder if it exists
+#<goto-parent>          p               go to parent directory
+#<mailbox-list>         .               list mailboxes with new mail
+#<sort>                 o               sort messages
+#<sort-reverse>         O               sort messages in reverse order
+#<toggle-mailboxes>     <Tab>           toggle whether to browse mailboxes or all files
+
+# create mailbox
+bind browser C noop
+# delete mailbox
+bind browser d noop
+# rename mailbox
+bind browser r noop
+
+bind browser \Cn select-new
+
+# subscribe stuff
+bind browser s noop
+bind browser T noop
+bind browser u noop
+
+# movement
+bind browser l select-entry
+bind browser <Right> select-entry
+#macro browser h '<change-dir><kill-line>..<Enter>' "go to parent folder"
+bind browser h goto-parent
+#macro browser <Left> '<change-dir><kill-line>..<Enter>' "go to parent folder"
+bind browser <Left> goto-parent
+bind browser gd change-dir
+bind browser gf goto-folder
+bind browser gp goto-parent
+
+# view file
+bind browser i view-file
+
+#----------------------------------------------------------------------------------------------------------------------------------#
+# editor
+#----------------------------------------------------------------------------------------------------------------------------------#
+
+#<bol>                  ^A              jump to the beginning of the line
+#<delete-char>          ^D              delete the char under the cursor
+#<eol>                  ^E              jump to the end of the line
+#<history-search>       ^R              search through the history list
+#<kill-eol>             ^K              delete chars from cursor to end of line
+#<kill-line>            ^U              delete all chars on the line
+#<kill-word>            ^W              delete the word in front of the cursor
+#<quote-char>           ^V              quote the next typed key
+
+bind editor \Ch backspace
+bind editor \Cb backward-word
+bind editor \Cv upcase-word
+bind editor <Tab> complete-query
+bind editor \Ct complete
+bind editor \Cl downcase-word
+bind editor \Cf forward-word
+bind editor \Cp history-up
+bind editor \Cn history-down
+bind editor \Co kill-eow
+
+# switching to folders with space in their names
+bind editor <Space> noop
+
+#----------------------------------------------------------------------------------------------------------------------------------#
+# settings
+#----------------------------------------------------------------------------------------------------------------------------------#
+
+auto_view text/html
+auto_view application/pgp-encrypted
+alternative_order text/plain text/enriched text/html
+
+# general settings
+
+set abort_key = "<Esc>"
+
+set abort_backspace = no
+
+set date_format = "%d/%m/%y %H:%M"
+
+# skip to compose when replying
+set fast_reply = yes
+
+# save attachments with the body
+set fcc_attach = yes
+
+# don't allow deleting flagged messages
+set flag_safe = yes
+
+# format of subject when forwarding
+set forward_format = "Fwd: %s"
+
+# include message in forwards
+set forward_quote = yes
+
+# include message in replies
+set include = yes
+
+set index_format = "%4C %Z %?X?A& ? %D %-15.15F %-67.67s (%-4.4c)"
+
+set mailcap_path = /home/ashish/.config/mutt/mailcap
+
+# Unread mail stay unread until read
+set mark_old = no
+
+# Disables the `+` displayed at line wraps
+set markers = no
+
+set menu_scroll = yes
+
+# don't allow bottom entry to move off bottom
+set menu_move_off = no
+
+# attachments are forwarded with mail
+set mime_forward = yes
+
+# don't move to the next message in pager when invoking <next-page>
+set pager_stop = yes
+
+set query_command = "abook --mutt-query '%s'"
+
+# reply as whomever it was to
+set reverse_name = yes
+
+# decode RFC2047-encoded MIME parameters
+set rfc2047_parameters = yes
+
+# Pause 0 seconds for informational messages
+set sleep_time = 0
+
+set sort = reverse-threads
+set sort_aux = last-date-received
+
+set tmpdir = /tmp/neomutt-tmp
+
+# enable terminal title
+set ts_enabled = yes
+
+# sidebar settings
+
+set mail_check_stats = yes
+
+set sidebar_format = '%B%* %?N?%N/?%?S?%S?'
+set sidebar_next_new_wrap = yes
+set sidebar_short_path = yes
+set sidebar_visible = yes
+set sidebar_width = 19

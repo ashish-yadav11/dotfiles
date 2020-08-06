@@ -1,0 +1,9 @@
+# vim: filetype=mailcap
+text/plain; /home/ashish/.config/mutt/scripts/url_highlight_less_o.sh %s; edit=$EDITOR %s; compose=$EDITOR %s
+text/html; /home/ashish/.config/mutt/scripts/html_in_browser.sh %s; nametemplate=%s.html; edit=$EDITOR %s; compose=$EDITOR %s
+text/html; w3m -I %{charset} -T text/html; copiousoutput
+image/*; /home/ashish/.config/mutt/scripts/open_file.sh %s; edit=/home/ashish/.config/mutt/scripts/edit_image.sh %s
+video/*; /home/ashish/.config/mutt/scripts/open_file.sh %s
+application/pdf; /home/ashish/.config/mutt/scripts/open_file.sh %s; edit=/home/ashish/.config/mutt/scripts/edit_pdf.sh %s
+application/pgp-encrypted; gpg -d '%s'; copiousoutput
+application/*; /home/ashish/.config/mutt/scripts/open_file.sh %s; edit=/home/ashish/.config/mutt/scripts/open_file.sh %s

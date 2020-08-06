@@ -1,0 +1,13 @@
+! Xft
+Xft.autohint: false
+Xft.antialias: true
+Xft.dpi: 96
+Xft.hinting: true
+Xft.hintstyle: hintslight
+Xft.lcdfilter:  lcddefault
+Xft.rgba: rgb
+
+! Sxiv
+Sxiv.background: #1d2021
+Sxiv.foreground: #bdae93
+Sxiv.font: monospace

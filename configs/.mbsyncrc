@@ -1,0 +1,24 @@
+IMAPStore iiser-remote
+Host imap.gmail.com
+Port 993
+User ashishkumar.yadav@students.iiserpune.ac.in
+AuthMechs XOAUTH2
+PassCmd "bash /home/ashish/.scripts/oauth2tool.sh ashishkumar.yadav@students.iiserpune.ac.in"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+MaildirStore iiser-local
+Subfolders Verbatim
+Path ~/.local/share/mail/iiser/
+Inbox ~/.local/share/mail/iiser/INBOX
+Flatten .
+
+Channel iiser
+Expunge Both
+Master :iiser-remote:
+Slave :iiser-local:
+Patterns * ![Gmail]* "[Gmail]/Drafts" "[Gmail]/Sent Mail" "[Gmail]/Spam" "[Gmail]/Trash"
+Create Both
+SyncState *
+MaxMessages 0
+ExpireUnread no

@@ -1,0 +1,3 @@
+QScrollBar{
+  width: 15px;
+}

@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/etc'
+let g:netrw_dirhist_5='/usr/share/applications'
+let g:netrw_dirhist_4='/usr/share/xsessions'
+let g:netrw_dirhist_3='/etc/X11/xinit/xinitrc.d'
+let g:netrw_dirhist_2='/etc/polkit-1/rules.d'
+let g:netrw_dirhist_1='/home/ashish/.local/projects/dwmblocks/blocks/external'
+let g:netrw_dirhist_0='/home/ashish/.local/projects/dwmblocks/utils'
+let g:netrw_dirhist_9='/media/storage/.temporary/dwm/dwm-6.2'
+let g:netrw_dirhist_8='/media/storage/.temporary/dwm/patches'
+let g:netrw_dirhist_7='/etc/systemd/sleep.conf.d'

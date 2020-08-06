@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Populus
+Comment=Simulations of Population Biology
+Exec=java -jar /home/ashish/Downloads/programs/PopulusAll_Jan_2018.jar
+Icon=java
+Terminal=false
+StartupNotify=false
+Categories=Education;Science;
