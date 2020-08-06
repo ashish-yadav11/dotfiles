@@ -9,6 +9,7 @@ from ranger.api.commands import Command
 
 
 from os.path import join
+
 class mkcd(Command):
     """
     :mkcd <dirname>
@@ -44,6 +45,7 @@ class mkcd(Command):
 
 from subprocess import PIPE
 fzf_command = "fzf --bind=change:top,ctrl-a:select-all,ctrl-t:toggle-all,ctrl-z:top,ctrl-space:toggle-sort --sync -1"
+
 class fzf_search(Command):
     def execute(self):
         depth = '-d4'
