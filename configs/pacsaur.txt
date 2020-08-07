@@ -9,7 +9,6 @@ dwm-cust
 etcher-bin
 google-chrome
 htop-vim-git
-lf
 libcgroup
 libxft-bgra
 mblaze-git
