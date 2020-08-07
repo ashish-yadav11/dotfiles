@@ -1,6 +1,9 @@
 #!/bin/dash
-if xinput --list-props 11 | grep -q "Device Enabled (147):	1" ; then
-    xinput disable 11 && dunstify -r 24914 -t 1000 "Touchpad disabled"
+touchpad="ETPS/2 Elantech Touchpad"
+props=$(xinput --list-props "$touchpad")
+state=${props#*Device Enabled*:	}; state=${state%%	*}
+if [ "$state" -eq 1 ] ; then
+    xinput disable "$touchpad" && dunstify -r 24914 -t 1000 "Touchpad disabled"
 else
-    xinput enable 11 && dunstify -r 24914 -t 1000 "Touchpad enabled"
+    xinput enable "$touchpad" && dunstify -r 24914 -t 1000 "Touchpad enabled"
 fi
