@@ -49,7 +49,7 @@ bind -m vi-insert -x '"\eb": "fzf_select_bookmark"'
 source /etc/profile.d/vte.sh
 
 # custom aliases
-alias diffab="/home/ashish/.scripts/diffab.sh"
+alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias gitdots="git --git-dir=/media/storage/.dots/ --work-tree=/media/storage/"
