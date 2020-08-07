@@ -462,12 +462,12 @@ bind browser gd change-dir
 bind browser gf goto-folder
 bind browser gp goto-parent
 
-# view file
-bind browser i view-file
-
 # sorting
 bind browser [ sort
 bind browser ] sort-reverse
+
+# view file
+bind browser i view-file
 
 #----------------------------------------------------------------------------------------------------------------------------------#
 # editor
