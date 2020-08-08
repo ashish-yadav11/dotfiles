@@ -52,7 +52,6 @@ source /etc/profile.d/vte.sh
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
-alias gitdots="git --git-dir=/media/storage/.dots/ --work-tree=/media/storage/"
 alias kynm="/home/ashish/.scripts/xevcn.sh"
 alias lessc="less -R"
 alias python="cgexec -g memory,cpuset:python /usr/bin/python"
@@ -178,6 +177,28 @@ nt() {
     ( sleep "$(echo "scale=2; $1*60" | bc)"
     shift 1
     notify-send -t 0 "$*" ) & disown
+}
+
+
+spull() {
+    echo -e "\e[1;32msuckless sites\e[0m"
+    git --git-dir=/media/storage/.temporary/suckless-sites/.git/ \
+        --work-tree=/media/storage/.temporary/suckless-sites/ pull
+    echo ""
+
+    echo -e "\e[1;32mdwm\e[0m"
+    git --git-dir=/media/storage/.temporary/suckless-software/dwm/.git/ \
+        --work-tree=/media/storage/.temporary/suckless-software/dwm/ pull
+    echo ""
+
+    echo -e "\e[1;32mst\e[0m"
+    git --git-dir=/media/storage/.temporary/suckless-software/st/.git \
+        --work-tree=/media/storage/.temporary/suckless-software/st/ pull
+    echo ""
+
+    echo -e "\e[1;32mscroll\e[0m"
+    git --git-dir=/media/storage/.temporary/suckless-software/scroll/.git \
+        --work-tree=/media/storage/.temporary/suckless-software/scroll/ pull
 }
 
 
