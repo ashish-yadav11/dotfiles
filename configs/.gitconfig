@@ -1,3 +1,5 @@
 [user]
 	name = Ashish Kumar Yadav
 	email = ashishkumar.yadav@students.iiserpune.ac.in
+[credential]
+	helper = /usr/bin/pass-git-helper
