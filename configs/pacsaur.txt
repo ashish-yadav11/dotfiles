@@ -18,6 +18,7 @@ neovim-remote
 netlogo
 networkmanager-dispatcher-chrony
 pam-gnupg
+pass-git-helper
 rofi-dmenu-cust
 siji-git
 surf
