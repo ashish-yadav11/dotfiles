@@ -18,9 +18,6 @@ macro index,pager gt "<change-folder>=[Gmail].Trash<Enter>" "go to trash"
 
 alias me Ashish Kumar Yadav <ashishkumar.yadav@students.iiserpune.ac.in>
 
-unmailboxes *
-mailboxes "=INBOX" "=[Gmail].Sent\ Mail" "=[Gmail].Spam" "=[Gmail].Trash"
-
 # don't copy outgoing messages, gmail automatically does that
 set copy = no
 
@@ -35,3 +32,6 @@ set record = "+[Gmail].Sent\ Mail"
 set sendmail = "msmtp -a iiser"
 set spoolfile = "+INBOX"
 set trash = "+[Gmail].Trash"
+
+unmailboxes *
+mailboxes "=INBOX" "=[Gmail].Sent\ Mail" "=[Gmail].Spam" "=[Gmail].Trash"
