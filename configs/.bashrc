@@ -182,23 +182,23 @@ nt() {
 
 spull() {
     echo -e "\e[1;32msuckless sites\e[0m"
-    git --git-dir=/media/storage/.temporary/suckless-sites/.git/ \
-        --work-tree=/media/storage/.temporary/suckless-sites/ pull
+    git --git-dir=/media/storage/.temporary/suckless-sites/.git \
+        --work-tree=/media/storage/.temporary/suckless-sites pull
     echo ""
 
     echo -e "\e[1;32mdwm\e[0m"
-    git --git-dir=/media/storage/.temporary/suckless-software/dwm/.git/ \
-        --work-tree=/media/storage/.temporary/suckless-software/dwm/ pull
+    git --git-dir=/media/storage/.temporary/suckless-software/dwm/.git \
+        --work-tree=/media/storage/.temporary/suckless-software/dwm pull
     echo ""
 
     echo -e "\e[1;32mst\e[0m"
     git --git-dir=/media/storage/.temporary/suckless-software/st/.git \
-        --work-tree=/media/storage/.temporary/suckless-software/st/ pull
+        --work-tree=/media/storage/.temporary/suckless-software/st pull
     echo ""
 
     echo -e "\e[1;32mscroll\e[0m"
     git --git-dir=/media/storage/.temporary/suckless-software/scroll/.git \
-        --work-tree=/media/storage/.temporary/suckless-software/scroll/ pull
+        --work-tree=/media/storage/.temporary/suckless-software/scroll pull
 }
 
 

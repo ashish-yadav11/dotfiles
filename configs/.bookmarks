@@ -23,7 +23,7 @@ curl ifconfig.co
 curl ifconfig.co/city
 
 # backup script
-sudo tar -zcvf /home/ashish/Documents/arbackup.tar.gz /etc/ /root/ /media/storage/.backup/
+sudo tar -zcvf /home/ashish/Documents/arbackup.tar.gz /etc /root /media/storage/.backup
 
 # escape dinner/sleep sleep
 read -r PID </tmp/sleep_dine.pid && { rm -f /tmp/sleep_dine.pid; [[ -n $PID ]] && rkill "$PID" ;}
