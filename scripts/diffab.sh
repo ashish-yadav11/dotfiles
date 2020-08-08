@@ -5,7 +5,7 @@ echo ""
 $diff_cmd /home/ashish/.scripts/ /home/ashish/.local/projects/dsblocks/helpers/scripts/ |
     grep -Ev '^Only.*'
 $diff_cmd /home/ashish/.local/dotfiles/configs/ /home/ashish/.config/ |
-    grep -Ev '^Only.*(configs?/:)|(nvim: \.netrwhist)|(ranger: tagged)|(newsboat: cache.db)'
+    grep -Ev '^Only.*(configs?/:)|(nvim: \.netrwhist)|(ranger: tagged)|(newsboat: cache.db)|(msmtp: msmtp.log)'
 $diff_cmd /home/ashish/.local/dotfiles/configs/ /home/ashish/ |
     grep -Ev '^Only.*(configs/:)|(ashish/(:)|(.surf:))'
 $diff_cmd /home/ashish/.local/dotfiles/locals/ /home/ashish/.local/ |
