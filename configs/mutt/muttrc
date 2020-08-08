@@ -50,7 +50,6 @@ bind index,pager                <Esc>u          noop
 #<previous-line>        <               scroll up one line
 #<select-entry>         <Return>        select the current entry
 #<shell-escape>         !               invoke a command in a subshell
-#<tag-entry>            t               tag the current entry
 #<tag-prefix>           ;               apply next function to tagged messages
 
 # page-movement
@@ -59,8 +58,6 @@ bind generic Z noop
 
 bind generic \Cl noop
 bind generic <F5> refresh
-
-bind generic,index,browser <Space> tag-entry
 
 # movement
 bind generic gg first-entry
@@ -81,6 +78,9 @@ bind generic,index,pager,browser N search-opposite
 # bottom page
 bind generic L noop
 bind generic ,/ search-reverse
+
+macro generic t "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next (possibly undeleted) one"
+macro generic,index,browser <Space> "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next entry"
 
 # ^J is Enter
 bind generic,attach,compose <Enter> noop
@@ -130,24 +130,24 @@ bind index zA collapse-all
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<return><pipe-message>abook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<return>" "add the sender address to abook"
 
 # deleting messages
-bind index d noop
+bind index,pager d noop
 bind index D noop
-bind index dd delete-message
+bind index,pager dd delete-message
 bind index dD delete-pattern
 bind index dp delete-pattern
-bind index dt delete-subthread
-bind index dT delete-thread
+bind index,pager dt delete-subthread
+bind index,pager dT delete-thread
 
 # undeleting messages
-bind index u noop
+bind index,pager u noop
 bind index U noop
-bind index ud undelete-message
-bind index uu undelete-message
+bind index,pager ud undelete-message
+bind index,pager uu undelete-message
 bind index uD undelete-pattern
 bind index uU undelete-pattern
 bind index up undelete-pattern
-bind index ut undelete-subthread
-bind index uT undelete-thread
+bind index,pager ut undelete-subthread
+bind index,pager uT undelete-thread
 
 # display message and toggle header weed
 bind index h noop
@@ -193,7 +193,7 @@ macro index ,f "<limit>~F<Enter><refresh>" "show all flagged messages"
 # mail pgp key
 bind index,pager \\m mail-key
 
-# toggle read
+# toggle a message's new flag
 bind index R toggle-new
 
 bind index,pager <BackTab> previous-new-then-unread
@@ -239,10 +239,10 @@ bind index,pager B sidebar-toggle-visible
 
 macro index,pager s "<enter-command>set my_delete=\$delete delete=yes<Enter><sync-mailbox><enter-command>set delete=\$my_delete my_wait_key=\$wait_key wait_key=no; unset my_delete<Enter><shell-escape>/home/ashish/.scripts/mailsync.sh &<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "sync mail"
 
-macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap_o<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path my_resolve=\$resolve resolve=no; unset my_mailcap_path<Enter><clear-flag>N<enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "open html in browser otherwise text to less with url highlighting"
+macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap_o<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter><clear-flag>N" "open html in browser otherwise text to less with url highlighting"
 macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap_o<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter>" "open html in browser otherwise text to less with url highlighting"
 
-macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>cat >/tmp/neomutt-tmp/mail<Enter><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter><shell-escape>/home/ashish/.config/mutt/scripts/url_highlight_less.sh /tmp/neomutt-tmp/mail<Enter><enter-command>set wait_key=\$my_wait_key set my_resolve=\$resolve resolve=no; unset my_wait_key<Enter><clear-flag>N<enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "pipe message to less with url highlighting"
+macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>cat >/tmp/neomutt-tmp/mail<Enter><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter><shell-escape>/home/ashish/.config/mutt/scripts/url_highlight_less.sh /tmp/neomutt-tmp/mail<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter><clear-flag>N" "pipe message to less with url highlighting"
 macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>cat >/tmp/neomutt-tmp/mail<Enter><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter><shell-escape>/home/ashish/.config/mutt/scripts/url_highlight_less.sh /tmp/neomutt-tmp/mail<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "pipe message to less with url highlighting"
 
 #----------------------------------------------------------------------------------------------------------------------------------#
@@ -263,19 +263,6 @@ macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes m
 #<skip-quoted>          S               skip beyond quoted text
 #<toggle-write>         %               toggle whether the mailbox will be rewritten
 
-bind pager d noop
-macro pager dd "<enter-command>set my_resolve=\$resolve resolve=no<Enter><delete-message><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "delete message"
-macro pager dt "<enter-command>set my_resolve=\$resolve resolve=no<Enter><delete-subthread><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "delete subthread"
-macro pager dT "<enter-command>set my_resolve=\$resolve resolve=no<Enter><delete-thread><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "delete thread"
-
-bind pager u noop
-macro pager ud "<enter-command>set my_resolve=\$resolve resolve=no<Enter><undelete-message><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "undelete message"
-macro pager uu "<enter-command>set my_resolve=\$resolve resolve=no<Enter><undelete-message><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "undelete message"
-macro pager ut "<enter-command>set my_resolve=\$resolve resolve=no<Enter><undelete-subthread><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "undelete subthread"
-macro pager uT "<enter-command>set my_resolve=\$resolve resolve=no<Enter><undelete-thread><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "undelete thread"
-
-macro pager F "<enter-command>set my_resolve=\$resolve resolve=no<Enter><flag-message><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "toggle a message's important flag"
-
 # movement
 bind pager j next-line
 bind pager <Down> next-line
@@ -295,7 +282,8 @@ bind pager - noop
 
 macro pager \Cs "<check-stats><redraw-screen>" "refresh stats without warnings"
 
-macro pager R "<enter-command>set my_resolve=\$resolve resolve=no<Enter><mark-as-new><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "toggle a message's new flag"
+# toggle a message's new flag
+bind pager R mark-as-new
 
 # top
 bind pager ^ noop
@@ -558,6 +546,9 @@ set reverse_name = yes
 
 # decode RFC2047-encoded MIME parameters
 set rfc2047_parameters = yes
+
+# don't move to the next mail when modifying the current mail
+set resolve = no
 
 # Pause 0 seconds for informational messages
 set sleep_time = 0
