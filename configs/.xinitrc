@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
