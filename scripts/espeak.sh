@@ -24,7 +24,7 @@ case "$1" in
 esac
 
 read -r PID </tmp/espeak.pid && [ -n "$PID" ] && rkill "$PID"
-trap 'rm -f /tmp/espeak.pid' EXIT HUP INT TERM
+trap 'rm -f /tmp/espeak.pid; exit' EXIT HUP INT TERM
 echo "$$" >/tmp/espeak.pid
 echo "$word" >/tmp/espeak.last
 espeak "$word"
