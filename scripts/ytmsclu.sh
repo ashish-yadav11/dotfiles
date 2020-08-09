@@ -33,30 +33,29 @@ x=${size%%x*}
 y=${size##*x}
 
 # coordinates of the black pixel with coordinates (9,40) wrt left lower corner
-Xb=$(( x0+9 ))
-Yb=$(( y0+y-40 ))
-
-if [[ ! $(import -window root -depth 8 -crop "1x1+${Xb}+${Yb}" txt:- | grep -om1 "#\w\+") == "#212121" ]] ; then
-    notify-send -u critical -t 0 "YouTube Music L/U Script" "Something is wrong!"
-    hide_exit
-fi
-
+Xb=$(( x0 + 9 ))
+Yb=$(( y0 + y - 40 ))
 # size of the pixel array to capture and analyze; 500 cut from left side and 300 from right
-Xs=$(( x-800 ))
+Xs=$(( x - 800 ))
 # coordinates of the pixel which will be the leftmost point of the pixel array to be captured later
 # on x-axis start from 504 right from the left border
-X0=$(( x0+504 ))
+X0=$(( x0 + 504 ))
 # on y-axis start from 35 above from the bottom border
-Y0=$(( y0+y-35 ))
+Y0=$(( y0 + y - 35 ))
 
-if [[ $x -lt 944 || $y -lt 65 ]] ; then
+if (( x < 944 || y < 65 )) ; then
     notify-send -t 3000 "YouTube Music L/U Script" \
         "The size of the YouTube Music window is less than can be tolerated by the script."
     hide_exit
 fi
-if [[ $X0 -lt 0 || $(( X0+Xs )) -gt 1365 || $Y0 -lt 0 || $Y0 -gt 767 ]] ; then
+if (( Xb < 0 || Xb > 1365 || Yb < 0 || Yb > 767 || X0 < 0 || (X0 + Xs) > 1365 || Y0 < 0 || Y0 > 767 )) ; then
     notify-send -t 4000 "YouTube Music L/U Script" \
         "The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
+    hide_exit
+fi
+
+if [[ ! $(import -window root -depth 8 -crop "1x1+${Xb}+${Yb}" txt:- | grep -om1 "#\w\+") == "#212121" ]] ; then
+    notify-send -u critical -t 0 "YouTube Music L/U Script" "Something is wrong!"
     hide_exit
 fi
 
@@ -66,11 +65,11 @@ if [[ $1 == 1 ]] ; then
         awk -F'[, ]' '/#[7-9][0-9A-F][7-9][0-9A-F][7-9][0-9A-F]/ {print $1}' )
 
     for i in ${!ytmglst[*]} ; do
-        if [[ ${ytmglst[$(( i+1 ))]} == "$(( ${ytmglst[$i]}+1 ))" &&
-              ${ytmglst[$(( i+2 ))]} == "$(( ${ytmglst[$i]}+2 ))" &&
-              ${ytmglst[$(( i+3 ))]} == "$(( ${ytmglst[$i]}+3 ))" &&
-              ${ytmglst[$(( i+4 ))]} == "$(( ${ytmglst[$i]}+6 ))" &&
-              ${ytmglst[$(( i+5 ))]} == "$(( ${ytmglst[$i]}+7 ))" ]] ; then
+        if [[ ${ytmglst[$(( i + 1 ))]} == "$(( ${ytmglst[$i]} + 1 ))" &&
+              ${ytmglst[$(( i + 2 ))]} == "$(( ${ytmglst[$i]} + 2 ))" &&
+              ${ytmglst[$(( i + 3 ))]} == "$(( ${ytmglst[$i]} + 3 ))" &&
+              ${ytmglst[$(( i + 4 ))]} == "$(( ${ytmglst[$i]} + 6 ))" &&
+              ${ytmglst[$(( i + 5 ))]} == "$(( ${ytmglst[$i]} + 7 ))" ]] ; then
 
             xdotool keyup ISO_Level3_Shift key plus
             hide_exit
@@ -84,13 +83,13 @@ elif [[ $1 == 0 ]] ; then
         awk -F'[, ]' '/#[D-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F]/ {print $1}' )
 
     for i in ${!ytmglst[*]} ; do
-        if [[ ${ytmglst[$(( i+1 ))]} == "$(( ${ytmglst[$i]}+1 ))" &&
-              ${ytmglst[$(( i+2 ))]} == "$(( ${ytmglst[$i]}+2 ))" &&
-              ${ytmglst[$(( i+3 ))]} == "$(( ${ytmglst[$i]}+3 ))" &&
-              ${ytmglst[$(( i+4 ))]} == "$(( ${ytmglst[$i]}+6 ))" &&
-              ${ytmglst[$(( i+5 ))]} == "$(( ${ytmglst[$i]}+7 ))" &&
-              ${ytmglst[$(( i+8 ))]} == "$(( ${ytmglst[$i]}+10 ))" &&
-              ${ytmglst[$(( i+11 ))]} == "$(( ${ytmglst[$i]}+13 ))" ]] ; then
+        if [[ ${ytmglst[$(( i + 1 ))]} == "$(( ${ytmglst[$i]} + 1 ))" &&
+              ${ytmglst[$(( i + 2 ))]} == "$(( ${ytmglst[$i]} + 2 ))" &&
+              ${ytmglst[$(( i + 3 ))]} == "$(( ${ytmglst[$i]} + 3 ))" &&
+              ${ytmglst[$(( i + 4 ))]} == "$(( ${ytmglst[$i]} + 6 ))" &&
+              ${ytmglst[$(( i + 5 ))]} == "$(( ${ytmglst[$i]} + 7 ))" &&
+              ${ytmglst[$(( i + 8 ))]} == "$(( ${ytmglst[$i]} + 10 ))" &&
+              ${ytmglst[$(( i + 11 ))]} == "$(( ${ytmglst[$i]} + 13 ))" ]] ; then
 
             xdotool keyup ISO_Level3_Shift key plus
             hide_exit

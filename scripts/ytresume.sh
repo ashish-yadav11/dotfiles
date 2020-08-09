@@ -35,8 +35,8 @@ x=${size%%x*}
 y=${size##*x}
 
 if [ "$x" -ge 944 ] && [ "$y" -ge 70 ] ; then
-    Xp=$(( x0+87 ))
-    Yp=$(( y0+y-42 ))
+    Xp=$(( x0 + 87 ))
+    Yp=$(( y0 + y - 42 ))
 
     if [ "$Xp" -lt 0 ] || [ "$Xp" -gt 1365 ] || [ "$Yp" -lt 0 ] || [ "$Yp" -gt 767 ] ; then
         notify-send -t 4000 "YouTube Music Resume Script" \
@@ -50,8 +50,8 @@ if [ "$x" -ge 944 ] && [ "$y" -ge 70 ] ; then
     fi
 fi
 
-Xr=$(( x0+47 ))
-Yr=$(( y0+61 ))
+Xr=$(( x0 + 47 ))
+Yr=$(( y0 + 61 ))
 
 if [ "$Xr" -lt 0 ] || [ "$Xr" -gt 1365 ] || [ "$Yr" -lt 0 ] || [ "$Yr" -gt 767 ] ; then
     notify-send -t 4000 "YouTube Music Resume Script" \
