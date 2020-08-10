@@ -30,7 +30,7 @@ diff=$(
     $diff_cmd /home/ashish/.local/dotfiles/configs/ /home/ashish/.config/ |
         grep -Ev '^Only.*(configs?/:)|(nvim: \.netrwhist)|(ranger: tagged)|(newsboat: cache.db)|(msmtp: msmtp.log)|(mpv: watch_later)'
     $diff_cmd /home/ashish/.local/dotfiles/configs/ /home/ashish/ |
-        grep -Ev '^Only.*(configs/:)|(ashish/(:)|(.surf:))|(GmailAPI: token)'
+        grep -Ev '^Only.*(configs/:)|(ashish/(:)|(.surf:))|(GmailAPI: token)|(\.gnupg: )'
     $diff_cmd /home/ashish/.local/dotfiles/locals/ /home/ashish/.local/ |
         grep -Ev '^Only.*(local/(:)|(share(:)|(applications: (mimeapps\.list)|(mimeinfo\.cache))|(builds: dwm)))'
     $diff_cmd /home/ashish/.local/dotfiles/scripts/ /home/ashish/.scripts/
