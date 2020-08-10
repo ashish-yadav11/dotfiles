@@ -28,7 +28,7 @@ print
 echo -e "\e[1;32mdotfiles\e[0m"
 diff=$(
     $diff_cmd /home/ashish/.local/dotfiles/configs/ /home/ashish/.config/ |
-        grep -Ev '^Only.*(configs?/:)|(nvim: \.netrwhist)|(ranger: tagged)|(newsboat: cache.db)|(msmtp: msmtp.log)'
+        grep -Ev '^Only.*(configs?/:)|(nvim: \.netrwhist)|(ranger: tagged)|(newsboat: cache.db)|(msmtp: msmtp.log)|(mpv: watch_later)'
     $diff_cmd /home/ashish/.local/dotfiles/configs/ /home/ashish/ |
         grep -Ev '^Only.*(configs/:)|(ashish/(:)|(.surf:))|(GmailAPI: token)'
     $diff_cmd /home/ashish/.local/dotfiles/locals/ /home/ashish/.local/ |
