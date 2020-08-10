@@ -1,9 +1,9 @@
 #!/bin/dash
 read -r btns </sys/class/backlight/radeon_bl0/actual_brightness
 if [ "$btns" -eq 1 ] ; then
-    dunstify -r 2189 -t 2000 "Brightness" "Warning - Brightness is at its minimum value of 1"
+    dunstify -r 2189 -t 2000 "Brightness" "Brightness is at its minimum value of 1"
 elif [ "$btns" -le 5 ] ; then
-    dunstify -r 2189 -t 2000 "Brightness" "Warning - Brightness can't be lowered below this point by the key"
+    dunstify -r 2189 -t 2000 "Brightness" "Brightness can't be lowered below this point by the key"
 else
     echo "$(( btns-5 ))" >/sys/class/backlight/radeon_bl0/brightness
     dunstify -r 2189 -t 1000 "Brightness" "Screen Brightness is $(( btns-5 ))/255"
