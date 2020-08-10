@@ -3,7 +3,9 @@ unmap <C-n>
 unmap <C-r>
 map b toggle_statusbar
 map B toggle_inputbar
+map D feedkeys ':set recolor-darkcolor "#fbf1c7"<Return>:set recolor-lightcolor "#1c1c1c"<Return>:set recolor true<Return>'
 map i recolor
+map W feedkeys ':set recolor-darkcolor "#000000"<Return>:set recolor-lightcolor "#bdae93"<Return>:set recolor true<Return>'
 
 set adjust-open width
 set font "Monospace 12"
