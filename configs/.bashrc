@@ -71,7 +71,6 @@ b() {
 require 'json'
 FILE = '$HOME/.config/BraveSoftware/Brave-Browser/Default/Bookmarks'
 #FILE = '$HOME/.config/google-chrome/Default/Bookmarks'
-#FILE = '$HOME/.config/opera/Bookmarks'
 CJK  = /\p{Han}|\p{Katakana}|\p{Hiragana}|\p{Hangul}/
 
 def build parent, json
@@ -122,7 +121,11 @@ EORUBY
 
 # change brightness
 btns() {
-    [[ $1 -ge 1 ]] && [[ $1 -le 255 ]] && echo "$1" >/sys/class/backlight/radeon_bl0/brightness
+    if (( $1 >= 1 && $1 <= 255 )) ; then
+        echo "$1" >/sys/class/backlight/radeon_bl0/brightness
+    else
+        echo "Invalid argument"
+    fi
 }
 
 
@@ -133,7 +136,6 @@ c() {
   sep='{::}'
   browser_history=$HOME/.config/BraveSoftware/Brave-Browser/Default/History
 #  browser_history=$HOME/.config/google-chrome/Default/History
-#  browser_history=$HOME/.config/opera/History
   open=xdg-open
   cp -f "$browser_history" /tmp/h
   sqlite3 -separator $sep /tmp/h \
@@ -149,7 +151,7 @@ cl() {
         (( $# )) || local dir=$HOME
 	if [[ -d $dir ]]; then
 		cd "$dir" >/dev/null || return
-                if [[ $# -gt 1 ]] ; then
+                if (( $# > 1 )) ; then
                     ls "${@:1:$#-1}"
                 else
                     ls
@@ -198,7 +200,7 @@ spull() {
 todo() {
     [[ ! -f $HOME/Documents/.todo ]] && touch "$HOME/Documents/.todo"
 
-    if ! (( $# )) ; then
+    if (( ! $# )) ; then
         nl -b a "$HOME/Documents/.todo"
     elif [[ $1 == -e ]] ; then
         nvim "$HOME/Documents/.todo"
