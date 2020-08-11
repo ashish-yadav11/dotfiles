@@ -60,8 +60,18 @@ export HISTSIZE=10000
 
 # custom functions
 
-# browse bookmarks
+# change brightness
 b() {
+    if (( $1 >= 1 && $1 <= 255 )) ; then
+        echo "$1" >/sys/class/backlight/radeon_bl0/brightness
+    else
+        echo "Invalid argument"
+    fi
+}
+
+
+# browse bookmarks
+bb() {
   local open ruby output
   open=xdg-open
   ruby=$(command -v ruby)
@@ -119,18 +129,8 @@ EORUBY
 }
 
 
-# change brightness
-btns() {
-    if (( $1 >= 1 && $1 <= 255 )) ; then
-        echo "$1" >/sys/class/backlight/radeon_bl0/brightness
-    else
-        echo "Invalid argument"
-    fi
-}
-
-
 # browse history
-c() {
+bh() {
   local cols sep browser_history open
   cols=$(( COLUMNS / 3 ))
   sep='{::}'
