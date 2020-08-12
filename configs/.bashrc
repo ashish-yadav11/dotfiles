@@ -146,7 +146,7 @@ bh() {
 }
 
 
-cl() {
+cdls() {
 	local dir=${*:(-1)}
         (( $# )) || local dir=$HOME
 	if [[ -d $dir ]]; then
@@ -157,7 +157,7 @@ cl() {
                     ls
                 fi
 	else
-		echo "bash: cl: $dir: No such directory"
+		echo "bash: cdls: $dir: No such directory"
 	fi
 }
 
