@@ -57,8 +57,6 @@ isync
 jdk-openjdk
 jq
 jre-openjdk
-julia
-julia-docs
 kcolorchooser
 ksh
 libcanberra-pulse
