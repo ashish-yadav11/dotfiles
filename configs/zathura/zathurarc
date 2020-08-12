@@ -3,7 +3,7 @@ unmap <C-n>
 unmap <C-r>
 map b toggle_statusbar
 map B toggle_inputbar
-map D feedkeys ':set recolor-darkcolor "#fbf1c7"<Return>:set recolor-lightcolor "#1c1c1c"<Return>:set recolor true<Return>'
+map D feedkeys ':set recolor-darkcolor "#ebdbb2"<Return>:set recolor-lightcolor "#1c1c1c"<Return>:set recolor true<Return>'
 map i recolor
 map W feedkeys ':set recolor-darkcolor "#000000"<Return>:set recolor-lightcolor "#bdae93"<Return>:set recolor true<Return>'
 
@@ -12,6 +12,11 @@ set font "Monospace 12"
 set guioptions ""
 set window-title-basename true
 set statusbar-basename true
+
+set recolor-darkcolor           "#000000"
+set recolor-lightcolor          "#bdae93"
+set recolor                     true
+#set recolor-keephue             true
 
 set notification-error-bg       "#1d2021" # bg0_h
 set notification-error-fg       "#fb4934" # bright:red
@@ -47,9 +52,3 @@ set default-fg                  "#ebdbb2" # fg
 set render-loading              true
 set render-loading-bg           "#1d2021" # bg0_h
 set render-loading-fg           "#ebdbb2" # fg
-
-# Recolor book content's color
-set recolor-darkcolor           "#000000"
-set recolor-lightcolor          "#bdae93"
-set recolor                     true
-#set recolor-keephue             true      # keep original color
