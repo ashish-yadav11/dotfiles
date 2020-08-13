@@ -1,5 +1,5 @@
 #!/bin/ksh
-notify-send -t 15000 "System will not sleep if lid is closed in the next 15 seconds"
+notify-send -t 15000 "System will not sleep if lid is closed within next 15 seconds"
 SECONDS=0
 while (( SECONDS < 15 )) ; do
     sleep 1
