@@ -1,30 +1,28 @@
 [Added Associations]
-application/x-shellscript=nvim.desktop;nvim-qt.desktop;
-audio/mpeg=vlc.desktop;
+application/x-shellscript=nvim.desktop;
 image/png=gimp.desktop;ristretto.desktop;sxiv.desktop;
 image/jpg=gimp.desktop;ristretto.desktop;
 inode/directory=caja.desktop;
-text/html=brave-browser.desktop;google-chrome.desktop;opera.desktop;
-text/plain=nvim.desktop,nvim-qt.desktop;
-text/x-arduino=nvim.desktop,nvim-qt.desktop,arduino.desktop;
-text/x-python=nvim.desktop;nvim-qt.desktop;
-video/mp4=vlc.desktop;mpv.desktop;
-image/vnd.djvu+multipage=okularApplication_djvu.desktop;
+text/html=brave-browser.desktop;google-chrome.desktop;nvim.desktop;
+text/plain=nvim.desktop;
+text/x-arduino=arduino.desktop;nvim.desktop;
+text/x-python=nvim.desktop;
+video/mp4=mpv.desktop;
+image/vnd.djvu+multipage=okularApplication_djvu.desktop;org.pwmt.zathura-djvu.desktop;
 application/pdf=okularApplication_pdf.desktop;org.pwmt.zathura-pdf-mupdf.desktop;
 image/jpeg=sxiv.desktop;
 
 [Default Applications]
-application/x-shellscript=nvim-qt.desktop
-audio/mpeg=vlc.desktop
+application/x-shellscript=nvim.desktop
 image/png=sxiv.desktop
 image/jpeg=sxiv.desktop
 image/jpg=sxiv.desktop
 inode/directory=caja.desktop
 text/html=brave-browser.desktop
-text/plain=nvim-qt.desktop
-text/x-aurdino=nvim-qt.desktop
-text/x-python=nvim-qt.desktop
+text/plain=nvim.desktop
+text/x-aurdino=nvim.desktop
+text/x-python=nvim.desktop
 video/mp4=mpv.desktop
-image/vnd.djvu+multipage=okularApplication_djvu.desktop
+image/vnd.djvu+multipage=org.pwmt.zathura-djvu.desktop
 application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
 x-scheme-handler/tg=telegramdesktop.desktop
