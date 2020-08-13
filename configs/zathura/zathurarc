@@ -1,54 +1,56 @@
 unmap <C-m>
 unmap <C-n>
 unmap <C-r>
+
 map b toggle_statusbar
-map B toggle_inputbar
-map D feedkeys ':set recolor-darkcolor "#ebdbb2"<Return>:set recolor-lightcolor "#1c1c1c"<Return>:set recolor true<Return>'
 map i recolor
+map B toggle_inputbar
+
+map D feedkeys ':set recolor-darkcolor "#ebdbb2"<Return>:set recolor-lightcolor "#1c1c1c"<Return>:set recolor true<Return>'
 map W feedkeys ':set recolor-darkcolor "#000000"<Return>:set recolor-lightcolor "#bdae93"<Return>:set recolor true<Return>'
 
 set adjust-open width
 set font "Monospace 12"
 set guioptions ""
-set window-title-basename true
+set recolor true
+#set recolor-keephue true
+set render-loading true
 set statusbar-basename true
+set window-title-basename true
+
+set default-bg                  "#1d2021"
+set default-fg                  "#ebdbb2"
+
+set highlight-color             "#d79921"
+set highlight-active-color      "#d65d0e"
+
+set completion-bg               "#3c3836"
+set completion-fg               "#ebdbb2"
+set completion-group-bg         "#282828"
+set completion-group-fg         "#928374"
+set completion-highlight-bg     "#83a598"
+set completion-highlight-fg     "#3c3836"
+
+set index-bg                    "#3c3836"
+set index-fg                    "#ebdbb2"
+set index-active-bg             "#83a598"
+set index-active-fg             "#3c3836"
+
+set inputbar-bg                 "#1d2021"
+set inputbar-fg                 "#ebdbb2"
+
+set notification-error-bg       "#1d2021"
+set notification-error-fg       "#fb4934"
+set notification-warning-bg     "#1d2021"
+set notification-warning-fg     "#fabd2f"
+set notification-bg             "#1d2021"
+set notification-fg             "#b8bb26"
 
 set recolor-darkcolor           "#000000"
 set recolor-lightcolor          "#bdae93"
-set recolor                     true
-#set recolor-keephue             true
 
-set notification-error-bg       "#1d2021" # bg0_h
-set notification-error-fg       "#fb4934" # bright:red
-set notification-warning-bg     "#1d2021" # bg0_h
-set notification-warning-fg     "#fabd2f" # bright:yellow
-set notification-bg             "#1d2021" # bg0_h
-set notification-fg             "#b8bb26" # bright:green
+set render-loading-bg           "#1d2021"
+set render-loading-fg           "#ebdbb2"
 
-set completion-bg               "#3c3836" # bg1
-set completion-fg               "#ebdbb2" # fg
-set completion-group-bg         "#282828" # bg0
-set completion-group-fg         "#928374" # gray
-set completion-highlight-bg     "#83a598" # bright:blue
-set completion-highlight-fg     "#3c3836" # bg1
-
-# Define the color in index mode
-set index-bg                    "#3c3836" # bg1
-set index-fg                    "#ebdbb2" # fg
-set index-active-bg             "#83a598" # bright:blue
-set index-active-fg             "#3c3836" # bg1
-
-set inputbar-bg                 "#1d2021" # bg0_h
-set inputbar-fg                 "#ebdbb2" # fg
-
-set statusbar-bg                "#3c3836" # bg1
-set statusbar-fg                "#ebdbb2" # fg
-
-set highlight-color             "#d79921" # yellow
-set highlight-active-color      "#d65d0e" # orange
-
-set default-bg                  "#1d2021" # bg0_h
-set default-fg                  "#ebdbb2" # fg
-set render-loading              true
-set render-loading-bg           "#1d2021" # bg0_h
-set render-loading-fg           "#ebdbb2" # fg
+set statusbar-bg                "#3c3836"
+set statusbar-fg                "#ebdbb2"
