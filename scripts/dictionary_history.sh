@@ -1,7 +1,8 @@
 #!/bin/dash
-log=$(fzf --sync --tac </home/ashish/Documents/.dictionary.log)
+log=$(tac /home/ashish/Documents/.dictionary.log)
 if [ -n "$log" ] ; then
-    dict "$log" | less
+    word=$(echo "$log" | fzf --sync)
+    [ -n "$word" ] && dict "$word" | less
 else
-    notify-send -t 2000 "Dictionary" "Log is empty"
+    notify-send -t 2000 "Dictionary" "History log is empty"
 fi
