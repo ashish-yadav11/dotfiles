@@ -17,11 +17,12 @@ autocmd FileType c,cpp setlocal shiftwidth=8
 autocmd FileType go setlocal noexpandtab smarttab shiftwidth=0 tabstop=8
 
 set clipboard+=unnamedplus
+set expandtab smarttab shiftwidth=4 tabstop=8
 set mouse=a
 set number relativenumber
 set splitbelow
 set splitright
-set expandtab smarttab shiftwidth=4 tabstop=8
+set termguicolors
 set title
 set titlelen=0
 
