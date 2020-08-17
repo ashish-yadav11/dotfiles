@@ -207,10 +207,14 @@ todo() {
     elif [[ $1 == -c ]] ; then
         echo -n "" >"$HOME/Documents/.todo"
     elif [[ $1 == -r ]] ; then
-        nl -b a "$HOME/Documents/.todo"
-        eval printf %.0s- '{1..'"${COLUMNS:-$(tput cols)}"\} ; echo
-        read -rp "Type a number to remove: " number
-        (( number )) && sed -i "${number}d" "$HOME/Documents/.todo"
+        if (( $2 > 0 )) ; then
+            sed -i "$2d" "$HOME/Documents/.todo"
+        else
+            nl -b a "$HOME/Documents/.todo"
+            eval printf %.0s- '{1..'"${COLUMNS:-$(tput cols)}"\} ; echo
+            read -rp "Type index of the task to remove: " index
+            (( index > 0 )) && sed -i "${index}d" "$HOME/Documents/.todo"
+        fi
     else
         printf "%s\n" "$*" >>"$HOME/Documents/.todo"
     fi
