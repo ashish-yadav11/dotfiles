@@ -1,6 +1,6 @@
 #!/bin/dash
 dmenu_command="dmenu -i -matching fuzzy -no-custom"
-case "$(echo "Turn off Display\nLock Screen\nLogout\nReboot\nPoweroff" | $dmenu_command)" in
+case "$(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nPoweroff" | $dmenu_command)" in
     "Turn off Display")
         /home/ashish/.scripts/screen.sh off
         ;;
@@ -9,19 +9,36 @@ case "$(echo "Turn off Display\nLock Screen\nLogout\nReboot\nPoweroff" | $dmenu_
         systemctl restart timeout.service
         /home/ashish/.scripts/screen.sh off
         ;;
-    Logout)
+    "Restart dwm")
+        case "$(echo "Yes\nNo" | $dmenu_command -p "Do you really want to restart dwm?")" in
+            Yes)
+                rootname=$(xgetrootname)
+                xsetroot -name "z:quit i 1"
+                xsetroot -name "$rootname"
+                ;;
+        esac
+        ;;
+    "Exit dwm")
         case "$(echo "Yes\nNo" | $dmenu_command -p "Do you really want to exit dwm?")" in
-            Yes) xsetroot -name "z:quit" ;;
+            Yes)
+                rootname=$(xgetrootname)
+                xsetroot -name "z:quit i 0"
+                xsetroot -name "$rootname"
+                ;;
         esac
         ;;
     Reboot)
         case "$(echo "Yes\nNo" | $dmenu_command -p "Do you really want to reboot the pc?")" in
-            Yes) systemctl reboot ;;
+            Yes)
+                systemctl reboot
+                ;;
         esac
         ;;
     Poweroff)
         case "$(echo "Yes\nNo" | $dmenu_command -p "Do you really want to shutdown the pc?")" in
-            Yes) systemctl poweroff ;;
+            Yes)
+                systemctl poweroff
+                ;;
         esac
         ;;
 esac
