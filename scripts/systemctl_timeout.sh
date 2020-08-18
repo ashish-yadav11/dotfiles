@@ -1,7 +1,7 @@
 #!/bin/dash
 case "$1" in
     toggle)
-        if systemctl is-active timeout.service ; then
+        if systemctl --quiet is-active timeout.service ; then
             systemctl stop timeout.service
             dunstify -r 192519 -t 1000 "systemctl" "timeout service stopped"
         else
@@ -10,7 +10,7 @@ case "$1" in
         fi
         ;;
     status)
-        if systemctl is-active timeout.service ; then
+        if systemctl --quiet is-active timeout.service ; then
             dunstify -r 192519 -t 1000 "systemctl" "timeout service is up"
         else
             dunstify -r 192519 -t 1000 "systemctl" "timeout service is down"
