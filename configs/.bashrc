@@ -42,6 +42,7 @@ bind -m vi-insert -x '"\eb": "fzf_select_bookmark"'
 source /etc/profile.d/vte.sh
 
 # custom aliases
+alias cp="cp -i"
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
