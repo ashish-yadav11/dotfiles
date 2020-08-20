@@ -1,8 +1,6 @@
 #!/bin/sh
-#export DIFFPROG="nvim -d"
 export BROWSER=brave
 #export EDITOR=nvim
-export ESCDELAY=0
 #export FZF_ALT_C_COMMAND="fd -HL -td -d4 | LC_COLLATE=C sort -f"
 #export FZF_CTRL_T_COMMAND="fd -HL -tf -d4 | LC_COLLATE=C sort -f"
 #export FZF_DEFAULT_COMMAND="fd -HL -tf -d4 | LC_COLLATE=C sort -f"
@@ -12,10 +10,16 @@ export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 export PATH=~/.local/bin:"$PATH"
 #export QT_QPA_PLATFORMTHEME=qt5ct
 #export RANGER_LOAD_DEFAULT_RC=FALSE
-export TERMINAL=termite
-export VISUAL=nvim
+#export TERMINAL=termite
+#export VISUAL=nvim
 
-# fix for java programs
+# fix for pacdiff to use nvim instead of vim
+#export DIFFPROG="nvim -d"
+# fix for theme in file opener in telegram
+#export TDESKTOP_I_KNOW_ABOUT_GTK_INCOMPATIBILITY=1
+# fix for escape keys in neomutt
+export ESCDELAY=0
+# fix for java programs in dwm
 wmname LG3D
 export _JAVA_AWT_WM_NONREPARENTING=1
 
