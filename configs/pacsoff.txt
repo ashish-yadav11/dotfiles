@@ -112,6 +112,7 @@ rofi
 ruby
 shellcheck
 shotwell
+signal-desktop
 sshfs
 strace
 sxiv
