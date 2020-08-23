@@ -1,6 +1,6 @@
 #!/bin/dash
 dmenu_command="dmenu -i -matching fuzzy -no-custom"
-case "$(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nPoweroff" | $dmenu_command)" in
+case "$(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu_command)" in
     "Turn off Display")
         /home/ashish/.scripts/screen.sh off
         ;;
@@ -34,7 +34,7 @@ case "$(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nPowe
                 ;;
         esac
         ;;
-    Poweroff)
+    Shutdown)
         case "$(echo "Yes\nNo" | $dmenu_command -p "Do you really want to shutdown the pc?")" in
             Yes)
                 systemctl poweroff
