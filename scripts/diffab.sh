@@ -11,16 +11,16 @@ print() {
 
 echo -e "\e[1;32mbackup\e[0m"
 diff=$(
-    $diff_cmd /home/ashish/ /media/storage/.backup/ |
+    $diff_cmd /media/storage/.backup/ /home/ashish/ |
         grep -Ev '^Only.*'
-    $diff_cmd /home/ashish/.config/ /media/storage/.backup/ |
+    $diff_cmd /media/storage/.backup/ /home/ashish/.config/ |
         grep -Ev '^Only.*'
 )
 print
 
 echo -e "\e[1;32mdsblocks\e[0m"
 diff=$(
-    $diff_cmd /home/ashish/.scripts/ /home/ashish/.local/projects/dsblocks/helpers/scripts/ |
+    $diff_cmd /home/ashish/.local/projects/dsblocks/helpers/scripts/ /home/ashish/.scripts/ |
         grep -Ev '^Only.*'
 )
 print
