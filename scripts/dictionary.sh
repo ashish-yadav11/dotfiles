@@ -25,11 +25,12 @@ esac
 dict "$word" >/tmp/dictionary.last.temp 2>&1
 case "$?" in
     0)
+        logfile=/home/ashish/Documents/.dictionary.log
         mv /tmp/dictionary.last.temp /tmp/dictionary.last
         termite --name=floating_Termite -t Dictionary -e "less /tmp/dictionary.last"
-        echo "$word" >>/home/ashish/Documents/.dictionary.log
-        awk '!visited[$0]++' /home/ashish/Documents/.dictionary.log | tail -10000 >/tmp/dictionary.log.temp
-        mv /tmp/dictionary.log.temp /home/ashish/Documents/.dictionary.log
+        echo "$word" >>"$logfile"
+        awk '!visited[$0]++' "$logfile" | tail -10000 >/tmp/dictionary.log.temp
+        mv /tmp/dictionary.log.temp "$logfile"
         ;;
     21)
         mv /tmp/dictionary.last.temp /tmp/dictionary.last
