@@ -109,7 +109,6 @@ reflector
 ripgrep
 ristretto
 rofi
-ruby
 shellcheck
 shotwell
 signal-desktop
