@@ -17,7 +17,6 @@ map <A-F5> set 'recolor true'
 map D feedkeys "<A-F1><A-F2><A-F5>"
 map W feedkeys "<A-F3><A-F4><A-F5>"
 
-set adjust-open width
 set font "Monospace 12"
 set guioptions ""
 set recolor true
