@@ -1,11 +1,11 @@
 #!/bin/bash
 
+[[ $1 != 1 && $1 != 0 ]] && { echo "Usage: $0 1|0"; exit ;}
+
 hide_exit() {
         [ -n "$ytaf" ] || xsetroot -name "z:scrh i 2"
         exit
 }
-
-[[ -z $1 ]] && { echo "Usage: $0 1|0"; exit ;}
 
 if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     # YouTube Music container already focused
@@ -77,7 +77,7 @@ if [[ $1 == 1 ]] ; then
     done
     hide_exit
 
-elif [[ $1 == 0 ]] ; then
+else
 
     mapfile -t ytmglst < <( import -window root -depth 8 -crop "${Xs}x1+${X0}+${Y0}" txt:- |
         awk -F'[, ]' '/#[D-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F]/ {print $1}' )
