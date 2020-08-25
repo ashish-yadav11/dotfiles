@@ -6,6 +6,6 @@ elif [ "$btns" -gt 250 ] ; then
     echo 255 >/sys/class/backlight/radeon_bl0/brightness
     dunstify -r 2189 -t 2000 "Brightness" "Screen Brightness is 255/255"
 else
-    echo "$(( btns+5 ))" >/sys/class/backlight/radeon_bl0/brightness
-    dunstify -r 2189 -t 1000 "Brightness" "Screen Brightness is $(( btns+5 ))/255"
+    echo "$(( btns + 5 ))" >/sys/class/backlight/radeon_bl0/brightness
+    dunstify -r 2189 -t 1000 "Brightness" "Screen Brightness is $(( btns + 5 ))/255"
 fi
