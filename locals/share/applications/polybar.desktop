@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Polybar
-Comment=Relaunch polybar
-Exec=/home/ashish/.config/polybar/launch.sh
-Icon=xfce4-panel
-Terminal=false
-StartupNotify=false
-Categories=Utility;
