@@ -2,11 +2,11 @@
 # ~/.bashrc
 #
 
-# If not running interactively, don't do anything
+# return if not running interactively
 [[ $- != *i* ]] && return
 
-alias ls='ls --color=auto'
-#PS1='[\u@\h \W]\$ '
+# change cursor to block before entering external programs
+PS0='\e[2 q'
 
 # prompt
 PS1='\[\033[38;5;167m\][\[\033[38;5;11m\]\u\[\033[38;5;10m\]@\[\033[38;5;12m\]\h \[\033[38;5;139m\]\W\[\033[38;5;167m\]]\[\033[0m\]$ '
@@ -48,6 +48,7 @@ alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm="/home/ashish/.scripts/xevcn.sh"
 alias lessc="less -R"
+alias ls="ls --color=auto"
 alias python="cgexec -g memory,cpuset:python /usr/bin/python"
 alias rm="rm -i"
 alias startx="startx &>$HOME/.local/share/xorg/startx.$XDG_VTNR.log"
