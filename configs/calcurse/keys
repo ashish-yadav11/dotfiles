@@ -34,7 +34,7 @@ generic-prev-year  Y
 generic-next-year  y 
 generic-scroll-down  ^N 
 generic-scroll-up  ^P 
-generic-goto-today  ^G 
+generic-goto-today  ; 
 generic-command  : 
 move-right  l L RGT 
 move-left  h H LFT 
