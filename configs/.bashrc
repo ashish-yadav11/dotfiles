@@ -83,24 +83,28 @@ nt() {
 }
 
 spull() {
+    dir=$(pwd)
+
+    cd /media/storage/.temporary/suckless-sites
     echo -e "\e[1;32msuckless sites\e[0m"
-    git --git-dir=/media/storage/.temporary/suckless-sites/.git \
-        --work-tree=/media/storage/.temporary/suckless-sites pull
+    git pull
     echo
 
+    cd /media/storage/.temporary/suckless-software/dwm
     echo -e "\e[1;32mdwm\e[0m"
-    git --git-dir=/media/storage/.temporary/suckless-software/dwm/.git \
-        --work-tree=/media/storage/.temporary/suckless-software/dwm pull
+    git pull
     echo
 
+    cd /media/storage/.temporary/suckless-software/st
     echo -e "\e[1;32mst\e[0m"
-    git --git-dir=/media/storage/.temporary/suckless-software/st/.git \
-        --work-tree=/media/storage/.temporary/suckless-software/st pull
+    git pull
     echo
 
+    cd /media/storage/.temporary/suckless-software/scroll
     echo -e "\e[1;32mscroll\e[0m"
-    git --git-dir=/media/storage/.temporary/suckless-software/scroll/.git \
-        --work-tree=/media/storage/.temporary/suckless-software/scroll pull
+    git pull
+
+    cd "$dir"
 }
 
 todo() {
