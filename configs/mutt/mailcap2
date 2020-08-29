@@ -1,0 +1,10 @@
+# vim: filetype=mailcap
+text/plain; /home/ashish/.config/mutt/scripts/url_highlight_less.sh %s; edit=$EDITOR %s
+text/html; setsid -f $BROWSER %s >/dev/null 2>&1; nametemplate=%s.html; x-neomutt-keep
+text/html; ; edit=$EDITOR %s; nametemplate=%s.html
+text/html; w3m -I %{charset} -T text/html; copiousoutput
+image/*; setsid -f sxiv %s >/dev/null 2>&1; edit=setsid -f gimp %s >/dev/null 2>&1; x-neomutt-keep
+video/*; setsid -f mpv %s >/dev/null 2>&1; x-neomutt-keep
+application/ics; calcurse -i %s \; notify-send -t 1000 "Calcurse" "Import successful"
+application/pdf; setsid -f zathura %s >/dev/null 2>&1; edit=setsid -f okular %s >/dev/null 2>&1; x-neomutt-keep
+application/*; setsid -f xdg-open %s >/dev/null 2>&1; x-neomutt-keep
