@@ -5,6 +5,6 @@ text/html; ; edit=$EDITOR %s; nametemplate=%s.html
 text/html; w3m -I %{charset} -T text/html; copiousoutput
 image/*; setsid -f sxiv %s >/dev/null 2>&1; edit=setsid -f gimp %s >/dev/null 2>&1; x-neomutt-keep
 video/*; setsid -f mpv %s >/dev/null 2>&1; x-neomutt-keep
-application/ics; calcurse -i %s \; notify-send -t 1000 "Calcurse" "Import successful"
+application/ics; /home/ashish/.config/mutt/scripts/import_in_calcurse.sh %s
 application/pdf; setsid -f zathura %s >/dev/null 2>&1; edit=setsid -f okular %s >/dev/null 2>&1; x-neomutt-keep
 application/*; setsid -f xdg-open %s >/dev/null 2>&1; x-neomutt-keep
