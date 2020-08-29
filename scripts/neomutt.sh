@@ -1,3 +1,3 @@
 #!/bin/dash
-termite --name=neomutt_Termite -e "bash -c 'stty -ixon; neomutt'"
-pidof -s /usr/bin/neomutt || rm -rf /tmp/neomutt/
+termite --name=neomutt_Termite -e "dash -c 'stty -ixon; neomutt'"
+pidof -s /usr/bin/neomutt >/dev/null 2>&1 || rm -rf /tmp/neomutt/
