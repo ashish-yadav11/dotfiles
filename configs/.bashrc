@@ -49,6 +49,7 @@ alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm="/home/ashish/.scripts/xevcn.sh"
 alias lessc="less -R"
 alias ls="ls --color=auto"
+alias newsboat="newsboat -q"
 alias python="cgexec -g memory,cpuset:python /usr/bin/python"
 alias rm="rm -i"
 alias startx="startx &>$HOME/.local/share/xorg/startx.$XDG_VTNR.log"
@@ -72,6 +73,11 @@ b() {
 
 mkcd() {
     mkdir "$1" && cd "$1"
+}
+
+neomutt() {
+    /usr/bin/neomutt "$@"
+    pidof -s /usr/bin/neomutt >/dev/null 2>&1 || rm -rf /tmp/neomutt/
 }
 
 nt() {
