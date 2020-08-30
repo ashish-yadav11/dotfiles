@@ -1,46 +1,47 @@
 #!/bin/dash
 
-B='#303030ff'   # blank
-D='#f37d7dff'   # default
-T='#a0a0a0ff'   # text 
-Ti='#7cf6e6ff'  # time
-Da='#f0ed6dff'  # date
-H='#efefefdd'   # highlight
-W='#ff4040ff'   # wrong
-Ba='#909090ff'  # backspace
+backspace="#909090ff"
+blank="#303030ff"
+date="#f0ed6dff"
+default="#f37d7dff"
+highlight="#efefefdd"
+text="#a0a0a0ff"
+time="#7cf6e6ff"
+transparent="#00000000"
+wrong="#ff4040ff"
 
 i3lock \
 --image=/media/storage/Pictures/wall6.png \
 \
---insidecolor=$B \
---insidevercolor=$B \
---insidewrongcolor=$W \
---linecolor='#00000000' \
+--insidecolor="$blank" \
+--insidevercolor="$blank" \
+--insidewrongcolor="$wrong" \
+--linecolor="$transparent" \
 --radius 115 \
 --ring-width 15 \
---ringcolor=$D \
---ringvercolor=$D \
---ringwrongcolor=$W \
---keyhlcolor=$H \
---bshlcolor=$Ba \
---separatorcolor=$D \
+--ringcolor="$default" \
+--ringvercolor="$default" \
+--ringwrongcolor="$wrong" \
+--keyhlcolor="$highlight" \
+--bshlcolor="$backspace" \
+--separatorcolor="$default" \
 \
 --noinputtext="" \
 --veriftext="Verifying.." \
---verifcolor=$T \
+--verifcolor="$text" \
 --verifsize=35 \
 --wrongtext="" \
---wrongcolor=$T \
+--wrongcolor="$text" \
 --wrongsize=35 \
 \
 --indicator \
 --clock \
 --timestr="%l:%M %P" \
---timecolor=$Ti \
+--timecolor="$time" \
 --timesize=35 \
 --timepos=683:375 \
 --datestr="%a, %b %d" \
---datecolor=$Da \
+--datecolor="$date" \
 --datesize=35 \
 --datepos=683:415 \
 \
