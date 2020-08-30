@@ -46,7 +46,7 @@ alias cp="cp -i"
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
-alias kynm="/home/ashish/.scripts/xevcn.sh"
+alias kynm=/home/ashish/.scripts/xevcn.sh
 alias lessc="less -R"
 alias ls="ls --color=auto"
 alias newsboat="newsboat -q"
