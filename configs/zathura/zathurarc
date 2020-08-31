@@ -3,7 +3,6 @@ unmap <C-n>
 unmap <C-r>
 
 map b toggle_statusbar
-map c set recolor-keephue
 map i recolor
 map B toggle_inputbar
 
@@ -17,6 +16,9 @@ map <A-F4> set 'recolor-lightcolor "#bdae93"'
 map <A-F5> set 'recolor true'
 map D feedkeys "<A-F1><A-F2><A-F5>"
 map W feedkeys "<A-F3><A-F4><A-F5>"
+
+map <A-F6> set recolor-keephue
+map c feedkeys "<A-F6>:<Return>"
 
 #set adjust-open width
 set font "Monospace 12"
