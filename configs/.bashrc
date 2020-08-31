@@ -88,6 +88,14 @@ nt() {
     } & disown
 }
 
+rd() {
+    if [[ $1 -ge 1000 && $1 -le 6500 ]] ; then
+        redshift -PO "$1" >/dev/null 2>&1
+    else
+        redshift -x >/dev/null 2>&1
+    fi
+}
+
 spull() {
     dir=$(pwd)
 
