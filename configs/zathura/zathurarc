@@ -3,6 +3,7 @@ unmap <C-n>
 unmap <C-r>
 
 map b toggle_statusbar
+map c set recolor-keephue
 map i recolor
 map B toggle_inputbar
 
@@ -19,10 +20,10 @@ map W feedkeys "<A-F3><A-F4><A-F5>"
 
 #set adjust-open width
 set font "Monospace 12"
-set guioptions ""
 set recolor true
-#set recolor-keephue true
+set recolor-reverse-video true
 set render-loading true
+set show-hidden true
 set statusbar-basename true
 set window-title-basename true
 
