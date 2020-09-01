@@ -1,5 +1,5 @@
 #!/bin/dash
-dmenu_command="dmenu -i -matching fuzzy -no-custom"
+dmenu_command="dmenu -i -matching fuzzy -no-custom -p quit"
 case "$(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu_command)" in
     "Turn off Display")
         /home/ashish/.scripts/screen.sh off
