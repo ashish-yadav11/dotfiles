@@ -30,6 +30,7 @@ espeak
 fd
 fdupes
 feh
+ffmpeg
 ffmpegthumbnailer
 file-roller
 fzf
