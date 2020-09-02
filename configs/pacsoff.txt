@@ -74,7 +74,6 @@ msmtp
 neomutt
 neovim
 neovim-qt
-nethogs
 network-manager-applet
 networkmanager
 newsboat
