@@ -237,7 +237,7 @@ bind index,pager \Cj sidebar-next
 bind index,pager \Co sidebar-open
 bind index,pager B sidebar-toggle-visible
 
-macro index,pager s "<enter-command>set my_delete=\$delete delete=yes<Enter><sync-mailbox><enter-command>set delete=\$my_delete my_wait_key=\$wait_key wait_key=no; unset my_delete<Enter><shell-escape>/home/ashish/.scripts/mailsync.sh &<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "sync mail"
+macro index,pager s "<enter-command>set my_delete=\$delete delete=yes<Enter><sync-mailbox><enter-command>set delete=\$my_delete my_wait_key=\$wait_key wait_key=no; unset my_delete<Enter><shell-escape>setsid -f /home/ashish/.scripts/mailsync.sh<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "sync mail"
 
 macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter><clear-flag>N" "open html in browser otherwise text to less with url highlighting"
 macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter>" "open html in browser otherwise text to less with url highlighting"
