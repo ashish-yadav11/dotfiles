@@ -23,5 +23,6 @@ if ping -c1 imap.gmail.com ; then
     fi
     notmuch new
 else
+    exec 8>/dev/null
     sigdsblocks 2 -5
 fi
