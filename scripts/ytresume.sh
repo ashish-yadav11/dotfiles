@@ -1,4 +1,5 @@
 #!/bin/dash
+xdotool keyup 108
 
 hide_exit() {
         [ -n "$ytaf" ] || xsetroot -name "z:scrh i 2"
@@ -20,7 +21,7 @@ case "$(xdotool getactivewindow getwindowname)" in
     *"YouTube Music")
         ;;
     *)
-        xdotool keyup ISO_Level3_Shift key F5
+        xdotool key F5
         sleep 0.200
         hide_exit
         ;;
@@ -50,23 +51,26 @@ if [ "$x" -ge 944 ] && [ "$y" -ge 70 ] ; then
     fi
 fi
 
-Xr=$(( x0 + 47 ))
-Yr=$(( y0 + 61 ))
+Xw=$(( x0 + 32 ))
+Yw=$(( y0 + 59 ))
 
-if [ "$Xr" -lt 0 ] || [ "$Xr" -gt 1365 ] || [ "$Yr" -lt 0 ] || [ "$Yr" -gt 767 ] ; then
+if [ "$Xw" -lt 0 ] || [ "$Xw" -gt 1365 ] || [ "$Yw" -lt 0 ] || [ "$Yw" -gt 767 ] ; then
     notify-send -t 4000 "YouTube Music Resume Script" \
         "The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
     hide_exit
 fi
 
-red=$(import -window root -depth 8 -crop "1x1+${Xr}+${Yr}" txt:- | grep -om1 "#\w\+")
-[ "$red" = "#FF0000" ] && exit
-
-if [ "$red" = "#330000" ] ; then
-    xdotool key Escape
-    hide_exit
-else
-    xdotool key F5
-    sleep 0.200
-    hide_exit
-fi
+case "$(import -window root -depth 8 -crop "1x1+${Xw}+${Yw}" txt:- | grep -om1 "#\w\+")" in
+    "#333333")
+        xdotool key Escape
+        hide_exit
+        ;;
+    "#FFFFFF")
+        exit
+        ;;
+    *)
+        xdotool key F5
+        sleep 0.200
+        hide_exit
+        ;;
+esac
