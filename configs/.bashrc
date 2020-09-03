@@ -8,8 +8,15 @@
 # change cursor to block before entering external programs
 PS0='\e[2 q'
 
+blue='\[\033[38;5;12m\]'
+green='\[\033[38;5;10m\]'
+red='\[\033[38;5;167m\]'
+violet='\[\033[38;5;139m\]'
+white='\[\033[0m\]'
+yellow='\[\033[38;5;11m\]'
+
 # prompt
-PS1='\[\033[38;5;167m\][\[\033[38;5;11m\]\u\[\033[38;5;10m\]@\[\033[38;5;12m\]\h \[\033[38;5;139m\]\W\[\033[38;5;167m\]]\[\033[0m\]$ '
+PS1="${red}[${yellow}\u${green}@${blue}\h ${violet}\W${red}]${white}$ "
 
 # disable ^S ^Q
 stty -ixon
