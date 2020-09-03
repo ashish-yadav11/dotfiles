@@ -1,5 +1,7 @@
 #!/bin/dash
 
+pidof -s /usr/bin/i3lock >/dev/null 2>&1 && exit 0
+
 backspace="#909090ff"
 blank="#303030ff"
 date="#f0ed6dff"
