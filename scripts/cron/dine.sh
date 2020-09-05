@@ -1,6 +1,7 @@
 #!/bin/dash
 sleep 60
-if [ "$(date +%T)" \> "20:51:00" ] || [ "$(date +%T)" \< "20:49:00" ] ; then
+time=$(date +%H%M)
+if [ "$time" -gt 2051 ] || [ "$time" -lt 2049 ] ; then
     exit 0
 fi
 export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
