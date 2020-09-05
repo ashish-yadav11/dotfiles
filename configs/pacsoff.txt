@@ -19,7 +19,6 @@ calc
 calcurse
 chrony
 crda
-create_ap
 cronie
 dash
 dconf-editor
