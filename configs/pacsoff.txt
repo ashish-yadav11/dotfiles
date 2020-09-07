@@ -61,6 +61,9 @@ kcolorchooser
 ksh
 libcanberra-pulse
 libreoffice-fresh
+libva-mesa-driver
+libva-vdpau-driver
+libvdpau-va-gl
 lostfiles
 lsof
 lxappearance
@@ -68,6 +71,7 @@ lxqt-sudo
 man-db
 man-pages
 materia-gtk-theme
+mesa-vdpau
 mpv
 msmtp
 neomutt
