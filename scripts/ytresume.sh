@@ -13,7 +13,7 @@ else
         xsetroot -name "z:scrs i 2"
         sleep 0.010
     else
-        exec brave --profile-directory=Default --app-id=cinhimbnkkaeohfgghhklpknlkffjgod
+        exec brave --app-id=cinhimbnkkaeohfgghhklpknlkffjgod
     fi
 fi
 
