@@ -38,11 +38,27 @@ diff=$(
 print
 
 echo -e "\e[1;32mpackage list\e[0m"
-diff=$(
+diff1=$(
     $diff_cmd /home/ashish/.local/dotfiles/configs/pacsoff.txt <( pacman -Qqen | grep -Fxvf <( pacman -Qqg base-devel ) |
         grep -Ev "(^base$)|(^efibootmgr$)|(^grub$)|(^linux$)|(^linux-firmware$)|(^linux-lts$)" )
+)
+diff2=$(
     $diff_cmd /home/ashish/.local/dotfiles/configs/pacsaur.txt <( pacman -Qqem )
 )
-print
+if [[ -n $diff1 ]] ; then
+    echo "diff '--color=always' -r /home/ashish/.local/dotfiles/configs/pacsoff.txt pacsoff.txt"
+    if [[ -n $diff2 ]] ; then
+        printf "%s\n" "$diff1"
+        echo "diff '--color=always' -r /home/ashish/.local/dotfiles/configs/pacsaur.txt pacsaur.txt"
+        printf "%s\n\n" "$diff2"
+    else
+        printf "%s\n\n" "$diff1"
+    fi
+elif [[ -n $diff2 ]] ; then
+    echo "diff '--color=always' -r /home/ashish/.local/dotfiles/configs/pacsaur.txt pacsaur.txt"
+    printf "%s\n\n" "$diff2"
+else
+    echo -e "No changes\n"
+fi
 
 echo "Manually check crontab for updates"
