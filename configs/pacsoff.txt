@@ -17,6 +17,7 @@ breeze-gtk
 caja
 calc
 calcurse
+chromium
 chrony
 crda
 cronie

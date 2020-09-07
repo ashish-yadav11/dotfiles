@@ -7,7 +7,6 @@ dict-wikt-en-all
 dict-wn
 dwm-cust
 etcher-bin
-google-chrome
 htop-vim-git
 libcgroup
 libxft-bgra
