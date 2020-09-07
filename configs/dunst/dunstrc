@@ -414,13 +414,13 @@
     body = ""
     format = "<span font='13.5'>%s</span>"
 
-[BatMon]
+[batmon]
     summary = "BatMon"
     history_ignore = yes
-[Brightness]
+[brightness]
     summary = "Brightness"
     history_ignore = yes
-[Brave]
+[brave]
     appname = "Brave"
     format = ""
 [caja-pseudo-critical]
@@ -433,10 +433,10 @@
 [dine.sh]
     summary = "wrap up, it's time for dinner"
     history_ignore = yes
-[Hotspot]
+[hotspot]
     summary = "Hotspot"
     history_ignore = yes
-[Reflector]
+[reflector]
     summary = "Reflector"
     body = "Reflecotor initiated"
     history_ignore = yes
@@ -449,7 +449,7 @@
 [timeout.sh]
     summary = "Timeout in 5 minutes"
     history_ignore = yes
-[USB]
+[usb]
     summary = " USB mounter"
     history_ignore = yes
 
