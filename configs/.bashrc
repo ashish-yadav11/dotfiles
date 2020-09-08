@@ -165,19 +165,3 @@ todo() {
 
     fi
 }
-
-ytm() {
-    if (( $# )) ; then
-        mpsyt "set -t show_video 0, set -t search_music 1, ,,, /$*"
-    else
-        mpsyt "set -t show_video 0, set -t search_music 1, ,,"
-    fi
-}
-
-ytv() {
-    if (( $# )) ; then
-        mpsyt "set -t show_video 1, set -t search_music 0, ,,, /$*"
-    else
-        mpsyt "set -t show_video 1, set -t search_music 0, ,,"
-    fi
-}
