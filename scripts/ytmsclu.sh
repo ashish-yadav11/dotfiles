@@ -3,8 +3,14 @@ xdotool keyup 108
 
 [[ $1 != 1 && $1 != 0 ]] && { echo "Usage: $0 1|0"; exit ;}
 
+sigdwm() {
+    rootname=$(xgetrootname)
+    xsetroot -name "z:$1"
+    xsetroot -name "$rootname"
+}
+
 hide_exit() {
-        [ -n "$ytaf" ] || xsetroot -name "z:scrh i 2"
+        [ -n "$ytaf" ] || sigdwm "scrh i 2"
         exit
 }
 
@@ -13,7 +19,7 @@ if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     ytaf=1
 else
     if xwininfo -tree -root | grep -q '("crx_cinhimbnkkaeohfgghhklpknlkffjgod" ' ; then
-        xsetroot -name "z:scrs i 2"
+        sigdwm "scrs i 2"
         sleep 0.010
     else
         exit
