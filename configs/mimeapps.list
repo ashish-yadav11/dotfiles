@@ -26,4 +26,6 @@ text/x-aurdino=nvim-qt.desktop
 text/x-python=nvim-qt.desktop
 video/mp4=mpv.desktop
 x-scheme-handler/etcher=balena-etcher-electron.desktop
+x-scheme-handler/http=brave-browser.desktop
+x-scheme-handler/https=brave-browser.desktop
 x-scheme-handler/tg=telegramdesktop.desktop
