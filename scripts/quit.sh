@@ -2,12 +2,6 @@
 
 dmenu_command="dmenu -i -matching fuzzy -no-custom"
 
-sigdwm() {
-    rootname=$(xgetrootname)
-    xsetroot -name "z:$1"
-    xsetroot -name "$rootname"
-}
-
 case "$(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu_command -p quit)" in
     "Turn off Display")
         /home/ashish/.scripts/screen.sh off
@@ -20,16 +14,16 @@ case "$(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShut
     "Restart dwm")
         case "$(echo "Yes\nNo" | $dmenu_command -p "Do you really want to restart dwm?")" in
             Yes)
-                rootname=$(xgetrootname)
-                sigdwm "quit i 1"
+                killall nm-applet
+                xsetroot -name "z:quit i 1"
+                exec nm-applet
                 ;;
         esac
         ;;
     "Exit dwm")
         case "$(echo "Yes\nNo" | $dmenu_command -p "Do you really want to exit dwm?")" in
             Yes)
-                rootname=$(xgetrootname)
-                sigdwm "quit i 0"
+                xsetroot -name "z:quit i 0"
                 ;;
         esac
         ;;

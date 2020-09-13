@@ -1,14 +1,8 @@
 #!/bin/dash
 xdotool keyup 108
 
-sigdwm() {
-    rootname=$(xgetrootname)
-    xsetroot -name "z:$1"
-    xsetroot -name "$rootname"
-}
-
 hide_exit() {
-        [ -n "$ytaf" ] || sigdwm "scrh i 2"
+        [ -n "$ytaf" ] || xsetroot -name "z:scrh i 2"
         exit
 }
 
@@ -16,7 +10,7 @@ if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     ytaf=1
 else
     if xwininfo -tree -root | grep -q '("crx_cinhimbnkkaeohfgghhklpknlkffjgod" ' ; then
-        sigdwm "scrs i 2"
+        xsetroot -name "z:scrs i 2"
         sleep 0.010
     else
         exec brave --app-id=cinhimbnkkaeohfgghhklpknlkffjgod
