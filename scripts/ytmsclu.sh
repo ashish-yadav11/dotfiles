@@ -14,7 +14,7 @@ if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
 else
     if xwininfo -tree -root | grep -q '("crx_cinhimbnkkaeohfgghhklpknlkffjgod" ' ; then
         xsetroot -name "z:scrs i 2"
-        sleep 0.010
+        sleep 0.050
     else
         exit
     fi
