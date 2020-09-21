@@ -1,26 +1,42 @@
-#!/bin/dash
-while read file
-do
-        case "$1" in
-        "w")
-                /home/ashish/.config/sxiv/exec/wallpaper.sh "$file" ;;
-	"r")
-		convert -rotate 90 "$file" "$file" ;;
-	"R")
-		convert -rotate -90 "$file" "$file" ;;
-	"f")
-		convert -flop "$file" "$file" ;;
-	"y")
-		echo -n "$file" | xclip -selection clipboard &&
-		notify-send "$file copied to clipboard" & ;;
-	"Y")
-		readlink -f "$file" | xclip -selection clipboard &&
-			notify-send "$(readlink -f "$file") copied to clipboard" & ;;
-	"d")
-		[ "$(echo "No\\nYes" | dmenu -i -p "Do you really want to delete $file")" = "Yes" ] && rm -f "$file" && notify-send "$file deleted" ;;
-	"g")
-                gimp "$file" & ;;
-        "n")
-                nomacs "$file" & ;;
-        esac
-done
+#!/bin/bash
+case "$1" in
+    w)
+        read -r file
+        /home/ashish/.config/sxiv/exec/wallpaper.sh "$file"
+        ;;
+    y)
+        mapfile -t files
+        echo "${files[@]}" | xclip -selection clipboard &&
+            notify-send "Sxiv" "Yank successful"
+        ;;
+    Y)
+        mapfile -t files
+        mapfile -t resolved_files < <(readlink -f "${files[@]}")
+        echo "${resolved_files[@]}" | xclip -selection clipboard &&
+            notify-send "Sxiv" "Yank successful"
+        ;;
+    r)
+        mapfile -t files
+        mogrify -rotate 90 "${files[@]}"
+        ;;
+    R)
+        mapfile -t files
+        mogrify -rotate -90 "${files[@]}"
+        ;;
+    f)
+        mapfile -t files
+        mogrify -flop "${files[@]}"
+        ;;
+    g)
+        xargs setsid -f gimp
+        ;;
+    n)
+        xargs setsid -f nomacs
+        ;;
+    d)
+        mapfile -t files
+        [ "$(echo -e "Yes\nNo" | dmenu -i -p "Do you really want to delete the selected image(s)?")" = Yes ] &&
+            rm -f "${files[@]}" &&
+                notify-send "Sxiv" "Deletion successful"
+        ;;
+esac

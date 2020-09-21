@@ -16,3 +16,4 @@ tags=$(exiv2 -q pr -pi "$1" 2>/dev/null | awk '$1~"Keywords" { printf("%s,", $4)
 tags=${tags%,}
 
 echo "${filesize}${s}${geometry}${tags:+$s}${tags}${s}${filename}"
+# vim: filetype=sh
