@@ -33,6 +33,7 @@ feh
 ffmpeg
 ffmpegthumbnailer
 file-roller
+firefox
 fzf
 gcc-fortran
 gdb

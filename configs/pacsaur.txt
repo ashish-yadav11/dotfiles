@@ -1,5 +1,4 @@
 brave-bin
-cpdf-bin
 create_ap
 cyrus-sasl-xoauth2-git
 dict-gcide
