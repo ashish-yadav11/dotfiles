@@ -1,5 +1,6 @@
 abook
 acpilight
+alacritty
 amd-ucode
 android-tools
 arduino
