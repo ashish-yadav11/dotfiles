@@ -5,7 +5,7 @@ nnoremap        <silent>        [f                      :e <cfile><cr>
 nnoremap        <silent>        <C-w>gf                 :tabnew <cfile><cr>
 nnoremap        <silent>        yd                      :let @+=expand("%:p:h")<CR>
 nnoremap        <silent>        yp                      :let @+=expand("%:p")<CR>
-nnoremap        <silent>        <Leader><Esc>           :let @/=""<CR>
+nnoremap        <silent>        <Leader><Esc>           :nohlsearch<CR>
 nnoremap        <silent>        <Leader>r               :silent !/home/ashish/.scripts/ranger_file.sh "%:p"<CR>
 nnoremap        <silent>        <Leader>R               :silent !/home/ashish/.scripts/ranger_dir.sh "%:p:h"<CR>
 inoremap                        <S-Tab>                 <C-v><Tab>
@@ -26,11 +26,11 @@ set termguicolors
 set title
 set titlelen=0
 
-let g:netrw_browsex_viewer="xdg-open"
+let g:netrw_browsex_viewer='xdg-open'
 
 
 " Specify a directory for plugins
-call plug#begin(stdpath('data') . '/plugged')
+call plug#begin(stdpath('data').'/plugged')
 
 " Make sure you use single quotes
 Plug 'junegunn/fzf.vim'
@@ -80,5 +80,5 @@ command! -bang -nargs=* Rg
 
 
 " vimtex options
-let g:tex_flavor  = 'latex'
-let g:vimtex_view_method = 'okular'
+let g:tex_flavor = 'latex'
+let g:vimtex_view_method = 'zathura'
