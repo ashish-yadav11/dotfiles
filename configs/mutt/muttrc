@@ -185,7 +185,7 @@ bind index,pager,attach rl list-reply
 bind index,pager,attach rt resend-message
 
 bind index L limit
-macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -p 'Enter a search term to find with notmuch: ' x; echo \$x >~/.cache/mutt_terms<Enter><limit>~i \"\`notmuch search --output=messages \$(cat ~/.cache/mutt_terms) | head -n 600 | perl -le '@a=<>;s/\^id:// for@a;$,=\"|\";print@a' | perl -le '@a=<>; chomp@a; s/\\+/\\\\+/ for@a;print@a' \`\"<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "show only messages matching a notmuch pattern"
+macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -r -p 'Enter a search term to find with notmuch: ' x; echo \$x >/tmp/neomutt/notmuch.search<Enter><limit>~i \"\`notmuch search --output=messages \$(cat /tmp/neomutt/notmuch.search) | head -n 600 | perl -le '@a=<>;s/\^id:// for@a;$,=\"|\";print@a' | perl -le '@a=<>; chomp@a; s/\\+/\\\\+/ for@a;print@a' \`\"<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "show only messages matching a notmuch pattern"
 macro index ,a "<limit>all\n" "show all messages"
 macro index ,n "<limit>~N<Enter><refresh>" "show all unread messages"
 macro index ,f "<limit>~F<Enter><refresh>" "show all flagged messages"
