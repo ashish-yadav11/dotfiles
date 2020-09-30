@@ -11,6 +11,7 @@ asciidoc
 at
 bash-completion
 bc
+bcprov
 biber
 bleachbit
 breeze
@@ -57,6 +58,7 @@ inkscape
 inotify-tools
 ispell
 isync
+java-commons-lang
 jdk-openjdk
 jq
 jre-openjdk
