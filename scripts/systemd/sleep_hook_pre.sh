@@ -1,6 +1,3 @@
 #!/bin/dash
-if read -r PID 2>/dev/null </tmp/sleep_dine.pid ; then
-    rm -f /tmp/sleep_dine.pid
-    rkill "$PID"
-fi
+read -r PID 2>/dev/null </tmp/sleep_dine.pid && rkill "$PID"
 sudo /home/ashish/.scripts/hotspot.sh terminate

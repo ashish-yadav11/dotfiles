@@ -7,14 +7,6 @@ case "$1" in
             exit
         fi
         ;;
-    last)
-        if [ -f /tmp/dictionary.last ] ; then
-            termite --name=floating_Termite -t Dictionary -e "less /tmp/dictionary.last"
-        else
-            notify-send -t 2000 "Dictionary" "Last word not available"
-        fi
-        exit
-        ;;
     *)
         word=$(yad --title=Dictionary --image=dictionary --no-buttons --entry --text=Dictionary \
                    --entry-label="Look up:" | tr '[:upper:]' '[:lower:]' | xargs)

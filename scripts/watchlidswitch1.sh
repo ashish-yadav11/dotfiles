@@ -1,4 +1,9 @@
 #!/bin/ksh
+read -r PID1 </tmp/watchlidswitch1.pid && rkill "$PID1" && exit
+read -r PID0 </tmp/watchlidswitch0.pid && rkill "$PID0"
+trap 'rm -f /tmp/watchlidswitch1.pid; exit' EXIT HUP INT TERM
+echo "$$" >/tmp/watchlidswitch1.pid
+
 notify-send -t 15000 "System will lock without sleeping if lid is closed within next 15 seconds"
 SECONDS=0
 while (( SECONDS < 15 )) ; do

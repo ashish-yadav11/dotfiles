@@ -7,16 +7,6 @@ case "$1" in
             exit
         fi
         ;;
-    last)
-        if read -r PID </tmp/espeak.pid ; then
-            rkill "$PID"
-        elif read -r text </tmp/espeak.last ; then
-            espeak "$text"
-        else
-            notify-send -t 2000 "Espeak" "Last text not available"
-        fi
-        exit
-        ;;
     *)
         text=$(yad --image=gespeaker --no-buttons --entry --text=Espeak --entry-label="Text:")
         [ -z "$text" ] && exit

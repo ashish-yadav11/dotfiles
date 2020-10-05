@@ -1,5 +1,4 @@
 #!/bin/dash
-# Get hex rgb color under mouse cursor, put it into clipboard and notify
 location=$(xdotool getmouselocation)
 x=${location#x:}; x=${x%% y:*}
 y=${location#*y:}; y=${y%% screen:*}
