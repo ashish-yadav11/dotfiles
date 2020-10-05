@@ -13,7 +13,7 @@ else
         xsetroot -name "z:scrs i 2"
         sleep 0.050
     else
-        exec brave --app-id=cinhimbnkkaeohfgghhklpknlkffjgod
+        exec chromium --profile-directory="Profile 1" --app-id=cinhimbnkkaeohfgghhklpknlkffjgod
     fi
 fi
 
