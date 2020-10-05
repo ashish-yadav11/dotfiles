@@ -455,5 +455,14 @@
 [usb]
     summary = " USB mounter"
     history_ignore = yes
+[inhibitsuspend]
+    summary = "System will now sleep normally on closing the lid"
+    history_ignore = yes
+[inhibitsuspend0]
+    summary = "System will not sleep if lid is closed within next 15 seconds"
+    history_ignore = yes
+[inhibitsuspend1]
+    summary = "System will lock without sleeping if lid is closed within next 15 seconds"
+    history_ignore = yes
 
 # vim: ft=cfg
