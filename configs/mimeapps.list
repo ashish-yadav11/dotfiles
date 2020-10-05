@@ -1,4 +1,5 @@
 [Added Associations]
+application/octet-stream=okularApplication_djvu.desktop;org.pwmt.zathura-djvu.desktop;
 application/pdf=okularApplication_pdf.desktop;org.pwmt.zathura-pdf-mupdf.desktop;
 application/x-shellscript=nvim.desktop;nvim-qt.desktop;
 image/jpeg=sxiv.desktop;
@@ -13,6 +14,7 @@ text/x-python=nvim.desktop;nvim-qt.desktop;
 video/mp4=mpv.desktop;
 
 [Default Applications]
+application/octet-stream=org.pwmt.zathura-djvu.desktop
 application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
 application/x-shellscript=nvim-qt.desktop
 image/jpeg=sxiv.desktop
