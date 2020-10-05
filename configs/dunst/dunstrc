@@ -433,6 +433,9 @@
 [dine.sh]
     summary = "wrap up, it's time for dinner"
     history_ignore = yes
+[espeak]
+    summary = "Espeak"
+    history_ignore = yes
 [hotspot]
     summary = "Hotspot"
     history_ignore = yes
