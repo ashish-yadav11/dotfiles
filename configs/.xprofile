@@ -1,5 +1,5 @@
 #!/bin/sh
-export BROWSER=brave
+export BROWSER=firefox
 #export EDITOR=nvim
 #export FZF_ALT_C_COMMAND="fd -HL -td -d4 | LC_COLLATE=C sort -f"
 #export FZF_CTRL_T_COMMAND="fd -HL -tf -d4 | LC_COLLATE=C sort -f"
