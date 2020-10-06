@@ -5,8 +5,7 @@ clear mod4
 
 keycode 66  = Escape Caps_Lock
 keycode 64  = Super_R
-keycode 108 = Hyper_R
 
-add mod1 = Hyper_R
+add mod1 = Alt_R
 add mod3 = Super_R
 add mod4 = Super_L
