@@ -183,7 +183,7 @@
     dmenu = dmenu -i -no-custom
 
     # Browser for opening urls in context menu.
-    browser = firefox
+    browser = brave
 
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = true
@@ -420,9 +420,6 @@
 [brightness]
     summary = "Brightness"
     history_ignore = yes
-[brave]
-    appname = "Brave"
-    format = ""
 [caja-pseudo-critical]
     appname = "caja"
     summary = "It is now safe to remove the drive"

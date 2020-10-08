@@ -1,5 +1,5 @@
 auto-reload no
-browser "firefox %u >/dev/null 2>&1"
+browser "brave %u >/dev/null 2>&1"
 cache-file "~/.config/newsboat/cache.db"
 #external-url-viewer "urlscan"
 #goto-first-unread no
@@ -43,7 +43,7 @@ bind-key ^A mark-all-feeds-read
 
 unbind-key h feedlist
 
-macro v set browser "mpv %u >/dev/null 2>&1" ; open-in-browser ; set browser "firefox %u >/dev/null 2>&1"
+macro v set browser "mpv %u >/dev/null 2>&1" ; open-in-browser ; set browser "brave %u >/dev/null 2>&1"
 
 # colorsceme
 color listnormal default default
