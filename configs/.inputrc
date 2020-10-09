@@ -1,5 +1,19 @@
 set enable-bracketed-paste on
 set keyseq-timeout 0
+
+set editing-mode vi
 set show-mode-in-prompt on
+set emacs-mode-string
 set vi-ins-mode-string \1\e[6 q\2
 set vi-cmd-mode-string \1\e[2 q\2
+
+set keymap vi-command
+"\C-h":
+
+set keymap vi-insert
+"\C-a": beginning-of-line
+"\C-e": end-of-line
+"\C-k": kill-line
+"\C-l": clear-screen
+"\C-n": next-history
+"\C-p": previous-history

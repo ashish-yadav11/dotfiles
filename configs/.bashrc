@@ -5,35 +5,6 @@
 # return if not running interactively
 [[ $- != *i* ]] && return
 
-# change cursor to block before entering external programs
-PS0='\e[2 q'
-
-blue='\[\033[38;5;12m\]'
-green='\[\033[38;5;10m\]'
-red='\[\033[38;5;167m\]'
-violet='\[\033[38;5;139m\]'
-white='\[\033[0m\]'
-yellow='\[\033[38;5;11m\]'
-
-# prompt
-PS1="${red}[${yellow}\u${green}@${blue}\h ${violet}\W${red}]${white}$ "
-
-# disable ^S ^Q
-stty -ixon
-
-# store bash history immediately
-PROMPT_COMMAND="history -a"
-
-# vi keybindings
-set -o vi
-
-# autocd
-shopt -s autocd
-
-# fzf keybindings
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
-
 fzf_select_bookmark() {
     local selected
     selected=$(sed 's/#.*//g; /^\s*$/d' <"$HOME/.bookmarks" | fzf | cut -f1 -d'@')
@@ -41,47 +12,18 @@ fzf_select_bookmark() {
     READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
 }
 
-bind -m emacs-standard -x '"\eb": "fzf_select_bookmark"'
-bind -m vi-command -x '"\eb": "fzf_select_bookmark"'
-bind -m vi-insert -x '"\eb": "fzf_select_bookmark"'
-
-# termite tabbing functionality
-source /etc/profile.d/vte.sh
+bind -m emacs-standard -x '"\eb": fzf_select_bookmark'
+bind -m vi-command -x '"\eb": fzf_select_bookmark'
+bind -m vi-insert -x '"\eb": fzf_select_bookmark'
 
 # custom aliases
-alias cp="cp -i"
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
-alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
-alias lessc="less -R"
-alias ls="ls --color=auto"
 alias newsboat="newsboat -q"
-alias python="cgexec -g memory,cpuset:python /usr/bin/python"
-alias rm="rm -i"
 alias startx="startx &>$HOME/.local/share/xorg/startx.$XDG_VTNR.log"
-alias tree="tree -C"
-alias vi=nvim
-alias vim=nvim
-
-# environment varaibles
-export HISTCONTROL=ignoredups
-export HISTSIZE=10000
 
 # custom functions
-
-b() {
-    if [[ $1 -ge 1 && $1 -le 255 ]] ; then
-        echo "$1" >/sys/class/backlight/radeon_bl0/brightness
-    else
-        echo "bash: b: Invalid argument"
-    fi
-}
-
-mkcd() {
-    mkdir "$1" && cd "$1"
-}
-
 neomutt() {
     /usr/bin/neomutt "$@"
     pidof -s /usr/bin/neomutt >/dev/null 2>&1 || rm -rf /tmp/neomutt/
