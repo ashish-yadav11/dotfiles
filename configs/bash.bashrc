@@ -2,7 +2,7 @@
 # /etc/bash.bashrc
 #
 
-# if not running interactively, don't do anything
+# return if not running interactively
 [[ $- != *i* ]] && return
 
 [[ $DISPLAY ]] && shopt -s checkwinsize
@@ -20,11 +20,11 @@ yellow='\[\033[38;5;11m\]'
 # prompt
 PS1="${red}[${yellow}\u${green}@${blue}\h ${violet}\W${red}]${white}$ "
 
-# disable ^S ^Q
-stty -ixon
-
 # autocd
 shopt -s autocd
+
+# disable ^S ^Q
+stty -ixon
 
 # fzf keybindings
 bind -m emacs-standard '"\C-s": transpose-chars'
@@ -35,15 +35,19 @@ source /usr/share/fzf/key-bindings.bash
 
 __prompt_command() {
     case "$TERM" in
-        xterm-termite) # termite tabbing functionality
+        xterm-termite)
+            # window title
             printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
+            # termite tabbing functionality
             printf "\033]7;file://%s%s\033\\" "${HOSTNAME}" "$(/usr/lib/vte-urlencode-cwd)"
             ;;
         xterm*|alacritty*|rxvt*|Eterm|aterm|kterm|gnome*)
+            # window title
             printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
             ;;
     esac
-    history -a # store bash history immediately
+    # store bash history immediately
+    history -a
 }
 
 # shell variables
@@ -77,5 +81,5 @@ mkcd() {
 }
 
 # autocompletion
-source /usr/share/fzf/completion.bash
 source /usr/share/bash-completion/bash_completion
+source /usr/share/fzf/completion.bash
