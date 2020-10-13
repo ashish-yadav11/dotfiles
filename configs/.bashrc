@@ -5,16 +5,16 @@
 # return if not running interactively
 [[ $- != *i* ]] && return
 
-fzf_select_bookmark() {
+__fzf_select_bookmark() {
     local selected
     selected=$(sed 's/#.*//g; /^\s*$/d' <"$HOME/.bookmarks" | fzf | cut -f1 -d'@')
     READLINE_LINE=$selected
     READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
 }
 
-bind -m emacs-standard -x '"\eb": fzf_select_bookmark'
-bind -m vi-command -x '"\eb": fzf_select_bookmark'
-bind -m vi-insert -x '"\eb": fzf_select_bookmark'
+bind -m emacs-standard -x '"\eb": __fzf_select_bookmark'
+bind -m vi-command -x '"\eb": __fzf_select_bookmark'
+bind -m vi-insert -x '"\eb": __fzf_select_bookmark'
 
 # custom aliases
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
@@ -46,6 +46,7 @@ rd() {
 }
 
 spull() {
+    local dir
     dir=$(pwd)
 
     cd /media/storage/.temporary/suckless-sites
@@ -71,7 +72,8 @@ spull() {
 }
 
 todo() {
-    local todo_file=$HOME/Documents/.todo
+    local todo_file
+    todo_file=$HOME/Documents/.todo
 
     if (( ! $# )) ; then
         if [[ -f "$todo_file" ]] ; then

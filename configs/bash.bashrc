@@ -31,7 +31,7 @@ bind -m emacs-standard '"\C-s": transpose-chars'
 bind -m vi-command '"\C-s": transpose-chars'
 bind -m vi-insert '"\C-s": transpose-chars'
 
-source /usr/share/fzf/key-bindings.bash
+source /home/ashish/.scripts/fzf.bash
 
 __prompt_command() {
     case "$TERM" in
