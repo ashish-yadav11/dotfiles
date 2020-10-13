@@ -12,16 +12,16 @@ main(int argc, char *argv[])
         Display *dpy;
         Window win, winr, winp;
         Window *winc; /* unused */
-	XClassHint ch = { NULL, NULL };
+        XClassHint ch = { NULL, NULL };
 
         if (!(dpy = XOpenDisplay(NULL))) {
                 fputs("Error: could not open display.\n", stderr);
                 return 1;
         }
-	XGetInputFocus(dpy, &win, &rtr);
-	while (XQueryTree(dpy, win, &winr, &winp, &winc, &nc) && winp != winr)
+        XGetInputFocus(dpy, &win, &rtr);
+        while (XQueryTree(dpy, win, &winr, &winp, &winc, &nc) && winp != winr)
                 win = winp;
-	XGetClassHint(dpy, win, &ch);
+        XGetClassHint(dpy, win, &ch);
         class = ch.res_class ? ch.res_class : "";
         instance = ch.res_name ? ch.res_name : "";
 
@@ -37,9 +37,9 @@ main(int argc, char *argv[])
 
         if (winc)
                 XFree(winc);
-	if (ch.res_class)
-		XFree(ch.res_class);
-	if (ch.res_name)
-		XFree(ch.res_name);
+        if (ch.res_class)
+                XFree(ch.res_class);
+        if (ch.res_name)
+                XFree(ch.res_name);
         return 0;
 }

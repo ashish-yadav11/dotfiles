@@ -42,8 +42,8 @@ asktype() {
             else
                 usbmount
             fi
-        ;;
-	Unmount*)
+            ;;
+        Unmount*)
             if [ "$(echo "$drives_to_unmount" | wc -l)" = 1 ] ; then
                 if output=$(udisksctl unmount -b "${drives_to_unmount%% *}") ; then
                     notify-send -t 2000 " USB mounter" "$output"
@@ -53,7 +53,7 @@ asktype() {
             else
                 usbunmount
             fi
-        ;;
+            ;;
     esac
 }
 
