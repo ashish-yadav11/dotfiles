@@ -29,7 +29,13 @@ print
 
 echo -e "\e[1;32mdotfiles\e[0m"
 diff=$(
-    $diff_cmd "$dotfiles/configs/bash.bashrc" /etc/bash.bashrc
+    diff1=$(
+        $diff_cmd "$dotfiles/configs/bash.bashrc" /etc/bash.bashrc
+    )
+    if [[ -n $diff1 ]] ; then
+        echo "diff '--color=always' -r "$dotfiles/configs/bash.bashrc" /etc/bash.bashrc"
+        printf "%s\n" "$diff1"
+    fi
     $diff_cmd "$dotfiles/configs/" /home/ashish/.config/ |
         grep -Ev '^Only.*(configs?/:)|(nvim: \.netrwhist)|(ranger: tagged)|(newsboat: cache.db)|(msmtp: msmtp.log)|(mpv: watch_later)'
     $diff_cmd "$dotfiles/configs/" /home/ashish/ |
