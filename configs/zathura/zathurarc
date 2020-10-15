@@ -4,27 +4,14 @@ unmap <C-r>
 
 map b toggle_statusbar
 map i recolor
-map B toggle_inputbar
 map Q quit
 
-map <A-F1> zoom default
-map q feedkeys "<A-F1>Q"
+map c feedkeys ":set recolor-keephue<Return>:<Return>"
+map D feedkeys ':set recolor-darkcolor "#ebdbb2"<Return>:set recolor-lightcolor "#1c1c1c"<Return>:set recolor true<Return>'
+map W feedkeys ':set recolor-darkcolor "#000000"<Return>:set recolor-lightcolor "#bdae93"<Return>:set recolor true<Return>'
+map q feedkeys "z0<S-q>"
 
-map <A-F2> set recolor-keephue
-map c feedkeys "<A-F2>:<Return>"
-
-#map D feedkeys ':set recolor-darkcolor "#ebdbb2"<Return>:set recolor-lightcolor "#1c1c1c"<Return>:set recolor true<Return>'
-#map W feedkeys ':set recolor-darkcolor "#000000"<Return>:set recolor-lightcolor "#bdae93"<Return>:set recolor true<Return>'
-
-map <A-F3> set 'recolor-darkcolor "#ebdbb2"'
-map <A-F4> set 'recolor-lightcolor "#1c1c1c"'
-map <A-F5> set 'recolor-darkcolor "#000000"'
-map <A-F6> set 'recolor-lightcolor "#bdae93"'
-map <A-F7> set 'recolor true'
-map D feedkeys "<A-F3><A-F4><A-F7>"
-map W feedkeys "<A-F5><A-F6><A-F7>"
-
-#set adjust-open width
+set adjust-open width
 set font "Monospace 12"
 set recolor true
 set recolor-reverse-video true
