@@ -1,29 +1,17 @@
 # vim:ft=sh
 
-# youtube-dl
-youtube-dl -f "bestvideo[ext=mp4][height<=?720]+bestaudio[ext=m4a]/best[ext=mp4][height<=?720]/bestvideo[height<=?720]+bestaudio/bestvideo[height<=?720]/best[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" @ both
-youtube-dl -f "bestvideo[height<=?720]+bestaudio/best[height<=?720]/best" @ nmp4
-youtube-dl -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" @ n720p
+youtube-dl -f "bestvideo[ext=mp4][height<=?720]+bestaudio[ext=m4a]/best[ext=mp4][height<=?720]/bestvideo[height<=?720]+bestaudio/bestvideo[height<=?720]/best[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" #youtube-dl;ytdl;720p;mp4
+youtube-dl -f "bestvideo[height<=?720]+bestaudio/best[height<=?720]/best" #youtube-dl;ytdl;720p
 
-# speedtest
-curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
-curl -s dl.getipaddr.net/speedtest.sh -o- | bash
+curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python #speedtest
 
-# weather
-curl wttr.in
-curl wttr.in/naugarh
-curl wttr.in/pune
+curl wttr.in #weather
+curl wttr.in/naugarh #weather;naugarh
+curl wttr.in/pune #weather;pune
 
-# cheatsheets
-curl cheat.sh
-curl getnews.tech
+curl ifconfig.co #ip
+curl ifconfig.co/city #city
 
-# ip address,location,etc.
-curl ifconfig.co
-curl ifconfig.co/city
+sudo tar -zcvf /home/ashish/Documents/arbackup.tar.gz /etc /root /media/storage/.backup #backup
 
-# backup script
-sudo tar -zcvf /home/ashish/Documents/arbackup.tar.gz /etc /root /media/storage/.backup
-
-# escape dinner/sleep sleep
-read -r PID </tmp/sleep_dine.pid && rkill "$PID"
+read -r PID </tmp/sleep_dine.pid && rkill "$PID" #kill;hibernation
