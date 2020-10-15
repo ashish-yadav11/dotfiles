@@ -49,7 +49,7 @@ print
 echo -e "\e[1;32mpackage list\e[0m"
 diff1=$(
     $diff_cmd "$dotfiles/configs/pacsoff.txt" <( pacman -Qqen | grep -Fxvf <( pacman -Qqg base-devel ) |
-        grep -Ev "(^base$)|(^efibootmgr$)|(^grub$)|(^linux$)|(^linux-firmware$)|(^linux-lts$)" )
+        grep -Ev '(^base$)|(^efibootmgr$)|(^grub$)|(^linux$)|(^linux-firmware$)|(^linux-lts$)' )
 )
 diff2=$(
     $diff_cmd "$dotfiles/configs/pacsaur.txt" <( pacman -Qqem )

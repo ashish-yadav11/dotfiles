@@ -45,7 +45,7 @@ if [ "$x" -ge 944 ] && [ "$y" -ge 70 ] ; then
         hide_exit
     fi
 
-    if [ "$(import -window root -depth 8 -crop "1x1+${Xp}+${Yp}" txt:- | grep -om1 "#\w\+")" = "#FFFFFF" ] ; then
+    if [ "$(import -window root -depth 8 -crop "1x1+${Xp}+${Yp}" txt:- | grep -om1 '#\w\+')" = "#FFFFFF" ] ; then
         xdotool key space
         hide_exit
     fi
@@ -60,7 +60,7 @@ if [ "$Xw" -lt 0 ] || [ "$Xw" -gt 1365 ] || [ "$Yw" -lt 0 ] || [ "$Yw" -gt 767 ]
     hide_exit
 fi
 
-case "$(import -window root -depth 8 -crop "1x1+${Xw}+${Yw}" txt:- | grep -om1 "#\w\+")" in
+case "$(import -window root -depth 8 -crop "1x1+${Xw}+${Yw}" txt:- | grep -om1 '#\w\+')" in
     "#333333")
         xdotool key Escape
         hide_exit

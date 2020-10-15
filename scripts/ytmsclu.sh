@@ -55,7 +55,7 @@ if (( Xb < 0 || Xb > 1365 || Yb < 0 || Yb > 767 || X0 < 0 || (X0 + Xs) > 1365 ||
     hide_exit
 fi
 
-if [[ ! $(import -window root -depth 8 -crop "1x1+${Xb}+${Yb}" txt:- | grep -om1 "#\w\+") == "#212121" ]] ; then
+if [[ ! $(import -window root -depth 8 -crop "1x1+${Xb}+${Yb}" txt:- | grep -om1 '#\w\+') == "#212121" ]] ; then
     notify-send -u critical -t 0 "YouTube Music L/U Script" "Something is wrong!"
     hide_exit
 fi
