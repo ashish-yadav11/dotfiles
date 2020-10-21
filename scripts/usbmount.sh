@@ -10,7 +10,7 @@ usbmount() {
     echo "$drives_to_mount" | $dmenu_command -p "Which drive(s) to mount?" |
         while read -r chosen ; do
             if output=$(udisksctl mount -b "${chosen%% *}") ; then
-                notify-send -t 2000 " USB mounter" ""
+                notify-send -t 2000 " USB mounter" "$output"
             else
                 notify-send -u critical " USB mounter" "Error mounting $chosen"
             fi
@@ -21,7 +21,7 @@ usbunmount() {
     echo "$drives_to_unmount" | $dmenu_command -p "Which drive(s) to unmount?" |
         while read -r chosen ; do
             if output=$(udisksctl unmount -b "${chosen%% *}") ; then
-                notify-send -t 2000 " USB mounter" "$output"
+                notify-send -t 2000 " USB mounter" "${output%.}"
             else
                 notify-send -u critical " USB mounter" "Error unmounting $chosen"
             fi
@@ -46,7 +46,7 @@ asktype() {
         Unmount*)
             if [ "$(echo "$drives_to_unmount" | wc -l)" = 1 ] ; then
                 if output=$(udisksctl unmount -b "${drives_to_unmount%% *}") ; then
-                    notify-send -t 2000 " USB mounter" "$output"
+                    notify-send -t 2000 " USB mounter" "${output%.}"
                 else
                     notify-send -u critical " USB mounter" "Error unmounting $drives_to_unmount"
                 fi
