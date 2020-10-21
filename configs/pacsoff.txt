@@ -52,7 +52,6 @@ grub-customizer
 gtk-engine-murrine
 guvcview
 gvfs-mtp
-i3lock-color
 imagemagick
 inkscape
 inotify-tools

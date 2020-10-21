@@ -1,5 +1,4 @@
 brave-bin
-create_ap
 cyrus-sasl-xoauth2-git
 dict-gcide
 dict-wikt-en-all
@@ -7,8 +6,10 @@ dict-wn
 dwm-cust
 etcher-bin
 htop-vim-git
+i3lock-color
 libcgroup
 libxft-bgra
+linux-wifi-hotspot
 mblaze-git
 neovim-plug
 neovim-remote
