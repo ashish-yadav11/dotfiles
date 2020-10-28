@@ -1,18 +1,3 @@
-[Added Associations]
-application/octet-stream=okularApplication_djvu.desktop;org.pwmt.zathura-djvu.desktop;
-application/pdf=okularApplication_pdf.desktop;org.pwmt.zathura-pdf-mupdf.desktop;
-application/x-shellscript=nvim.desktop;nvim-qt.desktop;
-image/jpeg=sxiv.desktop;
-image/jpg=gimp.desktop;ristretto.desktop;
-image/png=gimp.desktop;ristretto.desktop;sxiv.desktop;
-image/vnd.djvu+multipage=okularApplication_djvu.desktop;org.pwmt.zathura-djvu.desktop;
-inode/directory=caja.desktop;
-text/html=brave-browser.desktop;firefox.desktop;chromium.desktop;nvim.desktop;nvim-qt.desktop;
-text/plain=nvim.desktop;nvim-qt.desktop;
-text/x-arduino=arduino.desktop;nvim.desktop;nvim-qt.desktop;
-text/x-python=nvim.desktop;nvim-qt.desktop;
-video/mp4=mpv.desktop;
-
 [Default Applications]
 application/octet-stream=org.pwmt.zathura-djvu.desktop
 application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
