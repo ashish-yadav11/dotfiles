@@ -85,7 +85,6 @@ network-manager-applet
 networkmanager
 newsboat
 nload
-nomacs
 noto-fonts-emoji
 okular
 openresolv
