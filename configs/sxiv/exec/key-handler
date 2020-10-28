@@ -30,8 +30,8 @@ case "$1" in
     g)
         xargs setsid -f gimp
         ;;
-    n)
-        xargs setsid -f nomacs
+    s)
+        xargs setsid -f shotwell
         ;;
     d)
         mapfile -t files
