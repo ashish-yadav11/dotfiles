@@ -27,6 +27,7 @@ dash
 dconf-editor
 dictd
 dunst
+elinks
 entr
 espeak
 fd
@@ -150,7 +151,6 @@ ueberzug
 unclutter
 urlscan
 valgrind
-w3m
 wmname
 woeusb
 x11-ssh-askpass

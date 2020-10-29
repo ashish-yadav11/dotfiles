@@ -2,7 +2,8 @@
 text/plain; $EDITOR %s; edit=$EDITOR %s
 text/html; setsid -f $BROWSER %s >/dev/null 2>&1; nametemplate=%s.html; x-neomutt-keep
 text/html; ; edit=$EDITOR %s; nametemplate=%s.html
-text/html; w3m -I %{charset} -T text/html; copiousoutput
+text/html; elinks; copiousoutput
+audio/*; mpv %s
 image/*; setsid -f sxiv %s >/dev/null 2>&1; edit=setsid -f gimp %s >/dev/null 2>&1; x-neomutt-keep
 video/*; setsid -f mpv %s >/dev/null 2>&1; x-neomutt-keep
 application/ics; /home/ashish/.config/mutt/scripts/import_in_calcurse.sh %s

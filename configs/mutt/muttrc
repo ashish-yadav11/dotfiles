@@ -1,17 +1,26 @@
 # vim: filetype=neomuttrc
+
 source /home/ashish/.config/mutt/accounts/1-iiser.muttrc
 source /home/ashish/.config/mutt/colorscheme.muttrc
-bind index,pager,attach,compose \cb noop
-bind index,pager,browser y noop
+
+
+#----------------------------------------------------------------------------------------------------------------------#
+# bindings
+#----------------------------------------------------------------------------------------------------------------------#
+
 
 # index   - the main menu showing messages in a folder
 # pager   - where the contents of the message are displayed
 # attach  - menu showing attachments
 # compose - menu after saving written message while sending
 # browser - file/directory browser
-# editor  - single line editor for `To:', `Subject:' prompts.
+# editor  - single line editor for 'To:', 'Subject:' prompts
 
-# unbind escape stuff
+# remove unwanted bindings from /etc/neomuttrc
+bind index,pager,attach,compose \cb noop
+bind index,pager,browser y noop
+
+# unbind bindigns starting with Escape key
 bind index,editor               <Esc>b          noop
 bind index,pager,editor         <Esc>c          noop
 bind editor                     <Esc>d          noop
@@ -37,9 +46,11 @@ bind index                      <Esc>t          noop
 bind generic,pager              <Esc>/          noop
 bind index,pager                <Esc>u          noop
 
+
 #----------------------------------------------------------------------------------------------------------------------#
 # generic+
 #----------------------------------------------------------------------------------------------------------------------#
+
 
 #<first-entry>          =               move to the first entry
 #<help>                 ?               this screen
@@ -88,9 +99,11 @@ bind generic,attach,compose <Enter> noop
 # top page
 bind generic H noop
 
+
 #----------------------------------------------------------------------------------------------------------------------#
 # index+
 #----------------------------------------------------------------------------------------------------------------------#
+
 
 #<bounce-message>       b               remail a message to another user
 #<break-thread>         #               break the thread in two
@@ -186,7 +199,7 @@ bind index,pager,attach rt resend-message
 
 bind index L limit
 macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -r -p 'Enter a search term to find with notmuch: ' x; echo \$x >/tmp/neomutt/notmuch.search<Enter><limit>~i \"\`notmuch search --output=messages \$(cat /tmp/neomutt/notmuch.search) | head -n 600 | perl -le '@a=<>;s/\^id:// for@a;$,=\"|\";print@a' | perl -le '@a=<>; chomp@a; s/\\+/\\\\+/ for@a;print@a' \`\"<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "show only messages matching a notmuch pattern"
-macro index ,a "<limit>all\n" "show all messages"
+macro index ,a "<limit>all<Enter><refresh>" "show all messages"
 macro index ,n "<limit>~N<Enter><refresh>" "show all unread messages"
 macro index ,f "<limit>~F<Enter><refresh>" "show all flagged messages"
 
@@ -245,9 +258,11 @@ macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/h
 macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>cat >/tmp/neomutt/mail<Enter><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter><shell-escape>/home/ashish/.config/mutt/scripts/url_highlight_less.sh /tmp/neomutt/mail; rm -f /tmp/neomutt/mail<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter><clear-flag>N" "pipe message to less with url highlighting"
 macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>cat >/tmp/neomutt/mail<Enter><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter><shell-escape>/home/ashish/.config/mutt/scripts/url_highlight_less.sh /tmp/neomutt/mail; rm -f /tmp/neomutt/mail<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "pipe message to less with url highlighting"
 
+
 #----------------------------------------------------------------------------------------------------------------------#
 # pager+
 #----------------------------------------------------------------------------------------------------------------------#
+
 
 #<bounce-message>       b               remail a message to another user
 #<break-thread>         #               break the thread in two
@@ -295,9 +310,11 @@ bind pager T noop
 bind pager za toggle-quoted
 bind pager zA toggle-quoted
 
+
 #----------------------------------------------------------------------------------------------------------------------#
 # attachment+
 #----------------------------------------------------------------------------------------------------------------------#
+
 
 #<bounce-message>       b               remail a message to another user
 #<collapse-parts>       v               toggle display of subparts
@@ -315,9 +332,11 @@ bind attach p noop
 bind attach l view-attach
 bind attach <Right> view-attach
 
+
 #----------------------------------------------------------------------------------------------------------------------#
 # compose
 #----------------------------------------------------------------------------------------------------------------------#
+
 
 #<copy-file>            C               save message/attachment to a mailbox/file
 #<edit-bcc>             b               edit the BCC list
@@ -411,9 +430,11 @@ bind compose A rename-file
 # S/MIME options
 bind compose \\s smime-menu
 
+
 #----------------------------------------------------------------------------------------------------------------------#
 # browser
 #----------------------------------------------------------------------------------------------------------------------#
+
 
 #<change-dir>           c               change directories
 #<display-filename>     @               display the currently selected file's name
@@ -457,9 +478,11 @@ bind browser ] sort-reverse
 # view file
 bind browser i view-file
 
+
 #----------------------------------------------------------------------------------------------------------------------#
 # editor
 #----------------------------------------------------------------------------------------------------------------------#
+
 
 #<bol>                  ^A              jump to the beginning of the line
 #<delete-char>          ^D              delete the char under the cursor
@@ -484,12 +507,15 @@ bind editor \Co kill-eow
 # switching to folders with space in their names
 bind editor <Space> noop
 
+
 #----------------------------------------------------------------------------------------------------------------------#
 # settings
 #----------------------------------------------------------------------------------------------------------------------#
 
+
 auto_view text/html
 alternative_order text/plain text/enriched text/html
+
 
 # general settings
 
@@ -521,10 +547,10 @@ set index_format = "%4C %Z %?X?A& ? %D %-15.15F %-67.67s (%-4.4c)"
 
 set mailcap_path = /home/ashish/.config/mutt/mailcap1
 
-# Unread mail stay unread until read
+# unread mail stay unread until read
 set mark_old = no
 
-# Disables the `+` displayed at line wraps
+# disables the '+' displayed at line wraps
 set markers = no
 
 set menu_scroll = yes
@@ -549,7 +575,7 @@ set rfc2047_parameters = yes
 # don't move to the next mail when modifying the current mail
 set resolve = no
 
-# Pause 0 seconds for informational messages
+# pause 0 seconds for informational messages
 set sleep_time = 0
 
 set sort = reverse-threads
@@ -559,6 +585,7 @@ set tmpdir = /tmp/neomutt
 
 # enable terminal title
 set ts_enabled = yes
+
 
 # sidebar settings
 
