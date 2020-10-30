@@ -17,7 +17,7 @@ else
     fi
 fi
 
-case "$(xdotool getactivewindow getwindowname)" in
+case $(xdotool getactivewindow getwindowname) in
     *"YouTube Music")
         ;;
     *)
@@ -60,7 +60,7 @@ if [ "$Xw" -lt 0 ] || [ "$Xw" -gt 1365 ] || [ "$Yw" -lt 0 ] || [ "$Yw" -gt 767 ]
     hide_exit
 fi
 
-case "$(import -window root -depth 8 -crop "1x1+${Xw}+${Yw}" txt:- | grep -om1 '#\w\+')" in
+case $(import -window root -depth 8 -crop "1x1+${Xw}+${Yw}" txt:- | grep -om1 '#\w\+') in
     "#333333")
         xdotool key Escape
         hide_exit

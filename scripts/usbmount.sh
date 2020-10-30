@@ -31,7 +31,7 @@ usbunmount() {
 asktype() {
     M=$(echo "$drives_to_mount" | awk -v ORS='' '{if (!x) {x=1; print $0} else {print ", "$0}}')
     U=$(echo "$drives_to_unmount" | awk -v ORS='' '{if (!x) {x=1; print $0} else {print ", "$0}}')
-    case "$(echo "Mount: $M\nUnmount: $U" | dmenu -i -matching fuzzy -no-custom -p "What do you want me to do?")" in
+    case $(echo "Mount: $M\nUnmount: $U" | dmenu -i -matching fuzzy -no-custom -p "What do you want me to do?") in
         Mount*)
             if [ "$(echo "$drives_to_mount" | wc -l)" = 1 ] ; then
                 if output=$(udisksctl mount -b "${drives_to_mount%% *}") ; then

@@ -1,5 +1,5 @@
 #!/bin/bash
-case "$1" in
+case $1 in
     w)
         read -r file
         /home/ashish/.config/sxiv/exec/wallpaper.sh "$file"

@@ -1,5 +1,5 @@
 #!/bin/dash
-case "$1" in
+case $1 in
     sel)
         text=$(xclip -seletion primary -out)
         if [ -z "$text" ] ; then

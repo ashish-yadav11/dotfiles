@@ -1,5 +1,5 @@
 #!/bin/dash
-case "$1" in
+case $1 in
     toggle)
         if systemctl --quiet is-active timeout.service ; then
             systemctl stop timeout.service
