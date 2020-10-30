@@ -45,7 +45,6 @@ gimp-help-en
 git
 gnome-disk-utility
 gnome-icon-theme
-gnome-screenshot
 go
 go-tools
 gparted
@@ -116,6 +115,7 @@ reflector
 ripgrep
 ristretto
 rofi
+scrot
 shellcheck
 shotwell
 signal-desktop
