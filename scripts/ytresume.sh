@@ -11,7 +11,7 @@ if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
 else
     if xwininfo -tree -root | grep -q '("crx_cinhimbnkkaeohfgghhklpknlkffjgod" ' ; then
         xsetroot -name "z:scrs i 2"
-        sleep 0.050
+        sleep 0.05
     else
         exec brave --app-id=cinhimbnkkaeohfgghhklpknlkffjgod
     fi
@@ -22,7 +22,7 @@ case $(xdotool getactivewindow getwindowname) in
         ;;
     *)
         xdotool key F5
-        sleep 0.200
+        sleep 0.2
         hide_exit
         ;;
 esac
@@ -70,7 +70,7 @@ case $(import -window root -depth 8 -crop "1x1+${Xw}+${Yw}" txt:- | grep -om1 '#
         ;;
     *)
         xdotool key F5
-        sleep 0.200
+        sleep 0.2
         hide_exit
         ;;
 esac
