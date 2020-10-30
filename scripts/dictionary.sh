@@ -3,7 +3,7 @@ case $1 in
     sel)
         word=$(xclip -seletion primary -out | tr '[:upper:]' '[:lower:]' | xargs)
         if [ -z "$word" ] ; then
-            notify-send -t 2000 "Dictionary" "Nothing in primary selection"
+            notify-send -t 2000 Dictionary "Nothing in primary selection"
             exit
         fi
         ;;
@@ -30,6 +30,6 @@ case $? in
         ;;
     *)
         rm -f /tmp/dictionary.last.temp
-        notify-send -t 2000 "Dictionary" "No definitions found for the word"
+        notify-send -t 2000 Dictionary "No definitions found for the word"
         ;;
 esac

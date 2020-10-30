@@ -10,5 +10,5 @@ if [ -n "$log" ] ; then
         mv /tmp/dictionary.log.temp "$logfile"
     fi
 else
-    notify-send -t 2000 "Dictionary" "History log is empty"
+    notify-send -t 2000 Dictionary "History log is empty"
 fi

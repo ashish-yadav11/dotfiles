@@ -7,13 +7,13 @@ case $1 in
     y)
         mapfile -t files
         echo "${files[@]}" | xclip -selection clipboard &&
-            notify-send "Sxiv" "Yank successful"
+            notify-send Sxiv "Yank successful"
         ;;
     Y)
         mapfile -t files
         mapfile -t resolved_files < <(readlink -f "${files[@]}")
         echo "${resolved_files[@]}" | xclip -selection clipboard &&
-            notify-send "Sxiv" "Yank successful"
+            notify-send Sxiv "Yank successful"
         ;;
     r)
         mapfile -t files
@@ -37,6 +37,6 @@ case $1 in
         mapfile -t files
         [ "$(echo -e "Yes\nNo" | dmenu -i -p "Do you really want to delete the selected image(s)?")" = Yes ] &&
             rm -f "${files[@]}" &&
-                notify-send "Sxiv" "Deletion successful"
+                notify-send Sxiv "Deletion successful"
         ;;
 esac

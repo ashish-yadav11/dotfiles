@@ -3,7 +3,7 @@ case $1 in
     sel)
         text=$(xclip -seletion primary -out)
         if [ -z "$text" ] ; then
-            notify-send -t 2000 "Espeak" "Nothing in primary selection"
+            notify-send -t 2000 Espeak "Nothing in primary selection"
             exit
         fi
         ;;
