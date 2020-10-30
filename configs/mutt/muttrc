@@ -533,6 +533,9 @@ set abort_backspace = no
 
 set date_format = "%d/%m/%y %H:%M"
 
+# hide [-- Autoview using ... --] message from html mails
+#set display_filter = "grep -v '\\[-- Autoview using .* --\\]'"
+
 # skip to compose when replying
 set fast_reply = yes
 
