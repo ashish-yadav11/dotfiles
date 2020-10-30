@@ -8,8 +8,6 @@
 from ranger.api.commands import Command
 
 
-from os.path import join
-
 class mkcd(Command):
     """
     :mkcd <dirname>
@@ -18,7 +16,7 @@ class mkcd(Command):
     """
 
     def execute(self):
-        from os.path import expanduser, lexists
+        from os.path import join, expanduser, lexists
         from os import makedirs
         import re
 
@@ -43,11 +41,12 @@ class mkcd(Command):
             self.fm.notify("file/directory exists!", bad=True)
 
 
-from subprocess import PIPE
-fzf_command = "fzf --bind=change:top,ctrl-a:select-all,ctrl-t:toggle-all,ctrl-z:top,ctrl-space:toggle-sort --sync -1"
-
 class fzf_search(Command):
+
     def execute(self):
+        from os.path import join
+        from subprocess import PIPE
+
         depth = '-d4'
         target = ''
         if self.arg(1):
@@ -57,7 +56,7 @@ class fzf_search(Command):
             else:
                 target = ' ' + self.rest(1)
 
-        command="fd -HL " + depth + target + " | LC_COLLATE=C sort -f | " + fzf_command
+        command="fd -HL " + depth + target + " | LC_COLLATE=C sort -f | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
         file_dir = stdout.decode('utf-8').rstrip('\n')
@@ -65,7 +64,10 @@ class fzf_search(Command):
 
 
 class fzf_cd(Command):
+
     def execute(self):
+        from subprocess import PIPE
+
         depth = '-d4'
         target = ''
         if self.arg(1):
@@ -75,8 +77,49 @@ class fzf_cd(Command):
             else:
                 target = ' ' + self.rest(1)
 
-        command="fd -HL -td " + depth + target + " | LC_COLLATE=C sort -f | " + fzf_command
+        command="fd -HL -td " + depth + target + " | LC_COLLATE=C sort -f | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
         directory = stdout.decode('utf-8').rstrip('\n')
         self.fm.cd(directory)
+
+
+class trash_selection(Command):
+
+    def execute(self):
+        import os
+        from functools import partial
+
+        def is_directory_with_files(path):
+            return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
+
+        cwd = self.fm.thisdir
+        tfile = self.fm.thisfile
+        if not cwd or not tfile:
+            self.fm.notify("Error: no file selected for deletion!", bad=True)
+            return
+
+        # relative_path used for a user-friendly output in the confirmation.
+        files = [f.relative_path for f in self.fm.thistab.get_selection()]
+        many_files = (cwd.marked_items or is_directory_with_files(tfile.path))
+
+        confirm = self.fm.settings.confirm_on_delete
+        if confirm != 'never' and (confirm != 'multiple' or many_files):
+            self.fm.ui.console.ask(
+                "Confirm trashing of: %s (y/N)" % ', '.join(files),
+                partial(self._question_callback),
+                ('n', 'N', 'y', 'Y'),
+            )
+        else:
+            # no need for a confirmation, just delete
+            self._trash()
+
+    def _question_callback(self, answer):
+        if answer == 'y' or answer == 'Y':
+            self._trash()
+
+    def _trash(self):
+        from ranger.ext.shell_escape import shell_escape
+
+        selected_files = [shell_escape(f.path) for f in self.fm.thistab.get_selection()]
+        self.fm.execute_command("trash-put -- " + ' '.join(selected_files), flags='s')
