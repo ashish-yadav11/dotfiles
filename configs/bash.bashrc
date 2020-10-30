@@ -5,7 +5,7 @@
 # return if not running interactively
 [[ $- != *i* ]] && return
 
-[[ $DISPLAY ]] && shopt -s checkwinsize
+[[ -n $DISPLAY ]] && shopt -s checkwinsize
 
 # change cursor to block before entering external programs
 PS0='\e[2 q'
