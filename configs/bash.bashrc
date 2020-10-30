@@ -34,7 +34,7 @@ bind -m vi-insert '"\C-s": transpose-chars'
 source /home/ashish/.scripts/fzf.bash
 
 __prompt_command() {
-    case "$TERM" in
+    case $TERM in
         xterm-termite)
             # window title
             printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
@@ -78,6 +78,28 @@ b() {
 
 mkcd() {
     mkdir "$1" && cd "$1"
+}
+
+trash-list() {
+    if [[ -z $1 ]] ; then
+        /usr/bin/trash-list | sort
+        return
+    fi
+    case $1 in
+        --)
+            shift
+            /usr/bin/trash-list | sort | grep "$*"
+            ;;
+        -n)
+            /usr/bin/trash-list | sort -k3,3
+            ;;
+        -t)
+            /usr/bin/trash-list | sort
+            ;;
+        *)
+            /usr/bin/trash-list | sort | grep
+            "$*" ;;
+    esac
 }
 
 # autocompletion
