@@ -4,9 +4,9 @@ source /home/ashish/.config/mutt/accounts/1-iiser.muttrc
 source /home/ashish/.config/mutt/colorscheme.muttrc
 
 
-#----------------------------------------------------------------------------------------------------------------------#
-# bindings
-#----------------------------------------------------------------------------------------------------------------------#
+#----------#
+# bindings #
+#----------#
 
 
 # index   - the main menu showing messages in a folder
@@ -16,7 +16,9 @@ source /home/ashish/.config/mutt/colorscheme.muttrc
 # browser - file/directory browser
 # editor  - single line editor for 'To:', 'Subject:' prompts
 
+
 # remove unwanted bindings from /etc/neomuttrc
+bind index \eb noop
 bind index,pager,attach,compose \cb noop
 bind index,pager,browser y noop
 
@@ -47,9 +49,9 @@ bind generic,pager              <Esc>/          noop
 bind index,pager                <Esc>u          noop
 
 
-#----------------------------------------------------------------------------------------------------------------------#
-# generic+
-#----------------------------------------------------------------------------------------------------------------------#
+#----------#
+# generic+ #
+#----------#
 
 
 #<first-entry>          =               move to the first entry
@@ -88,10 +90,11 @@ bind generic,index,pager,browser N search-opposite
 
 # bottom page
 bind generic L noop
-bind generic ,/ search-reverse
 
-macro generic t "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next (possibly undeleted) one"
-macro generic,index,browser <Space> "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next entry"
+bind generic,pager ,/ search-reverse
+
+macro generic t "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next one"
+macro generic,index,browser <Space> "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next one"
 
 # ^J is Enter
 bind generic,attach,compose <Enter> noop
@@ -99,10 +102,13 @@ bind generic,attach,compose <Enter> noop
 # top page
 bind generic H noop
 
+# documentation
+macro generic,pager <F1> "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>less /usr/share/doc/neomutt/manual.txt<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "show NeoMutt documentation"
 
-#----------------------------------------------------------------------------------------------------------------------#
-# index+
-#----------------------------------------------------------------------------------------------------------------------#
+
+#--------#
+# index+ #
+#--------#
 
 
 #<bounce-message>       b               remail a message to another user
@@ -115,6 +121,7 @@ bind generic H noop
 #<next-thread>          ^N              jump to the next thread
 #<previous-thread>      ^P              jump to previous thread
 #<query>                Q               query external program for addresses
+#<sync-mailbox>         $               save changes to mailbox
 #<tag-pattern>          T               tag messages matching a pattern
 #<toggle-write>         %               toggle whether the mailbox will be rewritten
 
@@ -130,7 +137,7 @@ macro index,pager,attach,compose gx "<enter-command>set my_pipe_decode=\$pipe_de
 
 # newsgroup stuff
 bind index,pager i noop
-#macro index,pager i1 '<sync-mailbox><enter-command>source /home/ashish/.config/mutt/accounts/1-iiser.muttrc<Enter><change-folder>!<Enter>;<check-stats>' "switch to ashishkumar.yadav@students.iiserpune.ac.in"
+#macro index,pager i1 '<sync-mailbox><enter-command>source /home/ashish/.config/mutt/accounts/1-iiser.muttrc<Enter><change-folder>!<Enter><check-stats>' "switch to ashishkumar.yadav@students.iiserpune.ac.in"
 
 macro index \Cs "<check-stats><refresh>" "refresh stats without warnings"
 
@@ -259,9 +266,9 @@ macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes m
 macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>cat >/tmp/neomutt/mail<Enter><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter><shell-escape>/home/ashish/.config/mutt/scripts/url_highlight_less.sh /tmp/neomutt/mail; rm -f /tmp/neomutt/mail<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "pipe message to less with url highlighting"
 
 
-#----------------------------------------------------------------------------------------------------------------------#
-# pager+
-#----------------------------------------------------------------------------------------------------------------------#
+#--------#
+# pager+ #
+#--------#
 
 
 #<bounce-message>       b               remail a message to another user
@@ -276,6 +283,7 @@ macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes m
 #<previous-thread>      ^P              jump to previous thread
 #<search-toggle>        \\              toggle search pattern coloring
 #<skip-quoted>          S               skip beyond quoted text
+#<sync-mailbox>         $               save changes to mailbox
 #<toggle-write>         %               toggle whether the mailbox will be rewritten
 
 # movement
@@ -311,9 +319,9 @@ bind pager za toggle-quoted
 bind pager zA toggle-quoted
 
 
-#----------------------------------------------------------------------------------------------------------------------#
-# attachment+
-#----------------------------------------------------------------------------------------------------------------------#
+#-------------#
+# attachment+ #
+#-------------#
 
 
 #<bounce-message>       b               remail a message to another user
@@ -333,9 +341,9 @@ bind attach l view-attach
 bind attach <Right> view-attach
 
 
-#----------------------------------------------------------------------------------------------------------------------#
-# compose
-#----------------------------------------------------------------------------------------------------------------------#
+#---------#
+# compose #
+#---------#
 
 
 #<copy-file>            C               save message/attachment to a mailbox/file
@@ -431,9 +439,9 @@ bind compose A rename-file
 bind compose \\s smime-menu
 
 
-#----------------------------------------------------------------------------------------------------------------------#
-# browser
-#----------------------------------------------------------------------------------------------------------------------#
+#---------#
+# browser #
+#---------#
 
 
 #<change-dir>           c               change directories
@@ -479,9 +487,9 @@ bind browser ] sort-reverse
 bind browser i view-file
 
 
-#----------------------------------------------------------------------------------------------------------------------#
-# editor
-#----------------------------------------------------------------------------------------------------------------------#
+#--------#
+# editor #
+#--------#
 
 
 #<bol>                  ^A              jump to the beginning of the line
@@ -508,9 +516,9 @@ bind editor \Co kill-eow
 bind editor <Space> noop
 
 
-#----------------------------------------------------------------------------------------------------------------------#
-# settings
-#----------------------------------------------------------------------------------------------------------------------#
+#----------#
+# settings #
+#----------#
 
 
 auto_view text/html
