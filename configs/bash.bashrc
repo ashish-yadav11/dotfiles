@@ -87,8 +87,7 @@ trash-list() {
     fi
     case $1 in
         --)
-            shift
-            /usr/bin/trash-list | sort | grep "$*"
+            /usr/bin/trash-list | sort | grep "${@:2}"
             ;;
         -n)
             /usr/bin/trash-list | sort -k3,3
@@ -97,7 +96,7 @@ trash-list() {
             /usr/bin/trash-list | sort
             ;;
         *)
-            /usr/bin/trash-list | sort | grep
+            /usr/bin/trash-list | sort | grep "$@"
             "$*" ;;
     esac
 }
