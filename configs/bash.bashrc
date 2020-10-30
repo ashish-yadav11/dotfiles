@@ -63,6 +63,7 @@ alias lessc="less -R"
 alias ls="ls --color=auto"
 alias python="cgexec -g memory,cpuset:python /usr/bin/python"
 alias rm="rm -i"
+alias sudo="sudo "
 alias tree="tree -C"
 alias vi=nvim
 alias vim=nvim
