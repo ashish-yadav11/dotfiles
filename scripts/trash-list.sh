@@ -1,11 +1,12 @@
 #!/bin/dash
-if [[ -z $1 ]] ; then
+if [ -z "$1" ] ; then
     /usr/bin/trash-list | sort
     return
 fi
 case $1 in
     --)
-        /usr/bin/trash-list | sort | grep "${@:2}"
+        shift
+        /usr/bin/trash-list | sort | grep "$@"
         ;;
     -n)
         /usr/bin/trash-list | sort -k3,3
