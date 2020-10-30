@@ -80,27 +80,6 @@ mkcd() {
     mkdir "$1" && cd "$1"
 }
 
-trash-list() {
-    if [[ -z $1 ]] ; then
-        /usr/bin/trash-list | sort
-        return
-    fi
-    case $1 in
-        --)
-            /usr/bin/trash-list | sort | grep "${@:2}"
-            ;;
-        -n)
-            /usr/bin/trash-list | sort -k3,3
-            ;;
-        -t)
-            /usr/bin/trash-list | sort
-            ;;
-        *)
-            /usr/bin/trash-list | sort | grep "$@"
-            "$*" ;;
-    esac
-}
-
 # autocompletion
 source /usr/share/bash-completion/bash_completion
 source /usr/share/fzf/completion.bash
