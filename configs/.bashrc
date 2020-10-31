@@ -108,3 +108,24 @@ todo() {
 
     fi
 }
+
+trash-list() {
+    if [[ -z $1 ]] ; then
+        /usr/bin/trash-list | sort
+    else
+        case $1 in
+            --)
+                /usr/bin/trash-list | sort | grep "${@:2}"
+                ;;
+            -n)
+                /usr/bin/trash-list | sort -k3,3
+                ;;
+            -t)
+                /usr/bin/trash-list | sort
+                ;;
+            *)
+                /usr/bin/trash-list | sort | grep "$@"
+                ;;
+        esac
+    fi
+}
