@@ -21,7 +21,7 @@ alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias newsboat="newsboat -q"
-alias startx="startx &>$HOME/.local/share/xorg/startx.$XDG_VTNR.log"
+alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
 
 # custom functions
 neomutt() {
@@ -32,8 +32,7 @@ neomutt() {
 nt() {
     {
         sleep "$(echo "$1*60" | bc)"
-        shift 1
-        notify-send -t 0 "$*"
+        notify-send -t 0 "${*:2}"
     } & disown
 }
 
@@ -49,22 +48,22 @@ spull() {
     local dir
     dir=$(pwd)
 
-    cd /media/storage/.temporary/suckless-sites
+    cd /media/storage/.temporary/suckless-sites || return
     echo -e "\e[1;32msuckless sites\e[0m"
     git pull
     echo
 
-    cd /media/storage/.temporary/suckless-software/dwm
+    cd /media/storage/.temporary/suckless-software/dwm || return
     echo -e "\e[1;32mdwm\e[0m"
     git pull
     echo
 
-    cd /media/storage/.temporary/suckless-software/st
+    cd /media/storage/.temporary/suckless-software/st || return
     echo -e "\e[1;32mst\e[0m"
     git pull
     echo
 
-    cd /media/storage/.temporary/suckless-software/scroll
+    cd /media/storage/.temporary/suckless-software/scroll || return
     echo -e "\e[1;32mscroll\e[0m"
     git pull
 

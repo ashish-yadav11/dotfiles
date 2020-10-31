@@ -15,6 +15,6 @@ else
             ;;
         *)
             /usr/bin/trash-list | sort | grep "$@"
-            "$*" ;;
+            ;;
     esac
 fi
