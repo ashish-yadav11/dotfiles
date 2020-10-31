@@ -58,7 +58,6 @@ PROMPT_COMMAND=__prompt_command
 # custom aliases
 alias cp="cp -i"
 alias diffc="diff --color=always"
-alias fu="/home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias lessc="less -R"
 alias ls="ls --color=auto"
 alias python="cgexec -g memory,cpuset:python /usr/bin/python"
