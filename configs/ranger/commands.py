@@ -84,6 +84,42 @@ class fzf_cd(Command):
         self.fm.cd(directory)
 
 
+class trash_highlighted(Command):
+
+    def execute(self):
+        import os
+        from functools import partial
+
+        def is_directory_with_files(path):
+            return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
+
+        cwd = self.fm.thisdir
+        tfile = self.fm.thisfile
+        if not cwd or not tfile:
+            self.fm.notify("Error: no file highlighted for trashing!", bad=True)
+            return
+
+        many_files = is_directory_with_files(tfile.path)
+        if many_files:
+            self.fm.ui.console.ask(
+                "Confirm trashing of: %s (y/N)" % tfile.relative_path,
+                partial(self._question_callback, tfile),
+                ('n', 'N', 'y', 'Y'),
+            )
+        else:
+            self._trash(tfile)
+
+    def _question_callback(self, tfile, answer):
+        if answer == 'y' or answer == 'Y':
+            self._trash(tfile)
+
+    def _trash(self, tfile):
+        from ranger.ext.shell_escape import shell_escape
+
+        self.fm.execute_command("trash-put -- %s" % shell_escape(tfile.path), flags='s')
+        self.fm.notify("Trashing %s!" % tfile.relative_path)
+
+
 class trash_selection(Command):
 
     def execute(self):
@@ -96,30 +132,64 @@ class trash_selection(Command):
         cwd = self.fm.thisdir
         tfile = self.fm.thisfile
         if not cwd or not tfile:
-            self.fm.notify("Error: no file selected for deletion!", bad=True)
+            self.fm.notify("Error: no file selected for trashing!", bad=True)
             return
 
-        # relative_path used for a user-friendly output in the confirmation.
-        files = [f.relative_path for f in self.fm.thistab.get_selection()]
+        files = self.fm.thistab.get_selection()
+        relative_paths = [f.relative_path for f in files]
         many_files = (cwd.marked_items or is_directory_with_files(tfile.path))
+
+        if many_files:
+            self.fm.ui.console.ask(
+                "Confirm trashing of: %s (y/N)" % ', '.join(relative_paths),
+                partial(self._question_callback, files),
+                ('n', 'N', 'y', 'Y'),
+            )
+        else:
+            self._trash(files)
+
+    def _question_callback(self, files, answer):
+        if answer == 'y' or answer == 'Y':
+            self._trash(files)
+
+    def _trash(self, files):
+        from ranger.ext.shell_escape import shell_escape
+
+        escaped_paths = [shell_escape(f.path) for f in files]
+        relative_paths = [f.relative_path for f in files]
+        self.fm.execute_command("trash-put -- %s" % ' '.join(escaped_paths), flags='s')
+        self.fm.notify("Trashing %s!" % ', '.join(relative_paths))
+
+
+class delete_highlighted(Command):
+
+    def execute(self):
+        import os
+        from functools import partial
+
+        def is_directory_with_files(path):
+            return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
+
+        cwd = self.fm.thisdir
+        tfile = self.fm.thisfile
+        if not cwd or not tfile:
+            self.fm.notify("Error: no file highlighted for deletion!", bad=True)
+            return
+
+        files = [tfile.relative_path]
+        many_files = is_directory_with_files(tfile.path)
 
         confirm = self.fm.settings.confirm_on_delete
         if confirm != 'never' and (confirm != 'multiple' or many_files):
             self.fm.ui.console.ask(
-                "Confirm trashing of: %s (y/N)" % ', '.join(files),
-                partial(self._question_callback),
+                "Confirm deletion of: %s (y/N)" % files[0],
+                partial(self._question_callback, files),
                 ('n', 'N', 'y', 'Y'),
             )
         else:
             # no need for a confirmation, just delete
-            self._trash()
+            self.fm.delete(files)
 
-    def _question_callback(self, answer):
+    def _question_callback(self, files, answer):
         if answer == 'y' or answer == 'Y':
-            self._trash()
-
-    def _trash(self):
-        from ranger.ext.shell_escape import shell_escape
-
-        selected_files = [shell_escape(f.path) for f in self.fm.thistab.get_selection()]
-        self.fm.execute_command("trash-put -- " + ' '.join(selected_files), flags='s')
+            self.fm.delete(files)
