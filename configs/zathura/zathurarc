@@ -32,6 +32,7 @@ set font "Monospace 12"
 set recolor true
 set recolor-reverse-video true
 set render-loading true
+set sandbox none
 set show-hidden true
 set statusbar-basename true
 set window-title-basename true
