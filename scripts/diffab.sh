@@ -1,7 +1,7 @@
 #!/bin/bash
 mdiff_cmd="diff --color=always -r"
+mdiff_str="diff '--color=always' -r"
 sdiff_cmd="diff --color=always"
-sdiff_str="diff '--color=always'"
 dsblocks=/home/ashish/.local/projects/dsblocks
 dotfiles=/home/ashish/.local/dotfiles
 
@@ -13,21 +13,28 @@ print_mdiff() {
     fi
 }
 
+
 echo -e "\e[1;32mbackup\e[0m"
 mdiff=$(
     $mdiff_cmd /media/storage/.backup/ /home/ashish/ |
-        grep -Ev '^Only.*'
+        grep -Ev '^Only.*' |
+            sed -e "s/^$mdiff_str/diff/"
+
     $mdiff_cmd -I '^token = ' /media/storage/.backup/ /home/ashish/.config/ |
-        grep -Ev '^Only.*'
+        grep -Ev '^Only.*' |
+            sed -e "s/^$mdiff_str -I '\\^token = '/diff/"
 )
 print_mdiff
+
 
 echo -e "\e[1;32mdsblocks\e[0m"
 mdiff=$(
     $mdiff_cmd "$dsblocks/helpers/scripts/" /home/ashish/.scripts/ |
-        grep -Ev '^Only.*'
+        grep -Ev '^Only.*' |
+            sed -e "s/^$mdiff_str/diff/"
 )
 print_mdiff
+
 
 echo -e "\e[1;32mdotfiles\e[0m"
 mdiff=$(
@@ -35,23 +42,31 @@ mdiff=$(
         $sdiff_cmd "$dotfiles/configs/bash.bashrc" /etc/bash.bashrc
     )
     [[ -n $sdiff ]] &&
-        printf "$sdiff_str $dotfiles/configs/bash.bashrc /etc/bash.bashrc\n%s\n" "$sdiff"
+        printf "diff $dotfiles/configs/bash.bashrc /etc/bash.bashrc\n%s\n" "$sdiff"
 
     sdiff=$(
         $sdiff_cmd "$dotfiles/configs/crontab" <( crontab -l )
     )
     [[ -n $sdiff ]] &&
-        printf "$sdiff_str $dotfiles/configs/crontab crontab\n%s\n" "$sdiff"
+        printf "diff $dotfiles/configs/crontab crontab\n%s\n" "$sdiff"
 
     $mdiff_cmd -I "^history\|^lastVisited\|^':" "$dotfiles/configs/" /home/ashish/.config/ |
-        grep -Ev '^Only.*(configs?/:)|(nvim: \.netrwhist)|(ranger: tagged)|(newsboat: cache.db)|(msmtp: msmtp.log)|(mpv: watch_later)'
+        grep -Ev '^Only.*(configs?/:)|(nvim: \.netrwhist)|(ranger: tagged)|(newsboat: cache.db)|(msmtp: msmtp.log)|(mpv: watch_later)' |
+            sed -e "s/^$mdiff_str -I '\\^history\\\\|\\^lastVisited\\\\|\\^'\\\\'':'/diff/"
+
     $mdiff_cmd "$dotfiles/configs/" /home/ashish/ |
-        grep -Ev '^Only.*(configs/:)|(ashish/(:)|(.surf:))|(GmailAPI: token)|(\.gnupg: )'
+        grep -Ev '^Only.*(configs/:)|(ashish/(:)|(.surf:))|(GmailAPI: token)|(\.gnupg: )' |
+            sed -e "s/^$mdiff_str/diff/"
+
     $mdiff_cmd "$dotfiles/locals/" /home/ashish/.local/ |
-        grep -Ev '^Only.*(local/(:)|(share(:)|(applications: (mimeapps\.list)|(mimeinfo\.cache))|(builds: dwm)))'
-    $mdiff_cmd "$dotfiles/scripts/" /home/ashish/.scripts/
+        grep -Ev '^Only.*(local/(:)|(share(:)|(applications: (mimeapps\.list)|(mimeinfo\.cache))|(builds: dwm)))' |
+            sed -e "s/^$mdiff_str/diff/"
+
+    $mdiff_cmd "$dotfiles/scripts/" /home/ashish/.scripts/ |
+        sed -e "s/^$mdiff_str/diff/"
 )
 print_mdiff
+
 
 echo -e "\e[1;32mpackage list\e[0m"
 sdiff1=$(
@@ -61,10 +76,11 @@ sdiff1=$(
 sdiff2=$(
     $sdiff_cmd "$dotfiles/configs/pacsaur.txt" <( pacman -Qqem )
 )
+
 if [[ -n $sdiff1 && -n $sdiff2 ]] ; then
-    printf "$sdiff_str $dotfiles/configs/pacsoff.txt pacsoff\n%s\n$sdiff_str $dotfiles/configs/pacsaur.txt pacsaur\n%s\n\n" "$sdiff1" "$sdiff2"
+    printf "diff $dotfiles/configs/pacsoff.txt pacsoff\n%s\ndiff $dotfiles/configs/pacsaur.txt pacsaur\n%s\n\n" "$sdiff1" "$sdiff2"
 elif [[ -n $sdiff2 ]] ; then
-    printf "$sdiff_str $dotfiles/configs/pacsaur.txt pacsaur\n%s\n\n" "$sdiff2"
+    printf "diff $dotfiles/configs/pacsaur.txt pacsaur\n%s\n\n" "$sdiff2"
 else
     echo -e "No changes\n"
 fi
