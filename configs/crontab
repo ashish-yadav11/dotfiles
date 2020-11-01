@@ -1,3 +1,3 @@
-49      20      *       *       *       /home/ashish/.scripts/cron/dine.sh
-19      1       *       *       *       /home/ashish/.scripts/cron/sleep.sh
+50      20      *       *       *       /home/ashish/.scripts/cron/dine.sh
+20      1       *       *       *       /home/ashish/.scripts/cron/sleep.sh
 0       22      *       *       6       /home/ashish/.scripts/cron/maintenance.sh

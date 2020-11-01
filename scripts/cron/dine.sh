@@ -1,5 +1,4 @@
 #!/bin/dash
-sleep 60
 time=$(date +%H%M)
 { [ "$time" -gt 2051 ] || [ "$time" -lt 2049 ] ;} && exit 0
 
