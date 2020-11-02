@@ -61,7 +61,7 @@ if [[ ! $(import -window root -depth 8 -crop "1x1+${Xb}+${Yb}" txt:- | grep -om1
 fi
 
 if [[ $1 == 1 ]] ; then
-    
+
     mapfile -t ytmglst < <( import -window root -depth 8 -crop "${Xs}x1+${X0}+${Y0}" txt:- |
         awk -F'[, ]' '/#[7-9][0-9A-F][7-9][0-9A-F][7-9][0-9A-F]/ {print $1}' )
 
