@@ -2,7 +2,7 @@
 
 dmenu_command="dmenu -i -matching fuzzy -no-custom"
 
-case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu_command -p quit) in
+case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu_command -p Quit) in
     "Turn off Display")
         /home/ashish/.scripts/screen.sh off
         ;;
