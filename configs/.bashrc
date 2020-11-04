@@ -71,25 +71,24 @@ spull() {
 }
 
 todo() {
-    local todo_file
-    todo_file=$HOME/Documents/.todo
+    local todo_file=$HOME/Documents/.todo
 
     if (( ! $# )) ; then
-        if [[ -f "$todo_file" ]] ; then
+        if [[ -f $todo_file ]] ; then
             nl -b a "$todo_file"
         else
             touch "$todo_file"
         fi
 
     elif [[ $1 == -e ]] ; then
-        [[ -f "$todo_file" ]] || touch "$todo_file"
+        [[ -f $todo_file ]] || touch "$todo_file"
         nvim "$todo_file"
 
     elif [[ $1 == -c ]] ; then
         : >"$todo_file"
 
     elif [[ $1 == -r ]] ; then
-        if [[ ! -f "$todo_file" ]] ; then
+        if [[ ! -f $todo_file ]] ; then
             touch "$todo_file"
             exit
         fi
