@@ -440,8 +440,8 @@
     summary = "Reflector"
     body = "Reflecotor initiated"
     history_ignore = yes
-[screenshot]
-    summary = "Screenshot"
+[scrot]
+    summary = "Scrot"
     history_ignore = yes
 [sleep.sh]
     summary = "wrap up, it's time to go to bed"
