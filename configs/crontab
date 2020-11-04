@@ -1,3 +1,5 @@
+20      01      *       *       *       /home/ashish/.scripts/cron/sleep.sh
+00      06      *       *       *       DISPLAY=":0" redshift -x
 #50      20      *       *       *       /home/ashish/.scripts/cron/dine.sh
-20      1       *       *       *       /home/ashish/.scripts/cron/sleep.sh
-0       22      *       *       6       /home/ashish/.scripts/cron/maintenance.sh
+00      22      *       *       *       DISPLAY=":0" redshift -PO 4500
+00      22      *       *       6       /home/ashish/.scripts/cron/maintenance.sh
