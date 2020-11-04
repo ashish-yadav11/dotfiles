@@ -17,5 +17,5 @@ case $(echo "Root\nFocused window without border\nFocused window with border\nSe
         ;;
 esac
 
-scrot -q100 $options -e 'mv $f /home/ashish/Desktop/' &&
+scrot -q100 $options '/home/ashish/Pictures/screenshots/%Y-%m-%d-%H%M%S_$wx$h.png' &&
     notify-send -t 1000 Scrot "Screenshot captured"
