@@ -14,7 +14,7 @@ case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutd
     "Restart dwm")
         case $(echo "Yes\nNo" | $dmenu_command -p "Do you really want to restart dwm?") in
             Yes)
-                if [ "$(pidof dwm | wc -w)" = 1 ] || [ "$DISPLAY" = ":0" ] ; then
+                if [ "$(pidof dwm | wc -w)" = 1 ] || [ "$DISPLAY" = :0 ] ; then
                     killall nm-applet
                     xsetroot -name "z:quit i 1"
                     exec nm-applet

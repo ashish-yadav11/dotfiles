@@ -4,7 +4,7 @@ if read -r PID0 </tmp/inhibitsuspend0.pid && rkill "$PID0" ; then
     exit
 fi
 trap 'rm -f /tmp/inhibitsuspend0.pid' EXIT
-echo "$$" >/tmp/inhibitsuspend0.pid
+echo $$ >/tmp/inhibitsuspend0.pid
 read -r PID1 </tmp/inhibitsuspend1.pid && rkill "$PID1"
 
 dunstify -r 231219 -t 15000 "System will not sleep if lid is closed within next 15 seconds"
