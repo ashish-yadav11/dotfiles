@@ -14,7 +14,7 @@ export PATH=~/.local/bin:"$PATH"
 # fix for pacdiff to use nvim instead of vim
 #export DIFFPROG="nvim -d"
 # fix for theme in file opener in telegram
-#export TDESKTOP_I_KNOW_ABOUT_GTK_INCOMPATIBILITY=1
+export TDESKTOP_I_KNOW_ABOUT_GTK_INCOMPATIBILITY=1
 # fix for escape keys in neomutt
 export ESCDELAY=0
 # fix for java programs in dwm
