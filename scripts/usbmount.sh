@@ -1,5 +1,4 @@
 #!/bin/dash
-
 dmenu_command="dmenu -i -matching fuzzy -multi-select -no-custom"
 
 drives_to_mount=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '{if ($2=="part" && $3=="") {if ($4!="") {printf "%s (%s-%s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}}')
