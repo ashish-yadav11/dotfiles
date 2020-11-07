@@ -171,11 +171,10 @@ Keywords[zh_HK]=settings;configuration;設定值;組態;
 Keywords[zh_TW]=settings;configuration;設定值;設定;配置;
 Keywords[ug]=settings;configuration;تەڭشەكلەر;سەپلىمە;
 Keywords=settings;configuration;
-Exec=lxqt-sudo dbus-launch dconf-editor
+Exec=lxqt-sudo dbus-launch --exit-with-session dconf-editor
 Terminal=false
 Type=Application
 StartupNotify=true
 Categories=GNOME;GTK;System;
-DBusActivatable=true
 # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon=ca.desrt.dconf-editor
