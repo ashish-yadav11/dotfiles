@@ -69,18 +69,18 @@ print_mdiff
 
 
 echo -e "\e[1;32mpackage list\e[0m"
-sdiff1=$(
-    $sdiff_cmd "$dotfiles/configs/pacsoff.txt" <( pacman -Qqen | grep -Fxvf <( pacman -Qqg base-devel ) |
-        grep -Ev '(^base$)|(^efibootmgr$)|(^grub$)|(^linux$)|(^linux-firmware$)|(^linux-lts$)' )
-)
-sdiff2=$(
-    $sdiff_cmd "$dotfiles/configs/pacsaur.txt" <( pacman -Qqem )
-)
+mdiff=$(
+    sdiff=$(
+        $sdiff_cmd "$dotfiles/configs/pacsoff.txt" <( pacman -Qqen | grep -Fxvf <( pacman -Qqg base-devel ) |
+            grep -Ev '(^base$)|(^efibootmgr$)|(^grub$)|(^linux$)|(^linux-firmware$)|(^linux-lts$)' )
+    )
+    [[ -n $sdiff ]] &&
+        printf "diff $dotfiles/configs/pacsoff.txt pacsoff\n%s\n" "$sdiff"
 
-if [[ -n $sdiff1 && -n $sdiff2 ]] ; then
-    printf "diff $dotfiles/configs/pacsoff.txt pacsoff\n%s\ndiff $dotfiles/configs/pacsaur.txt pacsaur\n%s\n\n" "$sdiff1" "$sdiff2"
-elif [[ -n $sdiff2 ]] ; then
-    printf "diff $dotfiles/configs/pacsaur.txt pacsaur\n%s\n\n" "$sdiff2"
-else
-    echo -e "No changes\n"
-fi
+    sdiff=$(
+        $sdiff_cmd "$dotfiles/configs/pacsaur.txt" <( pacman -Qqem )
+    )
+    [[ -n $sdiff ]] &&
+        printf "diff $dotfiles/configs/pacsaur.txt pacsaur\n%s\n\n" "$sdiff"
+)
+print_mdiff
