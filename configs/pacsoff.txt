@@ -113,7 +113,6 @@ rclone
 redshift
 reflector
 ripgrep
-ristretto
 rofi
 scrot
 shellcheck
