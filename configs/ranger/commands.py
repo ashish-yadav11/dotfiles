@@ -47,16 +47,15 @@ class fzf_search(Command):
         from os.path import join
         from subprocess import PIPE
 
-        depth = '-d4'
-        target = ''
         if self.arg(1):
             if self.arg(1)[:2] == '-d':
-                depth = self.arg(1)
-                target = ' ' + self.rest(2)
+                fd_args = f"{self.arg(1)} {self.rest(2)}"
             else:
-                target = ' ' + self.rest(1)
+                fd_args = self.rest(1)
+        else:
+            fd_args = ''
 
-        command="fd -HL " + depth + target + " | LC_COLLATE=C sort -f | fzf"
+        command = f"fd -HL {fd_args} | LC_COLLATE=C sort -f | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
         file_dir = stdout.decode('utf-8').rstrip('\n')
@@ -68,16 +67,15 @@ class fzf_cd(Command):
     def execute(self):
         from subprocess import PIPE
 
-        depth = '-d4'
-        target = ''
         if self.arg(1):
             if self.arg(1)[:2] == '-d':
-                depth = self.arg(1)
-                target = ' ' + self.rest(2)
+                fd_args = f"{self.arg(1)} {self.rest(2)}"
             else:
-                target = ' ' + self.rest(1)
+                fd_args = self.rest(1)
+        else:
+            fd_args = ''
 
-        command="fd -HL -td " + depth + target + " | LC_COLLATE=C sort -f | fzf"
+        command = f"fd -HL -td {fd_args} | LC_COLLATE=C sort -f | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
         directory = stdout.decode('utf-8').rstrip('\n')
