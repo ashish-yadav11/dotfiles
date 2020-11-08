@@ -33,9 +33,9 @@ y0=${position##*,}; y0=${y0%% (screen: *}
 x=${size%%x*}
 y=${size##*x}
 
-# coordinates of the white pixel at the center of the youtube music icon in the top left corner
-Xw=$(( x0 + 32 ))
-Yw=$(( y0 + 59 ))
+# coordinates of a black pixel on the left side of the bottom status bar
+Xb=$(( x0 + 9 ))
+Yb=$(( y0 + y - 40 ))
 # size of the pixel array to capture and analyze; 500 cut from left side and 300 from right
 Xs=$(( x - 800 ))
 # coordinates of the pixel which will be the leftmost point of the pixel array to be captured later
@@ -49,12 +49,12 @@ if (( x < 944 || y < 65 )) ; then
         "The size of the YouTube Music window is less than can be tolerated by the script."
     exit
 fi
-if (( Xw < 0 || Xw > 1365 || Yw < 0 || Yw > 767 || X0 < 0 || (X0 + Xs) > 1365 || Y0 < 0 || Y0 > 767 )) ; then
+if (( Xb < 0 || Xb > 1365 || Yb < 0 || Yb > 767 || X0 < 0 || (X0 + Xs) > 1365 || Y0 < 0 || Y0 > 767 )) ; then
     notify-send -t 4000 "YouTube Music L/U Script" \
         "The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
     exit
 fi
-if [[ $(import -window root -depth 8 -crop "1x1+${Xw}+${Yw}" txt:- | grep -om1 '#\w\+') != "#FFFFFF" ]] ; then
+if [[ $(import -window root -depth 8 -crop "1x1+${Xb}+${Yb}" txt:- | grep -om1 '#\w\+') != "#212121" ]] ; then
     notify-send -u critical -t 0 "YouTube Music L/U Script" "Something is wrong!"
     exit
 fi
