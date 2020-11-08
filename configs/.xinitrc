@@ -31,4 +31,10 @@ fi
 
 . "$HOME/.xprofile"
 
+# redshift
+time=$(date +%H%M)
+if [ "$time" -ge 2200 ] || [ "$time" -lt 0600 ] ; then
+    redshift -PO 4500
+fi
+
 exec dwm
