@@ -21,19 +21,13 @@ alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias newsboat="newsboat -q"
+alias nt="setsid -f /home/ashish/.scripts/notify.sh"
 alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
 
 # custom functions
 neomutt() {
     /usr/bin/neomutt "$@"
     pidof -s /usr/bin/neomutt >/dev/null 2>&1 || rm -rf /tmp/neomutt/
-}
-
-nt() {
-    {
-        sleep "$(echo "$1*60" | bc)"
-        notify-send -t 0 "${*:2}"
-    } & disown
 }
 
 rd() {
