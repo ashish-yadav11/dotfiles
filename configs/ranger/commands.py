@@ -47,19 +47,19 @@ class fzf_search(Command):
         from os.path import join
         from subprocess import PIPE
 
-        if self.arg(1):
+        if self.rest(1):
             if self.arg(1)[:2] == '-d':
-                fd_args = f"{self.arg(1)} {self.rest(2)}"
+                fd_args = f"'{self.arg(1)}' '{self.rest(2)}'"
             else:
-                fd_args = self.rest(1)
+                fd_args = f"'{self.rest(1)}'"
         else:
             fd_args = ''
 
-        command = f"fd -HL {fd_args} | LC_COLLATE=C sort -f | fzf"
+        command = f"fd -HiL {fd_args} | LC_COLLATE=C sort -f | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
-        file_dir = stdout.decode('utf-8').rstrip('\n')
-        self.fm.select_file(join(self.fm.thisdir.path, file_dir))
+        selection = stdout.decode('utf-8').rstrip('\n')
+        self.fm.select_file(join(self.fm.thisdir.path, selection))
 
 
 class fzf_cd(Command):
@@ -69,17 +69,17 @@ class fzf_cd(Command):
 
         if self.arg(1):
             if self.arg(1)[:2] == '-d':
-                fd_args = f"{self.arg(1)} {self.rest(2)}"
+                fd_args = f"'{self.arg(1)}' '{self.rest(2)}'"
             else:
-                fd_args = self.rest(1)
+                fd_args = f"'{self.rest(1)}'"
         else:
             fd_args = ''
 
-        command = f"fd -HL -td {fd_args} | LC_COLLATE=C sort -f | fzf"
+        command = f"fd -HiL -td {fd_args} | LC_COLLATE=C sort -f | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
-        directory = stdout.decode('utf-8').rstrip('\n')
-        self.fm.cd(directory)
+        selection = stdout.decode('utf-8').rstrip('\n')
+        self.fm.cd(selection)
 
 
 class trash_highlighted(Command):
