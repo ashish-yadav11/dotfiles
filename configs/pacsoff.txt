@@ -1,5 +1,4 @@
 abook
-acpilight
 alacritty
 amd-ucode
 android-tools
@@ -7,7 +6,6 @@ arduino
 arduino-avr-core
 arduino-cli
 arduino-docs
-asciidoc
 at
 bash-completion
 bc
@@ -119,7 +117,6 @@ scrot
 shellcheck
 shotwell
 signal-desktop
-sshfs
 strace
 sxiv
 telegram-desktop
@@ -160,7 +157,6 @@ xdg-user-dirs
 xdotool
 xf86-video-ati
 xf86-video-vesa
-xmlto
 xorg-server
 xorg-server-xephyr
 xorg-xev
