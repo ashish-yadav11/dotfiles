@@ -75,6 +75,7 @@ lxqt-sudo
 man-db
 man-pages
 materia-gtk-theme
+mediainfo
 mesa-vdpau
 mpv
 msmtp
