@@ -2,14 +2,14 @@
 notify="dunstify -h string:x-canonical-private-synchronous:inhibitsuspend -h int:transient:1"
 
 if read -r PID </tmp/inhibitsuspend.pid && rkill "$PID" ; then
-    $notify -t 1000 "System will now sleep normally on closing the lid"
+    $notify -t 2000 "System will now sleep normally on closing the lid"
     exit
 fi
 
-trap '$notify -t 1000 "System will now sleep normally on closing the lid"; rm -f /tmp/inhibitsuspend.pid' EXIT
+trap 'rm -f /tmp/inhibitsuspend.pid' EXIT
 echo $$ >/tmp/inhibitsuspend.pid
 
-id=$($notify -p -t 15000 "System will not sleep if lid is closed within next 15 seconds")
+id=$($notify -p -t 0 "System will not sleep if lid is closed within next 15 seconds")
 SECONDS=0
 while (( SECONDS < 15 )) ; do
     sleep 1
@@ -26,6 +26,7 @@ while (( SECONDS < 15 )) ; do
         done
         systemctl start timeout.service
         sleep 1
-        break
+        exit
     fi
 done
+$notify -t 2000 "System will now sleep normally on closing the lid"
