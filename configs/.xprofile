@@ -28,7 +28,7 @@ feh --bg-scale /home/ashish/.config/wall* &
 nm-applet &
 pidof -s unclutter >/dev/null 2>&1 || unclutter &
 pidof -s clipdaemon >/dev/null 2>&1 || clipdaemon &
+dsblocks &
 pidof -sx /home/ashish/.scripts/pulse_daemon.sh >/dev/null 2>&1 ||
     /home/ashish/.scripts/pulse_daemon.sh &
-dsblocks &
 systemctl start timeout.service &
