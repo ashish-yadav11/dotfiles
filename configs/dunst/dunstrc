@@ -420,10 +420,13 @@
 [brightness]
     summary = "Brightness"
     history_ignore = yes
-[caja-pseudo-critical]
+[caja]
     appname = "caja"
     summary = "It is now safe to remove the drive"
     urgency = normal
+[calcurse]
+    summary = "Calcurse"
+    history_ignore = yes
 [dictionary]
     summary = "Dictionary"
     history_ignore = yes
@@ -438,7 +441,7 @@
     history_ignore = yes
 [reflector]
     summary = "Reflector"
-    body = "Reflecotor initiated"
+    body = "Reflector initiated"
     history_ignore = yes
 [scrot]
     summary = "Scrot"
@@ -449,11 +452,11 @@
 [systemctl]
     summary = "systemctl"
     history_ignore = yes
+[sxiv]
+    summary = "Sxiv"
+    history_ignore = yes
 [timeout.sh]
     summary = "Timeout in 5 minutes"
-    history_ignore = yes
-[usb]
-    summary = " USB mounter"
     history_ignore = yes
 [inhibitsuspend]
     summary = "System will now sleep normally on closing the lid"
