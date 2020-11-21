@@ -47,7 +47,7 @@ case $1 in
         ;;
     d)
         mapfile -t files
-        [[ $(echo -e "Yes\nNo" | dmenu -i -p "Do you really want to delete the selected image(s)?") = Yes ]] &&
+        [[ $(echo -e "Yes\nNo" | dmenu -i -p "Do you really want to delete the selected image(s)?") == Yes ]] &&
             if rm -f "${files[@]}" ; then
                 notify-send -t 1000 Sxiv "Deletion successful"
             else
