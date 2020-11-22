@@ -1,5 +1,6 @@
 #!/bin/ksh
 notify="dunstify -h string:x-canonical-private-synchronous:inhibitsuspend -h int:transient:1"
+screen=/home/ashish/.scripts/screen.sh
 
 if read -r PID </tmp/inhibitsuspend.pid && rkill "$PID" ; then
     $notify -t 2000 "System will now sleep normally on closing the lid"
@@ -18,7 +19,7 @@ while (( SECONDS < 15 )) ; do
     if [[ $state == closed ]] ; then
         dunstify -C "$id"
         systemctl stop timeout.service
-        /home/ashish/.scripts/screen.sh off
+        $screen off
         while [[ $state == closed ]] ; do
             sleep 1
             read -r state </proc/acpi/button/lid/LID/state

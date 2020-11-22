@@ -1,12 +1,12 @@
 #!/bin/dash
-dmenu_command="dmenu -i -matching fuzzy -multi-select -no-custom"
+dmenu="dmenu -i -matching fuzzy -multi-select -no-custom"
 
 drives_to_mount=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '{if ($2=="part" && $3=="") {if ($4!="") {printf "%s (%s-%s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}}')
 
 drives_to_unmount=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '{if ($2=="part" && $3!="" && $3!="/" && $3!="/efi" && $3!="[SWAP]" && $3!="/media/backup" && $3!="/media/storage") {if ($4!="") {printf "%s (%s-%s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}}')
 
 usbmount() {
-    echo "$drives_to_mount" | $dmenu_command -p "Which drive(s) to mount?" |
+    echo "$drives_to_mount" | $dmenu -p "Which drive(s) to mount?" |
         while read -r chosen ; do
             if output=$(udisksctl mount -b "${chosen%% *}") ; then
                 notify-send -t 2000 " USB mounter" "$output"
@@ -17,7 +17,7 @@ usbmount() {
 }
 
 usbunmount() {
-    echo "$drives_to_unmount" | $dmenu_command -p "Which drive(s) to unmount?" |
+    echo "$drives_to_unmount" | $dmenu -p "Which drive(s) to unmount?" |
         while read -r chosen ; do
             if output=$(udisksctl unmount -b "${chosen%% *}") ; then
                 notify-send -t 2000 " USB mounter" "${output%.}"

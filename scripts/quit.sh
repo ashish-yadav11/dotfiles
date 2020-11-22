@@ -1,17 +1,19 @@
 #!/bin/dash
-dmenu_command="dmenu -i -matching fuzzy -no-custom"
+dmenu="dmenu -i -matching fuzzy -no-custom"
+i3lock=/home/ashish/.scripts/i3lock.sh
+screen=/home/ashish/.scripts/screen.sh
 
-case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu_command -p Quit) in
+case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu -p Quit) in
     "Turn off Display")
-        /home/ashish/.scripts/screen.sh off
+        $screen off
         ;;
     "Lock Screen")
-        /home/ashish/.scripts/i3lock.sh
+        $i3lock
         systemctl restart timeout.service
-        /home/ashish/.scripts/screen.sh off
+        $screen off
         ;;
     "Restart dwm")
-        case $(echo "Yes\nNo" | $dmenu_command -p "Do you really want to restart dwm?") in
+        case $(echo "Yes\nNo" | $dmenu -p "Do you really want to restart dwm?") in
             Yes)
                 if [ "$(pidof dwm | wc -w)" = 1 ] || [ "$DISPLAY" = :0 ] ; then
                     killall nm-applet
@@ -24,21 +26,21 @@ case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutd
         esac
         ;;
     "Exit dwm")
-        case $(echo "Yes\nNo" | $dmenu_command -p "Do you really want to exit dwm?") in
+        case $(echo "Yes\nNo" | $dmenu -p "Do you really want to exit dwm?") in
             Yes)
                 xsetroot -name "z:quit i 0"
                 ;;
         esac
         ;;
     Reboot)
-        case $(echo "Yes\nNo" | $dmenu_command -p "Do you really want to reboot the pc?") in
+        case $(echo "Yes\nNo" | $dmenu -p "Do you really want to reboot the pc?") in
             Yes)
                 systemctl reboot
                 ;;
         esac
         ;;
     Shutdown)
-        case $(echo "Yes\nNo" | $dmenu_command -p "Do you really want to shutdown the pc?") in
+        case $(echo "Yes\nNo" | $dmenu -p "Do you really want to shutdown the pc?") in
             Yes)
                 systemctl poweroff
                 ;;
