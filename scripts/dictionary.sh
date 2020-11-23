@@ -20,8 +20,8 @@ case $? in
         logfile=/home/ashish/Documents/.dictionary.log
         mv /tmp/dictionary.last.temp /tmp/dictionary.last
         termite --name=floating_Termite -t Dictionary -e "less /tmp/dictionary.last"
-        echo "$word" >>"$logfile"
-        awk '!visited[$0]++' "$logfile" | tail -10000 >/tmp/dictionary.log.temp
+        sed -e "1i\\$word" -e "/^$word$/d" "$logfile" |
+            head -10000 >/tmp/dictionary.log.temp
         mv /tmp/dictionary.log.temp "$logfile"
         ;;
     21)
