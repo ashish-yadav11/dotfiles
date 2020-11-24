@@ -102,7 +102,6 @@ bind generic,attach,compose <Enter> noop
 # top page
 bind generic H noop
 
-# documentation
 macro generic,pager <F1> "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>less /usr/share/doc/neomutt/manual.txt<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "show NeoMutt documentation"
 
 
