@@ -1,3 +1,7 @@
+/*
+        gcc -o focusedwinclass -O3 -Wall -Wextra focusedwinclass.c -lX11
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <X11/Xlib.h>

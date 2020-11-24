@@ -17,10 +17,10 @@ case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutd
             Yes)
                 if [ "$(pidof dwm | wc -w)" = 1 ] || [ "$DISPLAY" = :0 ] ; then
                     killall nm-applet
-                    xsetroot -name "z:quit i 1"
+                    sigdwm "quit i 1"
                     exec nm-applet
                 else
-                    xsetroot -name "z:quit i 1"
+                    sigdwm "quit i 1"
                 fi
                 ;;
         esac
@@ -28,7 +28,7 @@ case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutd
     "Exit dwm")
         case $(echo "Yes\nNo" | $dmenu -p "Do you really want to exit dwm?") in
             Yes)
-                xsetroot -name "z:quit i 0"
+                sigdwm "quit i 0"
                 ;;
         esac
         ;;

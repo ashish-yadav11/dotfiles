@@ -2,7 +2,7 @@
 xdotool keyup 108
 
 hide_exit() {
-        [ -n "$ytaf" ] || xsetroot -name "z:scrh i 2"
+        [ -n "$ytaf" ] || sigdwm "scrh i 2"
         exit
 }
 
@@ -10,7 +10,7 @@ if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     ytaf=1
 else
     if xwininfo -tree -root | grep -q '("crx_cinhimbnkkaeohfgghhklpknlkffjgod" ' ; then
-        xsetroot -name "z:scrs i 2"
+        sigdwm "scrs i 2"
         sleep 0.1
     else
         exec brave --app-id=cinhimbnkkaeohfgghhklpknlkffjgod
