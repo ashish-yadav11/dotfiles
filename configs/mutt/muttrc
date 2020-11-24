@@ -63,6 +63,7 @@ bind index,pager                <Esc>u          noop
 #<previous-line>        <               scroll up one line
 #<select-entry>         <Return>        select the current entry
 #<shell-escape>         !               invoke a command in a subshell
+#<tag-entry>            t               tag the current entry
 #<tag-prefix>           ;               apply next function to tagged messages
 
 # page-movement
@@ -93,7 +94,6 @@ bind generic L noop
 
 bind generic,pager ,/ search-reverse
 
-macro generic t "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next one"
 macro generic,index,browser <Space> "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next one"
 
 # ^J is Enter
