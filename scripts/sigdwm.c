@@ -26,11 +26,11 @@ main(int argc, char *argv[])
         }
         if (XFetchName(dpy, DefaultRootWindow(dpy), &curname) && curname[0]) {
                 if (strncmp(curname, FSIGID, FSIGIDLEN) == 0) {
-                        char *curstext;
+                        char *stext;
 
-                        for (curstext = curname; *curstext != '\n' && *curstext != '\0'; curstext++);
-                        if (*curstext != '\0' && *(++curstext) != '\0')
-                                snprintf(newname, sizeof newname, FSIGID "%s\n%s", argv[1], curstext);
+                        for (stext = curname; *stext != '\n' && *stext != '\0'; stext++);
+                        if (*stext != '\0' && *(++stext) != '\0')
+                                snprintf(newname, sizeof newname, FSIGID "%s\n%s", argv[1], stext);
                         else
                                 snprintf(newname, sizeof newname, FSIGID "%s\n", argv[1]);
                 } else
