@@ -1,13 +1,14 @@
-/*
-        gcc -o sigdwm -O3 -Wall -Wextra sigdwm.c -lX11
-*/
+/* compilation:
 
+gcc -o sigdwm -O3 -Wall -Wextra sigdwm.c -lX11
+
+*/
 #include <stdio.h>
 #include <string.h>
 #include <X11/Xlib.h>
 
-#define FSIGID                          "z:"
 #define ROOTNAMELENGTH                  320
+#define FSIGID                          "z:"
 #define FSIGIDLEN                       (sizeof FSIGID - 1)
 
 int
@@ -29,13 +30,13 @@ main(int argc, char *argv[])
 
                         for (curstext = curname; *curstext != '\n' && *curstext != '\0'; curstext++);
                         if (*curstext != '\0' && *(++curstext) != '\0')
-                                snprintf(newname, sizeof newname, "%s%s\n%s", FSIGID, argv[1], curstext);
+                                snprintf(newname, sizeof newname, FSIGID "%s\n%s", argv[1], curstext);
                         else
-                                snprintf(newname, sizeof newname, "%s%s\n", FSIGID, argv[1]);
+                                snprintf(newname, sizeof newname, FSIGID "%s\n", argv[1]);
                 } else
-                        snprintf(newname, sizeof newname, "%s%s\n%s", FSIGID, argv[1], curname);
+                        snprintf(newname, sizeof newname, FSIGID "%s\n%s", argv[1], curname);
         } else
-                snprintf(newname, sizeof newname, "%s%s\n", FSIGID, argv[1]);
+                snprintf(newname, sizeof newname, FSIGID "%s\n", argv[1]);
         XFree(curname);
         XStoreName(dpy, DefaultRootWindow(dpy), newname);
         XCloseDisplay(dpy);
