@@ -6,7 +6,7 @@ if [ -n "$log" ] ; then
         dict "$word" >/tmp/dictionary.last
         awk -v word="$word" '
             BEGIN {print word; a = 1};
-            a > 10000 {exit};
+            a > 1000 {exit};
             $0 != word {print $0; a++}
         ' "$logfile" >/tmp/dictionary.log.temp
         mv /tmp/dictionary.log.temp "$logfile"
