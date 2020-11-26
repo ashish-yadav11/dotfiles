@@ -1,6 +1,7 @@
 #!/bin/dash
 truncate() {
-    sed 's/^[[:space:][:punct:]]*//; s/[[:space:][:punct:]]*$//' | tr '[:upper:]' '[:lower:]'
+    sed 's/^[[:space:][:punct:]]*//; s/[[:space:][:punct:]]*$//' |
+        tr '[:upper:]' '[:lower:]'
 }
 
 case $1 in
@@ -23,8 +24,11 @@ case $? in
     0)
         logfile=/home/ashish/Documents/.dictionary.log
         mv /tmp/dictionary.last.temp /tmp/dictionary.last
-        sed -e "1i\\$word" -e "/^$word$/d" "$logfile" |
-            head -10000 >/tmp/dictionary.log.temp
+        awk -v word="$word" '
+            BEGIN {print word; a = 1};
+            a > 10000 {exit};
+            $0 != word {print $0; a++}
+        ' "$logfile" >/tmp/dictionary.log.temp
         mv /tmp/dictionary.log.temp "$logfile"
         termite --name=floating_Termite -t Dictionary -e "less /tmp/dictionary.last"
         ;;
