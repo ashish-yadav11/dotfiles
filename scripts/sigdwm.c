@@ -7,9 +7,11 @@ gcc -o sigdwm -O3 -Wall -Wextra sigdwm.c -lX11
 #include <string.h>
 #include <X11/Xlib.h>
 
+#define LENGTH(X)                       (sizeof X / sizeof X[0])
+
 #define ROOTNAMELENGTH                  320
 #define FSIGID                          "z:"
-#define FSIGIDLEN                       (sizeof FSIGID - 1)
+#define FSIGIDLEN                       (LENGTH(FSIGID) - 1)
 
 int
 main(int argc, char *argv[])
