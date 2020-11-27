@@ -37,7 +37,7 @@ i3lock \
 \
 --indicator \
 --clock \
---timestr="%l:%M %P" \
+--timestr="%R" \
 --timecolor="$time" \
 --timesize=35 \
 --timepos=683:375 \
