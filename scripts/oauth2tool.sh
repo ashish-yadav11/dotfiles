@@ -1,68 +1,73 @@
-#!/bin/bash
+#!/bin/dash
 
-# Joseph Harriott - Sat 16 May 2020
-# https://github.com/harriott/ArchBuilds/blob/master/jo/mail/oauth2tool.sh
+# based on oauth2token.sh of Joseph Harriott
+#   (https://github.com/tenllado/dotfiles/tree/master/config/msmtp)
 
-# my adaptation of  oauth2token
-# -----------------------------
-#  "Msmtp setup for GMail with OAuth2" - Christian Tenllado
-#  https://github.com/tenllado/dotfiles/tree/master/config/msmtp
+# argument: <Gmail username>
 
-
-# argument: your Gmail username
-
-# This script assumes that you have done the following
-
-#   1. Set up your Gmail API. I did it with the Python Quickstart
-#        https://developers.google.com/gmail/api/quickstart/python
+# initialization
+#   (should be done before running the script for the first time)
 #
-#   2. Configured your ~/.config/msmtp/config correctly.  Mine looks like this:
+#     user=<Gmail username>
+#     client_id=<GoogleAPIClientID>
+#     cleint_secret=<GoogleAPIClientSecret>
+#     data_dir=/home/ashish/.local/share/gmail-oauth2/$user
+#     oauth2=/home/ashish/.scripts/oauth2.py
+#       (https://github.com/google/gmail-oauth2-tools/blob/master/python/oauth2.py)
 #
-#        defaults
-#        tls on
-#        tls_trust_file /etc/ssl/certs/ca-certificates.crt
-#        logfile ~/.config/msmtp/msmtp.log
-
-#        account username
-#        auth oauthbearer
-#        host smtp.gmail.com
-#        port 587
-#        from username@gmail.com
-#        user username@gmail.com
-#        passwordeval bash oauth2tool.sh username
-#
-#   3. Preloaded your  ~/.password-store
-#        echo "$(date +%s)" | pass insert -e "$user/GmailAPI/token-expire"
-#        echo <GoogleAPIClientID> | pass insert -e "$user/GmailAPI/CID"
-#        echo <GoogleAPIClientSecret> | pass insert -e "$user/GmailAPI/CS"
-#        echo <GoogleAPIClient_refresh_token> | pass insert -e "$user/GmailAPI/refresh"
+#     current_time=$(date +%s)
+#     mkdir -p "$data_dir"
+#     output=(
+#         $oauth2 \
+#             --user="$user" \
+#             --client_id=<GoogleAPIClientID> \
+#             --client_secret=<GoogleAPIClientSecret> \
+#             --generate_oauth2_token
+#     )
+#     newline='
+#     '
+#     output=${output#Refresh Token: }
+#     refresh_token=${output%%${newline}*}
+#     output=${output#*${newline}Access Token: }
+#     access_token=${output%${newline}*}
+#     expiry_time=${output#*${newline}Access Token Expiration Seconds: }
+#     echo "$refresh_token" | pass insert -e "gmail-oauth2/$user/refresh_token"
+#     echo "$client_id" >"$data_dir/client_id"
+#     echo "$client_secret" >"$data_dir/client_secret"
+#     echo "$access_token" >"$data_dir/access_token"
+#     echo "$(( current_time + expiry_time - 60 ))" >"$data_dir/expiry_time"
 
 user=$1
-# user=username
+data_dir=/home/ashish/.local/share/gmail-oauth2/$user
+ouath2=/home/ashish/.scripts/oauth2.py
 
 get_access_token() {
-    # https://github.com/google/gmail-oauth2-tools/blob/master/python/oauth2.py
-
-    { IFS= read -r tokenline && IFS= read -r expireline; } < \
-    <(python2 /home/ashish/.scripts/oauth2.py --user="$user" \
-    --client_id="$(pass "$user/GmailAPI/CID")" \
-    --client_secret="$(pass "$user/GmailAPI/CS")" \
-    --refresh_token="$(pass "$user/GmailAPI/refresh")")
-
-    token=${tokenline#Access Token: }
-    expire=${expireline#Access Token Expiration Seconds: }
+    read -r client_id <"$data_dir/client_id"
+    read -r client_secret <"$data_dir/client_secret"
+    refresh_token=$(pass "gmail-oauth2/$user/refresh_token")
+    output=$(
+        $oauth2 \
+            --user="$user" \
+            --client_id="$client_id" \
+            --client_secret="$client_secret" \
+            --refresh_token="$refresh_token"
+    )
+    newline='
+'
+    output=${output#Access Token: }
+    access_token=${output%${newline}*}
+    expiry_time=${output#*${newline}Access Token Expiration Seconds: }
 }
 
-token=$(pass "$user/GmailAPI/token")
-# Christian included an expire time to avoid unneccessary calls
-expire=$(pass "$user/GmailAPI/token-expire") # you can reset it as described above
-now=$(date +%s)
+read -r expiry_time <"$data_dir/expiry_time"
+current_time=$(date +%s)
 
-if [[ $token && $expire && $now -lt $((expire - 60)) ]]; then
-    echo "$token"
+if read -r access_token <"$data_dir/access_token" &&
+   [ "$current_time" -lt "$expiry_time" ] ; then
+    echo "$access_token"
 else
     get_access_token
-    echo "$token" | pass insert -e "$user/GmailAPI/token"
-    echo "$((now + expire))" | pass insert -e "$user/GmailAPI/token-expire"
-    echo "$token"
+    echo "$access_token" >"$data_dir/access_token"
+    echo "$(( current_time + expiry_time - 60 ))" >"$data_dir/expiry_time"
+    echo "$access_token"
 fi

@@ -3,7 +3,7 @@ Host imap.gmail.com
 Port 993
 User ashishkumar.yadav@students.iiserpune.ac.in
 AuthMechs XOAUTH2
-PassCmd "bash /home/ashish/.scripts/oauth2tool.sh ashishkumar.yadav@students.iiserpune.ac.in"
+PassCmd "dash /home/ashish/.scripts/oauth2tool.sh ashishkumar.yadav@students.iiserpune.ac.in"
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
