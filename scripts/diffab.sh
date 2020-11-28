@@ -23,6 +23,10 @@ mdiff=$(
     $mdiff_cmd -I '^token = ' /media/storage/.backup/ /home/ashish/.config/ |
         grep -Ev '^Only.*' |
             sed -e "s/^$mdiff_str -I '\\^token = '/diff/"
+
+    $mdiff_cmd /media/storage/.backup/ /home/ashish/.local/share/ |
+        grep -Ev '^Only.*' |
+            sed -e "s/^$mdiff_str/diff/"
 )
 print_mdiff
 
