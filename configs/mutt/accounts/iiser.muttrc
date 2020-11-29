@@ -2,18 +2,18 @@
 
 # group reply
 bind index,pager,attach g noop
+
 # show log
 bind index M noop
-# copy message
-bind index,pager C noop
 
 macro index,pager gi "<change-folder>=INBOX<Enter>" "go to inbox"
 macro index,pager Mi "<save-message>=INBOX<Enter>" "move mail to inbox"
-macro index,pager Ci "<copy-message>=INBOX<Enter>" "copy mail to inbox"
-macro index,pager gs "<change-folder>=[Gmail].Sent\ Mail<Enter>" "go to sent"
+macro index,pager gs "<change-folder>=[Gmail].Sent\ Mail<Enter>" "go to sent mail"
+macro index,pager Ms "<save-message>=[Gmail].Sent\ Mail<Enter>" "move mail to sent mail"
+macro index,pager gd "<change-folder>=[Gmail].Drafts<Enter>" "go to drafts"
+macro index,pager Md "<save-message>=[Gmail].Drafts<Enter>" "move mail to drafts"
 macro index,pager gS "<change-folder>=[Gmail].Spam<Enter>" "go to spam"
 macro index,pager MS "<save-message>=[Gmail].Spam<Enter>" "move mail to spam"
-macro index,pager CS "<copy-message>=[Gmail].Spam<Enter>" "copy mail to spam"
 macro index,pager gt "<change-folder>=[Gmail].Trash<Enter>" "go to trash"
 
 alias me Ashish Kumar Yadav <ashishkumar.yadav@students.iiserpune.ac.in>
@@ -34,4 +34,4 @@ set spoolfile = "+INBOX"
 set trash = "+[Gmail].Trash"
 
 unmailboxes *
-mailboxes "=INBOX" "=[Gmail].Sent\ Mail" "=[Gmail].Spam" "=[Gmail].Trash"
+mailboxes "=INBOX" "=[Gmail].Sent\ Mail" "=[Gmail].Drafts" "=[Gmail].Spam" "=[Gmail].Trash"

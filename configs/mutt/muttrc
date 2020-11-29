@@ -1,6 +1,6 @@
 # vim: filetype=neomuttrc
 
-source /home/ashish/.config/mutt/accounts/1-iiser.muttrc
+source /home/ashish/.config/mutt/accounts/iiser.muttrc
 source /home/ashish/.config/mutt/colorscheme.muttrc
 
 
@@ -134,7 +134,7 @@ macro index,pager,attach,compose gx "<enter-command>set my_pipe_decode=\$pipe_de
 
 # change newsgroup
 bind index,pager i noop
-#macro index,pager i1 '<sync-mailbox><enter-command>source /home/ashish/.config/mutt/accounts/1-iiser.muttrc<Enter><change-folder>!<Enter><check-stats>' "switch to ashishkumar.yadav@students.iiserpune.ac.in"
+#macro index,pager ii '<sync-mailbox><enter-command>source /home/ashish/.config/mutt/accounts/iiser.muttrc<Enter><change-folder>!<Enter><check-stats>' "switch to ashishkumar.yadav@students.iiserpune.ac.in"
 
 macro index \Cs "<check-stats><refresh>" "refresh stats without warnings"
 
@@ -143,6 +143,9 @@ bind index,pager,attach \\P check-traditional-pgp
 
 bind index za collapse-thread
 bind index zA collapse-all
+
+# copy message to mailbox
+bind index,pager C noop
 
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<return><pipe-message>abook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<return>" "add the sender address to abook"
 
@@ -220,7 +223,7 @@ bind index,pager P noop
 bind index,pager gp parent-message
 
 # recall postponed
-bind index,pager gd recall-message
+bind index,pager gD recall-message
 
 # movement
 bind index j next-entry
@@ -252,7 +255,7 @@ bind index,pager \Cj sidebar-next
 bind index,pager \Co sidebar-open
 bind index,pager B sidebar-toggle-visible
 
-macro index,pager s "<enter-command>set my_delete=\$delete delete=yes<Enter><sync-mailbox><enter-command>set delete=\$my_delete my_wait_key=\$wait_key wait_key=no; unset my_delete<Enter><shell-escape>setsid -f /home/ashish/.scripts/mailsync.sh<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "sync mail"
+macro index,pager s "<sync-mailbox><enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>setsid -f /home/ashish/.scripts/mailsync.sh<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "sync mail"
 
 macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter><clear-flag>N" "open html in browser otherwise text to less with url highlighting"
 macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter>" "open html in browser otherwise text to less with url highlighting"
@@ -530,6 +533,9 @@ set abort_key = "<Esc>"
 set abort_backspace = no
 
 set date_format = "%d/%m/%y %H:%M"
+
+# don't ask for confirmation when deleting messages in a folder
+set delete = yes
 
 # hide [-- Autoview using ... --] message from html mails
 #set display_filter = "grep -v '\\[-- Autoview using .* --\\]'"
