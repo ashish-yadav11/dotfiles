@@ -103,7 +103,6 @@ python-matplotlib
 python-pip
 python-pycodestyle
 python-scipy
-python2
 qbittorrent
 qt5ct
 r
