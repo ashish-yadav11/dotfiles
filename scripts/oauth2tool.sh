@@ -9,8 +9,8 @@
 #   (should be done before running the script for the first time)
 #
 #     user=<Gmail username>
-#     client_id=<GoogleAPIClientID>
-#     cleint_secret=<GoogleAPIClientSecret>
+#     client_id=<OauthClientID>
+#     cleint_secret=<OauthClientSecret>
 #     data_dir=/home/ashish/.local/share/gmail-oauth2/$user
 #     oauth2=/home/ashish/.scripts/oauth2.py
 #       (https://github.com/google/gmail-oauth2-tools/blob/master/python/oauth2.py)
@@ -20,8 +20,8 @@
 #     output=(
 #         $oauth2 \
 #             --user="$user" \
-#             --client_id=<GoogleAPIClientID> \
-#             --client_secret=<GoogleAPIClientSecret> \
+#             --client_id="$client_id" \
+#             --client_secret="$client_secret" \
 #             --generate_oauth2_token
 #     )
 #     newline='
@@ -39,9 +39,10 @@
 
 user=$1
 data_dir=/home/ashish/.local/share/gmail-oauth2/$user
-ouath2=/home/ashish/.scripts/oauth2.py
 
 get_access_token() {
+    oauth2=/home/ashish/.scripts/oauth2.py
+
     read -r client_id <"$data_dir/client_id"
     read -r client_secret <"$data_dir/client_secret"
     refresh_token=$(pass "gmail-oauth2/$user/refresh_token")
