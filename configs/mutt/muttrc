@@ -66,41 +66,39 @@ bind index,pager                <Esc>u          noop
 #<tag-entry>            t               tag the current entry
 #<tag-prefix>           ;               apply next function to tagged messages
 
-# page-movement
-bind generic z noop
-bind generic Z noop
-
 bind generic \Cl noop
 bind generic <F5> refresh
 
 # movement
-bind generic gg first-entry
-bind generic M noop
-bind generic gm middle-page
-bind generic,index,compose G last-entry
-bind generic,index,pager,attach,compose \Ce next-line
-bind generic,pager \Cy previous-line
-bind generic,index,pager,attach,compose \Cf next-page
-bind generic,index,pager \Cb previous-page
+bind generic L noop
+bind generic z noop
 bind generic zb current-bottom
 bind generic zz current-middle
 bind generic zt current-top
+bind generic gg first-entry
+bind generic ] noop
+bind generic,index,pager,compose \Cd half-down
+bind generic [ noop
+bind generic,index,pager \Cu half-up
+bind generic,index,compose G last-entry
+bind generic M noop
+bind generic gm middle-page
+bind generic,index,pager,attach,compose \Ce next-line
+bind generic,index,pager,attach,compose \Cf next-page
+bind generic,pager \Cy previous-line
+bind generic Z noop
+bind generic,index,pager \Cb previous-page
+bind generic H noop
 
 # previous match
 bind generic,index,pager,browser N search-opposite
 
-# bottom page
-bind generic L noop
-
 bind generic,pager ,/ search-reverse
-
-macro generic,index,browser <Space> "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next one"
 
 # ^J is Enter
 bind generic,attach,compose <Enter> noop
 
-# top page
-bind generic H noop
+macro generic,index,browser <Space> "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next one"
 
 macro generic,pager <F1> "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>less /usr/share/doc/neomutt/manual.txt<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "show NeoMutt documentation"
 
@@ -134,7 +132,7 @@ macro index,pager gf "<change-folder>?" "go to another folder"
 macro index,pager gF "<change-folder-readonly>?" "go to another folder in readonly mode"
 macro index,pager,attach,compose gx "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message> urlscan<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "call urlview to extract URLs out of a message"
 
-# newsgroup stuff
+# change newsgroup
 bind index,pager i noop
 #macro index,pager i1 '<sync-mailbox><enter-command>source /home/ashish/.config/mutt/accounts/1-iiser.muttrc<Enter><change-folder>!<Enter><check-stats>' "switch to ashishkumar.yadav@students.iiserpune.ac.in"
 
@@ -229,8 +227,6 @@ bind index j next-entry
 bind index <Down> next-entry
 bind index k previous-entry
 bind index <Up> previous-entry
-bind index,pager \Cd half-down
-bind index,pager \Cu half-up
 bind index J next-thread
 bind index K previous-thread
 bind index,pager } next-thread
@@ -355,7 +351,6 @@ bind attach <Right> view-attach
 #<ispell>               i               run ispell on the message
 #<postpone-message>     P               save this message to send later
 #<send-message>         y               send the message
-#<toggle-disposition>   ^D              toggle disposition between inline/attachment
 #<view-attach>          <Return>        view attachment using mailcap entry if necessary
 #<toggle-unlink>        u               toggle whether to delete file after sending it
 #<update-encoding>      U               update an attachment's encoding info
@@ -409,6 +404,7 @@ bind compose en new-mime
 bind compose F edit-from
 bind compose r noop
 bind compose R edit-reply-to
+bind compose t tag-entry
 bind compose T edit-to
 
 # filter attachment through shell command
@@ -436,6 +432,9 @@ bind compose A rename-file
 
 # S/MIME options
 bind compose \\s smime-menu
+
+# toggle disposition between inline/attachment
+bind compose I toggle-disposition
 
 
 #---------#
@@ -574,7 +573,13 @@ set mime_forward = yes
 # don't move to the next message in pager when invoking <next-page>
 set pager_stop = yes
 
+# ask whether to save message to draft on aborting send
+set postpone = ask-no
+
 set query_command = "abook --mutt-query '%s'"
+
+# ask whether to recall messages from draft when composing a new one
+set recall = ask-no
 
 # reply as whomever it was to
 set reverse_name = yes
@@ -584,6 +589,8 @@ set rfc2047_parameters = yes
 
 # don't move to the next mail when modifying the current mail
 set resolve = no
+
+set signature = ""
 
 # pause 0 seconds for informational messages
 set sleep_time = 0
