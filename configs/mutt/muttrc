@@ -246,8 +246,8 @@ bind index,pager ] sort-mailbox
 bind index,pager [ sort-reverse
 
 bind index \Ct tag-thread
-bind index ,t untag-pattern
-macro index ,T "<untag-pattern>~T<Enter>" "untag all tagged messages"
+macro index ,t "<untag-pattern>~T<Enter>" "untag all tagged messages"
+bind index ,T untag-pattern
 
 # sidebar
 bind index,pager \Ck sidebar-prev
