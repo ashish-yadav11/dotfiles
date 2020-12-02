@@ -2,13 +2,14 @@
 notify="dunstify -h string:x-canonical-private-synchronous:inhibitsuspend -h int:transient:1"
 screen=/home/ashish/.scripts/screen.sh
 
-if read -r PID </tmp/inhibitsuspend.pid && rkill "$PID" ; then
+read -r PID1 </tmp/inhibitsuspend1.pid && rkill "$PID1"
+if read -r PID0 </tmp/inhibitsuspend0.pid && rkill "$PID0" ; then
     $notify -t 2000 "System will now sleep normally on closing the lid"
     exit
 fi
 
-trap 'rm -f /tmp/inhibitsuspend.pid' EXIT
-echo $$ >/tmp/inhibitsuspend.pid
+trap 'rm -f /tmp/inhibitsuspend0.pid' EXIT
+echo $$ >/tmp/inhibitsuspend0.pid
 
 id=$($notify -p -t 0 "System will not sleep if lid is closed within next 15 seconds")
 SECONDS=0
