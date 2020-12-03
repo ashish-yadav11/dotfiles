@@ -1,4 +1,7 @@
 #!/bin/dash
+mbsync_channel=iiser
+trash_folder="/home/ashish/.local/share/mail/iiser/[Gmail].Trash/"
+
 exec >/dev/null 2>&1
 
 sigdsblocks 3 1
@@ -17,9 +20,7 @@ if ping -c1 imap.gmail.com ; then
     exec 8>/dev/null
     sigdsblocks 3 -2
     time=$(date +%s)
-    if mbsync iiser ; then
-        trash_folder="/home/ashish/.local/share/mail/iiser/[Gmail].Trash/"
-
+    if mbsync "$mbsync_channel" ; then
         find "$trash_folder" -newerct "@$time" -type f | mflag -S
         sigdsblocks 3 3
     else
