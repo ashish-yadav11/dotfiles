@@ -118,6 +118,7 @@ macro generic,pager <F1> "<enter-command>set my_wait_key=\$wait_key wait_key=no<
 #<next-thread>          ^N              jump to the next thread
 #<previous-thread>      ^P              jump to previous thread
 #<query>                Q               query external program for addresses
+#<read-thread>          ^R              mark the current thread as read
 #<sync-mailbox>         $               save changes to mailbox
 #<tag-pattern>          T               tag messages matching a pattern
 #<toggle-write>         %               toggle whether the mailbox will be rewritten
@@ -191,9 +192,6 @@ bind index,pager,attach \\k extract-keys
 
 bind index,pager,attach,compose \\f forget-passphrase
 
-# read thread
-bind index,pager \Cr noop
-
 # reply stuff
 bind index,pager,attach r noop
 bind index,pager,attach rr reply
@@ -238,6 +236,8 @@ bind index,pager { previous-thread
 # printing
 bind index,pager p noop
 
+macro index ,r "<tag-pattern>~U<Enter><tag-prefix><clear-flag>N<untag-pattern>~T<Enter>" "mark all messages as read"
+
 bind index ,l show-limit
 
 # sorting
@@ -279,6 +279,7 @@ macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes m
 #<next-thread>          ^N              jump to the next thread
 #<previous-entry>       K               move to the previous entry
 #<previous-thread>      ^P              jump to previous thread
+#<read-thread>          ^R              mark the current thread as read
 #<search-toggle>        \\              toggle search pattern coloring
 #<skip-quoted>          S               skip beyond quoted text
 #<sync-mailbox>         $               save changes to mailbox
