@@ -1,5 +1,6 @@
 #!/bin/dash
 logfile=/home/ashish/Documents/.dictionary.log
+
 log=$(cat "$logfile")
 if [ -n "$log" ] ; then
     if word=$(echo "$log" | fzf --sync) ; then

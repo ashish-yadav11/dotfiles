@@ -35,6 +35,7 @@
 #
 #     user=<gmail username>
 #     data_dir=/home/ashish/.local/share/gmail-oauth2/$user
+#
 #     date +%s >"$data_dir/expiry_time"
 
 user=$1

@@ -23,6 +23,7 @@ dict "$word" >/tmp/dictionary.last.temp 2>&1
 case $? in
     0)
         logfile=/home/ashish/Documents/.dictionary.log
+
         mv /tmp/dictionary.last.temp /tmp/dictionary.last
         awk -v word="$word" '
             BEGIN {print word; a = 1};
