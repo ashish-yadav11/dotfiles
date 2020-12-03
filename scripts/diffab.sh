@@ -31,15 +31,6 @@ mdiff=$(
 print_mdiff
 
 
-echo -e "\e[1;32mdsblocks\e[0m"
-mdiff=$(
-    $mdiff_cmd "$dsblocks/helpers/scripts/" /home/ashish/.scripts/ |
-        grep -Ev '^Only.*' |
-            sed -e "s/^$mdiff_str/diff/"
-)
-print_mdiff
-
-
 echo -e "\e[1;32mdotfiles\e[0m"
 mdiff=$(
     sdiff=$(
