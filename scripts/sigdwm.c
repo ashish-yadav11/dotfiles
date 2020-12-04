@@ -7,11 +7,11 @@ gcc -o sigdwm -O3 -Wall -Wextra sigdwm.c -lX11
 #include <string.h>
 #include <X11/Xlib.h>
 
-#define LENGTH(X)                       (sizeof X / sizeof X[0])
-
 #define ROOTNAMELENGTH                  320
 #define FSIGID                          "z:"
 #define FSIGIDLEN                       (LENGTH(FSIGID) - 1)
+
+#define LENGTH(X)                       (sizeof X / sizeof X[0])
 
 int
 main(int argc, char *argv[])
@@ -20,8 +20,10 @@ main(int argc, char *argv[])
         char newname[ROOTNAMELENGTH];
         Display *dpy;
 
-        if (argc != 2)
+        if (argc != 2) {
+                fprintf(stderr, "Usage: %s <signal>\n", argv[0]);
                 return 2;
+        }
         if (!(dpy = XOpenDisplay(NULL))) {
                 fputs("Error: could not open display.\n", stderr);
                 return 1;
