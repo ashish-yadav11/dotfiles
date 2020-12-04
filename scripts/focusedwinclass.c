@@ -9,6 +9,8 @@ gcc -o focusedwinclass -O3 -Wall -Wextra focusedwinclass.c -lX11
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
+#define DELIMITER                       " : "
+
 int
 main(int argc, char *argv[])
 {
@@ -31,15 +33,15 @@ main(int argc, char *argv[])
         class = ch.res_class ? ch.res_class : "";
         instance = ch.res_name ? ch.res_name : "";
 
-        if (argc > 1) {
+        if (argc == 2) {
                 if (strcmp(argv[1], "-c") == 0)
                         puts(class);
                 else if (strcmp(argv[1], "-i") == 0)
                         puts(instance);
                 else
-                        fprintf(stderr, "Usage: %s [-c] [-i]\n", argv[0]);
+                        fprintf(stderr, "Usage: %s [-c|-i]\n", argv[0]);
         } else
-                printf("%s : %s\n", class, instance);
+                printf("%s" DELIMITER "%s\n", class, instance);
 
         if (winc)
                 XFree(winc);
