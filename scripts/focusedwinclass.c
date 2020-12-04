@@ -11,17 +11,32 @@ gcc -o focusedwinclass -O3 -Wall -Wextra focusedwinclass.c -lX11
 
 #define DELIMITER                       " : "
 
+enum { Both, Class, Instance };
+
 int
 main(int argc, char *argv[])
 {
+        int print = Both;
         int rtr; /* unused */
         unsigned int nc; /* unused */
-        const char *class, *instance;
         Display *dpy;
         Window win, winr, winp;
         Window *winc; /* unused */
         XClassHint ch = { NULL, NULL };
 
+        if (argc == 2) {
+                if (strcmp(argv[1], "-c") == 0)
+                        print = Class;
+                else if (strcmp(argv[1], "-i") == 0)
+                        print = Instance;
+                else {
+                        fprintf(stderr, "Usage: %s [-c|-i]\n", argv[0]);
+                        return 2;
+                }
+        } else if (argc != 1) {
+                fprintf(stderr, "Usage: %s [-c|-i]\n", argv[0]);
+                return 2;
+        }
         if (!(dpy = XOpenDisplay(NULL))) {
                 fputs("Error: could not open display.\n", stderr);
                 return 1;
@@ -30,19 +45,19 @@ main(int argc, char *argv[])
         while (XQueryTree(dpy, win, &winr, &winp, &winc, &nc) && winp != winr)
                 win = winp;
         XGetClassHint(dpy, win, &ch);
-        class = ch.res_class ? ch.res_class : "";
-        instance = ch.res_name ? ch.res_name : "";
-
-        if (argc == 2) {
-                if (strcmp(argv[1], "-c") == 0)
-                        puts(class);
-                else if (strcmp(argv[1], "-i") == 0)
-                        puts(instance);
-                else
-                        fprintf(stderr, "Usage: %s [-c|-i]\n", argv[0]);
-        } else
-                printf("%s" DELIMITER "%s\n", class, instance);
-
+        switch (print) {
+                case Class:
+                        puts(ch.res_class ? ch.res_class : "");
+                        break;
+                case Instance:
+                        puts(ch.res_name ? ch.res_name : "");
+                        break;
+                case Both:
+                        printf("%s" DELIMITER "%s\n",
+                               ch.res_class ? ch.res_class : "",
+                               ch.res_name ? ch.res_name : "");
+                        break;
+        }
         if (winc)
                 XFree(winc);
         if (ch.res_class)
