@@ -6,6 +6,26 @@
 
 # You always need to import ranger.api.commands here to get the Command class:
 from ranger.api.commands import Command
+import os
+
+
+archive_folder = "/media/storage/.temporary/.trash" # without trailing slash
+
+
+def src_in_dst(src, dst):
+    if not os.path.isdir(dst) or os.path.islink(dst):
+        return False
+    f = os.path.realpath(src)
+    while True:
+        if os.path.samefile(f, dst):
+            return True
+        d = os.path.dirname(f)
+        if d == f:
+            return False
+        f = d
+
+def is_directory_with_files(path):
+    return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
 
 
 class mkcd(Command):
@@ -16,13 +36,11 @@ class mkcd(Command):
     """
 
     def execute(self):
-        from os.path import join, expanduser, lexists
-        from os import makedirs
         import re
 
-        dirname = join(self.fm.thisdir.path, expanduser(self.rest(1)))
-        if not lexists(dirname):
-            makedirs(dirname)
+        dirname = os.path.join(self.fm.thisdir.path, os.path.expanduser(self.rest(1)))
+        if not os.path.lexists(dirname):
+            os.makedirs(dirname)
 
             match = re.search('^/|^~[^/]*/', dirname)
             if match:
@@ -34,9 +52,10 @@ class mkcd(Command):
                 if s == '..' or (s.startswith('.') and not self.fm.settings['show_hidden']):
                     self.fm.cd(s)
                 else:
-                    ## We force ranger to load content before calling `scout`.
+                    # force ranger to load content before calling `scout`
                     self.fm.thisdir.load_content(schedule=False)
-                    self.fm.execute_console('scout -ae ^{}$'.format(s))
+                    self.fm.execute_console(f"scout -ae ^{s}$")
+                self.fm.ui.titlebar.need_redraw = True
         else:
             self.fm.notify("file/directory exists!", bad=True)
 
@@ -44,7 +63,6 @@ class mkcd(Command):
 class fzf_search(Command):
 
     def execute(self):
-        from os.path import join
         from subprocess import PIPE
 
         if self.rest(1):
@@ -59,7 +77,7 @@ class fzf_search(Command):
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
         selection = stdout.decode('utf-8').rstrip('\n')
-        self.fm.select_file(join(self.fm.thisdir.path, selection))
+        self.fm.select_file(os.path.join(self.fm.thisdir.path, selection))
 
 
 class fzf_cd(Command):
@@ -82,33 +100,25 @@ class fzf_cd(Command):
         self.fm.cd(selection)
 
 
-archive_folder = "/media/storage/.temporary/.trash" # without trailing slash
-
 class archive_highlighted(Command):
 
     def execute(self):
-        import os
         from functools import partial
 
-        def is_directory_with_files(path):
-            return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
-
         cwd = self.fm.thisdir
-        if (cwd.path == archive_folder):
-            self.fm.notify("Error: cannot archive from archive folder!", bad=True)
-            return
-
         tfile = self.fm.thisfile
-        if (tfile.path == archive_folder):
-            self.fm.notify("Error: cannot archive the archive folder!", bad=True)
-            return
 
         if not cwd or not tfile:
             self.fm.notify("Error: no file highlighted for archiving!", bad=True)
             return
+        if cwd.path == archive_folder:
+            self.fm.notify("Highlighted file is already in archive folder!")
+            return
+        if src_in_dst(archive_folder, tfile.path):
+            self.fm.notify("Error: archive folder is a subfolder of the highlighted!", bad=True)
+            return
 
-        many_files = is_directory_with_files(tfile.path)
-        if many_files:
+        if is_directory_with_files(tfile.path):
             self.fm.ui.console.ask(
                 f"Confirm archiving of: {tfile.relative_path} (y/N)",
                 partial(self._question_callback, tfile),
@@ -122,79 +132,90 @@ class archive_highlighted(Command):
             self._archive(tfile)
 
     def _archive(self, tfile):
-        from ranger.ext.shell_escape import shell_escape
+        import shutil
+        from ranger.ext.safe_path import get_safe_path
 
-        escaped_path = shell_escape(tfile.path)
-        self.fm.execute_command(f"mv --backup=numbered {escaped_path} {archive_folder}/", flags='s')
+        src = tfile.path
+        dst = get_safe_path(os.path.join(archive_folder, os.path.basename(src)))
+        try:
+            os.rename(src, dst)
+        except OSError:
+            if os.path.isdir(src):
+                shutil.copytree(src, dst, symlinks=True)
+                shutil.rmtree(src)
+            else:
+                shutil.copy2(src, dst, follow_symlinks=False)
+                os.unlink(src)
         self.fm.notify(f"Archiving {tfile.relative_path}!")
 
 
 class archive_selection(Command):
 
     def execute(self):
-        import os
         from functools import partial
 
-        def is_directory_with_files(path):
-            return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
-
         cwd = self.fm.thisdir
-        if (cwd.path == archive_folder):
-            self.fm.notify("Error: cannot archive from archive folder!", bad=True)
-            return
-
         tfile = self.fm.thisfile
+
         if not cwd or not tfile:
             self.fm.notify("Error: no file selected for archiving!", bad=True)
             return
+        if cwd.path == archive_folder:
+            self.fm.notify("Highlighted file is already in archive folder!")
+            return
 
         files = self.fm.thistab.get_selection()
-        paths = [f.path for f in files]
-        if archive_folder in paths:
-            self.fm.notify("Error: cannot archive the archive folder!", bad=True)
+        if any(src_in_dst(archive_folder, f.path) for f in files):
+            self.fm.notify("Error: archive folder is a subfolder of one of the selections!", bad=True)
             return
 
         relative_paths = ', '.join([f.relative_path for f in files])
-        many_files = (cwd.marked_items or is_directory_with_files(tfile.path))
 
-        if many_files:
+        if cwd.marked_items or is_directory_with_files(tfile.path):
             self.fm.ui.console.ask(
                 f"Confirm archiving of: {relative_paths} (y/N)",
-                partial(self._question_callback, paths, relative_paths),
+                partial(self._question_callback, files, relative_paths),
                 ('n', 'N', 'y', 'Y'),
             )
         else:
-            self._archive(paths, relative_paths)
+            self._archive(files, relative_paths)
 
-    def _question_callback(self, paths, relative_paths, answer):
+    def _question_callback(self, files, relative_paths, answer):
         if answer == 'y' or answer == 'Y':
-            self._archive(paths, relative_paths)
+            self._archive(files, relative_paths)
 
-    def _archive(self, paths, relative_paths):
-        from ranger.ext.shell_escape import shell_escape
+    def _archive(self, files, relative_paths):
+        import shutil
+        from ranger.ext.safe_path import get_safe_path
 
-        escaped_paths = ' '.join([shell_escape(path) for path in paths])
-        self.fm.execute_command(f"mv --backup=numbered {escaped_paths} {archive_folder}/", flags='s')
+        for f in files:
+            src = f.path
+            dst = get_safe_path(os.path.join(archive_folder, os.path.basename(src)))
+            try:
+                os.rename(src, dst)
+            except OSError:
+                if os.path.isdir(src):
+                    shutil.copytree(src, dst, symlinks=True)
+                    shutil.rmtree(src)
+                else:
+                    shutil.copy2(src, dst, follow_symlinks=False)
+                    os.unlink(src)
         self.fm.notify(f"Archiving {relative_paths}!")
 
 
 class trash_highlighted(Command):
 
     def execute(self):
-        import os
         from functools import partial
-
-        def is_directory_with_files(path):
-            return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
 
         cwd = self.fm.thisdir
         tfile = self.fm.thisfile
+
         if not cwd or not tfile:
             self.fm.notify("Error: no file highlighted for trashing!", bad=True)
             return
 
-        many_files = is_directory_with_files(tfile.path)
-        if many_files:
+        if is_directory_with_files(tfile.path):
             self.fm.ui.console.ask(
                 f"Confirm trashing of: {tfile.relative_path} (y/N)",
                 partial(self._question_callback, tfile),
@@ -218,11 +239,7 @@ class trash_highlighted(Command):
 class trash_selection(Command):
 
     def execute(self):
-        import os
         from functools import partial
-
-        def is_directory_with_files(path):
-            return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
 
         cwd = self.fm.thisdir
         tfile = self.fm.thisfile
@@ -232,9 +249,8 @@ class trash_selection(Command):
 
         files = self.fm.thistab.get_selection()
         relative_paths = ', '.join([f.relative_path for f in files])
-        many_files = (cwd.marked_items or is_directory_with_files(tfile.path))
 
-        if many_files:
+        if cwd.marked_items or is_directory_with_files(tfile.path):
             self.fm.ui.console.ask(
                 f"Confirm trashing of: {relative_paths} (y/N)",
                 partial(self._question_callback, files, relative_paths),
@@ -258,31 +274,25 @@ class trash_selection(Command):
 class delete_highlighted(Command):
 
     def execute(self):
-        import os
         from functools import partial
-
-        def is_directory_with_files(path):
-            return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
 
         cwd = self.fm.thisdir
         tfile = self.fm.thisfile
+
         if not cwd or not tfile:
             self.fm.notify("Error: no file highlighted for deletion!", bad=True)
             return
 
-        files = [tfile.relative_path]
-        many_files = is_directory_with_files(tfile.path)
-
         confirm = self.fm.settings.confirm_on_delete
-        if confirm != 'never' and (confirm != 'multiple' or many_files):
+        if confirm == 'always' or (confirm == 'multiple' and is_directory_with_files(tfile.path)):
             self.fm.ui.console.ask(
-                f"Confirm deletion of: {files[0]} (y/N)",
-                partial(self._question_callback, files),
+                f"Confirm deletion of: {tfile.relative_path} (y/N)",
+                partial(self._question_callback, tfile.relative_path),
                 ('n', 'N', 'y', 'Y'),
             )
         else:
-            self.fm.delete(files)
+            self.fm.delete([tfile.relative_path])
 
-    def _question_callback(self, files, answer):
+    def _question_callback(self, relative_path, answer):
         if answer == 'y' or answer == 'Y':
-            self.fm.delete(files)
+            self.fm.delete([relative_path])
