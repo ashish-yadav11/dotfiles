@@ -126,7 +126,6 @@ class archive_highlighted(Command):
 
         escaped_path = shell_escape(tfile.path)
         self.fm.execute_command(f"mv --backup=numbered {escaped_path} {archive_folder}/", flags='s')
-        self.fm.execute_command(f"rm -rf {escaped_path}", flags='s')
         self.fm.notify(f"Archiving {tfile.relative_path}!")
 
 
@@ -175,8 +174,7 @@ class archive_selection(Command):
         from ranger.ext.shell_escape import shell_escape
 
         escaped_paths = ' '.join([shell_escape(path) for path in paths])
-        self.fm.execute_command(f"cp -a --backup=numbered {escaped_paths} {archive_folder}/", flags='s')
-        self.fm.execute_command(f"rm -rf {escaped_paths}", flags='s')
+        self.fm.execute_command(f"mv --backup=numbered {escaped_paths} {archive_folder}/", flags='s')
         self.fm.notify(f"Archiving {relative_paths}!")
 
 
@@ -212,7 +210,8 @@ class trash_highlighted(Command):
     def _trash(self, tfile):
         from ranger.ext.shell_escape import shell_escape
 
-        self.fm.execute_command(f"trash-put -- {shell_escape(tfile.path)}", flags='s')
+        escaped_path = shell_escape(tfile.path)
+        self.fm.execute_command(f"trash-put -- {escaped_path}", flags='s')
         self.fm.notify(f"Trashing {tfile.relative_path}!")
 
 
