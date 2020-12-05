@@ -55,9 +55,12 @@ class mkcd(Command):
                     # force ranger to load content before calling `scout`
                     self.fm.thisdir.load_content(schedule=False)
                     self.fm.execute_console(f"scout -ae ^{s}$")
-                self.fm.ui.titlebar.need_redraw = True
+            self.fm.ui.titlebar.need_redraw = True
         else:
             self.fm.notify("file/directory exists!", bad=True)
+
+    def tab(self, tabnum):
+        return self._tab_directory_content()
 
 
 class fzf_search(Command):
