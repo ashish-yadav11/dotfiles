@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cleaner id="zathura">
+  <label>Zathura</label>
+  <option id="document cache">
+    <label>Document cache</label>
+    <description>Delete document cache</description>
+    <action search="file" command="truncate" path="~/.local/share/zathura/history"/>
+  </option>
+  <option id="input history">
+    <label>Input history</label>
+    <description>Delete input history</description>
+    <action search="file" command="truncate" path="~/.local/share/zathura/input-history"/>
+  </option>
+</cleaner>

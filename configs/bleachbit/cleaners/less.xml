@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cleaner id="less">
+  <label>Less</label>
+  <option id="cache">
+    <label>Cache</label>
+    <description>Delete the cache</description>
+    <action search="file" command="delete" path="~/.lesshst"/>
+  </option>
+</cleaner>
