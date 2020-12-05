@@ -82,6 +82,104 @@ class fzf_cd(Command):
         self.fm.cd(selection)
 
 
+archive_folder = "/media/storage/.temporary/.trash" # without trailing slash
+
+class archive_highlighted(Command):
+
+    def execute(self):
+        import os
+        from functools import partial
+
+        def is_directory_with_files(path):
+            return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
+
+        cwd = self.fm.thisdir
+        if (cwd.path == archive_folder):
+            self.fm.notify("Error: cannot archive from archive folder!", bad=True)
+            return
+
+        tfile = self.fm.thisfile
+        if (tfile.path == archive_folder):
+            self.fm.notify("Error: cannot archive the archive folder!", bad=True)
+            return
+
+        if not cwd or not tfile:
+            self.fm.notify("Error: no file highlighted for archiving!", bad=True)
+            return
+
+        many_files = is_directory_with_files(tfile.path)
+        if many_files:
+            self.fm.ui.console.ask(
+                f"Confirm archiving of: {tfile.relative_path} (y/N)",
+                partial(self._question_callback, tfile),
+                ('n', 'N', 'y', 'Y'),
+            )
+        else:
+            self._archive(tfile)
+
+    def _question_callback(self, tfile, answer):
+        if answer == 'y' or answer == 'Y':
+            self._archive(tfile)
+
+    def _archive(self, tfile):
+        from ranger.ext.shell_escape import shell_escape
+
+        escaped_path = shell_escape(tfile.path)
+        self.fm.execute_command(f"mv --backup=numbered {escaped_path} {archive_folder}/", flags='s')
+        self.fm.execute_command(f"rm -rf {escaped_path}", flags='s')
+        self.fm.notify(f"Archiving {tfile.relative_path}!")
+
+
+class archive_selection(Command):
+
+    def execute(self):
+        import os
+        from functools import partial
+
+        def is_directory_with_files(path):
+            return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
+
+        cwd = self.fm.thisdir
+        if (cwd.path == archive_folder):
+            self.fm.notify("Error: cannot archive from archive folder!", bad=True)
+            return
+
+        tfile = self.fm.thisfile
+        if not cwd or not tfile:
+            self.fm.notify("Error: no file selected for archiving!", bad=True)
+            return
+
+        files = self.fm.thistab.get_selection()
+        paths = [f.path for f in files]
+        if archive_folder in paths:
+            self.fm.notify("Error: cannot archive the archive folder!", bad=True)
+            return
+
+        relative_paths = ', '.join([f.relative_path for f in files])
+        many_files = (cwd.marked_items or is_directory_with_files(tfile.path))
+
+        if many_files:
+            self.fm.ui.console.ask(
+                f"Confirm archiving of: {relative_paths} (y/N)",
+                partial(self._question_callback, paths, relative_paths),
+                ('n', 'N', 'y', 'Y'),
+            )
+        else:
+            self._archive(paths, relative_paths)
+
+    def _question_callback(self, paths, relative_paths, answer):
+        if answer == 'y' or answer == 'Y':
+            self._archive(paths, relative_paths)
+
+    def _archive(self, paths, relative_paths):
+        from ranger.ext.shell_escape import shell_escape
+
+        escaped_paths = ' '.join([shell_escape(path) for path in paths])
+        self.fm.execute_command(f"cp -a --backup=numbered {escaped_paths} {archive_folder}/", flags='s')
+        self.fm.execute_command(f"rm -rf {escaped_paths}", flags='s')
+        self.fm.notify(f"Archiving {relative_paths}!")
+
+
 class trash_highlighted(Command):
 
     def execute(self):
@@ -100,7 +198,7 @@ class trash_highlighted(Command):
         many_files = is_directory_with_files(tfile.path)
         if many_files:
             self.fm.ui.console.ask(
-                "Confirm trashing of: %s (y/N)" % tfile.relative_path,
+                f"Confirm trashing of: {tfile.relative_path} (y/N)",
                 partial(self._question_callback, tfile),
                 ('n', 'N', 'y', 'Y'),
             )
@@ -114,8 +212,8 @@ class trash_highlighted(Command):
     def _trash(self, tfile):
         from ranger.ext.shell_escape import shell_escape
 
-        self.fm.execute_command("trash-put -- %s" % shell_escape(tfile.path), flags='s')
-        self.fm.notify("Trashing %s!" % tfile.relative_path)
+        self.fm.execute_command(f"trash-put -- {shell_escape(tfile.path)}", flags='s')
+        self.fm.notify(f"Trashing {tfile.relative_path}!")
 
 
 class trash_selection(Command):
@@ -134,29 +232,28 @@ class trash_selection(Command):
             return
 
         files = self.fm.thistab.get_selection()
-        relative_paths = [f.relative_path for f in files]
+        relative_paths = ', '.join([f.relative_path for f in files])
         many_files = (cwd.marked_items or is_directory_with_files(tfile.path))
 
         if many_files:
             self.fm.ui.console.ask(
-                "Confirm trashing of: %s (y/N)" % ', '.join(relative_paths),
-                partial(self._question_callback, files),
+                f"Confirm trashing of: {relative_paths} (y/N)",
+                partial(self._question_callback, files, relative_paths),
                 ('n', 'N', 'y', 'Y'),
             )
         else:
-            self._trash(files)
+            self._trash(files, relative_paths)
 
-    def _question_callback(self, files, answer):
+    def _question_callback(self, files, relative_paths, answer):
         if answer == 'y' or answer == 'Y':
-            self._trash(files)
+            self._trash(files, relative_paths)
 
-    def _trash(self, files):
+    def _trash(self, files, relative_paths):
         from ranger.ext.shell_escape import shell_escape
 
-        escaped_paths = [shell_escape(f.path) for f in files]
-        relative_paths = [f.relative_path for f in files]
-        self.fm.execute_command("trash-put -- %s" % ' '.join(escaped_paths), flags='s')
-        self.fm.notify("Trashing %s!" % ', '.join(relative_paths))
+        escaped_paths = ' '.join([shell_escape(f.path) for f in files])
+        self.fm.execute_command(f"trash-put -- {escaped_paths}", flags='s')
+        self.fm.notify(f"Trashing {relative_paths}!")
 
 
 class delete_highlighted(Command):
@@ -180,12 +277,11 @@ class delete_highlighted(Command):
         confirm = self.fm.settings.confirm_on_delete
         if confirm != 'never' and (confirm != 'multiple' or many_files):
             self.fm.ui.console.ask(
-                "Confirm deletion of: %s (y/N)" % files[0],
+                f"Confirm deletion of: {files[0]} (y/N)",
                 partial(self._question_callback, files),
                 ('n', 'N', 'y', 'Y'),
             )
         else:
-            # no need for a confirmation, just delete
             self.fm.delete(files)
 
     def _question_callback(self, files, answer):
