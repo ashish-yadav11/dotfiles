@@ -9,6 +9,7 @@ nnoremap        <silent>        <Leader><Esc>           :nohlsearch<CR>
 nnoremap        <silent>        <Leader>d               :lcd %:p:h<CR>
 nnoremap        <silent>        <Leader>r               :silent !/home/ashish/.scripts/ranger_file.sh "%:p"<CR>
 nnoremap        <silent>        <Leader>R               :silent !/home/ashish/.scripts/ranger_dir.sh "%:p:h"<CR>
+nnoremap        <silent>        <Leader><C-r>           :silent !/home/ashish/.scripts/ranger_dir.sh <C-r>=getcwd()<CR><CR>
 inoremap                        <S-Tab>                 <C-v><Tab>
 
 filetype plugin on
