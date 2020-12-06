@@ -114,7 +114,7 @@ class archive_highlighted(Command):
         if not cwd or not tfile:
             self.fm.notify("Error: no file highlighted for archiving!", bad=True)
             return
-        if cwd.path == archive_folder:
+        if os.path.samefile(cwd.path, archive_folder):
             self.fm.notify("Highlighted file is already in archive folder!")
             return
         if src_in_dst(archive_folder, tfile.path):
@@ -163,8 +163,8 @@ class archive_selection(Command):
         if not cwd or not tfile:
             self.fm.notify("Error: no file selected for archiving!", bad=True)
             return
-        if cwd.path == archive_folder:
-            self.fm.notify("Highlighted file is already in archive folder!")
+        if os.path.samefile(cwd.path, archive_folder):
+            self.fm.notify("Selected files are already in archive folder!")
             return
 
         files = self.fm.thistab.get_selection()
