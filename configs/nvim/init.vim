@@ -35,7 +35,6 @@ call plug#begin(stdpath('data').'/plugged')
 " Make sure you use single quotes
 Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox'
-Plug 'neomutt/neomutt.vim'
 Plug 'lervag/vimtex'
 
 " Initialize plugin system
@@ -59,11 +58,6 @@ let g:gruvbox_invert_selection = '0'
 " let g:gruvbox_improved_strings = '0'
 " let g:gruvbox_improved_warnings = '1'
 colorscheme gruvbox
-
-
-" url highlighting
-syn match matchURL /https\?:\/\/\(\w\+\(:\w\+\)\?@\)\?\([A-Za-z][-_0-9A-Za-z]*\.\)\{1,}\(\w\{2,}\.\?\)\{1,}\(:[0-9]\{1,5}\)\?\S*/
-hi matchURL ctermfg=14
 
 
 " fzf
