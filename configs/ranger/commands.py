@@ -115,10 +115,10 @@ class archive_highlighted(Command):
             self.fm.notify("Error: no file highlighted for archiving!", bad=True)
             return
         if os.path.samefile(cwd.path, archive_folder):
-            self.fm.notify("Highlighted file is already in archive folder!")
+            self.fm.notify("Highlighted file already in the archive folder!")
             return
         if src_in_dst(archive_folder, tfile.path):
-            self.fm.notify("Error: archive folder is a subfolder of the highlighted!", bad=True)
+            self.fm.notify("Error: cannot archive (a parent of) the archive folder!", bad=True)
             return
 
         if is_directory_with_files(tfile.path):
@@ -164,12 +164,12 @@ class archive_selection(Command):
             self.fm.notify("Error: no file selected for archiving!", bad=True)
             return
         if os.path.samefile(cwd.path, archive_folder):
-            self.fm.notify("Selected files are already in archive folder!")
+            self.fm.notify("Selected file(s) already in the archive folder!")
             return
 
         files = self.fm.thistab.get_selection()
         if any(src_in_dst(archive_folder, f.path) for f in files):
-            self.fm.notify("Error: archive folder is a subfolder of one of the selections!", bad=True)
+            self.fm.notify("Error: cannot archive (a parent of) the archive folder!", bad=True)
             return
 
         relative_paths = ', '.join([f.relative_path for f in files])
