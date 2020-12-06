@@ -6,6 +6,7 @@ nnoremap        <silent>        <C-w>gf                 :tabnew <cfile><cr>
 nnoremap        <silent>        yd                      :let @+=expand("%:p:h")<CR>
 nnoremap        <silent>        yp                      :let @+=expand("%:p")<CR>
 nnoremap        <silent>        <Leader><Esc>           :nohlsearch<CR>
+nnoremap        <silent>        <Leader>d               :lcd %:p:h<CR>
 nnoremap        <silent>        <Leader>r               :silent !/home/ashish/.scripts/ranger_file.sh "%:p"<CR>
 nnoremap        <silent>        <Leader>R               :silent !/home/ashish/.scripts/ranger_dir.sh "%:p:h"<CR>
 inoremap                        <S-Tab>                 <C-v><Tab>
