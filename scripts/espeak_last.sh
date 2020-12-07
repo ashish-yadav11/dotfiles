@@ -1,5 +1,5 @@
 #!/bin/dash
-read -r PID </tmp/espeak.pid && rkill "$PID"
+read -r PID </tmp/espeak.pid && /usr/bin/kill -- "-$PID"
 if read -r text </tmp/espeak.last ; then
     espeak "$text"
 else

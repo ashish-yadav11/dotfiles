@@ -14,4 +14,4 @@ curl ifconfig.co/city #city
 
 sudo tar -zcvf /home/ashish/Documents/arbackup.tar.gz /etc /root /media/storage/.backup #backup
 
-read -r PID </tmp/sleep_dine.pid && rkill "$PID" #kill;hibernation;dine;sleep
+read -r PID </tmp/sleep_dine.pid && /usr/bin/kill -- "-$PID" #kill;hibernation;dine;sleep

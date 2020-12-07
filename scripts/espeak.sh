@@ -13,7 +13,7 @@ case $1 in
         ;;
 esac
 
-read -r PID </tmp/espeak.pid && rkill "$PID"
+read -r PID </tmp/espeak.pid && /usr/bin/kill -- "-$PID"
 trap 'rm -f /tmp/espeak.pid; exit' HUP INT TERM
 echo "$$" >/tmp/espeak.pid
 echo "$text" >/tmp/espeak.last
