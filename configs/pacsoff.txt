@@ -96,7 +96,6 @@ pavucontrol-qt
 pdftk
 picom
 polkit-kde-agent
-pslist
 pulseaudio
 pulseaudio-alsa
 python-matplotlib
