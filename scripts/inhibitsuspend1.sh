@@ -10,7 +10,7 @@ if read -r PID1 </tmp/inhibitsuspend1.pid && rkill "$PID1" ; then
 fi
 
 trap 'rm -f /tmp/inhibitsuspend1.pid' EXIT
-echo $$ >/tmp/inhibitsuspend1.pid
+echo "$$" >/tmp/inhibitsuspend1.pid
 
 id=$($notify -p -t 0 "System will lock without sleeping if lid is closed within next 15 seconds")
 SECONDS=0

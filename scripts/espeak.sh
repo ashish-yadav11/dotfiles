@@ -15,7 +15,7 @@ esac
 
 read -r PID </tmp/espeak.pid && rkill "$PID"
 trap 'rm -f /tmp/espeak.pid; exit' HUP INT TERM
-echo $$ >/tmp/espeak.pid
+echo "$$" >/tmp/espeak.pid
 echo "$text" >/tmp/espeak.last
 espeak "$text"
 rm -f /tmp/espeak.pid
