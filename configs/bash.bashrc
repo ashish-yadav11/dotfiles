@@ -68,7 +68,25 @@ alias vi=nvim
 alias vim=nvim
 
 # custom functions
-b() {
+atqc() {
+    local c_id="\e[32m"
+    local c_tm="\e[33m"
+    local c_qu="\e[34m"
+    local c_ur="\e[36m"
+
+    atq | sort -r -k6,6 -k3,3M -k4,4 -k5,5 |
+        while read -r job ; do
+            ur=${job##* }; job=${job% *}
+            qu=${job##* }; job=${job% *}
+            tm=${job#*$'\t'}
+            id=${job%%$'\t'*}
+            echo -e "${c_id}${id}\t${c_tm}${tm} ${c_qu}${qu} ${c_ur}${ur}\e[0m"
+            # only print the commands supplied by the user
+            at -c "$id" | awk 'p; $0=="}" {p=1}'
+        done
+}
+
+btns() {
     if [[ $1 -ge 1 && $1 -le 255 ]] ; then
         echo "$1" >/sys/class/backlight/radeon_bl0/brightness
     else
