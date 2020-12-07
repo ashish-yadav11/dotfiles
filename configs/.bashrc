@@ -21,7 +21,6 @@ alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias newsboat="newsboat -q"
-alias nt="setsid -f /home/ashish/.scripts/notify.sh"
 alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
 
 # custom functions
@@ -33,8 +32,10 @@ neomutt() {
 rd() {
     if [[ $1 -ge 1000 && $1 -le 6500 ]] ; then
         redshift -PO "$1" >/dev/null 2>&1
-    else
+    elif [[ $1 == x ]] ; then
         redshift -x >/dev/null 2>&1
+    else
+        echo "Usage: rd <temperature b/w 1000 and 6500>|x"
     fi
 }
 
@@ -90,7 +91,7 @@ todo() {
             sed -i "$2d" "$todo_file"
         else
             nl -b a "$todo_file"
-            eval printf "%.0s-" '{1..'"${COLUMNS:-$(tput cols)}"\}
+            eval printf "%.0s-" "{1..${COLUMNS:-$(tput cols)}}"
             echo
             read -r -p "Type index of the task to remove: " index || echo
             [[ $index -gt 0 ]] && sed -i "${index}d" "$todo_file"
@@ -103,22 +104,10 @@ todo() {
 }
 
 trash-list() {
-    if [[ -z $1 ]] ; then
-        /usr/bin/trash-list | sort
-    else
-        case $1 in
-            --)
-                /usr/bin/trash-list | sort | grep "${@:2}"
-                ;;
-            -n)
-                /usr/bin/trash-list | sort -k3,3
-                ;;
-            -t)
-                /usr/bin/trash-list | sort
-                ;;
-            *)
-                /usr/bin/trash-list | sort | grep "$@"
-                ;;
-        esac
-    fi
+    case $1 in
+        -n)
+            /usr/bin/trash-list | sort -k3,3 ;;
+        *)
+            /usr/bin/trash-list | sort ;;
+    esac
 }
