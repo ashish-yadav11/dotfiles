@@ -439,10 +439,6 @@
 [hotspot]
     summary = "Hotspot"
     history_ignore = yes
-[reflector]
-    summary = "Reflector"
-    body = "Reflector initiated"
-    history_ignore = yes
 [scrot]
     summary = "Scrot"
     history_ignore = yes
