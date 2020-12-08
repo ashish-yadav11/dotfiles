@@ -5,7 +5,7 @@ gcc -o nt -O3 -Wall -Wextra nt.c
 */
 
 #include <stdlib.h>
-#include <ctype.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/wait.h>
@@ -14,43 +14,23 @@ gcc -o nt -O3 -Wall -Wextra nt.c
 
 #define USAGE \
         "Usage:\n" \
+        "	nt -h|--help\n" \
         "	nt <time-interval> <notification>\n" \
         "Examples:\n" \
-        "	nt 1h10m30s go to sleep\n" \
-        "	nt \"1H 10M 30S\" go to sleep\n" \
-        "	nt 1,10,30 go to sleep\n" \
-        "	nt 1:10:30 go to sleep\n" \
-        "	nt 1.10.30 go to sleep"
+        "	nt 5m '5 minutes up'\n" \
+        "	nt 30s '30 seconds up'\n" \
+        "	nt 10 '10 minutes up'\n" \
+        "	nt 1, '1 hour up'\n" \
+        "	nt 5,30 '5 minutes 30 seconds up'\n" \
+        "	nt ,10 '10 seconds up'\n" \
+        "	nt 1,10, '1 hour 10 minutes up'\n" \
+        "	nt 11:15 '11:15 up'\n" \
+        "	nt 1: '01:00 up'\n" \
+        "	nt :5 '00:05 up'"
 
-unsigned int
-parsetime(char *c)
-{
-        unsigned int i = 0, t = 0;
+#define ISDIGIT(X)                      (X >= '0' && X <= '9')
 
-        for (; *c != '\0'; c++) {
-                if (*c >= '0' && *c <= '9') {
-                        i *= 10;
-                        i += *c - '0';
-                } else if (*c == 's' || *c == 'S') {
-                        t += i;
-                        i = 0;
-                } else if (*c == 'm' || *c == 'M') {
-                        t += 60 * i;
-                        i = 0;
-                } else if (*c == 'h' || *c == 'H') {
-                        t += 60 * 60 * i;
-                        i = 0;
-                } else if (*c == ',' || *c == ':' || *c == '.')
-                        i *= 60;
-                else if (isspace((unsigned int) *c))
-                        continue;
-                else {
-                        fputs("nt: garbled time", stderr);
-                        exit(2);
-                }
-        }
-        return t + i;
-}
+enum { None, Comma1, Comma2, Second, Minute, Hour };
 
 /* the following function assumes n >= 1 */
 char *
@@ -74,78 +54,228 @@ catarray(int n, char *array[])
         return buf;
 }
 
+/* the following function assumes that t points to a buffer of length >= 5 */
+int
+parseatarg(char *a, char *c, char *t)
+{
+        switch (a - c) {
+                case 0:
+                        t[0] = t[1] = '0';
+                        break;
+                case 1:
+                        if (!ISDIGIT(a[0]))
+                                return 0;
+                        t[0] = '0', t[1] = a[0];
+                        break;
+                case 2:
+                        if (!ISDIGIT(a[0]) || !ISDIGIT(a[1]))
+                                return 0;
+                        t[0] = a[0], t[1] = a[1];
+                        break;
+                default:
+                        return 0;
+        }
+        if (ISDIGIT(c[1])) {
+                if (ISDIGIT(c[2]))
+                        t[2] = c[1], t[3] = c[2];
+                else if (c[2] == '\0')
+                        t[2] = '\0', t[3] = c[1];
+                else
+                        return 0;
+        } else if (c[1] == '\0')
+                t[2] = t[3] = '0';
+        else
+                return 0;
+        t[4] = '\0';
+        return 1;
+}
+
+int
+parsetime(char *a, unsigned int *t)
+{
+        int r = None;
+        unsigned int i = 0;
+
+        for (; *a != '\0'; a++) {
+                if (ISDIGIT(*a))
+                        i = 10 * i + *a - '0';
+                else switch (*a) {
+                        case ',':
+                                if (r == None) {
+                                        r = Comma1;
+                                        *t = 60 * i;
+                                } else if (r == Comma1) {
+                                        r = Comma2;
+                                        *t = 60 * (*t + i);
+                                } else
+                                        return 0;
+                                i = 0;
+                                break;
+                        case 'h':
+                                if (r == None || r == Minute || r == Second)
+                                        r = Hour;
+                                else
+                                        return 0;
+                                *t += 60 * 60 * i;
+                                i = 0;
+                                break;
+                        case 'm':
+                                if (r == None || r == Hour || r == Second)
+                                        r = Minute;
+                                else
+                                        return 0;
+                                *t += 60 * i;
+                                i = 0;
+                                break;
+                        case 's':
+                                if (r == None || r == Hour || r == Minute)
+                                        r = Second;
+                                else
+                                        return 0;
+                                *t += i;
+                                i = 0;
+                                break;
+                        default:
+                                return 0;
+                }
+        }
+        switch (r) {
+                case None:
+                        *t = 60 * i;
+                        break;
+                case Hour:
+                        *t += 60 * i;
+                        break;
+                case Second:
+                        if (i)
+                                return 0;
+                        break;
+                default:
+                        *t += i;
+                        break;
+        }
+        return *t ? 1 : 0;
+}
+
+void
+callat(intmax_t t, char *atarg, char *nt)
+{
+        int fdr[2], fdw[2];
+
+        /* call at */
+        if (pipe(fdr) == -1 || pipe(fdw) == -1) {
+                perror("callat - pipe");
+                free(nt);
+                exit(1);
+        }
+        switch (fork()) {
+                case -1:
+                        perror("callat - fork");
+                        free(nt);
+                        exit(1);
+                case 0:
+                {
+                        char *arg[] = { "/usr/bin/at", atarg, NULL };
+
+                        close(fdw[1]);
+                        close(fdr[0]);
+                        if (fdw[0] != STDIN_FILENO) {
+                                if (dup2(fdw[0], STDIN_FILENO) != STDIN_FILENO) {
+                                        perror("callat - child - dup2");
+                                        free(nt);
+                                        exit(1);
+                                }
+                                close(fdw[0]);
+                        }
+                        if (fdr[1] != STDOUT_FILENO) {
+                                if (dup2(fdr[1], STDOUT_FILENO) != STDOUT_FILENO) {
+                                        perror("callat - child - dup2");
+                                        free(nt);
+                                        exit(1);
+                                }
+                                close(fdr[1]);
+                        }
+                        if (dup2(STDOUT_FILENO, STDERR_FILENO) != STDERR_FILENO) {
+                                perror("callat - child - dup2");
+                                free(nt);
+                                exit(1);
+                        }
+                        execv(arg[0], arg);
+                        perror("callat - child - execv");
+                        _exit(127);
+                }
+                default:
+                {
+                        char line[128];
+                        FILE *stream;
+
+                        close(fdw[0]);
+                        close(fdr[1]);
+                        if (t >= 0)
+                                dprintf(fdw[1], "sleep \"$(( %jd - $(date +%%s) ))\"\n"
+                                               "notify-send -t 0 '%s'", t, nt);
+                        else
+                                dprintf(fdw[1], "notify-sned -t 0 '%s'", nt);
+                        close(fdw[1]);
+                        free(nt);
+                        if (!(stream = fdopen(fdr[0], "r"))) {
+                                close(fdr[0]);
+                                perror("callat - fdopen");
+                                exit(1);
+                        }
+                        for (int f = 1; fgets(line, sizeof line, stream);)
+                                if (f && strcmp(line, "warning: commands will be executed using /bin/sh\n") == 0)
+                                        f = 0;
+                                else
+                                        fputs(line, stdout);
+                        fclose(stream);
+                        if (wait(NULL) == -1) {
+                                perror("callat - wait");
+                                exit(1);
+                        }
+                }
+        }
+}
+
 int
 main(int argc, char *argv[])
 {
-        char *nbuf;
-        unsigned int s;
-        time_t t;
-        int fd[2];
+        unsigned int t;
+        char *c;
+        char *nt;
 
         if (argc == 2 && (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)) {
                 puts(USAGE);
                 return 0;
         }
         if (argc < 3) {
-                fputs("nt: incorrect invocation\n", stderr);
+                fputs("nt: not enough arguments\n", stderr);
                 puts(USAGE);
                 return 2;
         }
-        t = time(NULL);
-        /* parse time */
-        if (!(s = parsetime(argv[1]))) {
-                fputs("nt: incorrect invocation\n", stderr);
+        nt = catarray(argc - 2, argv + 2);
+        if (nt[0] == '\0') {
+                fputs("nt: notification is empty\n", stderr);
                 puts(USAGE);
+                free(nt);
                 return 2;
         }
-        /* fill notification buffer */
-        nbuf = catarray(argc - 2, argv + 2);
-        if (nbuf[0] == '\0') {
-                fputs("nt: incorrect invocation\n", stderr);
-                puts(USAGE);
-                free(nbuf);
-                return 2;
-        }
-        /* call at */
-        if (pipe(fd) == -1) {
-                perror("main - pipe");
-                free(nbuf);
-                return 1;
-        }
-        switch (fork()) {
-                case -1:
-                        perror("main - fork");
-                        free(nbuf);
-                        return 1;
-                case 0:
-                {
-                        char tbuf[25];
-                        char *arg[] = { "/usr/bin/at", tbuf, NULL };
+        if ((c = strchr(argv[1], ':'))) {
+                char atarg[5];
 
-                        close(fd[1]);
-                        if (fd[0] != STDIN_FILENO) {
-                                if (dup2(fd[0], STDIN_FILENO) != STDIN_FILENO) {
-                                        perror("main - child - dup2");
-                                        free(nbuf);
-                                        return 1;
-                                }
-                                close(fd[0]);
-                        }
-                        snprintf(tbuf, sizeof tbuf, "now + %u minutes", s / 60);
-                        execv(arg[0], arg);
-                        perror("main - child - execv");
-                        _exit(127);
+                if (parseatarg(argv[1], c, atarg)) {
+                        callat(-1, atarg, nt);
+                        return 0;
                 }
-                default:
-                        close(fd[0]);
-                        dprintf(fd[1], "sleep \"$(( %ld - $(date +%%s) ))\"\n"
-                                       "notify-send -t 0 '%s'", t + s, nbuf);
-                        close(fd[1]);
-                        free(nbuf);
-                        if (wait(NULL) == -1) {
-                                perror("main - wait");
-                                return 1;
-                        }
+        } else if (parsetime(argv[1], &t)) {
+                char atarg[25];
+
+                snprintf(atarg, sizeof atarg, "now + %u minutes", t / 60);
+                callat(time(NULL) + t, atarg, nt);
+                return 0;
         }
-        return 0;
+        fputs("nt: invalid time specification\n", stderr);
+        puts(USAGE);
+        free(nt);
+        return 2;
 }
