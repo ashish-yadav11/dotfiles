@@ -15,22 +15,25 @@ gcc -o nt -O3 -Wall -Wextra nt.c
 #define USAGE \
         "Usage:\n" \
         "	nt -h|--help\n" \
-        "	nt <time-interval> <notification>\n" \
+        "	nt <time-specification> <notification>\n" \
+        "\n" \
+        "	time-specification:\n" \
+        "		relative - [HH,]MM[.SS] or [HHh][MMm][SSs]\n" \
+        "		absolute - [HH]:[MM]\n" \
         "Examples:\n" \
-        "	nt 5m '5 minutes up'\n" \
-        "	nt 30s '30 seconds up'\n" \
         "	nt 10 '10 minutes up'\n" \
+        "	nt 30s '30 seconds up'\n" \
         "	nt 1, '1 hour up'\n" \
-        "	nt 5,30 '5 minutes 30 seconds up'\n" \
-        "	nt ,10 '10 seconds up'\n" \
-        "	nt 1,10, '1 hour 10 minutes up'\n" \
+        "	nt 5.30 '5 minutes 30 seconds up'\n" \
+        "	nt .10 '10 seconds up'\n" \
+        "	nt 1,10 '1 hour 10 minutes up'\n" \
         "	nt 11:15 '11:15 up'\n" \
         "	nt 1: '01:00 up'\n" \
         "	nt :5 '00:05 up'"
 
 #define ISDIGIT(X)                      (X >= '0' && X <= '9')
 
-enum { None, Comma1, Comma2, Second, Minute, Hour };
+enum { None, Period, Comma, Second, Minute, Hour };
 
 /* the following function assumes n >= 1 */
 char *
@@ -58,7 +61,7 @@ catarray(int n, char *array[])
 int
 parseatarg(char *a, char *c, char *t)
 {
-        switch (a - c) {
+        switch (c - a) {
                 case 0:
                         t[0] = t[1] = '0';
                         break;
@@ -79,7 +82,7 @@ parseatarg(char *a, char *c, char *t)
                 if (ISDIGIT(c[2]))
                         t[2] = c[1], t[3] = c[2];
                 else if (c[2] == '\0')
-                        t[2] = '\0', t[3] = c[1];
+                        t[2] = '0', t[3] = c[1];
                 else
                         return 0;
         } else if (c[1] == '\0')
@@ -97,41 +100,43 @@ parsetime(char *a, unsigned int *t)
         unsigned int i = 0;
 
         for (; *a != '\0'; a++) {
-                if (ISDIGIT(*a))
+                if (ISDIGIT(*a)) {
                         i = 10 * i + *a - '0';
-                else switch (*a) {
+                        continue;
+                }
+                switch (*a) {
                         case ',':
-                                if (r == None) {
-                                        r = Comma1;
-                                        *t = 60 * i;
-                                } else if (r == Comma1) {
-                                        r = Comma2;
-                                        *t = 60 * (*t + i);
-                                } else
+                                if (r != None)
                                         return 0;
+                                r = Comma;
+                                *t = 60 * i;
+                                i = 0;
+                                break;
+                        case '.':
+                                if (r != None && r != Comma)
+                                        return 0;
+                                r = Period;
+                                *t = 60 * (*t + i);
                                 i = 0;
                                 break;
                         case 'h':
-                                if (r == None || r == Minute || r == Second)
-                                        r = Hour;
-                                else
+                                if (r != None)
                                         return 0;
-                                *t += 60 * 60 * i;
+                                r = Hour;
+                                *t = 60 * 60 * i;
                                 i = 0;
                                 break;
                         case 'm':
-                                if (r == None || r == Hour || r == Second)
-                                        r = Minute;
-                                else
+                                if (r != None && r != Hour)
                                         return 0;
+                                r = Minute;
                                 *t += 60 * i;
                                 i = 0;
                                 break;
                         case 's':
-                                if (r == None || r == Hour || r == Minute)
-                                        r = Second;
-                                else
+                                if (r != None && r != Hour && r != Minute)
                                         return 0;
+                                r = Second;
                                 *t += i;
                                 i = 0;
                                 break;
@@ -143,6 +148,7 @@ parsetime(char *a, unsigned int *t)
                 case None:
                         *t = 60 * i;
                         break;
+                case Comma:
                 case Hour:
                         *t += 60 * i;
                         break;
@@ -158,11 +164,10 @@ parsetime(char *a, unsigned int *t)
 }
 
 void
-callat(intmax_t t, char *atarg, char *nt)
+callat(time_t t, char *atarg, char *nt)
 {
         int fdr[2], fdw[2];
 
-        /* call at */
         if (pipe(fdr) == -1 || pipe(fdw) == -1) {
                 perror("callat - pipe");
                 free(nt);
@@ -206,6 +211,8 @@ callat(intmax_t t, char *atarg, char *nt)
                 }
                 default:
                 {
+                        int f;
+                        intmax_t id;
                         char line[128];
                         FILE *stream;
 
@@ -213,7 +220,7 @@ callat(intmax_t t, char *atarg, char *nt)
                         close(fdr[1]);
                         if (t >= 0)
                                 dprintf(fdw[1], "sleep \"$(( %jd - $(date +%%s) ))\"\n"
-                                               "notify-send -t 0 '%s'", t, nt);
+                                                "notify-send -t 0 '%s'", (intmax_t)t, nt);
                         else
                                 dprintf(fdw[1], "notify-sned -t 0 '%s'", nt);
                         close(fdw[1]);
@@ -223,10 +230,14 @@ callat(intmax_t t, char *atarg, char *nt)
                                 perror("callat - fdopen");
                                 exit(1);
                         }
-                        for (int f = 1; fgets(line, sizeof line, stream);)
+                        f = 1;
+                        while (fgets(line, sizeof line, stream))
                                 if (f && strcmp(line, "warning: commands will be executed using /bin/sh\n") == 0)
                                         f = 0;
-                                else
+                                else if (t >= 0 && sscanf(line, "job %jd", &id) == 1) {
+                                        printf("job %jd at %s", id, ctime(&t));
+                                        t = -1;
+                                } else
                                         fputs(line, stdout);
                         fclose(stream);
                         if (wait(NULL) == -1) {
@@ -249,14 +260,12 @@ main(int argc, char *argv[])
                 return 0;
         }
         if (argc < 3) {
-                fputs("nt: not enough arguments\n", stderr);
-                puts(USAGE);
+                fputs("nt: not enough arguments\n" USAGE "\n", stderr);
                 return 2;
         }
         nt = catarray(argc - 2, argv + 2);
         if (nt[0] == '\0') {
-                fputs("nt: notification is empty\n", stderr);
-                puts(USAGE);
+                fputs("nt: notification can't be an empty string\n", stderr);
                 free(nt);
                 return 2;
         }
@@ -274,8 +283,7 @@ main(int argc, char *argv[])
                 callat(time(NULL) + t, atarg, nt);
                 return 0;
         }
-        fputs("nt: invalid time specification\n", stderr);
-        puts(USAGE);
+        fputs("nt: invalid time specification\n" USAGE "\n", stderr);
         free(nt);
         return 2;
 }
