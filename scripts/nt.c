@@ -18,7 +18,7 @@ gcc -o nt -O3 -Wall -Wextra nt.c
         "	nt <time-specification> <notification>\n" \
         "\n" \
         "	time-specification:\n" \
-        "		relative - [HH,]MM[.SS] or [HHh][MMm][SSs]\n" \
+        "		relative - [H,]M[.S] or [Hh][Mm][Ss]\n" \
         "		absolute - [HH]:[MM]\n" \
         "Examples:\n" \
         "	nt 10 '10 minutes up'\n" \
@@ -148,16 +148,15 @@ parsetime(char *a, unsigned int *t)
                 case None:
                         *t = 60 * i;
                         break;
+                case Period:
+                        *t += i;
+                        break;
                 case Comma:
-                case Hour:
                         *t += 60 * i;
                         break;
-                case Second:
+                default:
                         if (i)
                                 return 0;
-                        break;
-                default:
-                        *t += i;
                         break;
         }
         return *t ? 1 : 0;
