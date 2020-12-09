@@ -1,13 +1,9 @@
 #!/bin/dash
-case $(echo "Root\nFocused window without border\nFocused window with border\nSelection" |
-            dmenu -i -matching fuzzy -no-custom -p Scrot) in
+case $(echo "Root\nFocused window\nSelection" | dmenu -i -matching fuzzy -no-custom -p Scrot) in
     Root)
         ;;
-    "Focused window without border")
+    "Focused window")
         options="-u"
-        ;;
-    "Focused window with border")
-        options="-ub"
         ;;
     Selection)
         options="-s"
