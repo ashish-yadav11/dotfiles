@@ -1,2 +1,10 @@
 #!/bin/dash
-xev | awk -F'[ )]+' 'c && !--c {printf "%-3s %s\n",$5,$8}; /^KeyPress/ {c=2}'
+xev | awk -F'[ )]+' '{
+    if (c) {
+        if (!--c) {
+            printf "%-3s %s\n", $5, $8
+        }
+    } else if ($0 ~ /^KeyPress/) {
+        c = 2
+    }
+}'
