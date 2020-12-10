@@ -24,7 +24,7 @@ bind -m vi-insert -x '"\C-r": __fzf_history'
 __fzf_file_widget() {
     local selected
     selected=$(
-        fd -HL -tf -d4 | LC_COLLATE=C sort -f |
+        fd -HL -tf -d4 | LC_ALL=C sort -f |
             FZF_DEFAULT_OPTS="--height 40% --reverse $FZF_DEFAULT_OPTS" fzf -m "$@" |
                 while read -r item; do
                     printf "%q " "$item"
@@ -42,7 +42,7 @@ bind -m vi-insert -x '"\C-t": __fzf_file_widget'
 __fzf_cd() {
     local dir
     dir=$(
-        fd -HL -td -d4 | LC_COLLATE=C sort -f |
+        fd -HL -td -d4 | LC_ALL=C sort -f |
             FZF_DEFAULT_OPTS="--height 40% --reverse $FZF_DEFAULT_OPTS" fzf +m) && printf "cd %q" "$dir"
 }
 
