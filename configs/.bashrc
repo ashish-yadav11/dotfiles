@@ -7,7 +7,8 @@
 
 __fzf_select_bookmark() {
     local selected
-    selected=$(grep -Ev '(^#)|(^\s*$)' "$HOME/.bookmarks" | fzf -d' #' -n2 | awk -F' #' '{print $1}')
+    selected=$(grep -Ev '(^#)|(^\s*$)' "$HOME/.bookmarks" | fzf -d' #' -n2)
+    selected=${selected%% #*}
     READLINE_LINE=$selected
     READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
 }
