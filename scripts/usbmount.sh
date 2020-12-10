@@ -2,10 +2,10 @@
 dmenu="dmenu -i -matching fuzzy -multi-select -no-custom"
 
 # external drives not mounted in the filesystem
-drives0=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '{if ($2=="part" && $3=="") {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}}')
+drives0=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3=="" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')
 
 # external drives mounted in the filesystem
-drives1=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '{if ($2=="part" && $3!="" && $3!="/" && $3!="/efi" && $3!="[SWAP]" && $3!="/media/backup" && $3!="/media/storage") {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}}')
+drives1=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3!="" && $3!="/" && $3!="/efi" && $3!="[SWAP]" && $3!="/media/backup" && $3!="/media/storage" && $3!="/run/timeshift/backup" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')
 
 usbmount() {
     echo "$drives0" | $dmenu -p "Which drive(s) to mount?" |
@@ -32,10 +32,8 @@ usbunmount() {
 }
 
 asktype() {
-    awk_cat='{if (NR == 1) {print $0} else {printf ", %s",$0}}; END {if (NR == 1) {print "s"} else {print "m"}}'
-
-    M=$(echo "$drives0" | awk -v ORS='' "$awk_cat")
-    U=$(echo "$drives1" | awk -v ORS='' "$awk_cat")
+    M=$(echo "$drives0" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
+    U=$(echo "$drives1" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
 
     echo "Mount: ${M%?}\nUnmount: ${U%?}" | $dmenu -p "What to do?" |
         while read -r chosen ; do
