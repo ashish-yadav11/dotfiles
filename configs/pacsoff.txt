@@ -47,6 +47,7 @@ go
 go-tools
 gparted
 grub-customizer
+gthumb
 gtk-engine-murrine
 guvcview
 gvfs-mtp
@@ -113,7 +114,6 @@ ripgrep
 rofi
 scrot
 shellcheck
-shotwell
 signal-desktop
 strace
 sxiv
