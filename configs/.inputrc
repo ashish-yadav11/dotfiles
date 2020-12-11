@@ -1,4 +1,3 @@
-set enable-bracketed-paste on
 set keyseq-timeout 0
 
 set editing-mode vi
