@@ -66,44 +66,6 @@ spull() {
     cd "$dir"
 }
 
-todo() {
-    local todo_file=$HOME/Documents/.todo
-
-    if (( ! $# )) ; then
-        if [[ -f $todo_file ]] ; then
-            nl -b a "$todo_file"
-        else
-            touch "$todo_file"
-        fi
-
-    elif [[ $1 == -e ]] ; then
-        [[ -f $todo_file ]] || touch "$todo_file"
-        nvim "$todo_file"
-
-    elif [[ $1 == -c ]] ; then
-        : >"$todo_file"
-
-    elif [[ $1 == -r ]] ; then
-        if [[ ! -f $todo_file ]] ; then
-            touch "$todo_file"
-            exit
-        fi
-        if [[ $2 -gt 0 ]] ; then
-            sed -i "$2d" "$todo_file"
-        else
-            nl -b a "$todo_file"
-            eval printf "%.0s-" "{1..${COLUMNS:-$(tput cols)}}"
-            echo
-            read -r -p "Type index of the task to remove: " index || echo
-            [[ $index -gt 0 ]] && sed -i "${index}d" "$todo_file"
-        fi
-
-    else
-        echo "$*" >>"$todo_file"
-
-    fi
-}
-
 trash-list() {
     case $1 in
         -n)
