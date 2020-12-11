@@ -6,7 +6,7 @@ cur="\033[36m"
 cdf="\033[0m"
 
 # merge redundant descriptions for running jobs
-atq | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '{
+at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '{
         if (r) {
             r = 0
             printf "%s,%s %s %02d %s %04d,~%c,%s\n",$1,$2,$3,$4,$5,$6,$7,$8
