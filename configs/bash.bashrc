@@ -68,45 +68,6 @@ alias vi=nvim
 alias vim=nvim
 
 # custom functions
-atqc() {
-    local c_id="\e[32m"
-    local c_tm="\e[33m"
-    local c_qu="\e[34m"
-    local c_ur="\e[36m"
-
-    atq | sort -r -k6,6 -k3,3M -k4,4 -k5,5 |
-        while read -r job ; do
-            ur=${job##* }
-            job=${job% *}
-            qu=${job##* }
-            # skip redundant description of running jobs
-            if [[ $qu == "=" ]] ; then
-                lastactive=1
-                continue
-            elif (( lastactive )) ; then
-                qu="~$qu"
-            else
-                qu=" $qu"
-            fi
-            job=${job% *}
-            tm=${job#*$'\t'}
-            id=${job%%$'\t'*}
-            echo -e "${c_id}${id}\t${c_tm}${tm} ${c_qu}${qu} ${c_ur}${ur}\e[0m"
-
-            # only print commands which were supplied by the user
-            # remove last 4 mail info lines from description of running jobs
-            if (( lastactive )) ; then
-                lastactive=0
-                at -c "$id" | awk 'BEGIN {r=4; i=0; j=r}; {
-                    if (p) {if (j) {j--} else {print a[i%r]}; a[i%r]=$0; i++}
-                    else if ($0 == "}") {p=1}
-                }'
-            else
-                at -c "$id" | awk '{if (p) {print} else if ($0=="}") {p=1}}'
-            fi
-        done
-}
-
 btns() {
     if [[ $1 -ge 1 && $1 -le 255 ]] ; then
         echo "$1" >/sys/class/backlight/radeon_bl0/brightness
