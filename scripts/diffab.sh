@@ -2,7 +2,6 @@
 mdiff_cmd="diff --color=always -r"
 mdiff_str="diff '--color=always' -r"
 sdiff_cmd="diff --color=always"
-dsblocks=/home/ashish/.local/projects/dsblocks
 dotfiles=/home/ashish/.local/dotfiles
 
 print_mdiff() {
