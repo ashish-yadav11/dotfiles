@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cleaner id="zathura">
   <label>Zathura</label>
+  <description>Document viewer</description>
   <option id="document cache">
     <label>Document cache</label>
     <description>Delete document cache</description>

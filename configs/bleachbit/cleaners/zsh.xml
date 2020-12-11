@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cleaner id="zsh">
+  <label>Zsh</label>
+  <description>Shell</description>
+  <option id="history">
+    <label>History</label>
+    <description>Delete the command history</description>
+    <action search="file" command="truncate" path="~/.zsh_history"/>
+  </option>
+</cleaner>

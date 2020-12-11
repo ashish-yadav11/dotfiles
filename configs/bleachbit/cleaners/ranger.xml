@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cleaner id="ranger">
   <label>Ranger</label>
+  <description>Console file manger</description>
   <option id="command history">
     <label>Command history</label>
     <description>Delete command history</description>

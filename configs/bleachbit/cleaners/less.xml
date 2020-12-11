@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cleaner id="less">
   <label>Less</label>
+  <description>Pager</description>
   <option id="cache">
     <label>Cache</label>
     <description>Delete the cache</description>
-    <action search="file" command="delete" path="~/.lesshst"/>
+    <action search="file" command="truncate" path="~/.lesshst"/>
   </option>
 </cleaner>
