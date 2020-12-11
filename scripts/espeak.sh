@@ -1,6 +1,10 @@
 #!/bin/dash
 case $1 in
     sel)
+        if read -r PID </tmp/espeak.pid ; then
+            kill "$PID" $(pgrep -P "$PID")
+            exit
+        fi
         text=$(xclip -seletion primary -out)
         if [ -z "$text" ] ; then
             notify-send -t 2000 Espeak "Nothing in primary selection"
@@ -8,12 +12,12 @@ case $1 in
         fi
         ;;
     *)
+        read -r PID </tmp/espeak.pid && kill "$PID" $(pgrep -P "$PID")
         text=$(yad --image=gespeaker --no-buttons --entry --text=Espeak --entry-label="Text:")
         [ -z "$text" ] && exit
         ;;
 esac
 
-read -r PID </tmp/espeak.pid && /usr/bin/kill -- "-$PID"
 trap 'rm -f /tmp/espeak.pid; exit' HUP INT TERM
 echo "$$" >/tmp/espeak.pid
 echo "$text" >/tmp/espeak.last
