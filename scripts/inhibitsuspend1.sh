@@ -3,8 +3,8 @@ i3lock=/home/ashish/.scripts/i3lock.sh
 notify="dunstify -h string:x-canonical-private-synchronous:inhibitsuspend -h int:transient:1"
 screen=/home/ashish/.scripts/screen.sh
 
-read -r PID0 </tmp/inhibitsuspend0.pid && /usr/bin/kill -- "-$PID0"
-if read -r PID1 </tmp/inhibitsuspend1.pid && /usr/bin/kill -- "-$PID1" ; then
+read -r PID0 </tmp/inhibitsuspend0.pid && kill "$PID0"
+if read -r PID1 </tmp/inhibitsuspend1.pid && kill "$PID1" ; then
     $notify -t 2000 "System will now sleep normally on closing the lid"
     exit
 fi
