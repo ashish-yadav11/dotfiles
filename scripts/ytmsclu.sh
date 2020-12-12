@@ -64,12 +64,10 @@ if [[ $1 == 1 ]] ; then
     mapfile -t ytmglst < <( import -window root -depth 8 -crop "${Xs}x1+${X0}+${Y0}" txt:- |
         awk -F'[, ]' '/#[7-9][0-9A-F][7-9][0-9A-F][7-9][0-9A-F]/ {print $1}' )
 
-    for i in ${!ytmglst[*]} ; do
-        if [[ ${ytmglst[$(( i + 1 ))]} == "$(( ${ytmglst[$i]} + 1 ))" &&
-              ${ytmglst[$(( i + 2 ))]} == "$(( ${ytmglst[$i]} + 2 ))" &&
-              ${ytmglst[$(( i + 3 ))]} == "$(( ${ytmglst[$i]} + 3 ))" &&
-              ${ytmglst[$(( i + 4 ))]} == "$(( ${ytmglst[$i]} + 6 ))" &&
-              ${ytmglst[$(( i + 5 ))]} == "$(( ${ytmglst[$i]} + 7 ))" ]] ; then
+    for i in "${!ytmglst[@]}" ; do
+        if (( ytmglst[i + 1] == ytmglst[i] + 1 && ytmglst[i + 2] == ytmglst[i] + 2 &&
+              ytmglst[i + 3] == ytmglst[i] + 3 && ytmglst[i + 4] == ytmglst[i] + 6 &&
+              ytmglst[i + 5] == ytmglst[i] + 7 )) ; then
             xdotool key plus
             hide_exit
         fi
@@ -81,14 +79,11 @@ else
     mapfile -t ytmglst < <( import -window root -depth 8 -crop "${Xs}x1+${X0}+${Y0}" txt:- |
         awk -F'[, ]' '/#[D-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F]/ {print $1}' )
 
-    for i in ${!ytmglst[*]} ; do
-        if [[ ${ytmglst[$(( i + 1 ))]}  == "$(( ${ytmglst[$i]} + 1 ))"  &&
-              ${ytmglst[$(( i + 2 ))]}  == "$(( ${ytmglst[$i]} + 2 ))"  &&
-              ${ytmglst[$(( i + 3 ))]}  == "$(( ${ytmglst[$i]} + 3 ))"  &&
-              ${ytmglst[$(( i + 4 ))]}  == "$(( ${ytmglst[$i]} + 6 ))"  &&
-              ${ytmglst[$(( i + 5 ))]}  == "$(( ${ytmglst[$i]} + 7 ))"  &&
-              ${ytmglst[$(( i + 8 ))]}  == "$(( ${ytmglst[$i]} + 10 ))" &&
-              ${ytmglst[$(( i + 11 ))]} == "$(( ${ytmglst[$i]} + 13 ))" ]] ; then
+    for i in "${!ytmglst[@]}" ; do
+        if (( ytmglst[i + 1]  == ytmglst[i] + 1 && ytmglst[i + 2]  == ytmglst[i] + 2 &&
+              ytmglst[i + 3]  == ytmglst[i] + 3 && ytmglst[i + 4]  == ytmglst[i] + 6 &&
+              ytmglst[i + 5]  == ytmglst[i] + 7 && ytmglst[i + 8]  == ytmglst[i] + 10 &&
+              ytmglst[i + 11] == ytmglst[i] + 13 )) ; then
             xdotool key plus
             hide_exit
         fi
