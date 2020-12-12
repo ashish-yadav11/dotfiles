@@ -33,27 +33,23 @@ bind -m vi-insert '"\C-s": transpose-chars'
 
 source /home/ashish/.scripts/fzf.bash
 
+# termite tabbing
+source /etc/profile.d/vte.sh
+
 __prompt_command() {
     case $TERM in
-        xterm-termite)
-            # window title
-            printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
-            # termite tabbing functionality
-            printf "\033]7;file://%s%s\033\\" "${HOSTNAME}" "$(/usr/lib/vte-urlencode-cwd)"
-            ;;
-        xterm*|alacritty*|rxvt*|Eterm|aterm|kterm|gnome*)
-            # window title
-            printf "\033]0;%s@%s:%s\007" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
+        *termite*|*st*|*alacritty*)
+            printf "\e]0;%s@%s:%s\a" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
             ;;
     esac
-    # store bash history immediately
     history -a
 }
 
 # shell variables
 HISTCONTROL=ignoredups
 HISTSIZE=10000
-PROMPT_COMMAND=__prompt_command
+LC_ALL=C
+PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}__prompt_command
 
 # custom aliases
 alias cp="cp -i"
