@@ -11,6 +11,9 @@ set keymap vi-command
 "\C-h":
 "J": history-search-backward
 "K": history-search-forward
+# insert key
+"\e[2~": vi-insertion-mode
+# pgup and pgdn keys
 "\e[5~": history-search-backward
 "\e[6~": history-search-forward
 
@@ -21,5 +24,6 @@ set keymap vi-insert
 "\C-l": clear-screen
 "\C-n": next-history
 "\C-p": previous-history
+# pgup and pgdn keys
 "\e[5~": history-search-backward
 "\e[6~": history-search-forward
