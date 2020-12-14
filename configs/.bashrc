@@ -5,6 +5,13 @@
 # return if not running interactively
 [[ $- != *i* ]] && return
 
+# aliases
+alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
+alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
+alias kynm=/home/ashish/.scripts/xevcn.sh
+alias newsboat="newsboat -q"
+alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
+
 __fzf_select_bookmark() {
     local selected
     selected=$(grep -Ev '(^#)|(^\s*$)' "$HOME/.bookmarks" | fzf -d' #' -n2)
@@ -17,14 +24,7 @@ bind -m emacs-standard -x '"\eb": __fzf_select_bookmark'
 bind -m vi-command -x '"\eb": __fzf_select_bookmark'
 bind -m vi-insert -x '"\eb": __fzf_select_bookmark'
 
-# custom aliases
-alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
-alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
-alias kynm=/home/ashish/.scripts/xevcn.sh
-alias newsboat="newsboat -q"
-alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
-
-# custom functions
+# functions
 neomutt() {
     /usr/bin/neomutt "$@"
     pidof -s /usr/bin/neomutt >/dev/null 2>&1 || rm -rf /tmp/neomutt/

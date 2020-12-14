@@ -7,51 +7,53 @@
 
 [[ -n $DISPLAY ]] && shopt -s checkwinsize
 
-# change cursor to block before entering external programs
-PS0='\e[2 q'
-
-blue='\[\033[38;5;12m\]'
-green='\[\033[38;5;10m\]'
-red='\[\033[38;5;167m\]'
-violet='\[\033[38;5;139m\]'
-white='\[\033[0m\]'
-yellow='\[\033[38;5;11m\]'
-
-# prompt
-PS1="${red}[${yellow}\u${green}@${blue}\h ${violet}\W${red}]${white}$ "
-
 # autocd
 shopt -s autocd
 
 # disable ^S ^Q
 stty -ixon
 
-# fzf keybindings
-bind -m emacs-standard '"\C-s": transpose-chars'
-bind -m vi-command '"\C-s": transpose-chars'
-bind -m vi-insert '"\C-s": transpose-chars'
+# change cursor to block before entering external programs
+PS0="\e[2 q"
 
-source /home/ashish/.scripts/fzf.bash
+blue="\[\e[38;5;12m\]"
+green="\[\e[38;5;10m\]"
+red="\[\e[38;5;167m\]"
+violet="\[\e[38;5;139m\]"
+white="\[\e[0m\]"
+yellow="\[\e[38;5;11m\]"
+
+# prompt
+PS1="${red}[${yellow}\u${green}@${blue}\h ${violet}\W${red}]${white}$ "
+
+# history (export to prevent history truncation when running sh)
+export HISTCONTROL=ignoredups
+export HISTSIZE=10000
+
+# fix sorting in completion
+LC_ALL=C
 
 # termite tabbing
 source /etc/profile.d/vte.sh
 
-__prompt_command() {
-    case $TERM in
-        *termite*|*st*|*alacritty*)
-            printf "\e]0;%s@%s:%s\a" "${USER}" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
-            ;;
-    esac
-    history -a
-}
+case $TERM in
+    *termite*|*st*|*alacritty*)
+        __prompt_command() {
+            printf "\e]0;%s@%s:%s\a" "$USER" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
+            history -a
+        }
+        ;;
+    *)
+        __prompt_command() {
+            history -a
+        }
+    ;;
+esac
 
-# shell variables
-HISTCONTROL=ignoredups
-HISTSIZE=10000
-LC_ALL=C
+# set title and save history immediately
 PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}__prompt_command
 
-# custom aliases
+# aliases
 alias cp="cp -i"
 alias diffc="diff --color=always"
 alias lessc="less -R"
@@ -63,7 +65,14 @@ alias tree="tree -C"
 alias vi=nvim
 alias vim=nvim
 
-# custom functions
+# fzf keybindings
+bind -m emacs-standard '"\C-s": transpose-chars'
+bind -m vi-command '"\C-s": transpose-chars'
+bind -m vi-insert '"\C-s": transpose-chars'
+
+source /usr/share/fzf/key-bindings.bash
+
+# functions
 btns() {
     if [[ $1 -ge 1 && $1 -le 255 ]] ; then
         echo "$1" >/sys/class/backlight/radeon_bl0/brightness
