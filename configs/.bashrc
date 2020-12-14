@@ -27,14 +27,14 @@ bind -m vi-insert -x '"\eb": __fzf_select_bookmark'
 # functions
 neomutt() {
     /usr/bin/neomutt "$@"
-    pidof -s /usr/bin/neomutt >/dev/null 2>&1 || rm -rf /tmp/neomutt/
+    pidof -s /usr/bin/neomutt &>/dev/null || rm -rf /tmp/neomutt/
 }
 
 rd() {
     if [[ $1 -ge 1000 && $1 -le 6500 ]] ; then
-        redshift -PO "$1" >/dev/null 2>&1
+        redshift -PO "$1" &>/dev/null
     elif [[ $1 == x ]] ; then
-        redshift -x >/dev/null 2>&1
+        redshift -x &>/dev/null
     else
         echo "Usage: rd <temperature b/w 1000 and 6500>|x"
     fi
