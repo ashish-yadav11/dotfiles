@@ -30,9 +30,6 @@ PS1="${red}[${yellow}\u${green}@${blue}\h ${violet}\W${red}]${white}$ "
 export HISTCONTROL=ignoredups
 export HISTSIZE=10000
 
-# fix sorting in completion
-LC_ALL=C
-
 # termite tabbing
 source /etc/profile.d/vte.sh
 
