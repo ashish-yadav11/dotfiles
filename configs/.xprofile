@@ -4,7 +4,7 @@ export BROWSER=brave
 #export FZF_ALT_C_COMMAND="fd -HL -td -d4 | LC_ALL=C sort -f"
 #export FZF_CTRL_T_COMMAND="fd -HL -tf -d4 | LC_ALL=C sort -f"
 #export FZF_DEFAULT_COMMAND="fd -HL -tf -d4 | LC_ALL=C sort -f"
-#export FZF_DEFAULT_OPTS="--layout=reverse --bind='change:top,ctrl-g:top,ctrl-f:page-down,ctrl-b:page-up,ctrl-q:clear-selection,ctrl-v:select-all,ctrl-z:deselect-all,ctrl-s:toggle,ctrl-t:toggle-all,ctrl-y:execute-silent(echo -n {} | xclip -selection clipboard),ctrl-space:toggle-sort,alt-b:ignore,alt-f:ignore,alt-bs:ignore' --no-unicode"
+#export FZF_DEFAULT_OPTS="--cycle --layout=reverse --no-unicode --bind='change:top,ctrl-d:delete-char,ctrl-g:top,ctrl-q:clear-selection,ctrl-v:select-all,ctrl-z:deselect-all,ctrl-s:toggle,ctrl-t:toggle-all,ctrl-space:toggle-sort,ctrl-y:execute-silent(echo -n {} | xclip -selection clipboard)'"
 export GOPATH=~/.local/lib/go
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 #export PAGER="less -R"
