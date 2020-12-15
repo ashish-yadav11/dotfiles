@@ -27,6 +27,6 @@ general.firstdayofweek=monday
 general.multipledays=yes
 general.periodicsave=0
 general.systemevents=yes
-notification.command=s=$(calcurse -n); s=${s#*[}; h=${s%%:*}; s=${s#*:}; m=${s%%]*}; t=$(( h * 60 + m )); notify-send -t "$(( t * 60000 ))" Calcurse "Appointment in $t minute(s)\n${s##*] }"
+notification.command=s=$(calcurse -n); s=${s#*[}; h=${s%%:*}; s=${s#*:}; m=${s%%]*}; t=$(( h * 60 + m )); notify-send -t "$(( t * 60000 ))" Calcurse "Appointment in $t minute(s)\n${s#*] }"
 notification.notifyall=all
 notification.warning=300
