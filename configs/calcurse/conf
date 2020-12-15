@@ -27,7 +27,6 @@ general.firstdayofweek=monday
 general.multipledays=yes
 general.periodicsave=0
 general.systemevents=yes
-general.systemdialogs=yes
-notification.command=printf '\a'
+notification.command=s=$(calcurse -n | awk 'NR==2 {gsub(/[\[\]]/,"",$1); split($1,arr,":"); t=arr[1]*60+arr[2]; printf "%d|Appointment in %d minute(s)\n",t*60000,t; printf "%s",$2; for (i=3; i<=NF; i++) {printf "%s%s",OFS,$i}; exit}'); notify-send -t "${s%%|*}" Calcurse "${s#*|}"
 notification.notifyall=all
 notification.warning=300
