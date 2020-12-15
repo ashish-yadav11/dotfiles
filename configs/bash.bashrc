@@ -33,22 +33,21 @@ export HISTSIZE=10000
 # termite tabbing
 source /etc/profile.d/vte.sh
 
+# save history immediately
+if [[ -n $PROMPT_COMMAND ]] ; then
+    PROMPT_COMMAND=$PROMPT_COMMAND'
+history -a'
+else
+    PROMPT_COMMAND='history -a'
+fi
+
+# set title
 case $TERM in
     *termite*|*st*|*alacritty*)
-        __prompt_command() {
-            printf "\e]0;%s@%s:%s\a" "$USER" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"
-            history -a
-        }
+        PROMPT_COMMAND=$PROMPT_COMMAND'
+printf "\e]0;%s@%s:%s\a" "$USER" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
         ;;
-    *)
-        __prompt_command() {
-            history -a
-        }
-    ;;
 esac
-
-# set title and save history immediately
-PROMPT_COMMAND=${PROMPT_COMMAND:+"$PROMPT_COMMAND; "}__prompt_command
 
 # aliases
 alias cp="cp -i"
