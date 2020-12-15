@@ -30,16 +30,6 @@ neomutt() {
     pidof -s /usr/bin/neomutt &>/dev/null || rm -rf /tmp/neomutt/
 }
 
-rd() {
-    if [[ $1 -ge 1000 && $1 -le 6500 ]] ; then
-        redshift -PO "$1" &>/dev/null
-    elif [[ $1 == x ]] ; then
-        redshift -x &>/dev/null
-    else
-        echo "Usage: rd <temperature b/w 1000 and 6500>|x"
-    fi
-}
-
 spull() {
     local dir
     dir=$(pwd)
