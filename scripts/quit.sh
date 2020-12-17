@@ -6,6 +6,13 @@ screen=/home/ashish/.scripts/screen.sh
 case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu -p Quit) in
     "Turn off Display")
         $screen off
+        systemctl stop timeout.service
+        while : ; do
+            read -r state </proc/acpi/button/lid/LID/state
+            case $state in *open) break ;; esac
+            sleep 10
+        done
+        systemctl start timeout.service
         ;;
     "Lock Screen")
         $i3lock

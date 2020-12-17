@@ -61,7 +61,6 @@ jdk-openjdk
 jq
 jre-openjdk
 kcolorchooser
-ksh
 libcanberra-pulse
 libreoffice-fresh
 libva-mesa-driver
