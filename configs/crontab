@@ -1,7 +1,12 @@
-#       mm      hh      DD      MM      W       script/command
+# environment variables
 
-        20      01      *       *       *       /home/ashish/.scripts/cron/sleep.sh
-        00      06      *       *       *       DISPLAY=:0 redshift -x
-#       50      20      *       *       *       /home/ashish/.scripts/cron/dine.sh
-        00      22      *       *       *       DISPLAY=:0 redshift -PO 4500
-        00      22      *       *       6       /home/ashish/.scripts/cron/maintenance.sh
+  DISPLAY=:0
+  DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+
+# mm      hh      DD      MM      W       command
+
+  20      01      *       *       *       /home/ashish/.scripts/cron/sleep.sh
+  00      06      *       *       *       redshift -x
+# 50      20      *       *       *       /home/ashish/.scripts/cron/dine.sh
+  00      22      *       *       *       redshift -PO 4500
+  00      22      *       *       6       /home/ashish/.scripts/cron/maintenance.sh
