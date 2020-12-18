@@ -23,11 +23,13 @@ at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '{
         echo "${cid}${id}\t${ctm}${tm} ${cqu}${qu} ${cur}${ur}${cdf}"
         # only print commands which were supplied by the user
         case $qu in
-            =*)
+            ~*)
                 at -c "$id" | awk '{
-                        if (p && $0 !~ /^Subject: Output from your job/ && $0 !~ /^To: /) {
+                        if (p) {
                             if ($0 == "") {
                                 s = s"\n"
+                            } else if ($0 ~ /^Subject: Output from your job/ || $0 ~ /^To: /) {
+                                s = ""
                             } else {
                                 print s$0
                                 s = ""
