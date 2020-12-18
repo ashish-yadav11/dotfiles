@@ -4,6 +4,11 @@ echo "$$" >/tmp/sleep_dine.pid
 id=$(dunstify -p -t 0 "wrap up, it's time for dinner")
 sleep 600
 dunstify -C "$id"
+time=$(date +%H%S)
+if [ "$time" -lt 2059 ] || [ "$time" -gt 2101 ] ; then
+    rm -f /tmp/sleep_dine.pid
+    exit
+fi
 feh -FNY /home/ashish/Pictures/dine.png &
 sleep 20
 pkill -P "$$"
