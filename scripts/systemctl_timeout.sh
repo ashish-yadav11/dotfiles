@@ -2,6 +2,10 @@
 notify="notify-send -h string:x-canonical-private-synchronous:timeout"
 
 case $1 in
+    restart)
+        systemctl start timeout.service
+        $notify -t 1000 systemctl "timeout service restarted"
+        ;;
     toggle)
         if systemctl --quiet is-active timeout.service ; then
             systemctl stop timeout.service
