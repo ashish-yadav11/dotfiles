@@ -3,7 +3,7 @@ notify="notify-send -h string:x-canonical-private-synchronous:timeout"
 
 case $1 in
     restart)
-        systemctl start timeout.service
+        systemctl restart timeout.service
         $notify -t 1000 systemctl "timeout service restarted"
         ;;
     toggle)
