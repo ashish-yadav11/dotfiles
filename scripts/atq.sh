@@ -9,11 +9,11 @@ cdf="\033[0m"
 at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '{
         if (r) {
             r = 0
-            printf "%s,%s %s %02d %s %04d,~%c,%s\n",$1,$2,$3,$4,$5,$6,$7,$8
+            printf "%s,%s %s %2d %s %4d,~%c,%s\n",$1,$2,$3,$4,$5,$6,$7,$8
         } else if ($7 == "=") {
             r = 1
         } else {
-            printf "%s,%s %s %02d %s %04d, %c,%s\n",$1,$2,$3,$4,$5,$6,$7,$8
+            printf "%s,%s %s %2d %s %4d, %c,%s\n",$1,$2,$3,$4,$5,$6,$7,$8
         }
     }' | while read -r job ; do
         id=${job%%,*}; job=${job#*,}
