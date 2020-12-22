@@ -27,7 +27,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 pidof -s /usr/lib/polkit-kde-authentication-agent-1 >/dev/null 2>&1 ||
     /usr/lib/polkit-kde-authentication-agent-1 2>/dev/null &
 pidof -s dunst >/dev/null 2>&1 || dunst &
-feh --no-fehbg --bg-scale /home/ashish/.config/wall* &
+xwallpaper --stretch /home/ashish/.config/wall* &
 nm-applet &
 pidof -s unclutter >/dev/null 2>&1 || unclutter &
 pidof -s clipdaemon >/dev/null 2>&1 || clipdaemon &

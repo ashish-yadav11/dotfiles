@@ -163,6 +163,7 @@ xorg-xinput
 xorg-xkill
 xorg-xsetroot
 xorg-xwininfo
+xwallpaper
 yad
 youtube-dl
 zathura
