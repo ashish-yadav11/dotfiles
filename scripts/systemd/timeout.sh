@@ -7,5 +7,5 @@ while true ; do
     id=$($notify -p -t 0 "Timeout in 5 minutes")
     sleep 300
     dunstify -C "$id"
-    feh -F /home/ashish/Pictures/timeout.jpg
+    feh -FNY /home/ashish/Pictures/timeout.jpg
 done
