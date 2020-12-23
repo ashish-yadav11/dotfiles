@@ -1,8 +1,35 @@
 #!/bin/bash
 case $1 in
+    e)
+        xargs setsid -f gthumb
+        ;;
+    E)
+        xargs setsid -f gimp
+        ;;
+    r)
+        mapfile -t files
+        mogrify -rotate 90 "${files[@]}"
+        ;;
+    R)
+        mapfile -t files
+        mogrify -rotate -90 "${files[@]}"
+        ;;
+    f)
+        mapfile -t files
+        mogrify -flop "${files[@]}"
+        ;;
     w)
         read -r file
         /home/ashish/.config/sxiv/exec/wallpaper.sh "$file"
+        ;;
+    d)
+        mapfile -t files
+        [[ $(echo -e "Yes\nNo" | dmenu -i -p "Do you really want to delete the selected image(s)?") == Yes ]] &&
+            if rm -f "${files[@]}" ; then
+                notify-send -t 1000 Sxiv "Deletion successful"
+            else
+                notify-send -u critical Sxiv "Deletion failed"
+            fi
         ;;
     y)
         pwd=$(pwd)
@@ -26,32 +53,5 @@ case $1 in
         else
             notify-send -u critical Sxiv "Yank failed"
         fi
-        ;;
-    r)
-        mapfile -t files
-        mogrify -rotate 90 "${files[@]}"
-        ;;
-    R)
-        mapfile -t files
-        mogrify -rotate -90 "${files[@]}"
-        ;;
-    f)
-        mapfile -t files
-        mogrify -flop "${files[@]}"
-        ;;
-    g)
-        xargs setsid -f gimp
-        ;;
-    s)
-        xargs setsid -f shotwell
-        ;;
-    d)
-        mapfile -t files
-        [[ $(echo -e "Yes\nNo" | dmenu -i -p "Do you really want to delete the selected image(s)?") == Yes ]] &&
-            if rm -f "${files[@]}" ; then
-                notify-send -t 1000 Sxiv "Deletion successful"
-            else
-                notify-send -u critical Sxiv "Deletion failed"
-            fi
         ;;
 esac
