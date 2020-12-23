@@ -10,7 +10,7 @@ alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias newsboat="newsboat -q"
-alias python="cgexec -g memory,cpuset:python /usr/bin/python"
+alias python="systemd-run -q --user --scope -p MemoryMax=2G -p AllowedCPUs=0-2 python"
 alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
 
 __fzf_select_bookmark() {
