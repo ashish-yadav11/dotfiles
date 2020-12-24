@@ -20,4 +20,4 @@ else
 fi
 exec 8>/dev/null
 notmuch new
-flock -n 9 || sigdsblocks 3 "$sigval"
+flock -n 9 && sigdsblocks 3 "$sigval"
