@@ -15,7 +15,7 @@ fi
 
 sigdsblocks 3 0
 time=$(date +%s)
-if msbync "$mbsync_channel" ; then
+if mbsync "$mbsync_channel" ; then
     find "$trash_folder" -newerct "@$time" -type f | mflag -S
     notmuch new
     sigdsblocks 3 1
