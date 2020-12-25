@@ -72,7 +72,7 @@ btns() {
     if [[ $1 -ge 1 && $1 -le 255 ]] ; then
         echo "$1" >/sys/class/backlight/radeon_bl0/brightness
     else
-        echo "bash: b: Invalid argument"
+        echo "btns: invalid argument"
     fi
 }
 

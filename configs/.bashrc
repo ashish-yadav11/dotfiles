@@ -37,20 +37,17 @@ spull() {
     cd /media/storage/.temporary/suckless-sites || return
     echo -e "\e[1;32msuckless sites\e[0m"
     git pull
-    echo
 
     cd /media/storage/.temporary/suckless-software/dwm || return
-    echo -e "\e[1;32mdwm\e[0m"
+    echo -e "\n\e[1;32mdwm\e[0m"
     git pull
-    echo
 
     cd /media/storage/.temporary/suckless-software/st || return
-    echo -e "\e[1;32mst\e[0m"
+    echo -e "\n\e[1;32mst\e[0m"
     git pull
-    echo
 
     cd /media/storage/.temporary/suckless-software/scroll || return
-    echo -e "\e[1;32mscroll\e[0m"
+    echo -e "\n\e[1;32mscroll\e[0m"
     git pull
 
     cd "$dir"
