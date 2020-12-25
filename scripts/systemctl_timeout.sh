@@ -24,5 +24,5 @@ case $1 in
         ;;
     *)
         echo "Usage: $0 toggle|status"
-    ;;
+        ;;
 esac
