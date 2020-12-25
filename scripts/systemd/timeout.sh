@@ -1,7 +1,6 @@
 #!/bin/dash
 notify="dunstify -h string:x-canonical-private-synchronous:timeout"
 
-PID=$(pidof -s /usr/bin/i3lock) && tail --pid="$PID" -f /dev/null
 trap '[ -n "$id" ] && dunstify -C "$id"; exit' TERM
 while true ; do
     sleep 3300

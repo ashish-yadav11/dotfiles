@@ -1,6 +1,5 @@
 #!/bin/dash
 dmenu="dmenu -i -matching fuzzy -no-custom"
-i3lock=/home/ashish/.scripts/i3lock.sh
 screen=/home/ashish/.scripts/screen.sh
 
 case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu -p Quit) in
@@ -13,8 +12,7 @@ case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutd
         systemctl start timeout.service
         ;;
     "Lock Screen")
-        $i3lock
-        systemctl restart timeout.service
+        systemctl start lock.service
         $screen off
         ;;
     "Restart dwm")

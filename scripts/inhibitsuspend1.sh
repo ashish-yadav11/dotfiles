@@ -1,5 +1,4 @@
 #!/bin/bash
-i3lock=/home/ashish/.scripts/i3lock.sh
 notify="dunstify -h string:x-canonical-private-synchronous:inhibitsuspend -h int:transient:1"
 screen=/home/ashish/.scripts/screen.sh
 
@@ -19,8 +18,7 @@ while (( SECONDS < 15 )) ; do
     read -r state </proc/acpi/button/lid/LID/state
     if [[ $state == *closed ]] ; then
         dunstify -C "$id"
-        $i3lock
-        systemctl restart timeout.service
+        systemctl start lock.service
         $screen off
         while [[ $state == *closed ]] ; do
             sleep 2
