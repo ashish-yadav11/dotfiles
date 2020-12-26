@@ -43,7 +43,7 @@ let g:clipboard = {
   \         '+': 'xsel -ob',
   \         '*': 'xsel -op',
   \     },
-  \     'cache_enabled': 1
+  \     'cache_enabled': 1,
   \ }
 let g:netrw_browsex_viewer = 'xdg-open'
 
