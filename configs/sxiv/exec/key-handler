@@ -37,7 +37,7 @@ case $1 in
             paths="$paths $(printf %q "$pwd/$file")"
         done
         paths=${paths# }
-        if echo -n "$paths" | xclip -selection clipboard ; then
+        if echo -n "$paths" | xsel -ib ; then
             notify-send -t 1000 Sxiv "Yank successful"
         else
             notify-send -u critical Sxiv "Yank failed"
@@ -48,7 +48,7 @@ case $1 in
             paths="$paths $(printf %q "$(realpath "$file")")"
         done
         paths=${paths# }
-        if echo -n "$paths" | xclip -selection clipboard ; then
+        if echo -n "$paths" | xsel -ib ; then
             notify-send -t 1000 Sxiv "Yank successful"
         else
             notify-send -u critical Sxiv "Yank failed"

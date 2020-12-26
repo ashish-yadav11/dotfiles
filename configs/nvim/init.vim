@@ -28,6 +28,7 @@ set termguicolors
 set title
 set titlelen=0
 
+let g:clipboard='xsel'
 let g:netrw_browsex_viewer='xdg-open'
 
 
@@ -37,6 +38,7 @@ call plug#begin(stdpath('data').'/plugged')
 " Make sure you use single quotes
 Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox'
+Plug 'JuliaEditorSupport/julia-vim'
 Plug 'lervag/vimtex'
 
 " Initialize plugin system

@@ -5,7 +5,7 @@ case $1 in
             kill "$PID" $(pgrep -P "$PID")
             exit
         fi
-        text=$(xclip -seletion primary -out)
+        text=$(xsel -op)
         if [ -z "$text" ] ; then
             notify-send -t 2000 Espeak "Nothing in primary selection"
             exit
