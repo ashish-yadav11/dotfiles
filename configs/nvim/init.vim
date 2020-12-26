@@ -1,3 +1,5 @@
+" keybindings
+
 map                             <Space>                 \
 nnoremap                        <F5>                    :buffers<CR>:buffer<Space>
 nnoremap        <silent>        gf                      :e <cfile><cr>
@@ -11,6 +13,9 @@ nnoremap        <silent>        <Leader>r               :silent !/home/ashish/.s
 nnoremap        <silent>        <Leader>R               :silent !/home/ashish/.scripts/ranger_dir.sh "%:p:h"<CR>
 nnoremap        <silent>        <Leader><C-r>           :silent !/home/ashish/.scripts/ranger_dir.sh <C-r>=getcwd()<CR><CR>
 inoremap                        <S-Tab>                 <C-v><Tab>
+
+
+" general
 
 filetype plugin on
 syntax on
@@ -29,33 +34,34 @@ set title
 set titlelen=0
 
 let g:clipboard = {
-      \   'name': 'xsel',
-      \   'copy': {
-      \      '+': 'xsel -ib',
-      \      '*': 'xsel -ip',
-      \    },
-      \   'paste': {
-      \      '+': 'xsel -ob',
-      \      '*': 'xsel -op',
-      \   }
-      \ }
+  \     'name': 'xsel',
+  \     'copy': {
+  \         '+': 'xsel -nib',
+  \         '*': 'xsel -nip',
+  \     },
+  \     'paste': {
+  \         '+': 'xsel -ob',
+  \         '*': 'xsel -op',
+  \     },
+  \     'cache_enabled': 1
+  \ }
 let g:netrw_browsex_viewer = 'xdg-open'
 
 
-" Specify a directory for plugins
+" vimplug
+
 call plug#begin(stdpath('data').'/plugged')
 
-" Make sure you use single quotes
 Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'lervag/vimtex'
 
-" Initialize plugin system
 call plug#end()
 
 
-" colorscheme
+" colorschemes
+
 " let g:gruvbox_bold = '1'
 " let g:gruvbox_italic = '1'
 " let g:gruvbox_underline = '1'
@@ -71,22 +77,30 @@ let g:gruvbox_invert_selection = '0'
 " let g:gruvbox_invert_tabline = '0'
 " let g:gruvbox_improved_strings = '0'
 " let g:gruvbox_improved_warnings = '1'
+
 colorscheme gruvbox
 
 
 " fzf
-if has('nvim') && !exists('g:fzf_layout')
-  autocmd! FileType fzf
-  autocmd  FileType fzf set laststatus=0 noshowmode noruler
-    \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-endif
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --color=always --column --hidden --line-number --no-heading --smart-case --max-depth 4 '.shellescape(<q-args>).' || exit 0', 1,
-  \   fzf#vim#with_preview({'options': ['--prompt', 'Rg>']}), <bang>0)
+  \     'rg
+          \ --color=always
+          \ --column
+          \ --line-number
+          \ --no-heading
+          \ --max-depth 4
+          \ --hidden
+          \ --smart-case
+          \ -- '.shellescape(<q-args>).'; exit 0',
+  \     1,
+  \     fzf#vim#with_preview(),
+  \     <bang>0
+  \ )
 
 
-" vimtex options
+" vimtex
+
 let g:tex_flavor = 'latex'
 let g:vimtex_view_method = 'zathura'
