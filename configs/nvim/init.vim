@@ -28,8 +28,18 @@ set termguicolors
 set title
 set titlelen=0
 
-let g:clipboard='xsel'
-let g:netrw_browsex_viewer='xdg-open'
+let g:clipboard = {
+      \   'name': 'xsel',
+      \   'copy': {
+      \      '+': 'xsel -ib',
+      \      '*': 'xsel -ip',
+      \    },
+      \   'paste': {
+      \      '+': 'xsel -ob',
+      \      '*': 'xsel -op',
+      \   }
+      \ }
+let g:netrw_browsex_viewer = 'xdg-open'
 
 
 " Specify a directory for plugins
