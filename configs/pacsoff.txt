@@ -89,7 +89,6 @@ noto-fonts-emoji
 okular
 openresolv
 pacman-contrib
-pandoc
 papirus-icon-theme
 pass
 pavucontrol-qt
