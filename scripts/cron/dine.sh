@@ -1,5 +1,5 @@
 #!/bin/dash
-time=$(date +%H%S)
+time=$(date +%H%M)
 if [ "$time" -lt 2049 ] || [ "$time" -gt 2051 ] ; then
     exit
 fi
@@ -9,7 +9,7 @@ id=$(dunstify -p -t 0 "wrap up, it's time for dinner")
 sleep 600
 dunstify -C "$id"
 id=""
-time=$(date +%H%S)
+time=$(date +%H%M)
 if [ "$time" -lt 2059 ] || [ "$time" -gt 2101 ] ; then
     rm -f /tmp/sleep_dine.pid
     exit
