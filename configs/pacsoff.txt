@@ -149,6 +149,7 @@ wmname
 woeusb
 x11-ssh-askpass
 xcape
+xclip
 xdg-user-dirs
 xdotool
 xf86-video-ati
