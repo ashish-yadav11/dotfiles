@@ -432,10 +432,10 @@
     format = "<span font='13.5'>%s</span>"
 
 [batmon]
-    summary = "BatMon"
+    stack_tag = "batmon"
     history_ignore = yes
 [brightness]
-    summary = "Brightness"
+    stack_tag = "brightness"
     history_ignore = yes
 [caja]
     appname = "caja"
@@ -453,29 +453,23 @@
 [hotspot]
     summary = "Hotspot"
     history_ignore = yes
+[maintenance]
+    stack_tag = "maintenance"
+    history_ignore = yes
 [scrot]
     summary = "Scrot"
     history_ignore = yes
 [sleep.sh]
     summary = "wrap up, it's time to go to bed"
     history_ignore = yes
-[systemctl]
-    summary = "systemctl"
-    history_ignore = yes
 [sxiv]
     summary = "Sxiv"
     history_ignore = yes
-[timeout.sh]
-    summary = "Timeout in 5 minutes"
+[timeout]
+    stack_tag = "timeout"
     history_ignore = yes
 [inhibitsuspend]
-    summary = "System will now sleep normally on closing the lid"
-    history_ignore = yes
-[inhibitsuspend0]
-    summary = "System will not sleep if lid is closed within next 15 seconds"
-    history_ignore = yes
-[inhibitsuspend1]
-    summary = "System will lock without sleeping if lid is closed within next 15 seconds"
+    stack_tag = "inhibitsuspend"
     history_ignore = yes
 
 # vim: ft=cfg
