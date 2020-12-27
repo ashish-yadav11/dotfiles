@@ -54,7 +54,7 @@ call plug#begin(stdpath('data').'/plugged')
 
 Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox'
-Plug 'JuliaEditorSupport/julia-vim'
+Plug 'neomutt/neomutt.vim'
 Plug 'lervag/vimtex'
 
 call plug#end()
