@@ -9,25 +9,6 @@ from ranger.api.commands import Command
 import os
 
 
-archive_folder = "/media/storage/.temporary/.trash" # without trailing slash
-
-
-def src_in_dst(src, dst):
-    if not os.path.isdir(dst) or os.path.islink(dst):
-        return False
-    f = os.path.realpath(src)
-    while True:
-        if os.path.samefile(f, dst):
-            return True
-        d = os.path.dirname(f)
-        if d == f:
-            return False
-        f = d
-
-def is_directory_with_files(path):
-    return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
-
-
 class mkcd(Command):
     """
     :mkcd <dirname>
@@ -67,41 +48,65 @@ class fzf_search(Command):
 
     def execute(self):
         from subprocess import PIPE
+        from ranger.ext.shell_escape import shell_escape
 
-        if self.rest(1):
-            if self.arg(1)[:2] == '-d':
-                fd_args = f"'{self.arg(1)}' '{self.rest(2)}'"
+        if self.arg(1):
+            if self.arg(1) == '--':
+                fd_args = f"-- {shell_escape(self.rest(2))}"
+            elif self.arg(1)[:2] == '-d' and self.arg(1)[2:].isdigit():
+                fd_args = f"{shell_escape(self.arg(1))} -- {shell_escape(self.rest(2))}"
             else:
-                fd_args = f"'{self.rest(1)}'"
+                fd_args = f"-- {shell_escape(self.rest(1))}"
         else:
             fd_args = ''
 
-        command = f"fd -HiL {fd_args} | LC_ALL=C sort -f | fzf"
+        command = f"fd -HiIL {fd_args} | LC_ALL=C sort -f | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
         selection = stdout.decode('utf-8').rstrip('\n')
         self.fm.select_file(os.path.join(self.fm.thisdir.path, selection))
 
-
 class fzf_cd(Command):
 
     def execute(self):
         from subprocess import PIPE
+        from ranger.ext.shell_escape import shell_escape
 
         if self.arg(1):
-            if self.arg(1)[:2] == '-d':
-                fd_args = f"'{self.arg(1)}' '{self.rest(2)}'"
+            if self.arg(1) == '--':
+                fd_args = f"-- {shell_escape(self.rest(2))}"
+            elif self.arg(1)[:2] == '-d' and self.arg(1)[2:].isdigit():
+                fd_args = f"{shell_escape(self.arg(1))} -- {shell_escape(self.rest(2))}"
             else:
-                fd_args = f"'{self.rest(1)}'"
+                fd_args = f"-- {shell_escape(self.rest(1))}"
         else:
             fd_args = ''
 
-        command = f"fd -HiL -td {fd_args} | LC_ALL=C sort -f | fzf"
+        command = f"fd -HiIL -td {fd_args} | LC_ALL=C sort -f | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
         selection = stdout.decode('utf-8').rstrip('\n')
         self.fm.cd(selection)
 
+
+
+def src_in_dst(src, dst):
+    if not os.path.isdir(dst) or os.path.islink(dst):
+        return False
+    f = os.path.realpath(src)
+    while True:
+        if os.path.samefile(f, dst):
+            return True
+        d = os.path.dirname(f)
+        if d == f:
+            return False
+        f = d
+
+def is_directory_with_files(path):
+    return os.path.isdir(path) and not os.path.islink(path) and len(os.listdir(path)) > 0
+
+
+archive_folder = "/media/storage/.temporary/.trash" # without trailing slash
 
 class archive_highlighted(Command):
 
@@ -150,7 +155,6 @@ class archive_highlighted(Command):
                 shutil.copy2(src, dst, follow_symlinks=False)
                 os.unlink(src)
         self.fm.notify(f"Archiving {tfile.relative_path}!")
-
 
 class archive_selection(Command):
 
@@ -237,7 +241,6 @@ class trash_highlighted(Command):
         escaped_path = shell_escape(tfile.path)
         self.fm.execute_command(f"trash-put -- {escaped_path}", flags='s')
         self.fm.notify(f"Trashing {tfile.relative_path}!")
-
 
 class trash_selection(Command):
 
