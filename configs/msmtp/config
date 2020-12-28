@@ -1,11 +1,12 @@
 defaults
 tls on
 tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile ~/.cache/msmtp.log
 
 account iiser
-auth oauthbearer
+from ashishkumar.yadav@students.iiserpune.ac.in
 host smtp.gmail.com
 port 587
-from ashishkumar.yadav@students.iiserpune.ac.in
+auth oauthbearer
 user ashishkumar.yadav@students.iiserpune.ac.in
 passwordeval /home/ashish/.scripts/oauth2tool.sh ashishkumar.yadav@students.iiserpune.ac.in
