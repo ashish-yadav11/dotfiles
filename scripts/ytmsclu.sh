@@ -1,5 +1,5 @@
 #!/bin/bash
-xdotool keyup 108
+modifier=108
 
 [[ $1 != 1 && $1 != 0 ]] && { echo "Usage: $0 1|0"; exit ;}
 
@@ -68,7 +68,7 @@ if [[ $1 == 1 ]] ; then
         if (( ytmglst[i + 1] == ytmglst[i] + 1 && ytmglst[i + 2] == ytmglst[i] + 2 &&
               ytmglst[i + 3] == ytmglst[i] + 3 && ytmglst[i + 4] == ytmglst[i] + 6 &&
               ytmglst[i + 5] == ytmglst[i] + 7 )) ; then
-            xdotool key plus
+            xdotool keyup "$modifier" key plus
             hide_exit
         fi
     done
@@ -84,7 +84,7 @@ else
               ytmglst[i + 3]  == ytmglst[i] + 3 && ytmglst[i + 4]  == ytmglst[i] + 6 &&
               ytmglst[i + 5]  == ytmglst[i] + 7 && ytmglst[i + 8]  == ytmglst[i] + 10 &&
               ytmglst[i + 11] == ytmglst[i] + 13 )) ; then
-            xdotool key plus
+            xdotool keyup "$modifier" key plus
             hide_exit
         fi
     done

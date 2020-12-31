@@ -1,9 +1,9 @@
 #!/bin/dash
-xdotool keyup 108
+modifier=108
 
 hide_exit() {
-        [ -n "$ytaf" ] || sigdwm "scrh i 2"
-        exit
+    [ -n "$ytaf" ] || sigdwm "scrh i 2"
+    exit
 }
 
 if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
@@ -21,7 +21,7 @@ case $(xdotool getactivewindow getwindowname) in
     *"YouTube Music")
         ;;
     *)
-        xdotool key F5
+        xdotool keyup "$modifier" key F5
         sleep 0.2
         hide_exit
         ;;
@@ -45,7 +45,7 @@ if [ "$x" -ge 944 ] && [ "$y" -ge 70 ] ; then
         exit
     fi
     if [ "$(import -window root -depth 8 -crop "1x1+${Xp}+${Yp}" txt:- | grep -om1 '#\w\+')" = "#FFFFFF" ] ; then
-        xdotool key space
+        xdotool keyup "$modifier" key space
         hide_exit
     fi
 fi
@@ -61,14 +61,14 @@ fi
 
 case $(import -window root -depth 8 -crop "1x1+${Xw}+${Yw}" txt:- | grep -om1 '#\w\+') in
     "#333333")
-        xdotool key Escape
+        xdotool keyup "$modifier" key Escape
         hide_exit
         ;;
     "#FFFFFF")
         exit
         ;;
     *)
-        xdotool key F5
+        xdotool keyup "$modifier" key F5
         sleep 0.2
         hide_exit
         ;;
