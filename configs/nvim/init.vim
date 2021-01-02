@@ -1,17 +1,18 @@
 " keybindings
 
 map                             <Space>                 \
-nnoremap        <silent>        gf                      :e <cfile><cr>
-nnoremap        <silent>        [f                      :e <cfile><cr>
-nnoremap        <silent>        <C-w>gf                 :tabnew <cfile><cr>
+nnoremap        <silent>        gf                      :edit <cfile><CR>
+nnoremap        <silent>        [f                      :edit <cfile><CR>
+nnoremap        <silent>        <C-w>gf                 :tabnew <cfile><CR>
 nnoremap        <silent>        yd                      :let @+=expand("%:p:h")<CR>
 nnoremap        <silent>        yp                      :let @+=expand("%:p")<CR>
 nnoremap        <silent>        <Leader><Esc>           :nohlsearch<CR>
 nnoremap                        <Leader>b               :buffers<CR>:buffer<Space>
 nnoremap        <silent>        <Leader>p               :lcd %:p:h<CR>
-nnoremap        <silent>        <Leader>r               :silent !/home/ashish/.scripts/ranger_file.sh "%:p"<CR>
-nnoremap        <silent>        <Leader>R               :silent !/home/ashish/.scripts/ranger_dir.sh "%:p:h"<CR>
-nnoremap        <silent>        <Leader><C-r>           :silent !/home/ashish/.scripts/ranger_dir.sh <C-r>=getcwd()<CR><CR>
+nnoremap        <silent>        <Leader>t               :execute ':silent !cd -- '.shellescape(expand("%:p:h"), 1).'; setsid -f termite'<CR>
+nnoremap        <silent>        <Leader>r               :execute ':silent !path=$(printf %q '.shellescape(expand("%:p"), 1).'); RANGER_LEVEL=0 setsid -f termite -e "ranger --selectfile=$path"'<CR>
+nnoremap        <silent>        <Leader>R               :execute ':silent !cd -- '.shellescape(expand("%:p:h"), 1).'; RANGER_LEVEL=0 setsid -f termite -e ranger'<CR>
+nnoremap        <silent>        <Leader><C-r>           :execute ':silent !cd -- '.shellescape(expand(getcwd(), 1)).'; RANGER_LEVEL=0 setsid -f termite -e ranger'<CR>
 inoremap                        <S-Tab>                 <C-v><Tab>
 
 
