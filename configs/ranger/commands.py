@@ -276,7 +276,6 @@ class trash_selection(Command):
         self.fm.execute_command(f"trash-put -- {escaped_paths}", flags='s')
         self.fm.notify(f"Trashing {relative_paths}!")
 
-
 class delete_highlighted(Command):
 
     def execute(self):
@@ -302,3 +301,40 @@ class delete_highlighted(Command):
     def _question_callback(self, relative_path, answer):
         if answer == 'y' or answer == 'Y':
             self.fm.delete([relative_path])
+
+
+class terminal_curdir(Command):
+
+    def execute(self):
+        from ranger.ext.shell_escape import shell_escape
+
+        cwd = self.fm.thisdir
+
+        if not cwd:
+            self.fm.execute_command("termite", flags='fs')
+        else:
+            self.fm.execute_command(f"cd {shell_escape(cwd.path)}; termite", flags='fs')
+
+class ranger_curfile(Command):
+
+    def execute(self):
+        from ranger.ext.shell_escape import shell_escape
+
+        tfile = self.fm.thisfile
+
+        if not tfile:
+            self.fm.execute_command("RANGER_LEVEL=0 termite -e ranger", flags='fs')
+        else:
+            self.fm.execute_command(f'path=$(printf %q {shell_escape(tfile.path)}); RANGER_LEVEL=0 termite -e "ranger --selectfile=$path"', flags='fs')
+
+class ranger_curdir(Command):
+
+    def execute(self):
+        from ranger.ext.shell_escape import shell_escape
+
+        cwd = self.fm.thisdir
+
+        if not cwd:
+            self.fm.execute_command("RANGER_LEVEL=0 termite -e ranger", flags='fs')
+        else:
+            self.fm.execute_command(f"cd {shell_escape(cwd.path)}; RANGER_LEVEL=0 termite -e ranger", flags='fs')
