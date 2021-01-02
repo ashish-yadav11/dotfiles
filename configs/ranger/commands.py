@@ -313,7 +313,7 @@ class terminal_curdir(Command):
         if not cwd:
             self.fm.execute_command("termite", flags='fs')
         else:
-            self.fm.execute_command(f"cd {shell_escape(cwd.path)}; termite", flags='fs')
+            self.fm.execute_command(f"cd -- {shell_escape(cwd.path)}; termite", flags='fs')
 
 class ranger_curfile(Command):
 
@@ -337,4 +337,4 @@ class ranger_curdir(Command):
         if not cwd:
             self.fm.execute_command("RANGER_LEVEL=0 termite -e ranger", flags='fs')
         else:
-            self.fm.execute_command(f"cd {shell_escape(cwd.path)}; RANGER_LEVEL=0 termite -e ranger", flags='fs')
+            self.fm.execute_command(f"cd -- {shell_escape(cwd.path)}; RANGER_LEVEL=0 termite -e ranger", flags='fs')
