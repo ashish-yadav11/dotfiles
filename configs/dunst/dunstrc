@@ -456,9 +456,6 @@
 [maintenance]
     stack_tag = "maintenance"
     history_ignore = yes
-[neomutt]
-    summary = "NeoMutt"
-    history_ignore = yes
 [scrot]
     summary = "Scrot"
     history_ignore = yes
