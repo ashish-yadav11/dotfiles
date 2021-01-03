@@ -131,7 +131,7 @@ bind index,pager,attach c compose-to-sender
 
 macro index,pager gf "<change-folder>?" "go to another folder"
 macro index,pager gF "<change-folder-readonly>?" "go to another folder in readonly mode"
-macro index,pager,attach,compose gx "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message> urlscan<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "call urlview to extract URLs out of a message"
+macro index,pager,attach,compose gx "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>urlscan<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "call urlview to extract URLs out of a message"
 
 # change newsgroup
 bind index,pager i noop
@@ -203,7 +203,7 @@ bind index,pager,attach rl list-reply
 bind index,pager,attach rt resend-message
 
 bind index L limit
-macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -r -p 'Enter a search term to find with notmuch: ' x; echo \$x >/tmp/neomutt/notmuch.search<Enter><limit>~i \"\`notmuch search --output=messages \$(cat /tmp/neomutt/notmuch.search) | head -n 600 | perl -le '@a=<>;s/\^id:// for@a;$,=\"|\";print@a' | perl -le '@a=<>; chomp@a; s/\\+/\\\\+/ for@a;print@a' \`\"<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "show only messages matching a notmuch pattern"
+macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -r -p 'Enter a search term to find with notmuch: ' arg && echo \"\$arg\" >/tmp/neomutt/notmuch.arg<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter><limit>~I __MACRO__<Enter><refresh>" "show only messages matching a notmuch pattern"
 macro index ,a "<limit>all<Enter><refresh>" "show all messages"
 macro index ,n "<limit>~N<Enter><refresh>" "show all unread messages"
 macro index ,f "<limit>~F<Enter><refresh>" "show all flagged messages"
@@ -260,8 +260,8 @@ macro index,pager s "<sync-mailbox><enter-command>set my_wait_key=\$wait_key wai
 macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter><clear-flag>N" "open html in browser otherwise text to less with url highlighting"
 macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter>" "open html in browser otherwise text to less with url highlighting"
 
-macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>cat >/tmp/neomutt/mail<Enter><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter><shell-escape>/home/ashish/.config/mutt/scripts/url_highlight_less.sh /tmp/neomutt/mail; rm -f /tmp/neomutt/mail<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter><clear-flag>N" "pipe message to less with url highlighting"
-macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>cat >/tmp/neomutt/mail<Enter><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter><shell-escape>/home/ashish/.config/mutt/scripts/url_highlight_less.sh /tmp/neomutt/mail; rm -f /tmp/neomutt/mail<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "pipe message to less with url highlighting"
+macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>/home/ashish/.config/mutt/scripts/url_highlight_less.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter><clear-flag>N" "pipe message to less with url highlighting"
+macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>/home/ashish/.config/mutt/scripts/url_highlight_less.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "pipe message to less with url highlighting"
 
 
 #--------#
@@ -555,6 +555,8 @@ set forward_format = "Fwd: %s"
 
 # include message in forwards
 set forward_quote = yes
+
+set external_search_command = /home/ashish/.config/mutt/scripts/notmuch_filter.sh
 
 # include message in replies
 set include = yes
