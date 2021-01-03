@@ -1,7 +1,117 @@
 # vim: filetype=neomuttrc
 
-source /home/ashish/.config/mutt/accounts/iiser.muttrc
-source /home/ashish/.config/mutt/colorscheme.muttrc
+set my_config_folder=/home/ashish/.config/mutt
+set my_accounts_folder=$my_config_folder/accounts
+set my_scripts_folder=$my_config_folder/scripts
+
+source $my_accounts_folder/iiser.muttrc
+source $my_config_folder/colorscheme.muttrc
+
+
+#----------#
+# settings #
+#----------#
+
+
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+
+
+# general settings
+
+set abort_key = <Esc>
+
+set abort_backspace = no
+
+set date_format = "%d/%m/%y %H:%M"
+
+# don't ask for confirmation when deleting messages in a folder
+set delete = yes
+
+# hide [-- Autoview using ... --] message from html mails
+#set display_filter = "grep -v '\\[-- Autoview using .* --\\]'"
+
+# skip to compose when replying
+set fast_reply = yes
+
+# save attachments with the body
+set fcc_attach = yes
+
+# don't allow deleting flagged messages
+set flag_safe = yes
+
+# format of subject when forwarding
+set forward_format = "Fwd: %s"
+
+# include message in forwards
+set forward_quote = yes
+
+# include message in replies
+set include = yes
+
+set index_format = "%4C %Z %?X?A& ? %D %-15.15F %-67.67s (%-4.4c)"
+
+set mailcap_path = $my_config_folder/mailcap1
+
+# unread mail stay unread until read
+set mark_old = no
+
+# disables the '+' displayed at line wraps
+set markers = no
+
+set menu_scroll = yes
+
+# don't allow bottom entry to move off bottom
+set menu_move_off = no
+
+# attachments are forwarded with mail
+set mime_forward = yes
+
+# don't move to the next message in pager when invoking <next-page>
+set pager_stop = yes
+
+# ask whether to save message to draft on aborting send
+set postpone = ask-no
+
+set query_command = "abook --mutt-query '%s'"
+
+# ask whether to recall messages from draft when composing a new one
+set recall = ask-no
+
+# reply as whomever it was to
+set reverse_name = yes
+
+# decode RFC2047-encoded MIME parameters
+set rfc2047_parameters = yes
+
+# don't move to the next mail when modifying the current mail
+set resolve = no
+
+set shell = /bin/dash
+
+set signature = ""
+
+# pause 0 seconds for informational messages
+set sleep_time = 0
+
+set sort = reverse-threads
+set sort_aux = last-date-received
+
+set tmpdir = /tmp/neomutt
+
+# enable terminal title
+set ts_enabled = yes
+
+
+# sidebar settings
+
+set mail_check_stats = yes
+
+set sidebar_format = "%B%* %?N?%N/?%?S?%S?"
+set sidebar_next_new_wrap = yes
+set sidebar_short_path = yes
+set sidebar_visible = yes
+set sidebar_width = 19
 
 
 #----------#
@@ -135,7 +245,7 @@ macro index,pager,attach,compose gx "<enter-command>set my_pipe_decode=\$pipe_de
 
 # change newsgroup
 bind index,pager i noop
-#macro index,pager ii '<sync-mailbox><enter-command>source /home/ashish/.config/mutt/accounts/iiser.muttrc<Enter><change-folder>!<Enter><check-stats>' "switch to ashishkumar.yadav@students.iiserpune.ac.in"
+#macro index,pager ii '<sync-mailbox><enter-command>source $my_accounts_folder/iiser.muttrc<Enter><change-folder>!<Enter><check-stats>' "switch to ashishkumar.yadav@students.iiserpune.ac.in"
 
 macro index \Cs "<check-stats><refresh>" "refresh stats without warnings"
 
@@ -203,7 +313,7 @@ bind index,pager,attach rl list-reply
 bind index,pager,attach rt resend-message
 
 bind index L limit
-macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -r -p 'Enter a search term to find with notmuch: ' arg && echo \"\$arg\" >/tmp/neomutt/notmuch.arg<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter><limit>~I __MACRO__<Enter><refresh>" "show only messages matching a notmuch pattern"
+macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -r -p 'Enter a search term to find with notmuch: ' arg && echo \"\$arg\" >$tmpdir/notmuch.arg<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter><enter-command>lua-source $my_scripts_folder/notmuch_search.lua<Enter>" "show only messages matching a notmuch pattern"
 macro index ,a "<limit>all<Enter><refresh>" "show all messages"
 macro index ,n "<limit>~N<Enter><refresh>" "show all unread messages"
 macro index ,f "<limit>~F<Enter><refresh>" "show all flagged messages"
@@ -257,11 +367,11 @@ bind index,pager B sidebar-toggle-visible
 
 macro index,pager s "<sync-mailbox><enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>setsid -f /home/ashish/.scripts/mailsync.sh<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "sync mail"
 
-macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter><clear-flag>N" "open html in browser otherwise text to less with url highlighting"
-macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=/home/ashish/.config/mutt/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter>" "open html in browser otherwise text to less with url highlighting"
+macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=$my_config_folder/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter><clear-flag>N" "open html in browser otherwise text to less with url highlighting"
+macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=$my_config_folder/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter>" "open html in browser otherwise text to less with url highlighting"
 
-macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>/home/ashish/.config/mutt/scripts/url_highlight_less.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter><clear-flag>N" "pipe message to less with url highlighting"
-macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>/home/ashish/.config/mutt/scripts/url_highlight_less.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "pipe message to less with url highlighting"
+macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>$my_scripts_folder/url_highlight_less.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter><clear-flag>N" "pipe message to less with url highlighting"
+macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>$my_scripts_folder/url_highlight_less.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "pipe message to less with url highlighting"
 
 
 #--------#
@@ -516,109 +626,3 @@ bind editor \Co kill-eow
 
 # switching to folders with space in their names
 bind editor <Space> noop
-
-
-#----------#
-# settings #
-#----------#
-
-
-auto_view text/html
-alternative_order text/plain text/enriched text/html
-
-
-# general settings
-
-set abort_key = "<Esc>"
-
-set abort_backspace = no
-
-set date_format = "%d/%m/%y %H:%M"
-
-# don't ask for confirmation when deleting messages in a folder
-set delete = yes
-
-# hide [-- Autoview using ... --] message from html mails
-#set display_filter = "grep -v '\\[-- Autoview using .* --\\]'"
-
-# skip to compose when replying
-set fast_reply = yes
-
-# save attachments with the body
-set fcc_attach = yes
-
-# don't allow deleting flagged messages
-set flag_safe = yes
-
-# format of subject when forwarding
-set forward_format = "Fwd: %s"
-
-# include message in forwards
-set forward_quote = yes
-
-set external_search_command = /home/ashish/.config/mutt/scripts/notmuch_filter.sh
-
-# include message in replies
-set include = yes
-
-set index_format = "%4C %Z %?X?A& ? %D %-15.15F %-67.67s (%-4.4c)"
-
-set mailcap_path = /home/ashish/.config/mutt/mailcap1
-
-# unread mail stay unread until read
-set mark_old = no
-
-# disables the '+' displayed at line wraps
-set markers = no
-
-set menu_scroll = yes
-
-# don't allow bottom entry to move off bottom
-set menu_move_off = no
-
-# attachments are forwarded with mail
-set mime_forward = yes
-
-# don't move to the next message in pager when invoking <next-page>
-set pager_stop = yes
-
-# ask whether to save message to draft on aborting send
-set postpone = ask-no
-
-set query_command = "abook --mutt-query '%s'"
-
-# ask whether to recall messages from draft when composing a new one
-set recall = ask-no
-
-# reply as whomever it was to
-set reverse_name = yes
-
-# decode RFC2047-encoded MIME parameters
-set rfc2047_parameters = yes
-
-# don't move to the next mail when modifying the current mail
-set resolve = no
-
-set signature = ""
-
-# pause 0 seconds for informational messages
-set sleep_time = 0
-
-set sort = reverse-threads
-set sort_aux = last-date-received
-
-set tmpdir = /tmp/neomutt
-
-# enable terminal title
-set ts_enabled = yes
-
-
-# sidebar settings
-
-set mail_check_stats = yes
-
-set sidebar_format = '%B%* %?N?%N/?%?S?%S?'
-set sidebar_next_new_wrap = yes
-set sidebar_short_path = yes
-set sidebar_visible = yes
-set sidebar_width = 19

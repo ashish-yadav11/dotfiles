@@ -2,6 +2,39 @@
 
 
 #----------#
+# settings #
+#----------#
+
+
+alias me Ashish Kumar Yadav <ashishkumar.yadav@students.iiserpune.ac.in>
+
+# don't copy outgoing messages, gmail automatically does that
+set copy = no
+
+set folder = /home/ashish/.local/share/mail/iiser
+
+set from = ashishkumar.yadav@students.iiserpune.ac.in
+
+set header_cache = /home/ashish/.cache/mutt/iiser/headers
+
+set mbox_type = Maildir
+
+set message_cachedir = /home/ashish/.cache/mutt/iiser/bodies
+
+set postponed = +[Gmail].Drafts
+
+set record = "+[Gmail].Sent Mail"
+
+set realname = "Ashish Kumar Yadav"
+
+set sendmail = "msmtp -a iiser"
+
+set spoolfile = +INBOX
+
+set trash = +[Gmail].Trash
+
+
+#----------#
 # bindings #
 #----------#
 
@@ -23,38 +56,5 @@ macro index,pager MS "<save-message>=[Gmail].Spam<Enter>" "move mail to spam"
 macro index,pager gt "<change-folder>=[Gmail].Trash<Enter>" "go to trash"
 
 
-#----------#
-# settings #
-#----------#
-
-
-alias me Ashish Kumar Yadav <ashishkumar.yadav@students.iiserpune.ac.in>
-
-# don't copy outgoing messages, gmail automatically does that
-set copy = no
-
-set folder = "/home/ashish/.local/share/mail/iiser"
-
-set from = "ashishkumar.yadav@students.iiserpune.ac.in"
-
-set header_cache = /home/ashish/.cache/mutt/iiser/headers
-
-set mbox_type = Maildir
-
-set message_cachedir = /home/ashish/.cache/mutt/iiser/bodies
-
-set postponed = "+[Gmail].Drafts"
-
-set record = "+[Gmail].Sent\ Mail"
-
-set realname = "Ashish Kumar Yadav"
-
-set sendmail = "msmtp -a iiser"
-
-set spoolfile = "+INBOX"
-
-set trash = "+[Gmail].Trash"
-
-
 unmailboxes *
-mailboxes "=INBOX" "=[Gmail].Sent\ Mail" "=[Gmail].Drafts" "=[Gmail].Spam" "=[Gmail].Trash"
+mailboxes =INBOX "=[Gmail].Sent Mail" =[Gmail].Drafts =[Gmail].Spam =[Gmail].Trash
