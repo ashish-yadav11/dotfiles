@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 modifier=108
 keyboard="AT Translated Set 2 keyboard"
 
