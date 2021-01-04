@@ -2,7 +2,7 @@
 modifier=108
 keyboard="AT Translated Set 2 keyboard"
 
-exec 9>/tmp/ytm.lock
+exec 9<>/tmp/ytm.hide
 flock 9
 
 press_key() {
@@ -14,13 +14,22 @@ press_key() {
             esac
             ;;
         *)
-            xdotool key --delay 0 "$1"
+            xdotool key "$1"
             ;;
     esac
 }
 
 hide_exit() {
-    [ -n "$ytaf" ] || sigdwm "scrh i 2"
+    if read -r hyt </tmp/ytm.hide && flock -u 9 && flock -n 9 ; then
+        : >/tmp/ytm.hide
+        sigdwm "scrh i 2"
+    elif [ -z "$ytaf" ] ; then
+        if flock -u 9 && flock -n 9 ; then
+            sigdwm "scrh i 2"
+        else
+            echo 1 >/tmp/ytm.hide
+        fi
+    fi
     exit
 }
 
