@@ -12,7 +12,7 @@ if [[ $(focusedwinclass -i) == crx_cinhimbnkkaeohfgghhklpknlkffjgod ]] ; then
     # YouTube Music window already focused
     ytaf=1
 else
-    if xwininfo -tree -root | grep -qm1 '("crx_cinhimbnkkaeohfgghhklpknlkffjgod" ' ; then
+    if xwininfo -children -root | grep -qm1 ': ("crx_cinhimbnkkaeohfgghhklpknlkffjgod" ' ; then
         sigdwm "scrs i 2"
         sleep 0.1
     else

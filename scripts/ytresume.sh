@@ -9,7 +9,7 @@ hide_exit() {
 if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     ytaf=1
 else
-    if xwininfo -tree -root | grep -qm1 '("crx_cinhimbnkkaeohfgghhklpknlkffjgod" ' ; then
+    if xwininfo -children -root | grep -qm1 ': ("crx_cinhimbnkkaeohfgghhklpknlkffjgod" ' ; then
         sigdwm "scrs i 2"
         sleep 0.1
     else
