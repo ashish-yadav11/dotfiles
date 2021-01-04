@@ -13,7 +13,7 @@ press_key() {
         [[ $(xinput query-state "$keyboard") == *"key[$modifier]=up"* ]] &&
             xdotool keyup --delay 0 "$modifier"
     else
-        xotool key "$1"
+        xdotool key "$1"
     fi
 }
 
