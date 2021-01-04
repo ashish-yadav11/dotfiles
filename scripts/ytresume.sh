@@ -8,7 +8,7 @@ flock 9
 press_key() {
     case $(xinput query-state "$keyboard") in
         *"key[$modifier]=down"*)
-            xdotool keydown --delay 0 "$modifier" key "$1" keyup --delay 0 "$modifier"
+            xdotool keyup --delay 0 "$modifier" key "$1" keydown --delay 0 "$modifier"
             case $(xinput query-state "$keyboard") in
                 *"key[$modifier]=up"*) xdotool keyup --delay 0 "$modifier" ;;
             esac
@@ -20,7 +20,7 @@ press_key() {
 }
 
 hide_exit() {
-    if read -r hyt </tmp/ytm.hide && flock -u 9 && flock -n 9 ; then
+    if [ -s /tmp/ytm.hide ] && flock -u 9 && flock -n 9 ; then
         : >/tmp/ytm.hide
         sigdwm "scrh i 2"
     elif [ -z "$ytaf" ] ; then
@@ -74,7 +74,7 @@ if [ "$x" -ge 944 ] && [ "$y" -ge 70 ] ; then
             "The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
         exit
     fi
-    if [ "$(import -window root -depth 8 -crop "1x1+${Xp}+${Yp}" txt:- | grep -om1 '#\w\+')" = "#FFFFFF" ] ; then
+    if [ "$(pixelcolor -q "$Xp" "$Yp")" = "#ffffff" ] ; then
         press_key space
         hide_exit
     fi
@@ -89,12 +89,12 @@ if [ "$Xw" -lt 0 ] || [ "$Xw" -gt 1365 ] || [ "$Yw" -lt 0 ] || [ "$Yw" -gt 767 ]
     exit
 fi
 
-case $(import -window root -depth 8 -crop "1x1+${Xw}+${Yw}" txt:- | grep -om1 '#\w\+') in
+case $(pixelcolor -q "$Xw" "$Yw") in
     "#333333")
         press_key Escape
         hide_exit
         ;;
-    "#FFFFFF")
+    "#ffffff")
         exit
         ;;
     *)
