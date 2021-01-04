@@ -4,7 +4,6 @@ keyboard="AT Translated Set 2 keyboard"
 
 [[ $1 != 1 && $1 != 0 ]] && { echo "Usage: $0 1|0"; exit ;}
 
-trap 'rm -f /tmp/ytm.lock' EXIT
 exec 9>/tmp/ytm.lock
 flock 9
 
