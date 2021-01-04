@@ -1,7 +1,22 @@
 #!/bin/bash
 modifier=108
+keyboard="AT Translated Set 2 keyboard"
 
 [[ $1 != 1 && $1 != 0 ]] && { echo "Usage: $0 1|0"; exit ;}
+
+trap 'rm -f /tmp/ytm.lock' EXIT
+exec 9>/tmp/ytm.lock
+flock 9
+
+press_key() {
+    if [[ $(xinput query-state "$keyboard") == *"key[$modifier]=down"* ]] ; then
+        xdotool keyup --delay 0 "$modifier" key "$1" keydown --delay 0 "$modifier"
+        [[ $(xinput query-state "$keyboard") == *"key[$modifier]=up"* ]] &&
+            xdotool keyup --delay 0 "$modifier"
+    else
+        xotool key "$1"
+    fi
+}
 
 hide_exit() {
         [[ -n $ytaf ]] || sigdwm "scrh i 2"
@@ -12,7 +27,7 @@ if [[ $(focusedwinclass -i) == crx_cinhimbnkkaeohfgghhklpknlkffjgod ]] ; then
     # YouTube Music window already focused
     ytaf=1
 else
-    if xwininfo -children -root | grep -qm1 ': ("crx_cinhimbnkkaeohfgghhklpknlkffjgod" ' ; then
+    if [[ $(xwininfo -children -root) == *': ("crx_cinhimbnkkaeohfgghhklpknlkffjgod" '* ]] ; then
         sigdwm "scrs i 2"
         sleep 0.1
     else
@@ -21,7 +36,7 @@ else
 fi
 
 # exit if the focused window doesn't have YouTube Music at the end of its title
-[[ $(xdotool getactivewindow getwindowname) =~ "YouTube Music"$ ]] || exit
+[[ $(xdotool getactivewindow getwindowname) == *"YouTube Music" ]] || exit
 
 geometry=$(xdotool getactivewindow getwindowgeometry)
 position=${geometry##*Position: }
@@ -68,7 +83,7 @@ if [[ $1 == 1 ]] ; then
         if (( ytmglst[i + 1] == ytmglst[i] + 1 && ytmglst[i + 2] == ytmglst[i] + 2 &&
               ytmglst[i + 3] == ytmglst[i] + 3 && ytmglst[i + 4] == ytmglst[i] + 6 &&
               ytmglst[i + 5] == ytmglst[i] + 7 )) ; then
-            xdotool keyup "$modifier" key plus
+            press_key plus
             hide_exit
         fi
     done
@@ -84,7 +99,7 @@ else
               ytmglst[i + 3]  == ytmglst[i] + 3 && ytmglst[i + 4]  == ytmglst[i] + 6 &&
               ytmglst[i + 5]  == ytmglst[i] + 7 && ytmglst[i + 8]  == ytmglst[i] + 10 &&
               ytmglst[i + 11] == ytmglst[i] + 13 )) ; then
-            xdotool keyup "$modifier" key plus
+            press_key plus
             hide_exit
         fi
     done
