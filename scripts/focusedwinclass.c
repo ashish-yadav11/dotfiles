@@ -64,5 +64,6 @@ main(int argc, char *argv[])
                 XFree(ch.res_class);
         if (ch.res_name)
                 XFree(ch.res_name);
+        XCloseDisplay(dpy);
         return 0;
 }
