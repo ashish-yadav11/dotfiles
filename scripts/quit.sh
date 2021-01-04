@@ -1,10 +1,9 @@
 #!/bin/dash
 dmenu="dmenu -i -matching fuzzy -no-custom"
-screen=/home/ashish/.scripts/screen.sh
 
 case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu -p Quit) in
     "Turn off Display")
-        $screen off
+        screen off
         systemctl stop timeout.service
         while [ "$(xset -q | awk '$1=="Monitor" && $2=="is" {print $3; exit}')" = Off ] ; do
             sleep 10
@@ -13,7 +12,7 @@ case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutd
         ;;
     "Lock Screen")
         systemctl start lock.service
-        $screen off
+        screen off
         ;;
     "Restart dwm")
         case $(echo "Yes\nNo" | $dmenu -p "Do you really want to restart dwm?") in

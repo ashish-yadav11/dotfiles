@@ -1,6 +1,5 @@
 #!/bin/bash
 notify="dunstify -h string:x-canonical-private-synchronous:inhibitsuspend -h int:transient:1"
-screen=/home/ashish/.scripts/screen.sh
 
 read -r PID1 </tmp/inhibitsuspend1.pid && kill "$PID1"
 if read -r PID0 </tmp/inhibitsuspend0.pid && kill "$PID0" ; then
@@ -19,7 +18,7 @@ while (( SECONDS < 15 )) ; do
     if [[ $state == *closed ]] ; then
         dunstify -C "$id"
         systemctl stop timeout.service
-        $screen off
+        screen off
         while [[ $state == *closed ]] ; do
             sleep 2
             read -r state </proc/acpi/button/lid/LID/state
