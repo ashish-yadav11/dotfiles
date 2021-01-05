@@ -4,12 +4,23 @@
 modifier=108
 keyboard="AT Translated Set 2 keyboard"
 
-ntwarnsize="The size of the YouTube Music window is less than can be tolerated by the script."
+ntwarnsize="The size of the YouTube Music window is less than that required by the script."
 ntwarnpos="The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
 ntwarnuncertain="Something is wrong!"
 
-exec 9<>/tmp/ytm.hide
-flock 9
+hide_exit() {
+    if [ -s /tmp/ytm.hide ] && flock -u 9 && flock -n 9 ; then
+        : >/tmp/ytm.hide
+        sigdwm "scrh i 2"
+    elif [ -z "$ytaf" ] ; then
+        if flock -u 9 && flock -n 9 ; then
+            sigdwm "scrh i 2"
+        else
+            echo 1 >/tmp/ytm.hide
+        fi
+    fi
+    exit
+}
 
 press_key() {
     case $(xinput query-state "$keyboard") in
@@ -25,19 +36,8 @@ press_key() {
     esac
 }
 
-hide_exit() {
-    if [ -s /tmp/ytm.hide ] && flock -u 9 && flock -n 9 ; then
-        : >/tmp/ytm.hide
-        sigdwm "scrh i 2"
-    elif [ -z "$ytaf" ] ; then
-        if flock -u 9 && flock -n 9 ; then
-            sigdwm "scrh i 2"
-        else
-            echo 1 >/tmp/ytm.hide
-        fi
-    fi
-    exit
-}
+exec 9<>/tmp/ytm.hide
+flock 9
 
 if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     # YouTube Music window already focused
@@ -61,37 +61,29 @@ case $(xdotool getactivewindow getwindowname) in
 esac
 
 geometry=$(xdotool getactivewindow getwindowgeometry)
-position=${geometry##*Position: }
-size=${position##*Geometry: }
+geometry=${geometry#*Position: }
+position=${geometry% (screen: *}
+size=${geometry#*Geometry: }
 # coordinates of right upper corner of the YouTube Music window
-x0=${position%%,*}
-y0=${position##*,}; y0=${y0%% (screen: *}
+x=${position%,*}
+y=${position#*,}
 # size of the YouTube Music window
-x=${size%%x*}
-y=${size##*x}
+w=${size%x*}
+h=${size#*x}
+if [ "$w" -lt 944 ] || [ "$h" -lt 65 ] ; then
+    notify-send -u critical -t 3000 ytmsclu "$ntwarnsize"
+    exit
+fi
 
 # coordinates of a black pixel on the left side of the bottom status bar
-Xb=$(( x0 + 9 ))
-Yb=$(( y0 + y - 40 ))
-# size of the pixel array to capture and analyze; 500 cut from left side and 300 from right
-Xs=$(( x - 800 ))
-# coordinates of the pixel which will be the leftmost point of the pixel array to be captured later
-# on x-axis start from 504 right from the left border
-X0=$(( x0 + 504 ))
-# on y-axis start from 35 above from the bottom border
-Y0=$(( y0 + y - 35 ))
-
-if [ "$x" -lt 944 ] || [ "$y" -lt 65 ] ; then
-    notify-send -t 3000 ytmsclu "$ntwarnsize"
+xb=$(( x + 9 ))
+yb=$(( y + h - 40 ))
+if [ "$xb" -lt 0 ] || [ "$xb" -gt 1365 ] || [ "$yb" -lt 0 ] || [ "$yb" -gt 767 ] ; then
+    notify-send -u critical -t 4000 ytmsclu "$ntwarnpos"
     exit
 fi
-if [ "$(( Xb < 0 || Xb > 1365 || Yb < 0 || Yb > 767 || X0 < 0 || (X0 + Xs) > 1365 || Y0 < 0 || Y0 > 767 ))" = 1 ] ; then
-    notify-send -t 4000 ytmsclu "$ntwarnpos"
-    exit
-fi
-
 i=0
-while [ "$i" -lt 5 ] && [ "$(pixelcolor -q "$Xb" "$Yb")" != "#212121" ] ; do
+while [ "$i" -lt 5 ] && [ "$(pixelcolor -q "$xb" "$yb")" != "#212121" ] ; do
     sleep 0.05
     i=$(( i + 1 ))
 done
@@ -100,8 +92,19 @@ if [ "$i" = 5 ] ; then
     exit
 fi
 
+# size of the pixel array to capture and analyze; 500 cut from left side and 300 from right
+s=$(( w - 800 ))
+# coordinates of the pixel which will be the leftmost point of the pixel array to be captured
+# on x-axis start from 504 right from the left border
+x0=$(( x + 504 ))
+# on y-axis start from 35 above from the bottom border
+y0=$(( y + h - 35 ))
+if [ "$(( x0 < 0 || x0 > 1365 || (x0 + s) > 1365 || y < 0 || y > 767 ))" = 1 ] ; then
+    notify-send -u critical -t 4000 ytmsclu "$ntwarnpos"
+    exit
+fi
 if [ "$1" = 1 ] ; then
-    pixelcolor "$X0" "$Y0" "$Xs" | awk -F[,:] '
+    pixelcolor "$x0" "$y0" "$s" | awk -F[,:] '
         $3 ~ /#[7-9].[7-9].[7-9].$/ {
             x[++i % 6] = $1
             if (s != 5) {
@@ -119,7 +122,7 @@ if [ "$1" = 1 ] ; then
         }
     ' && press_key plus
 else
-    pixelcolor "$X0" "$Y0" "$Xs" | awk -F[,:] '
+    pixelcolor "$x0" "$y0" "$s" | awk -F[,:] '
         $3 ~ /#[d-f].[d-f].[d-f].$/ {
             x[++i % 17] = $1
             if (s != 16) {

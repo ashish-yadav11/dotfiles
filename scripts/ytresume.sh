@@ -1,12 +1,24 @@
 #!/bin/dash
-modifier_sym=Alt_R
-modifier_code=108
+modifier=108
 keyboard="AT Translated Set 2 keyboard"
 
+ntwarnsize="The size of the YouTube Music window is less than can be tolerated by the script."
 ntwarnpos="The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
+ntwarnuncertain="Something is wrong!"
 
-exec 9<>/tmp/ytm.hide
-flock 9
+hide_exit() {
+    if [ -s /tmp/ytm.hide ] && flock -u 9 && flock -n 9 ; then
+        : >/tmp/ytm.hide
+        sigdwm "scrh i 2"
+    elif [ -z "$ytaf" ] ; then
+        if flock -u 9 && flock -n 9 ; then
+            sigdwm "scrh i 2"
+        else
+            echo 1 >/tmp/ytm.hide
+        fi
+    fi
+    exit
+}
 
 press_key() {
     case $(xinput query-state "$keyboard") in
@@ -22,19 +34,15 @@ press_key() {
     esac
 }
 
-hide_exit() {
-    if [ -s /tmp/ytm.hide ] && flock -u 9 && flock -n 9 ; then
-        : >/tmp/ytm.hide
-        sigdwm "scrh i 2"
-    elif [ -z "$ytaf" ] ; then
-        if flock -u 9 && flock -n 9 ; then
-            sigdwm "scrh i 2"
-        else
-            echo 1 >/tmp/ytm.hide
-        fi
+checkpixelpos() {
+    if [ "$1" -lt 0 ] || [ "$1" -gt 1365 ] || [ "$2" -lt 0 ] || [ "$2" -gt 767 ] ; then
+        notify-send -u critical -t 4000 ytresume "$ntwarnpos"
+        exit
     fi
-    exit
 }
+
+exec 9<>/tmp/ytm.hide
+flock 9
 
 if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     ytaf=1
@@ -61,52 +69,54 @@ case $(xdotool getactivewindow getwindowname) in
 esac
 
 geometry=$(xdotool getactivewindow getwindowgeometry)
-position=${geometry##*Position: }
-size=${position##*Geometry: }
-x0=${position%%,*}
-y0=${position##*,}; y0=${y0%% (screen: *}
-x=${size%%x*}
-y=${size##*x}
-
-if [ "$x" -ge 944 ] && [ "$y" -ge 70 ] ; then
-    Xp=$(( x0 + 87 ))
-    Yp=$(( y0 + y - 42 ))
-
-    if [ "$Xp" -lt 0 ] || [ "$Xp" -gt 1365 ] || [ "$Yp" -lt 0 ] || [ "$Yp" -gt 767 ] ; then
-        notify-send -t 4000 ytresume "$ntwarnpos"
-        exit
-    fi
-    if [ "$(pixelcolor -q "$Xp" "$Yp")" = "#ffffff" ] ; then
-        press_key space
-        hide_exit
-    fi
-fi
-
-Xw=$(( x0 + 32 ))
-Yw=$(( y0 + 59 ))
-
-if [ "$Xw" -lt 0 ] || [ "$Xw" -gt 1365 ] || [ "$Yw" -lt 0 ] || [ "$Yw" -gt 767 ] ; then
-    notify-send -t 4000 ytresume "$ntwarnpos"
+geometry=${geometry#*Position: }
+position=${geometry% (screen: *}
+size=${geometry#*Geometry: }
+x=${position%,*}
+y=${position#*,}
+w=${size%x*}
+h=${size#*x}
+if [ "$w" -lt 944 ] || [ "$h" -lt 65 ] ; then
+    notify-send -u critical -t 3000 ytresume "$ntwarnsize"
     exit
 fi
 
+xb=$(( x + 9 ))
+yb=$(( y + h - 40 ))
+checkpixelpos "$xb" "$yb"
 i=0
-while [ "$i" -lt 5 ] ; do
-    case $(pixelcolor -q "$Xw" "$Yw") in
-        "#333333")
-            press_key Escape
-            hide_exit
-            ;;
-        "#ffffff")
-            exit
-            ;;
-        *)
-            sleep 0.05
-            i=$(( i + 1 ))
-            ;;
-    esac
+while [ "$i" -lt 5 ] && [ "$(pixelcolor -q "$xb" "$yb")" != "#212121" ] ; do
+    sleep 0.05
+    i=$(( i + 1 ))
 done
+if [ "$i" = 5 ] ; then
+    notify-send -u critical -t 0 ytresume "$ntwarnuncertain"
+    exit
+fi
 
-press_key F5
-sleep 0.2
-hide_exit
+xp=$(( x + 87 ))
+yp=$(( y + h - 42 ))
+checkpixelpos "$xp" "$yp"
+if [ "$(pixelcolor -q "$xp" "$yp")" = "#ffffff" ] ; then
+    press_key space
+    hide_exit
+fi
+
+xw=$(( x + 32 ))
+yw=$(( y + 59 ))
+checkpixelpos "$xw" "$yw"
+
+case $(pixelcolor -q "$xw" "$yw") in
+    "#333333")
+        press_key Escape
+        hide_exit
+        ;;
+    "#ffffff")
+        exit
+        ;;
+    *)
+        press_key F5
+        sleep 0.2
+        hide_exit
+        ;;
+esac
