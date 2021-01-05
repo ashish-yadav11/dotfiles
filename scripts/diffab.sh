@@ -16,15 +16,15 @@ print_mdiff() {
 echo -e "\e[1;32mbackup\e[0m"
 mdiff=$(
     $mdiff_cmd /media/storage/.backup /home/ashish |
-        grep -Ev '^Only.*' |
+        grep -Ev '^Only in ' |
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd -I '^token = ' /media/storage/.backup /home/ashish/.config |
-        grep -Ev '^Only.*' |
+        grep -Ev '^Only in ' |
             sed -e "s/^$mdiff_str -I '\\^token = '/diff/"
 
     $mdiff_cmd /media/storage/.backup /home/ashish/.local/share |
-        grep -Ev '^Only.*' |
+        grep -Ev '^Only in ' |
             sed -e "s/^$mdiff_str/diff/"
 )
 print_mdiff
@@ -45,15 +45,15 @@ mdiff=$(
         printf "diff $dotfiles/configs/crontab crontab\n%s\n" "$sdiff"
 
     $mdiff_cmd -I "^history\|^lastVisited\|^':" "$dotfiles/configs" /home/ashish/.config |
-        grep -Ev '^Only.*(configs:|\.config(:|/nvim: \.netrwhist|/newsboat: cache.db|/mpv: watch_later))' |
+        grep -Ev '^Only in .*(configs:|\.config(:|/nvim: \.netrwhist|/newsboat: cache.db|/mpv: watch_later))' |
             sed -e "s/^$mdiff_str -I '\\^history\\\\|\\^lastVisited\\\\|\\^'\\\\'':'/diff/"
 
     $mdiff_cmd "$dotfiles/configs" /home/ashish |
-        grep -Ev '^Only.*(configs:|ashish(:|/\.surf:|/\.gnupg: ))' |
+        grep -Ev '^Only in .*(configs:|ashish(:|/\.surf:|/\.gnupg: ))' |
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/locals" /home/ashish/.local |
-        grep -Ev '^Only.*(local(:|/share(:|/applications: mimeinfo\.cache)|/builds: dwm))' |
+        grep -Ev '^Only in .*(local(:|/share(:|/applications: mimeinfo\.cache)|/builds: dwm))' |
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/scripts" /home/ashish/.scripts |
