@@ -50,7 +50,7 @@ else
     case $(xwininfo -children -root) in
         *': ("crx_cinhimbnkkaeohfgghhklpknlkffjgod" '*)
             sigdwm "scrs i 2"
-            sleep 0.01
+            sleep 0.1
             ;;
         *)
             exec brave --app-id=cinhimbnkkaeohfgghhklpknlkffjgod
@@ -78,19 +78,6 @@ w=${size%x*}
 h=${size#*x}
 if [ "$w" -lt 944 ] || [ "$h" -lt 65 ] ; then
     notify-send -u critical -t 3000 ytresume "$ntwarnsize"
-    exit
-fi
-
-xb=$(( x + 9 ))
-yb=$(( y + h - 40 ))
-checkpixelpos "$xb" "$yb"
-i=0
-while [ "$i" -lt 5 ] && [ "$(pixelcolor -q "$xb" "$yb")" != "#212121" ] ; do
-    sleep 0.05
-    i=$(( i + 1 ))
-done
-if [ "$i" = 5 ] ; then
-    notify-send -u critical -t 0 ytresume "$ntwarnuncertain"
     exit
 fi
 

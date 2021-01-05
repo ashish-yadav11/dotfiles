@@ -46,7 +46,7 @@ else
     case $(xwininfo -children -root) in
         *': ("crx_cinhimbnkkaeohfgghhklpknlkffjgod" '*)
             sigdwm "scrs i 2"
-            sleep 0.01
+            sleep 0.1
             ;;
         *)
             exit
@@ -82,12 +82,7 @@ if [ "$xb" -lt 0 ] || [ "$xb" -gt 1365 ] || [ "$yb" -lt 0 ] || [ "$yb" -gt 767 ]
     notify-send -u critical -t 4000 ytmsclu "$ntwarnpos"
     exit
 fi
-i=0
-while [ "$i" -lt 5 ] && [ "$(pixelcolor -q "$xb" "$yb")" != "#212121" ] ; do
-    sleep 0.05
-    i=$(( i + 1 ))
-done
-if [ "$i" = 5 ] ; then
+if [ "$(pixelcolor -q "$xb" "$yb")" != "#212121" ] ; then
     notify-send -u critical -t 0 ytmsclu "$ntwarnuncertain"
     exit
 fi
