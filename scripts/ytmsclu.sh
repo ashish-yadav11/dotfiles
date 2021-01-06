@@ -1,12 +1,15 @@
 #!/bin/dash
-[ "$1" != 1 ] && [ "$1" != 0 ] && { echo "Usage: $0 1|0"; exit ;}
-
 modifier=108
 keyboard="AT Translated Set 2 keyboard"
 
 ntwarnsize="The size of the YouTube Music window is less than that required by the script."
 ntwarnpos="The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
 ntwarnuncertain="Something is wrong!"
+
+[ "$1" != 1 ] && [ "$1" != 0 ] && { echo "Usage: $0 1|0"; exit ;}
+
+exec 9<>/tmp/ytm.hide
+flock 9
 
 hide_exit() {
     if [ -s /tmp/ytm.hide ] && flock -u 9 && flock -n 9 ; then
@@ -35,9 +38,6 @@ press_key() {
             ;;
     esac
 }
-
-exec 9<>/tmp/ytm.hide
-flock 9
 
 if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     # YouTube Music window already focused

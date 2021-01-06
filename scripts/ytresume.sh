@@ -6,6 +6,9 @@ ntwarnsize="The size of the YouTube Music window is less than can be tolerated b
 ntwarnpos="The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
 ntwarnuncertain="Something is wrong!"
 
+exec 9<>/tmp/ytm.hide
+flock 9
+
 hide_exit() {
     if [ -s /tmp/ytm.hide ] && flock -u 9 && flock -n 9 ; then
         : >/tmp/ytm.hide
@@ -40,9 +43,6 @@ checkpixelpos() {
         exit
     fi
 }
-
-exec 9<>/tmp/ytm.hide
-flock 9
 
 if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     ytaf=1
