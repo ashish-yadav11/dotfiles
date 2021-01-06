@@ -1,8 +1,4 @@
 #!/bin/dash
-time=$(date +%H%M)
-if [ "$time" -lt 2049 ] || [ "$time" -gt 2051 ] ; then
-    exit
-fi
 trap '[ -n "$id" ] && dunstify -C "$id"; rm -f /tmp/sleep_dine.pid; exit' TERM
 echo "$$" >/tmp/sleep_dine.pid
 id=$(dunstify -p -t 0 "wrap up, it's time for dinner")
