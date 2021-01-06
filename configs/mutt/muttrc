@@ -29,7 +29,7 @@ set date_format = "%d/%m/%y %H:%M"
 set delete = yes
 
 # hide [-- Autoview using ... --] message from html mails
-#set display_filter = "grep -v '\\[-- Autoview using .* --\\]'"
+#set display_filter = "grep -Ev '^(.*)?\\[-- Autoview using .* --\\]$'"
 
 # skip to compose when replying
 set fast_reply = yes
