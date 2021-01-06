@@ -26,5 +26,6 @@ case $1 in
         fi
 
         read -r PID </var/run/atd.pid && kill -HUP "$PID"
+        ntping
         ;;
 esac
