@@ -1,34 +1,34 @@
 #!/bin/dash
-cid="\033[32m"
-ctm="\033[33m"
-cqu="\033[34m"
-cur="\033[36m"
-cdf="\033[0m"
-
 # merge redundant descriptions for running jobs
-at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '{
+at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '
+    BEGIN {
+        cid = "\033[32m"
+        ctm = "\033[33m"
+        cqu = "\033[34m"
+        cur = "\033[36m"
+        cdf = "\033[0m"
+    }
+    {
         if (r) {
             r = 0
-            printf "%s,%s %s %2d %s %4d,~%c,%s\n",$1,$2,$3,$4,$5,$6,$7,$8
+            printf "%s%s\t%s%s %s %2d %s %4d %s~%c %s%s%s|%s\n",
+                    cid,$1,ctm,$2,$3,$4,$5,$6,cqu,$7,cur,$8,cdf,$1
         } else if ($7 == "=") {
             r = 1
         } else {
-            printf "%s,%s %s %2d %s %4d, %c,%s\n",$1,$2,$3,$4,$5,$6,$7,$8
+            printf "%s%s\t%s%s %s %2d %s %4d %s%c %s%s%s|%s\n",
+                    cid,$1,ctm,$2,$3,$4,$5,$6,cqu,$7,cur,$8,cdf,$1
         }
     }' | while read -r job ; do
-        id=${job%%,*}; job=${job#*,}
-        tm=${job%%,*}; job=${job#*,}
-        qu=${job%,*}
-        ur=${job#*,}
-        echo "${cid}${id}\t${ctm}${tm} ${cqu}${qu} ${cur}${ur}${cdf}"
+        echo "${job%|*}"
         # only print commands which were supplied by the user
-        case $qu in
-            ~*)
-                at -c "$id" | awk '{
+        case $job in
+            *~*)
+                at -c "${job##*|}" | awk '{
                         if (p) {
                             if ($0 == "") {
                                 s = s"\n"
-                            } else if ($0 ~ /^Subject: Output from your job/ || $0 ~ /^To: /) {
+                            } else if ($0 ~ /^(To: |Subject: Output from your job)/) {
                                 s = ""
                             } else {
                                 print s$0
@@ -40,7 +40,7 @@ at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '{
                     }'
                 ;;
             *)
-                at -c "$id" | awk '{
+                at -c "${job##*|}" | awk '{
                         if (p) {
                             if ($0 == "") {
                                 s = s"\n"
@@ -54,4 +54,5 @@ at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '{
                     }'
                 ;;
         esac
+        echo
     done
