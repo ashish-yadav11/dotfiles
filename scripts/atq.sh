@@ -20,7 +20,8 @@ at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '
                     cid,$1,ctm,$2,$3,$4,$5,$6,cqu,$7,cur,$8,cdf,$1
         }
     }' | while read -r job ; do
-        echo "${job%|*}"
+        echo "$n${job%|*}"
+        n="\n"
         # only print commands which were supplied by the user
         case $job in
             *~*)
@@ -54,5 +55,4 @@ at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '
                     }'
                 ;;
         esac
-        echo
     done
