@@ -87,8 +87,6 @@ set rfc2047_parameters = yes
 # don't move to the next mail when modifying the current mail
 set resolve = no
 
-set shell = /bin/dash
-
 set signature = ""
 
 # pause 0 seconds for informational messages
