@@ -1,5 +1,6 @@
 brave-bin
 cyrus-sasl-xoauth2-git
+dashbinsh
 dict-gcide
 dict-wikt-en-all
 dict-wn
