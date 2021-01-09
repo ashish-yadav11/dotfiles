@@ -16,5 +16,5 @@ case $1 in
         ;;
 esac
 case $(echo "Yes\nNo" | $dmenu -p "curl $url to zathura?") in
-    Yes) curl -s "$url" | zathura - ;;
+    Yes) curl -sL "$url" | zathura - ;;
 esac
