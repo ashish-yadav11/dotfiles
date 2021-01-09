@@ -145,7 +145,6 @@ unclutter
 urlscan
 valgrind
 wmname
-woeusb
 x11-ssh-askpass
 xcape
 xclip
