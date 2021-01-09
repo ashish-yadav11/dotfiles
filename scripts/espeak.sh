@@ -1,6 +1,6 @@
 #!/bin/dash
 case $1 in
-    sel)
+    selection)
         if read -r PID </tmp/espeak.pid ; then
             kill "$PID" $(pgrep -P "$PID")
             exit
