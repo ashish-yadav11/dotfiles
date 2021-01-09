@@ -3,6 +3,7 @@ configuration {
 	font:                     "Monospace 12";
 	drun-display-format:      "{name}";
 	disable-history:          true;
+	matching-negate-char:     '!';
 	theme:                    "/home/ashish/.config/rofi/themes/gruvbox-dark-hard.rasi";
 	kb-row-select:            "Control+Shift+Return";
 	kb-toggle-sort:           "Control+space";
