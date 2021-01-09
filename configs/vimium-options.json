@@ -8,7 +8,7 @@
   "linkHintCharacters": "sadfjklewcmpghvnroiut",
   "linkHintNumbers": "0123456789",
   "newTabUrl": "file:///home/ashish/.config/browser-new-tab/new-tab.html",
-  "nextPatterns": "next,more,newer,>,›,→,»,≫,>>",
+  "nextPatterns": "next,more,forward,newer,>,›,→,»,≫,>>",
   "previousPatterns": "prev,previous,back,older,<,‹,←,«,≪,<<",
   "regexFindMode": false,
   "ignoreKeyboardLayout": false,
