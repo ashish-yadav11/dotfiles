@@ -8,7 +8,7 @@ case $1 in
     selection)
         word=$(xsel -op | truncate)
         if [ -z "$word" ] ; then
-            notify-send -t 2000 Dictionary "Nothing in primary selection"
+            notify-send -t 2000 Dictionary "Nothing in primary selection!"
             exit
         fi
         ;;
