@@ -55,9 +55,20 @@ spull() {
 
 trash-list() {
     case $1 in
-        -n)
-            /usr/bin/trash-list | sort -k3,3 ;;
-        *)
-            /usr/bin/trash-list | sort ;;
+        -n) /usr/bin/trash-list | sort -k3,3 ;;
+         *) /usr/bin/trash-list | sort ;;
     esac
+}
+
+zcurl() {
+    case $# in
+        0) url=$(xsel -ob) || { echo "Nothing in clipboard!"; return ;} ;;
+        1) url=$1 ;;
+        *) echo "Usage: zcurl [url]" ;;
+    esac
+    if [[ $url != http*.pdf ]] || ! curl -sfLIo /dev/null "$url" ; then
+        echo "Invalid URL!"
+        return
+    fi
+    curl -L "$url" | zathura - 2>/dev/null
 }
