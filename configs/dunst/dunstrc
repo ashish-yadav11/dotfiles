@@ -441,9 +441,6 @@
     appname = "caja"
     summary = "It is now safe to remove the drive"
     urgency = normal
-[curl to zathura]
-    summary = "curl to zathura"
-    history_ignore = yes
 [dictionary]
     summary = "Dictionary"
     history_ignore = yes
