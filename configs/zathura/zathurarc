@@ -30,6 +30,7 @@ map W feedkeys "<A-F4><A-F5><A-F6>"
 set adjust-open width
 set font "Monospace 12"
 set recolor true
+set recolor-keephue true
 set recolor-reverse-video true
 set render-loading true
 set sandbox none
