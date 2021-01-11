@@ -43,6 +43,7 @@ gimp-help-en
 git
 gnome-disk-utility
 gnome-icon-theme
+gnuplot
 go
 go-tools
 gparted
