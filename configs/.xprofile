@@ -24,14 +24,14 @@ export ESCDELAY=0
 wmname LG3D
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-pidof -s /usr/lib/polkit-kde-authentication-agent-1 >/dev/null 2>&1 ||
-    /usr/lib/polkit-kde-authentication-agent-1 2>/dev/null &
-pidof -s dunst >/dev/null 2>&1 || dunst &
 xwallpaper --stretch /home/ashish/.config/wall* &
-nm-applet &
-pidof -s unclutter >/dev/null 2>&1 || unclutter &
-pidof -s clipdaemon >/dev/null 2>&1 || clipdaemon &
+pidof -s /usr/lib/polkit-kde-authentication-agent-1 >/dev/null 2>&1 ||
+    /usr/lib/polkit-kde-authentication-agent-1 &
+pidof -s dunst >/dev/null 2>&1 || dunst &
+pidof -s nm-applet >/dev/null 2>&1 || nm-applet &
+clipdaemon &
 dsblocks &
 pidof -sx /home/ashish/.scripts/pulse_daemon.sh >/dev/null 2>&1 ||
     /home/ashish/.scripts/pulse_daemon.sh &
+unclutter &
 systemctl start timeout.service &
