@@ -175,7 +175,7 @@
     max_icon_size = 32
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/Papirus-Dark/16x16/status:/usr/share/icons/Papirus-Dark/32x32/status
+    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
     ### History ###
 
@@ -459,11 +459,17 @@
 [scrot]
     summary = "Scrot"
     history_ignore = yes
+[signal]
+    appname = "Signal"
+    history_ignore = yes
 [sleep.sh]
     summary = "wrap up, it's time to go to bed"
     history_ignore = yes
 [sxiv]
     summary = "Sxiv"
+    history_ignore = yes
+[telegram]
+    appname = "Telegram Desktop"
     history_ignore = yes
 [timeout]
     stack_tag = "timeout"
