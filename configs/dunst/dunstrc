@@ -437,10 +437,6 @@
 [brightness]
     stack_tag = "brightness"
     history_ignore = yes
-[caja]
-    appname = "caja"
-    summary = "It is now safe to remove the drive"
-    urgency = normal
 [dictionary]
     summary = "Dictionary"
     history_ignore = yes
