@@ -31,6 +31,7 @@ set delete = yes
 # hide [-- Autoview using ... --] message from html mails
 #set display_filter = "grep -Ev ']9;[0-9]+\\[-- Autoview using .* --\\]$'"
 
+
 # skip to compose when replying
 set fast_reply = yes
 
@@ -311,7 +312,7 @@ bind index,pager,attach rl list-reply
 bind index,pager,attach rt resend-message
 
 bind index L limit
-macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -r -p 'Enter a search term to find with notmuch: ' arg && echo \"\$arg\" >$tmpdir/notmuch.arg<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter><enter-command>lua-source $my_scripts_folder/notmuch_search.lua<Enter>" "show only messages matching a notmuch pattern"
+macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -r -p 'Enter a search term to find with notmuch: ' arg && echo \"\$arg\" >$tmpdir/notmuch.arg<Enter><enter-command>set wait_key=\$my_wait_key my_external_search_command=\$external_search_command external_search_command=$my_scripts_folder/notmuch_search_helper.sh; unset my_wait_key<Enter><enter-command>lua-source $my_scripts_folder/notmuch_search.lua<Enter><enter-command>set external_search_command=\$my_external_search_command; unset my_external_search_command<Enter>" "show only messages matching a notmuch pattern"
 macro index ,a "<limit>all<Enter><refresh>" "show all messages"
 macro index ,n "<limit>~N<Enter><refresh>" "show all unread messages"
 macro index ,f "<limit>~F<Enter><refresh>" "show all flagged messages"

@@ -1,6 +1,7 @@
 local argfile = "/tmp/neomutt/notmuch.arg"
+local outfile = "/tmp/neomutt/notmuch.out"
 
--- read search term into arg and clear argfile
+-- read search term from argfile into arg and clear argfile
 local f = io.open(argfile, "r")
 if not f then return end
 local arg = f:read("a")
@@ -25,20 +26,20 @@ if not o:close() then
     return
 end
 
--- process output
 -- no matching messages
 if output == "" then mutt.error("No messages matched criteria"); return end
--- escape ERE special tokens
-output = output:gsub('([.%[\\()*+?{|^$])', '\\\\\\\\%1')
--- concatenate lines with |
-output = output:gsub('\nid:', '|')
--- escape quotes
-output = output:gsub('"', '\\\\\\"')
--- add ^<( at the start and )>$ at the end
-output = output:gsub('^id:', '\\"^<(')
-output = output:gsub('\n*$', ')>$\\"')
--- there shouldn't be any other newline characters in output
-if output:find('\n') then mutt.error("notmuch output processing failed"); return end
+-- add < at the start
+output = output:gsub("^id:", "<")
+-- add > at the end removing the newline character
+output = output:gsub("\n$", ">")
+-- remove 'id:' from the beginning of each line
+output = output:gsub("\nid:", ">\n<")
 
--- call limit
-mutt.command.push('"<limit>~i ' .. output .. '<Enter>"')
+-- write output to outfile
+local f = io.open(outfile, "w")
+if not f then return end
+f:write(output)
+f:close()
+
+-- call limit with dummy parameter
+mutt.command.push('"<limit>~I x<Enter><refresh>"')
