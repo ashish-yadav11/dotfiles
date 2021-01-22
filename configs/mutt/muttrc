@@ -257,7 +257,7 @@ bind index zA collapse-all
 # copy message to mailbox
 bind index,pager C noop
 
-macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<return><pipe-message>abook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<return>" "add the sender address to abook"
+macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<return><pipe-message>abook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<return>" "add sender's address to abook"
 
 # deleting messages
 bind index,pager d noop
@@ -312,7 +312,7 @@ bind index,pager,attach rl list-reply
 bind index,pager,attach rt resend-message
 
 bind index L limit
-macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -r -p 'Enter a search term to find with notmuch: ' arg && echo \"\$arg\" >$tmpdir/notmuch.arg<Enter><enter-command>set wait_key=\$my_wait_key my_external_search_command=\$external_search_command external_search_command=$my_scripts_folder/notmuch_search_helper.sh; unset my_wait_key<Enter><enter-command>lua-source $my_scripts_folder/notmuch_search.lua<Enter><enter-command>set external_search_command=\$my_external_search_command; unset my_external_search_command<Enter>" "show only messages matching a notmuch pattern"
+macro index \Cl "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>read -r -p 'Enter a search term to find with notmuch: ' arg && echo \"\$arg\" >$tmpdir/notmuch.arg<Enter><enter-command>set wait_key=\$my_wait_key my_external_search_command=\$external_search_command external_search_command=$my_scripts_folder/notmuch_search_helper.sh; unset my_wait_key<Enter><enter-command>lua-source $my_scripts_folder/notmuch_search.lua<Enter><enter-command>set external_search_command=\$my_external_search_command; unset my_external_search_command<Enter>" "limit to messages matching a notmuch pattern"
 macro index ,a "<limit>all<Enter><refresh>" "show all messages"
 macro index ,n "<limit>~N<Enter><refresh>" "show all unread messages"
 macro index ,f "<limit>~F<Enter><refresh>" "show all flagged messages"
@@ -366,8 +366,8 @@ bind index,pager B sidebar-toggle-visible
 
 macro index,pager s "<sync-mailbox><enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>setsid -f /home/ashish/.scripts/mailsync.sh<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "sync mail"
 
-macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=$my_config_folder/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter><clear-flag>N" "open html in browser otherwise text to less with url highlighting"
-macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=$my_config_folder/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter>" "open html in browser otherwise text to less with url highlighting"
+macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=$my_config_folder/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter><clear-flag>N" "open in browser/less with url highlighting"
+macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=$my_config_folder/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter>" "open in browser/less with url highlighting"
 
 macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>$my_scripts_folder/url_highlight_less.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter><clear-flag>N" "pipe message to less with url highlighting"
 macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>$my_scripts_folder/url_highlight_less.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "pipe message to less with url highlighting"
@@ -629,9 +629,9 @@ bind editor \\u upcase-word
 
 bind editor \\d kill-eow
 
-bind editor \\\\ quote-char
-
 bind editor \Cs transpose-chars
+
+macro editor \\\\ "<quote-char>\\" "literal backspace"
 
 # switching to folders with space in their names
 bind editor <Space> noop
