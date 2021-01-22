@@ -19,7 +19,6 @@ pam-gnupg
 pass-git-helper
 rofi-dmenu-cust
 siji-git
-surf
 timeshift
 woeusb-ng
 yay

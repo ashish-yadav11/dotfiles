@@ -61,6 +61,7 @@ java-commons-lang
 jdk-openjdk
 jq
 jre-openjdk
+julia
 kcolorchooser
 libcanberra-pulse
 libreoffice-fresh
