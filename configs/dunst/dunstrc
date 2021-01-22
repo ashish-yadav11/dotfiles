@@ -440,9 +440,6 @@
 [dictionary]
     summary = "Dictionary"
     history_ignore = yes
-[dine.sh]
-    summary = "wrap up, it's time for dinner"
-    history_ignore = yes
 [espeak]
     summary = "Espeak"
     history_ignore = yes
@@ -461,8 +458,8 @@
 [signal]
     appname = "Signal"
     history_ignore = yes
-[sleep.sh]
-    summary = "wrap up, it's time to go to bed"
+[sleep-dine]
+    stack_tag = "sleepdine"
     history_ignore = yes
 [sxiv]
     summary = "Sxiv"

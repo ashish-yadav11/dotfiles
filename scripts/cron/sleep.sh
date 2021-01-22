@@ -1,7 +1,9 @@
 #!/bin/dash
+notify="dunstify -h string:x-canonical-private-synchronous:sleepdine"
+
 trap '[ -n "$id" ] && dunstify -C "$id"; rm -f /tmp/sleep_dine.pid; exit' TERM
 echo "$$" >/tmp/sleep_dine.pid
-id=$(dunstify -p -t 0 "wrap up, it's time to go to bed")
+id=$($notify -p -t 0 "wrap up, it's time to go to bed")
 sleep 600
 dunstify -C "$id"
 id=""
