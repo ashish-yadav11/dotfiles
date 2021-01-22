@@ -74,7 +74,7 @@ set pager_stop = yes
 # ask whether to save message to draft on aborting send
 set postpone = ask-no
 
-set query_command = "abook --mutt-query '%s'"
+set query_command = "abook --mutt-query %s"
 
 # ask whether to recall messages from draft when composing a new one
 set recall = ask-no
@@ -603,25 +603,35 @@ bind browser i view-file
 #--------#
 
 
+#<backward-char>        ^B              move the cursor one character to the left
 #<bol>                  ^A              jump to the beginning of the line
 #<delete-char>          ^D              delete the char under the cursor
 #<eol>                  ^E              jump to the end of the line
+#<forward-char>         ^F              move the cursor one character to the right
+#<history-down>         ^N              scroll down through the history list
 #<history-search>       ^R              search through the history list
+#<history-up>           ^P              scroll up through the history list
 #<kill-eol>             ^K              delete chars from cursor to end of line
 #<kill-line>            ^U              delete all chars on the line
 #<kill-word>            ^W              delete the word in front of the cursor
 #<quote-char>           ^V              quote the next typed key
 
-bind editor \Ch backspace
-bind editor \Cb backward-word
-bind editor \Cv upcase-word
+bind editor \\b backward-word
+bind editor \\f forward-word
+
 bind editor <Tab> complete-query
+bind editor <BackTab> complete
 bind editor \Ct complete
-bind editor \Cl downcase-word
-bind editor \Cf forward-word
-bind editor \Cp history-up
-bind editor \Cn history-down
-bind editor \Co kill-eow
+
+bind editor \\l downcase-word
+bind editor \\c capitalize-word
+bind editor \\u upcase-word
+
+bind editor \\d kill-eow
+
+bind editor \\\\ quote-char
+
+bind editor \Cs transpose-chars
 
 # switching to folders with space in their names
 bind editor <Space> noop
