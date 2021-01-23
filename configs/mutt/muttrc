@@ -631,7 +631,7 @@ bind editor \\d kill-eow
 
 bind editor \Cs transpose-chars
 
-macro editor \\\\ "<quote-char>\\" "literal backspace"
+macro editor \\\\ "<quote-char>\\" "literal backslash"
 
 # switching to folders with space in their names
 bind editor <Space> noop
