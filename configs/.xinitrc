@@ -29,12 +29,28 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
     unset f
 fi
 
-. "$HOME/.xprofile"
-
 # redshift
 time=$(date +%H%M)
 if [ "$time" -ge 2200 ] || [ "$time" -lt 0600 ] ; then
     redshift -PO 4500
 fi
+
+# fix for theme in file opener in telegram
+export TDESKTOP_I_KNOW_ABOUT_GTK_INCOMPATIBILITY=1
+
+# fix for java programs in dwm
+wmname LG3D
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+xwallpaper --stretch /home/ashish/.config/wall* &
+pidof -s /usr/lib/polkit-kde-authentication-agent-1 >/dev/null 2>&1 ||
+    /usr/lib/polkit-kde-authentication-agent-1 &
+pidof -s nm-applet >/dev/null 2>&1 || nm-applet &
+clipdaemon &
+dsblocks &
+pidof -sx /home/ashish/.scripts/pulse_daemon.sh >/dev/null 2>&1 ||
+    /home/ashish/.scripts/pulse_daemon.sh &
+unclutter &
+systemctl start timeout.service &
 
 exec dwm
