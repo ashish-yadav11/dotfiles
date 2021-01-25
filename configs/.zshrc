@@ -169,26 +169,17 @@ function neomutt {
 }
 
 function spull {
-    local dir
-    dir=$(pwd)
-
-    cd /media/storage/.temporary/suckless-sites || return
     echo -e "\e[1;32msuckless sites\e[0m"
-    git pull
+    git -C /media/storage/.temporary/suckless-sites pull
 
-    cd /media/storage/.temporary/suckless-software/dwm || return
     echo -e "\n\e[1;32mdwm\e[0m"
-    git pull
+    git -C /media/storage/.temporary/suckless-software/dwm pull
 
-    cd /media/storage/.temporary/suckless-software/st || return
     echo -e "\n\e[1;32mst\e[0m"
-    git pull
+    git -C /media/storage/.temporary/suckless-software/st pull
 
-    cd /media/storage/.temporary/suckless-software/scroll || return
     echo -e "\n\e[1;32mscroll\e[0m"
-    git pull
-
-    cd "$dir"
+    git -C /media/storage/.temporary/suckless-software/scroll pull
 }
 
 function trash-list {
@@ -209,6 +200,11 @@ function zcurl {
         return
     fi
     curl -L "$url" | zathura - 2>/dev/null
+}
+
+function zpull {
+    echo -e "\e[1;32mfzf-tab\e[0m"
+    git -C /home/ashish/.local/share/zsh/plugins/fzf-tab pull
 }
 
 
