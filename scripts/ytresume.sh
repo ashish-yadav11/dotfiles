@@ -4,7 +4,6 @@ keyboard="AT Translated Set 2 keyboard"
 
 ntwarnsize="The size of the YouTube Music window is less than can be tolerated by the script."
 ntwarnpos="The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
-ntwarnuncertain="Something is wrong!"
 
 exec 9<>/tmp/ytm.hide
 flock 9
