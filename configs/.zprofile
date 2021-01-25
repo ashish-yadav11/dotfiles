@@ -1,4 +1,28 @@
-# autostart x on login
+## ENVIRONMENT VARIABLES (commented ones are set globally)
+
+export BROWSER=brave
+#export EDITOR=nvim
+#export FZF_ALT_C_COMMAND="fd -HIL -td -d4 | LC_ALL=C sort -f"
+#export FZF_CTRL_T_COMMAND="fd -HIL -tf -d4 | LC_ALL=C sort -f"
+#export FZF_DEFAULT_COMMAND="fd -HIL -tf -d4 | LC_ALL=C sort -f"
+#export FZF_DEFAULT_OPTS="--cycle --layout=reverse --no-unicode --bind='change:top,ctrl-d:delete-char,ctrl-g:top,ctrl-q:clear-selection,ctrl-v:select-all,ctrl-z:deselect-all,ctrl-s:toggle,ctrl-t:toggle-all,ctrl-space:toggle-sort,ctrl-y:execute-silent(echo -n {} | xsel -ib)'"
+export GOPATH=~/.local/lib/go
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+#export PAGER="less -R"
+export PATH=~/.local/bin:$PATH
+#export QT_QPA_PLATFORMTHEME=qt5ct
+#export RANGER_LOAD_DEFAULT_RC=FALSE
+#export TERMINAL=termite
+#export VISUAL=nvim
+
+# fix for pacdiff to use nvim instead of vim
+export DIFFPROG="nvim -d"
+# fix for escape keys in neomutt
+export ESCDELAY=0
+
+
+## MISCELLANEOUS
+
 if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] ; then
   startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"
 fi
