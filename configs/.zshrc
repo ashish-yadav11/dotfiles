@@ -15,7 +15,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 KEYTIMEOUT=1
 PROMPT_EOL_MARK=''
-PS1='%167F[%11F%n%10F@%12F%M%139F %1~%167F]%f%k$ '
+PS1='%167F[%11F%n%10F@%12F%M%139F %1~%167F]%f$ '
 READNULLCMD=less
 SAVEHIST=10000
 zle_highlight=(region:bg=19 special:none suffix:bold isearch:underline paste:none)
