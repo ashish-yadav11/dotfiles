@@ -53,7 +53,7 @@ esac
 alias cp="cp -i"
 alias diffc="diff --color=always"
 alias lessc="less -R"
-alias ls="ls --color=auto"
+alias ls="ls --group-directories-first --color=auto"
 alias rm="rm -i"
 alias sudo="sudo "
 alias tree="tree -C"
