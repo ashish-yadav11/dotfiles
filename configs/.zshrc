@@ -18,7 +18,7 @@ PROMPT_EOL_MARK=''
 PS1='%167F[%11F%n%10F@%12F%M%139F %1~%167F]%f%k$ '
 READNULLCMD=less
 SAVEHIST=10000
-zle_highlight=('region:bg=19' 'special:none' 'suffix:bold' 'isearch:underline' 'paste:none')
+zle_highlight=(region:bg=19 special:none suffix:bold isearch:underline paste:none)
 
 
 ## MISCELLANEOUS (man zshmisc)
@@ -115,7 +115,7 @@ bindkey -a "\e[F" end-of-line # end key
 
 function fzf-select-bookmark {
     local selected
-    selected=$(grep -Ev '^(#|\s*$)' "$HOME/.bookmarks" | fzf --height 40% -d' #' -n2..)
+    selected=$(grep -Ev '^(#|\s*$)' ~/.bookmarks | fzf --height 40% -d' #' -n2..)
     selected=${selected%% #*}
     LBUFFER=$selected
     zle reset-prompt
@@ -204,7 +204,7 @@ function zcurl {
 
 function zpull {
     echo -e "\e[1;32mfzf-tab\e[0m"
-    git -C /home/ashish/.local/share/zsh/plugins/fzf-tab pull
+    git -C ~/.local/share/zsh/plugins/fzf-tab pull
 }
 
 

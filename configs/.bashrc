@@ -14,7 +14,7 @@ alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
 
 __fzf_select_bookmark() {
     local selected
-    selected=$(grep -Ev '^(#|\s*$)' "$HOME/.bookmarks" | fzf --height 40% -d' #' -n2..)
+    selected=$(grep -Ev '^(#|\s*$)' ~/.bookmarks | fzf --height 40% -d' #' -n2..)
     selected=${selected%% #*}
     READLINE_LINE=$selected
     READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
