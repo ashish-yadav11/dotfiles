@@ -81,6 +81,8 @@ zle -N viins-backward-delete-char
 bindkey -v "\C-h" viins-backward-delete-char
 bindkey -v "\C-?" viins-backward-delete-char
 
+bindkey -v "\C-s" transpose-chars
+
 bindkey -a "J" history-search-forward
 bindkey -a "K" history-search-backward
 
@@ -142,18 +144,30 @@ alias help=run-help
 
 ## CUSTOM
 
-# aliases
+alias cp="cp -i"
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
+alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
+alias lessc="less -R"
+alias ls="ls --color=auto"
 alias newsboat="newsboat -q"
+alias rm="rm -i"
 alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
+alias sudo="sudo "
+alias tree="tree -C"
+alias vi=nvim
+alias vim=nvim
 
-#functions
+function mkcd {
+    mkdir "$1" && cd "$1"
+}
+
 function neomutt {
     /usr/bin/neomutt "$@"
     pidof -s /usr/bin/neomutt &>/dev/null || rm -rf /tmp/neomutt/
 }
+
 function spull {
     local dir
     dir=$(pwd)
@@ -176,12 +190,14 @@ function spull {
 
     cd "$dir"
 }
+
 function trash-list {
     case $1 in
         -n) /usr/bin/trash-list | sort -k3,3 ;;
          *) /usr/bin/trash-list | sort ;;
     esac
 }
+
 function zcurl {
     case $# in
         0) url=$(xsel -ob) || { echo "Nothing in clipboard!"; return ;} ;;
