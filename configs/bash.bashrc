@@ -68,14 +68,6 @@ bind -m vi-insert '"\C-s": transpose-chars'
 source /usr/share/fzf/key-bindings.bash
 
 # functions
-btns() {
-    if [[ $1 -ge 1 && $1 -le 255 ]] ; then
-        echo "$1" >/sys/class/backlight/radeon_bl0/brightness
-    else
-        echo "btns: invalid argument"
-    fi
-}
-
 mkcd() {
     mkdir "$1" && cd "$1"
 }
