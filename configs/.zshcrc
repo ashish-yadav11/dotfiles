@@ -1,0 +1,43 @@
+## PARAMETERS (man zshparam)
+
+PS1='%F{red}[%B%F{yellow}%n%F{green}@%F{blue}%M%F{cyan} %1~%b%F{red}]%f$ '
+
+
+## ZLE (man zshzle)
+
+defcursor="\e[?0c"
+cmdcursor="\e[?112c"
+inscursor="\e[?2c"
+repcursor="\e[?4c"
+
+# insert key
+bindkey -v "\e[2~" overwrite-mode
+bindkey -a "\e[2~" vi-insert
+
+# delete key
+bindkey -v "\e[3~" delete-char
+bindkey -a "\e[3~" delete-char
+
+# home key
+bindkey -v "\e[1~" beginning-of-line
+bindkey -a "\e[1~" beginning-of-line
+
+# pgup key
+bindkey -v "\e[5~" history-search-backward
+bindkey -a "\e[5~" history-search-backward
+
+# pgdn key
+bindkey -v "\e[6~" history-search-forward
+bindkey -a "\e[6~" history-search-forward
+
+# end key
+bindkey -v "\e[4~" end-of-line # end key
+bindkey -a "\e[4~" end-of-line # end key
+
+
+## MISCELLANEOUS (man zshmisc)
+
+# restore default cursor before running external commands and before exit
+function preexec zshexit {
+    echo -ne "$defcursor"
+}

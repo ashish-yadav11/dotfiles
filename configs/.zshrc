@@ -1,3 +1,12 @@
+## CONSOLE/TERMINAL SPECIFIC
+
+if [[ $TERM == linux ]] ; then
+    source ~/.zshcrc
+else
+    source ~/.zshtrc
+fi
+
+
 ## OPTIONS (man zshoptions)
 
 setopt AUTO_CD
@@ -15,28 +24,9 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 KEYTIMEOUT=1
 PROMPT_EOL_MARK=''
-PS1='%167F[%11F%n%10F@%12F%M%139F %1~%167F]%f$ '
 READNULLCMD=less
 SAVEHIST=10000
 zle_highlight=(region:bg=19 special:none suffix:bold isearch:underline paste:none)
-
-
-## MISCELLANEOUS (man zshmisc)
-
-# terminal title
-case $TERM in
-    *termite*|*st*|*alacritty*|*rxvt*|*xterm*)
-        function chpwd {
-            print -Pn "\e]0;%n@%M:%~\a"
-        }
-        chpwd
-        ;;
-esac
-
-# restore block cursor before running external commands
-function preexec {
-    echo -ne "\e[2 q"
-}
 
 
 ## ZLE (man zshzle)
@@ -48,18 +38,18 @@ bindkey -v
 function zle-line-init zle-keymap-select {
     case $KEYMAP in
         vicmd)
-            echo -ne "\e[2 q"
+            echo -ne "$cmdcursor"
             ;;
         viins|main)
             if [[ $ZLE_STATE == *overwrite* ]] ; then
                 UNDO_REPLACE_NO=$UNDO_CHANGE_NO
-                echo -ne "\e[4 q"
+                echo -ne "$repcursor"
             else
-                echo -ne "\e[6 q"
+                echo -ne "$inscursor"
             fi
             ;;
         *)
-            echo -ne "\e[6 q"
+            echo -ne "$inscursor"
             ;;
     esac
 }
@@ -88,30 +78,6 @@ bindkey -a "K" history-search-backward
 
 bindkey -v "\C-n" down-history
 bindkey -v "\C-p" up-history
-
-# insert key
-bindkey -v "\e[2~" overwrite-mode
-bindkey -a "\e[2~" vi-insert
-
-# delete key
-bindkey -v "\e[3~" delete-char
-bindkey -a "\e[3~" delete-char
-
-# home key
-bindkey -v "\e[H" beginning-of-line
-bindkey -a "\e[H" beginning-of-line
-
-# pgup key
-bindkey -v "\e[5~" history-search-backward
-bindkey -a "\e[5~" history-search-backward
-
-# pgdn key
-bindkey -v "\e[6~" history-search-forward
-bindkey -a "\e[6~" history-search-forward
-
-# end key
-bindkey -v "\e[F" end-of-line # end key
-bindkey -a "\e[F" end-of-line # end key
 
 function fzf-select-bookmark {
     local selected
@@ -213,9 +179,6 @@ function zpull {
 # fzf-tab
 zstyle ':fzf-tab:*' fzf-bindings 'ctrl-space:toggle-sort'
 source ~/.local/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
-
-# termite tabbing
-source /etc/profile.d/vte.sh
 
 # fzf key bindings
 source /usr/share/fzf/key-bindings.zsh
