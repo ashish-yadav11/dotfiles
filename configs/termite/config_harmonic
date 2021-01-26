@@ -55,7 +55,6 @@ background=#0b1c2c
 highlight=#173d5f
 
 # Colors from color0 to color254 can be set
-
 color0=#102a42
 color1=#bf8b56
 color2=#56bf8b
@@ -72,7 +71,6 @@ color12=#8b56bf
 color13=#bf568b
 color14=#568bbf
 color15=#f7f9fb
-
 color16=#bfbf56
 color17=#bf5656
 color18=#223b54
