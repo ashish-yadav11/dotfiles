@@ -1,22 +1,20 @@
 # vim: filetype=neomuttrc
 
-# default index colors
+# index
 color index yellow default ".*"
 color index_author red default ".*"
 color index_number blue default
 color index_subject cyan default ".*"
 
-# new mail is boldened
 color index brightyellow default "~N"
 color index_author brightred default "~N"
 color index_subject brightcyan default "~N"
 
-# tagged mail is highlighted
 color index brightyellow black "~T"
 color index_author brightred black "~T"
 color index_subject brightcyan black "~T"
 
-# other colors and aesthetic settings
+# general
 color attachment white default
 color bold black default
 color error red default
@@ -40,24 +38,48 @@ color status brightyellow black
 color tilde black default
 color underline black default
 
-# regex highlighting
+mono bold bold
+mono error bold
+mono indicator reverse
+mono quoted bold
+mono underline underline
+
+# header
 color header blue default ".*"
-color header brightmagenta default "^(From)"
-color header brightcyan default "^(Subject)"
-color header brightwhite default "^(CC|BCC)"
-color body green default "\`[^\`]*\`" # green text between backticks
-color body brightblue default "^# \.*" # headings as bold blue
-color body brightcyan default "^## \.*" # subheadings as bold cyan
-color body brightgreen default "^### \.*" # subsubheadings as bold green
-color body yellow default "^(\t| )*(-|\\*) \.*" # list items as yellow
-color body brightcyan default "[;:][-o][)/(|]" # emoticons
-color body brightcyan default "[;:][)(|]" # emoticons
-color body brightcyan default "[ ][*][^*]*[*][ ]?" # emoticons
-color body brightcyan default "[ ]?[*][^*]*[*][ ]" # emoticons
-color body red default "(BAD signature)"
-color body cyan default "(Good signature)"
+color header brightmagenta default "^From"
+color header brightcyan default "^Subject"
+color header brightwhite default "^(Cc|Bcc)"
+
+mono header bold "^(From|Subject|Date|To|Cc|Bcc):"
+
+# code
+color body green default '`[^`]*`'
+
+# headings and lists
+color body brightblue default "^# .*"
+color body brightcyan default "^## .*"
+color body brightgreen default "^### .*"
+color body yellow default "^(\t| )*(-|\\*) .*"
+
+# emoticons and smileys
+color body brightcyan default "[;:]-[>})/<{(|]"
+color body brightcyan default "[;:][)(|]"
+
+# starred
+color body brightcyan default "\\*[^*]*\\*"
+
+# pgp
+color body red default "BAD signature"
+color body cyan default "Good signature"
 color body brightblack default "^gpg: Good signature .*"
 color body brightyellow default "^gpg: "
-color body brightyellow red "^gpg: BAD signature from.*"
-color body brightred default "[\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+" # email addresses
-color body red default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]" # URL
+color body brightyellow red "^gpg: BAD signature from .*"
+
+mono body bold "^gpg: Good signature .*"
+mono body bold "^gpg: BAD signature from .*"
+
+# email address
+color body brightred default "((@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]),)*@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]):)?[0-9a-z_.+%$-]+@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\])"
+
+# url
+color body red default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"

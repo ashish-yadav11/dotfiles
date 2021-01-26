@@ -240,7 +240,7 @@ bind index,pager,attach c compose-to-sender
 
 macro index,pager gf "<change-folder>?" "go to another folder"
 macro index,pager gF "<change-folder-readonly>?" "go to another folder in readonly mode"
-macro index,pager,attach,compose gx "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>urlscan<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "call urlview to extract URLs out of a message"
+macro index,pager,attach,compose gx "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>urlscan<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "call urlscan to extract URLs out of a message"
 
 # change newsgroup
 bind index,pager i noop
