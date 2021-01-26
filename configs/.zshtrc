@@ -39,8 +39,8 @@ bindkey -v "\e[6~" history-search-forward
 bindkey -a "\e[6~" history-search-forward
 
 # end key
-bindkey -v "\e[F" end-of-line # end key
-bindkey -a "\e[F" end-of-line # end key
+bindkey -v "\e[F" end-of-line
+bindkey -a "\e[F" end-of-line
 
 
 ## MISCELLANEOUS (man zshmisc)
