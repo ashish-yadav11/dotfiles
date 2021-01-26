@@ -199,7 +199,6 @@ bind generic Z noop
 bind generic,index,pager \Cb previous-page
 bind generic H noop
 
-# previous match
 bind generic,index,pager,browser N search-opposite
 
 bind generic,pager ,/ search-reverse
@@ -279,11 +278,10 @@ bind index up undelete-pattern
 bind index,pager ut undelete-subthread
 bind index,pager uT undelete-thread
 
-# display message and toggle header weed
-bind index h noop
-bind index <Left> noop
-bind index l display-message
-bind index <Right> display-message
+# toggle header weed
+bind index,compose h noop
+# previous page
+bind index,compose <Left> noop
 
 # editing stuff
 bind index,pager Y noop
@@ -337,6 +335,8 @@ bind index j next-entry
 bind index <Down> next-entry
 bind index k previous-entry
 bind index <Up> previous-entry
+bind index l display-message
+bind index <Right> display-message
 bind index J next-thread
 bind index K previous-thread
 bind index,pager } next-thread
@@ -445,8 +445,8 @@ bind pager zA toggle-quoted
 # printing
 bind attach p noop
 
-bind attach l view-attach
-bind attach <Right> view-attach
+bind attach,compose l view-attach
+bind attach,compose <Right> view-attach
 
 
 #---------#
@@ -471,12 +471,6 @@ bind attach <Right> view-attach
 
 bind compose o attach-file
 bind compose O attach-message
-
-# movement
-bind compose h exit
-bind compose <Left> exit
-bind compose l view-attach
-bind compose <Right> view-attach
 
 # attach PGP public key
 bind compose \\k attach-key
