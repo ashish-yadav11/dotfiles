@@ -85,7 +85,6 @@ neovim
 neovim-qt
 network-manager-applet
 networkmanager
-newsboat
 nload
 noto-fonts-emoji
 okular
