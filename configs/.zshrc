@@ -117,6 +117,7 @@ alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
+alias mv="mv -i"
 alias rm="rm -i"
 alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
 alias sudo="sudo "
