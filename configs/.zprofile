@@ -24,5 +24,5 @@ export ESCDELAY=0
 ## MISCELLANEOUS
 
 if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] ; then
-  startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"
+    startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"
 fi
