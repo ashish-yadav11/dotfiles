@@ -45,7 +45,7 @@ fi
 case $TERM in
     *termite*|*st*|*alacritty*)
         PROMPT_COMMAND=$PROMPT_COMMAND'
-printf "\e]0;%s@%s:%s\a" "$USER" "${HOSTNAME%%.*}" "${PWD/#$HOME/\~}"'
+printf "\e]0;%s@%s:%s\a" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
         ;;
 esac
 
