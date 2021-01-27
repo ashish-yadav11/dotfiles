@@ -56,8 +56,8 @@ get_access_token() {
     newline='
 '
     output=${output#Access Token: }
-    access_token=${output%${newline}*}
-    expiry_time=${output#*${newline}Access Token Expiration Seconds: }
+    access_token=${output%"${newline}"*}
+    expiry_time=${output#*"${newline}Access Token Expiration Seconds: "}
 }
 
 read -r access_token <"$data_dir/access_token"
