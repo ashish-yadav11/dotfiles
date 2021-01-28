@@ -119,9 +119,11 @@ alias kynm=/home/ashish/.scripts/xevcn.sh
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
 alias mv="mv -i"
+alias n="nvim ~/Documents/.notes"
 alias rm="rm -i"
 alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
 alias sudo="sudo "
+alias t="nvim ~/Documents/.todo"
 alias tree="tree -C"
 alias vi=nvim
 alias vim=nvim
