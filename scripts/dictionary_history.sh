@@ -1,5 +1,5 @@
 #!/bin/dash
-logfile=/home/ashish/Documents/.dictionary.log
+logfile=/home/ashish/.cache/dictionary.log
 
 log=$(cat "$logfile")
 if [ -n "$log" ] ; then
