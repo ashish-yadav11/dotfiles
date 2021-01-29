@@ -103,6 +103,12 @@ command! -bang -nargs=* Rg
   \ )
 
 
+" julia
+
+let g:latex_to_unicode_eager = 0
+let g:latex_to_unicode_file_types = '.*'
+
+
 " vimtex
 
 let g:tex_flavor = 'latex'
