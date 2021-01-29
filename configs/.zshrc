@@ -186,5 +186,8 @@ source ~/.local/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 # fzf key bindings
 source /usr/share/fzf/key-bindings.zsh
 
+# system clipboard
+source /usr/share/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh
+
 # syntax highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

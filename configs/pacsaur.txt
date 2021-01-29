@@ -22,3 +22,4 @@ siji-git
 timeshift
 woeusb-ng
 yay
+zsh-system-clipboard-git
