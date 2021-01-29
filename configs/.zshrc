@@ -13,7 +13,7 @@ setopt AUTO_CD
 setopt GLOB_DOTS
 setopt HIST_IGNORE_DUPS
 setopt INC_APPEND_HISTORY
-setopt CORRECT_ALL
+setopt CORRECT
 unsetopt FLOW_CONTROL
 setopt INTERACTIVE_COMMENTS
 setopt SH_WORD_SPLIT
@@ -185,3 +185,6 @@ source ~/.local/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 
 # fzf key bindings
 source /usr/share/fzf/key-bindings.zsh
+
+# syntax highlighting
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

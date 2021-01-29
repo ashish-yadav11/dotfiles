@@ -173,3 +173,4 @@ zathura-pdf-mupdf
 zathura-ps
 zsh
 zsh-completions
+zsh-syntax-highlighting
