@@ -313,7 +313,7 @@ class terminal_curdir(Command):
         if not cwd:
             self.fm.execute_command("termite", flags='fs')
         else:
-            self.fm.execute_command(f"cd -- {shell_escape(cwd.path)}; termite", flags='fs')
+            self.fm.execute_command(f"termite -d {shell_escape(cwd.path)}", flags='fs')
 
 class ranger_curfile(Command):
 
@@ -325,7 +325,8 @@ class ranger_curfile(Command):
         if not tfile:
             self.fm.execute_command("RANGER_LEVEL=0 termite -e ranger", flags='fs')
         else:
-            self.fm.execute_command(f'path=$(printf %q {shell_escape(tfile.path)}); RANGER_LEVEL=0 termite -e "ranger --selectfile=$path"', flags='fs')
+            ranger_command = shell_escape(f"ranger --selectfile={shell_escape(tfile.path)}")
+            self.fm.execute_command(f"RANGER_LEVEL=0 termite -e {ranger_command}", flags='fs')
 
 class ranger_curdir(Command):
 
@@ -337,4 +338,5 @@ class ranger_curdir(Command):
         if not cwd:
             self.fm.execute_command("RANGER_LEVEL=0 termite -e ranger", flags='fs')
         else:
-            self.fm.execute_command(f"cd -- {shell_escape(cwd.path)}; RANGER_LEVEL=0 termite -e ranger", flags='fs')
+            ranger_command = shell_escape(f"ranger {shell_escape(cwd.path)}")
+            self.fm.execute_command(f"RANGER_LEVEL=0 termite -e {ranger_command}", flags='fs')
