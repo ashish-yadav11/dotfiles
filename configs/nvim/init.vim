@@ -9,10 +9,11 @@ nnoremap        <silent>        yp                      :let @+=expand("%:p")<CR
 nnoremap        <silent>        <Leader><Esc>           :nohlsearch<CR>
 nnoremap                        <Leader>b               :buffers<CR>:buffer<Space>
 nnoremap        <silent>        <Leader>p               :lcd %:p:h<CR>
-nnoremap        <silent>        <Leader>t               :execute ':silent !cd -- '.shellescape(expand("%:p:h"), 1).'; setsid -f termite'<CR>
-nnoremap        <silent>        <Leader>r               :execute ':silent !path=$(printf %q '.shellescape(expand("%:p"), 1).'); RANGER_LEVEL=0 setsid -f termite -e "ranger --selectfile=$path"'<CR>
-nnoremap        <silent>        <Leader>R               :execute ':silent !cd -- '.shellescape(expand("%:p:h"), 1).'; RANGER_LEVEL=0 setsid -f termite -e ranger'<CR>
-nnoremap        <silent>        <Leader><C-r>           :execute ':silent !cd -- '.shellescape(expand(getcwd(), 1)).'; RANGER_LEVEL=0 setsid -f termite -e ranger'<CR>
+nnoremap        <silent>        <Leader>t               :execute ':silent !setsid -f termite -d '.shellescape(expand("%:p:h"), 1)<CR>
+nnoremap        <silent>        <Leader><C-t>           :execute ':silent !setsid -f termite -d '.shellescape(expand(getcwd()), 1)<CR>
+nnoremap        <silent>        <Leader>r               :execute ':silent !RANGER_LEVEL=0 setsid -f termite -e '.shellescape('ranger --selectfile='.shellescape(expand("%:p")), 1)<CR>
+nnoremap        <silent>        <Leader>R               :execute ':silent !RANGER_LEVEL=0 setsid -f termite -e '.shellescape('ranger '.shellescape(expand("%:p:h")), 1)<CR>
+nnoremap        <silent>        <Leader><C-r>           :execute ':silent !RANGER_LEVEL=0 setsid -f termite -e '.shellescape('ranger '.shellescape(expand(getcwd())), 1)<CR>
 inoremap                        <S-Tab>                 <C-v><Tab>
 
 
