@@ -30,7 +30,7 @@ PS1="${red}[${yellow}\u${green}@${blue}\h ${violet}\W${red}]${white}$ "
 export HISTCONTROL=ignoredups
 export HISTSIZE=10000
 
-HISTIGNORE=h:h[de]
+HISTIGNORE=h
 
 # termite tabbing
 source /etc/profile.d/vte.sh
@@ -54,9 +54,7 @@ esac
 # aliases
 alias cp="cp -i"
 alias diffc="diff --color=always"
-alias h='nvim -c "normal G" "${HISTFILE:-$TEMPHISTFILE}"'
-alias hd='[[ -n $HISTFILE ]] && { TEMPHISTFILE=$HISTFILE; unset HISTFILE ;}'
-alias he='[[ -z $HISTFILE ]] && { HISTFILE=$TEMPHISTFILE; unset TEMPHISTFILE ;}'
+alias h='[[ -f $HISTFILE ]] && nvim -c "normal G" "$HISTFILE"'
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
 alias mv="mv -i"

@@ -22,7 +22,7 @@ setopt SH_WORD_SPLIT
 ## PARAMETERS (man zshparam)
 
 HISTFILE=~/.zsh_history
-HISTORY_IGNORE='(h|h[de])'
+HISTORY_IGNORE=h
 HISTSIZE=10000
 KEYTIMEOUT=1
 PROMPT_EOL_MARK=''
@@ -115,9 +115,7 @@ alias cp="cp -i"
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
-alias h='nvim -c "normal G" "${HISTFILE:-$TEMPHISTFILE}"'
-alias hd='[[ -n $HISTFILE ]] && { TEMPHISTFILE=$HISTFILE; unset HISTFILE ;}'
-alias he='[[ -z $HISTFILE ]] && { HISTFILE=$TEMPHISTFILE; unset TEMPHISTFILE ;}'
+alias h='[[ -f $HISTFILE ]] && nvim -c "normal G" "$HISTFILE"'
 alias help=run-help
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias lessc="less -R"
