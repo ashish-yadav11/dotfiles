@@ -184,6 +184,7 @@ function zpull {
 ## PLUGINS
 
 # fzf-tab
+zstyle ':fzf-tab:*' fzf-flags '-i'
 zstyle ':fzf-tab:*' fzf-bindings 'ctrl-space:toggle-sort'
 source ~/.local/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 
