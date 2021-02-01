@@ -22,6 +22,7 @@ setopt SH_WORD_SPLIT
 ## PARAMETERS (man zshparam)
 
 HISTFILE=~/.zsh_history
+HISTORY_IGNORE='(h|h[de])'
 HISTSIZE=10000
 KEYTIMEOUT=1
 PROMPT_EOL_MARK=''
@@ -104,9 +105,8 @@ zle -N edit-command-line
 bindkey -v "\C-e" edit-command-line
 bindkey -a "\C-e" edit-command-line
 
-autoload -Uz run-help
 unalias run-help
-alias help=run-help
+autoload -Uz run-help
 
 
 ## CUSTOM
@@ -115,13 +115,17 @@ alias cp="cp -i"
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
+alias h='nvim -c "normal G" "${HISTFILE:-$TEMPHISTFILE}"'
+alias hd='[[ -n $HISTFILE ]] && { TEMPHISTFILE=$HISTFILE; unset HISTFILE ;}'
+alias he='[[ -z $HISTFILE ]] && { HISTFILE=$TEMPHISTFILE; unset TEMPHISTFILE ;}'
+alias help=run-help
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
 alias mv="mv -i"
 alias n="nvim ~/Documents/.notes"
 alias rm="rm -i"
-alias startx="startx &>'$HOME/.local/share/xorg/startx.$XDG_VTNR.log'"
+alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
 alias sudo="sudo "
 alias t="nvim ~/Documents/.todo"
 alias tree="tree -C"
