@@ -16,7 +16,7 @@ at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '
         } else if ($7 == "=") {
             r = 1
         } else {
-            printf "%s%s\t%s%s %s %2d %s %4d %s%c %s%s%s|%s\n",
+            printf "%s%s\t%s%s %s %2d %s %4d %s %c %s%s%s|%s\n",
                     cid,$1,ctm,$2,$3,$4,$5,$6,cqu,$7,cur,$8,cdf,$1
         }
     }' | while read -r job ; do
