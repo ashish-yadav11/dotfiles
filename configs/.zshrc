@@ -170,7 +170,7 @@ function zcurl {
         echo "Invalid URL!"
         return
     fi
-    curl -L "$url" | zathura - 2>/dev/null
+    curl -L "$url" | setsid -f zathura - 2>/dev/null
 }
 
 function zpull {
