@@ -132,7 +132,7 @@ alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
 alias mv="mv -i"
 alias n="nvim ~/Documents/.notes"
-alias pb='bash --rcfile <(echo '\''source ~/.bashrc; HISTFILE="" PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
+alias pb='bash --rcfile <(echo '\''source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
 alias pz="INCOGNITO=1 zsh"
 alias rm="rm -i"
 alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
