@@ -41,5 +41,5 @@ if not f then return end
 f:write(output)
 f:close()
 
--- call limit with dummy parameter
-mutt.command.push('"<limit>~I x<Enter><refresh>"')
+-- set external_search_command to cat outfile and call limit with dummy parameter
+mutt.command.push([["<enter-command>set my_external_search_command=\$external_search_command external_search_command='cat ]] .. outfile .. [[; :'<Enter><limit>~I x<Enter><refresh><enter-command>set external_search_command=\$my_external_search_command; unset my_external_search_command<Enter>"]])
