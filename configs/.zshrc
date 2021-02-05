@@ -21,14 +21,24 @@ setopt SH_WORD_SPLIT
 
 ## PARAMETERS (man zshparam)
 
-HISTFILE=~/.zsh_history
-HISTORY_IGNORE=h
+
+HISTORY_IGNORE='(h|pb|pz)'
 HISTSIZE=10000
 KEYTIMEOUT=1
 PROMPT_EOL_MARK=''
 READNULLCMD=less
 SAVEHIST=10000
 zle_highlight=(region:bg=19 special:none suffix:bold isearch:underline paste:none)
+
+
+## INCOGNITO MODE
+
+if [[ -z $INCOGNITO ]] ; then
+    HISTFILE=~/.zsh_history
+else
+    PS1="%F{blue}%f $PS1"
+    unset INCOGNITO
+fi
 
 
 ## ZLE (man zshzle)
@@ -115,13 +125,15 @@ alias cp="cp -i"
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
-alias h='[[ -f $HISTFILE ]] && nvim -c "normal G" "$HISTFILE"'
+alias h='nvim -c "normal G" ~/.zsh_history'
 alias help=run-help
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
 alias mv="mv -i"
 alias n="nvim ~/Documents/.notes"
+alias pb='bash --rcfile <(echo '\''source ~/.bashrc; HISTFILE="" PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
+alias pz="INCOGNITO=1 zsh"
 alias rm="rm -i"
 alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
 alias sudo="sudo "

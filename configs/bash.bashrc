@@ -30,7 +30,7 @@ PS1="${red}[${yellow}\u${green}@${blue}\h ${violet}\W${red}]${white}$ "
 export HISTCONTROL=ignoredups
 export HISTSIZE=10000
 
-HISTIGNORE=h
+HISTIGNORE=h:pb:pz
 
 # termite tabbing
 source /etc/profile.d/vte.sh
@@ -54,10 +54,12 @@ esac
 # aliases
 alias cp="cp -i"
 alias diffc="diff --color=always"
-alias h='[[ -f $HISTFILE ]] && nvim -c "normal G" "$HISTFILE"'
+alias h='nvim -c "normal G" ~/.bash_history'
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
 alias mv="mv -i"
+alias pb='bash --rcfile <(echo '\''source ~/.bashrc; HISTFILE="" PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
+alias pz="INCOGNITO=1 zsh"
 alias rm="rm -i"
 alias sudo="sudo "
 alias tree="tree -C"
