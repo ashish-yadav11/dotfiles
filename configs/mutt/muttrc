@@ -390,6 +390,7 @@ macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes m
 #<previous-thread>      ^P              jump to previous thread
 #<read-thread>          ^R              mark the current thread as read
 #<search-toggle>        \\              toggle search pattern coloring
+#<skip-headers>         H               skip beyond headers
 #<skip-quoted>          S               skip beyond quoted text
 #<sync-mailbox>         $               save changes to mailbox
 #<toggle-write>         %               toggle whether the mailbox will be rewritten
@@ -442,11 +443,10 @@ bind pager zA toggle-quoted
 #<view-text>            T               view attachment as text
 #<view-attach>          <Return>        view attachment using mailcap entry if necessary
 
-# printing
-bind attach p noop
-
 bind attach,compose l view-attach
 bind attach,compose <Right> view-attach
+
+bind attach p view-pager
 
 
 #---------#
