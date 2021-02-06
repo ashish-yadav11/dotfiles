@@ -117,6 +117,7 @@ bindkey -a "\C-e" edit-command-line
 
 unalias run-help
 autoload -Uz run-help
+alias help=run-help
 
 
 ## CUSTOM
@@ -126,7 +127,6 @@ alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias h='nvim -c "normal G" ~/.zsh_history'
-alias help=run-help
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
