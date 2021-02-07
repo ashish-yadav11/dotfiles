@@ -31,7 +31,6 @@ set delete = yes
 # hide [-- Autoview using ... --] message from html mails
 #set display_filter = "grep -Ev ']9;[0-9]+\\[-- Autoview using .* --\\]$'"
 
-
 # skip to compose when replying
 set fast_reply = yes
 
@@ -88,7 +87,7 @@ set rfc2047_parameters = yes
 # don't move to the next mail when modifying the current mail
 set resolve = no
 
-set signature = ""
+unset signature
 
 # pause 0 seconds for informational messages
 set sleep_time = 0
