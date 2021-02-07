@@ -80,4 +80,3 @@ mkcd() {
 
 # autocompletion
 source /usr/share/bash-completion/bash_completion
-source /usr/share/fzf/completion.bash
