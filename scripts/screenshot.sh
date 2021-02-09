@@ -1,8 +1,10 @@
 #!/bin/dash
 case $(echo "Root\nFocused window\nSelection" | dmenu -i -matching fuzzy -no-custom -p Scrot) in
     Root)
+        sleep 0.100
         ;;
     "Focused window")
+        sleep 0.100
         options="-u"
         ;;
     Selection)
