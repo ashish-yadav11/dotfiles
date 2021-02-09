@@ -9,6 +9,7 @@
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
+alias l="nvim ~/Documents/.log"
 alias n="nvim ~/Documents/.notes"
 alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
 alias t="nvim ~/Documents/.todo"

@@ -128,6 +128,7 @@ alias diffc="diff --color=always"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias h='nvim -c "normal G" ~/.zsh_history'
 alias kynm=/home/ashish/.scripts/xevcn.sh
+alias l="nvim ~/Documents/.log"
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
 alias mv="mv -i"
