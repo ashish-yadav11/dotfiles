@@ -53,18 +53,21 @@ esac
 
 # aliases
 alias cp="cp -i"
+alias mv="mv -i"
+alias rm="rm -i"
+
 alias diffc="diff --color=always"
-alias h='nvim -c "normal G" ~/.bash_history'
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
-alias mv="mv -i"
-alias pb='bash --rcfile <(echo '\''source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
-alias pz="INCOGNITO=1 zsh"
-alias rm="rm -i"
-alias sudo="sudo "
 alias tree="tree -C"
+
+alias sudo="sudo "
 alias vi=nvim
 alias vim=nvim
+
+alias h='nvim -c "normal G" ~/.bash_history'
+alias pb='bash --rcfile <(echo '\''source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
+alias pz="INCOGNITO=1 zsh"
 
 # fzf keybindings
 bind -m emacs-standard '"\C-s": transpose-chars'

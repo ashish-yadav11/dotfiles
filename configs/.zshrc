@@ -122,26 +122,39 @@ alias help=run-help
 
 ## CUSTOM
 
+# safeguards
 alias cp="cp -i"
-alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
+alias mv="mv -i"
+alias rm="rm -i"
+
+# color and aesthetics
 alias diffc="diff --color=always"
-alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
-alias h='nvim -c "normal G" ~/.zsh_history'
-alias kynm=/home/ashish/.scripts/xevcn.sh
-alias l="nvim ~/Documents/.log"
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
-alias mv="mv -i"
-alias n="nvim ~/Documents/.notes"
-alias pb='bash --rcfile <(echo '\''source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
-alias pz="INCOGNITO=1 zsh"
-alias rm="rm -i"
+alias tree="tree -C"
+
+# re-definitions
 alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
 alias sudo="sudo "
-alias t="nvim ~/Documents/.todo"
-alias tree="tree -C"
 alias vi=nvim
 alias vim=nvim
+
+# scripts
+alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
+alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
+alias kynm=/home/ashish/.scripts/xevcn.sh
+
+# files
+alias l="nvim ~/Documents/.lag"
+alias n="nvim ~/Documents/.notes"
+alias s="nvim /media/storage/sem6dat/schedule"
+alias t="nvim ~/Documents/.todo"
+
+# history
+alias h='nvim -c "normal G" ~/.zsh_history'
+alias pb='bash --rcfile <(echo '\''source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
+alias pz="INCOGNITO=1 zsh"
+
 
 function mkcd {
     mkdir "$1" && cd "$1"
