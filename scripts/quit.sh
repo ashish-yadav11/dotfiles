@@ -17,13 +17,15 @@ case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutd
     "Restart dwm")
         case $(echo "Yes\nNo" | $dmenu -p "Do you really want to restart dwm?") in
             Yes)
-                if [ "$(pidof dwm | wc -w)" = 1 ] || [ "$DISPLAY" = :0 ] ; then
-                    killall nm-applet
-                    sigdwm "quit i 1"
-                    exec nm-applet
-                else
-                    sigdwm "quit i 1"
+                if PID=$(pidof -s /usr/bin/nm-applet) ; then
+                    dpy=$(tr '\0' '\n' <"/proc/$PID/environ" | grep '^DISPLAY=')
+                    if [ "${dpy#DISPLAY=}" = "$DISPLAY" ] ; then
+                        killall nm-applet
+                        sigdwm "quit i 1"
+                        exec nm-applet
+                    fi
                 fi
+                sigdwm "quit i 1"
                 ;;
         esac
         ;;

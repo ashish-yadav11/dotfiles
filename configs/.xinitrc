@@ -45,7 +45,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 xwallpaper --stretch /home/ashish/.config/wall* &
 pidof -s /usr/lib/polkit-kde-authentication-agent-1 >/dev/null 2>&1 ||
     /usr/lib/polkit-kde-authentication-agent-1 &
-pidof -s nm-applet >/dev/null 2>&1 || nm-applet &
+pidof -s /usr/bin/nm-applet >/dev/null 2>&1 || nm-applet &
 clipdaemon &
 dsblocks &
 pidof -sx /home/ashish/.scripts/pulse_daemon.sh >/dev/null 2>&1 ||
