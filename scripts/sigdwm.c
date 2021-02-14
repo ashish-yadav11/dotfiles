@@ -31,8 +31,8 @@ main(int argc, char *argv[])
                         char *stext;
 
                         for (stext = curname; *stext != '\n' && *stext != '\0'; stext++);
-                        if (*stext != '\0' && *(++stext) != '\0')
-                                snprintf(newname, sizeof newname, FSIGID "%s\n%s", argv[1], stext);
+                        if (*stext != '\0')
+                                snprintf(newname, sizeof newname, FSIGID "%s\n%s", argv[1], stext + 1);
                         else
                                 snprintf(newname, sizeof newname, FSIGID "%s\n", argv[1]);
                 } else
