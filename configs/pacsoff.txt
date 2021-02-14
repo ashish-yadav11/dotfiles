@@ -129,7 +129,6 @@ texlive-pictures
 texlive-pstricks
 texlive-publishers
 texlive-science
-tk
 tldr
 trash-cli
 ttf-croscore
