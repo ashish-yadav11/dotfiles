@@ -92,13 +92,16 @@ bindkey -v "\C-n" down-history
 bindkey -v "\C-p" up-history
 
 function fzf-select-bookmark {
-    local selected
-    selected=$(
-        grep -Ev '^(#|\s*$)' ~/.bookmarks |
-            fzf --height 40% -d' #' -n2.. -q "$LBUFFER"
-    ) || { zle reset-prompt; return ;}
-    selected=${selected%% #*}
-    LBUFFER=$selected
+    local selected lbuffer
+    lbuffer=$LBUFFER
+    LBUFFER=''
+    zle -R
+    if selected=$(grep -Ev '^(#|\s*$)' ~/.bookmarks |
+                      fzf --height 40% -d' #' -n2.. -q "$lbuffer") ; then
+        LBUFFER=${selected%% #*}
+    else
+        LBUFFER=$lbuffer
+    fi
     zle reset-prompt
 }
 zle -N fzf-select-bookmark

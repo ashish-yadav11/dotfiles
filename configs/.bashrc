@@ -22,9 +22,8 @@ __fzf_select_bookmark() {
         grep -Ev '^(#|\s*$)' ~/.bookmarks |
             fzf --height 40% -d' #' -n2.. -q "$READLINE_LINE"
     ) || return
-    selected=${selected%% #*}
-    READLINE_LINE=$selected
-    READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
+    READLINE_LINE=${selected%% #*}
+    READLINE_POINT=${#READLINE_LINE}
 }
 
 bind -m emacs-standard -x '"\eb": __fzf_select_bookmark'
