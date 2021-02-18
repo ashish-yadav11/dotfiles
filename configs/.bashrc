@@ -18,7 +18,10 @@ alias t="nvim ~/Documents/.todo"
 
 __fzf_select_bookmark() {
     local selected
-    selected=$(grep -Ev '^(#|\s*$)' ~/.bookmarks | fzf --height 40% -d' #' -n2..)
+    selected=$(
+        grep -Ev '^(#|\s*$)' ~/.bookmarks |
+            fzf --height 40% -d' #' -n2.. -q "$READLINE_LINE"
+    ) || return
     selected=${selected%% #*}
     READLINE_LINE=$selected
     READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
