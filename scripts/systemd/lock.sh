@@ -10,39 +10,36 @@ transparent="#00000000"
 wrong="#ff4040ff"
 
 i3lock \
---image=/media/storage/Pictures/wall6.png \
-\
+--bshlcolor="$backspace" \
+--clock \
 --color="$blank" \
+--datecolor="$date" \
+--datepos=683:415 \
+--datesize=35 \
+--datestr="%a, %b %d" \
+--image=/media/storage/Pictures/wall6.png \
+--indicator \
 --insidecolor="$blank" \
 --insidevercolor="$blank" \
 --insidewrongcolor="$wrong" \
+--keyhlcolor="$highlight" \
 --linecolor="$transparent" \
+--no-modkeytext \
+--noinputtext="" \
 --radius=115 \
+--refresh-rate=0.5 \
 --ring-width=15 \
 --ringcolor="$default" \
 --ringvercolor="$default" \
 --ringwrongcolor="$wrong" \
---keyhlcolor="$highlight" \
---bshlcolor="$backspace" \
 --separatorcolor="$default" \
-\
---noinputtext="" \
---veriftext="Verifying.." \
+--timecolor="$time" \
+--timepos=683:375 \
+--timesize=35 \
+--timestr="%R" \
 --verifcolor="$text" \
 --verifsize=35 \
---wrongtext="" \
+--veriftext="Verifying.." \
 --wrongcolor="$text" \
 --wrongsize=35 \
-\
---indicator \
---clock \
---timestr="%R" \
---timecolor="$time" \
---timesize=35 \
---timepos=683:375 \
---datestr="%a, %b %d" \
---datecolor="$date" \
---datesize=35 \
---datepos=683:415 \
-\
---refresh-rate=0.5
+--wrongtext=""
