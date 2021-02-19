@@ -8,7 +8,7 @@ dwm-cust
 etcher-bin
 htop-vim-git
 i3lock-color
-libxft-bgra-git
+libxft-bgra
 linux-wifi-hotspot
 mblaze-git
 neovim-plug
