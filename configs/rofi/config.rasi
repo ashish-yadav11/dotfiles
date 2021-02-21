@@ -63,7 +63,7 @@ configuration {
 /*	color-window: ;*/
 /*	max-history-size: 25;*/
 /*	combi-hide-mode-prefix: false;*/
-/*	matching-negate-char: '!' /* unsupported */;*/
+	matching-negate-char: '!';
 /*	cache-dir: ;*/
 /*	window-thumbnail: false;*/
 /*	drun-use-desktop-cache: false;*/
