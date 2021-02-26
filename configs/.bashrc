@@ -13,7 +13,6 @@ alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
 
 alias l="nvim ~/Documents/.lag"
 alias n="nvim ~/Documents/.notes"
-alias s="nvim /media/storage/sem6dat/schedule"
 alias t="nvim ~/Documents/.todo"
 
 __fzf_select_bookmark() {
@@ -34,6 +33,14 @@ bind -m vi-insert -x '"\eb": __fzf_select_bookmark'
 neomutt() {
     /usr/bin/neomutt "$@"
     pidof -s /usr/bin/neomutt &>/dev/null || rm -rf /tmp/neomutt/
+}
+
+s() {
+    if [[ -x ./sync.sh ]] ; then
+        ./sync.sh "$@"
+    else
+        echo "No sync.sh in this directory!"
+    fi
 }
 
 spull() {

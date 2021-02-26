@@ -153,7 +153,6 @@ alias kynm=/home/ashish/.scripts/xevcn.sh
 # files
 alias l="nvim ~/Documents/.lag"
 alias n="nvim ~/Documents/.notes"
-alias s="nvim /media/storage/sem6dat/schedule"
 alias t="nvim ~/Documents/.todo"
 
 # history
@@ -169,6 +168,14 @@ function mkcd {
 function neomutt {
     /usr/bin/neomutt "$@"
     pidof -s /usr/bin/neomutt &>/dev/null || rm -rf /tmp/neomutt/
+}
+
+function s {
+    if [[ -x ./sync.sh ]] ; then
+        ./sync.sh "$@"
+    else
+        echo "No sync.sh in this directory!"
+    fi
 }
 
 function spull {
