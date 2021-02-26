@@ -11,6 +11,6 @@ conflicts=('dmenu')
 
 package() {
     install -d "${pkgdir}/usr/bin"
-    echo -e "#!/bin/sh\n$(which rofi) -dmenu -location 1 -width 100 -lines 1 -columns 9 \"\$@\"" > "${pkgdir}/usr/bin/dmenu"
+    echo -e "#!/bin/sh\n$(which rofi) -dmenu -location 1 -width 100 -lines 1 -columns 9 "'"$@"' >"${pkgdir}/usr/bin/dmenu"
     chmod 755 "${pkgdir}/usr/bin/dmenu"
 }
