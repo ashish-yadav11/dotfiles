@@ -437,6 +437,9 @@
 [brightness]
     stack_tag = "brightness"
     history_ignore = yes
+[calcurse]
+    summary = "Calcurse"
+    history_ignore = yes
 [dictionary]
     summary = "Dictionary"
     history_ignore = yes
