@@ -43,6 +43,18 @@ s() {
     fi
 }
 
+share() {
+    local link
+    if [[ ! -f $1 ]] ; then
+        printf "file %q doesn't exist!" "$1"
+        return
+    fi
+    if link=$(curl -F"file=@$1" "https://0x0.st") ; then
+        echo -n "$link" | xsel -ib
+        echo "$link"
+    fi
+}
+
 spull() {
     echo -e "\e[1;32msuckless sites\e[0m"
     git -C /media/storage/.temporary/suckless-sites pull
