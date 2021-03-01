@@ -45,11 +45,11 @@ mdiff=$(
         printf "diff $dotfiles/configs/crontab crontab\n%s\n" "$sdiff"
 
     $mdiff_cmd -I "^history\|^lastVisited\|^':" "$dotfiles/configs" /home/ashish/.config |
-        grep -Ev '^Only in .*(configs:|\.config(:|/nvim: \.netrwhist|/newsboat: cache.db|/mpv: watch_later))' |
+        grep -Ev '^Only in .*(configs:|\.config(:|/mpv: watch_later|/nvim: \.netrwhist|/newsboat: cache.db|/ranger: scope.sh))' |
             sed -e "s/^$mdiff_str -I '\\^history\\\\|\\^lastVisited\\\\|\\^'\\\\'':'/diff/"
 
     $mdiff_cmd "$dotfiles/configs" /home/ashish |
-        grep -Ev '^Only in .*(configs:|ashish(:|/\.surf:|/\.gnupg: ))' |
+        grep -Ev '^Only in .*(configs:|ashish(:|/\.gnupg: ))' |
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/locals" /home/ashish/.local |
