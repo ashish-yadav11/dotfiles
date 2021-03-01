@@ -48,7 +48,7 @@ primary_email=ashishkumar.yadav@students.iiserpune.ac.in
 #
 [new]
 tags=unread;inbox;
-ignore=.mbsyncstate;.uidvalidity;
+ignore=.mbsyncstate;.mbsyncstate.journal;.mbsyncstate.lock;.mbsyncstate.new;.uidvalidity;
 
 # Search configuration
 #
