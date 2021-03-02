@@ -57,8 +57,6 @@ inotify-tools
 ispell
 isync
 java-commons-lang
-jdk-openjdk
-jre-openjdk
 julia
 kcolorchooser
 libcanberra-pulse
