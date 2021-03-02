@@ -161,6 +161,14 @@ alias pb='bash --rcfile <(echo '\''source ~/.bashrc; unset HISTFILE; PS1="\[\e[0
 alias pz="INCOGNITO=1 zsh"
 
 
+function m {
+    if [[ -x ./make.sh ]] ; then
+        ./make.sh "$@"
+    else
+        echo "No make.sh in this directory!"
+    fi
+}
+
 function mkcd {
     mkdir "$1" && cd "$1"
 }

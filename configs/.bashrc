@@ -30,6 +30,14 @@ bind -m vi-command -x '"\eb": __fzf_select_bookmark'
 bind -m vi-insert -x '"\eb": __fzf_select_bookmark'
 
 # functions
+m() {
+    if [[ -x ./make.sh ]] ; then
+        ./make.sh "$@"
+    else
+        echo "No make.sh in this directory!"
+    fi
+}
+
 neomutt() {
     /usr/bin/neomutt "$@"
     pidof -s /usr/bin/neomutt &>/dev/null || rm -rf /tmp/neomutt/
