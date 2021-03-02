@@ -58,7 +58,6 @@ ispell
 isync
 java-commons-lang
 jdk-openjdk
-jq
 jre-openjdk
 julia
 kcolorchooser
@@ -99,7 +98,6 @@ pulseaudio
 pulseaudio-alsa
 python-matplotlib
 python-pip
-python-pycodestyle
 python-scipy
 qbittorrent
 qt5ct
@@ -145,7 +143,6 @@ unclutter
 urlscan
 valgrind
 wmname
-x11-ssh-askpass
 xcape
 xclip
 xdg-user-dirs
