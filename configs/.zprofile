@@ -12,6 +12,7 @@ export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 export PATH=~/.local/bin:$PATH
 #export QT_QPA_PLATFORMTHEME=qt5ct
 #export RANGER_LOAD_DEFAULT_RC=FALSE
+export R_ENVIRON_USER=~/.Renviron
 #export TERMINAL=termite
 #export VISUAL=nvim
 
