@@ -1,3 +1,3 @@
 #!/bin/dash
-PID=$(pidof -s /usr/bin/i3lock) && tail --pid="$PID" -f /dev/null
+pwait ^i3lock$
 notify-send DUNST_COMMAND_RESUME
