@@ -458,6 +458,9 @@
 [maintenance]
     stack_tag = "maintenance"
     history_ignore = yes
+[pomodoro]
+    stack_tag = "pomodoro"
+    history_ignore = yes
 [scrot]
     summary = "Scrot"
     history_ignore = yes
@@ -472,9 +475,6 @@
     history_ignore = yes
 [telegram]
     appname = "Telegram Desktop"
-    history_ignore = yes
-[timeout]
-    stack_tag = "timeout"
     history_ignore = yes
 [usbmount]
     summary = " USB mounter"

@@ -4,11 +4,6 @@ dmenu="dmenu -i -matching fuzzy -no-custom"
 case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $dmenu -p Quit) in
     "Turn off Display")
         screen off
-        systemctl stop timeout.service
-        while [ "$(xset -q | awk '$1=="Monitor" && $2=="is" {print $3; exit}')" = Off ] ; do
-            sleep 10
-        done
-        systemctl start timeout.service
         ;;
     "Lock Screen")
         systemctl start lock.service

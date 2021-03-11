@@ -1,7 +1,7 @@
 #!/bin/dash
-sleep 1
 case $1 in
     standby|suspend|off)
+        sleep 1
         xset dpms force "$1"
         ;;
     *)

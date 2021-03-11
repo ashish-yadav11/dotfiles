@@ -1,18 +1,19 @@
 #!/bin/dash
 exec >/dev/null 2>&1
 
-export DISPLAY=:0
-export XAUTHORITY=/home/ashish/.Xauthority
-
 case $1 in
     pre)
         hotspot=/home/ashish/.scripts/hotspot.sh
 
+        read -r PID </tmp/pomodoro.pid && kill "$PID" $(pgrep -P "$PID")
         read -r PID </tmp/sleep_dine.pid && kill "$PID" $(pgrep -P "$PID")
 
         $hotspot terminate
         ;;
     post)
+        export DISPLAY=:0
+        export XAUTHORITY=/home/ashish/.Xauthority
+
         sigdsblocks 1
         sigdsblocks 2
         sigdsblocks 5

@@ -51,7 +51,6 @@ dsblocks &
 pidof -sx /home/ashish/.scripts/pulse_daemon.sh >/dev/null 2>&1 ||
     /home/ashish/.scripts/pulse_daemon.sh &
 unclutter &
-systemctl start timeout.service &
 
 #exec valgrind --leak-check=full dwm
 exec dwm
