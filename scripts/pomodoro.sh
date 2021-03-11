@@ -25,10 +25,13 @@ else
     timeperiod=1500
 fi
 
-read -r PID </tmp/pomodoro.pid && kill "$PID" $(pgrep -P "$PID")
+exec 9<>/tmp/pomodoro.pid
+flock -n 9 || read -r PID <&9 && kill "$PID" $(pgrep -P "$PID")
+flock -w1 9 || $notify -u critical -t 0 pomodoro "Something went wrong!"
 trap '
     read -r NID </tmp/pomodoro.nid && dunstify -C "$NID"
-    rm -f /tmp/pomodoro.nid /tmp/pomodoro.pid
+    exec 9<&-
+    flock -n 9 && rm -f /tmp/pomodoro.nid /tmp/pomodoro.pid
     exit
 ' TERM
 echo "$$" >/tmp/pomodoro.pid
@@ -45,4 +48,3 @@ block "☑️🍅🍅🍅"
 block "☑️☑️🍅🍅"
 block "☑️☑️☑️🍅"
 block "☑️☑️☑️☑️"
-rm -f /tmp/pomodoro.nid /tmp/pomodoro.pid
