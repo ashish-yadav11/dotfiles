@@ -17,7 +17,10 @@ if [ -n "$1" ] ; then
             exit
             ;;
         *)
-            [ "$1" -gt 0 ] 2>/dev/null || exit
+            if ! [ "$1" -gt 0 ] 2>/dev/null ; then
+                $notify -u critical -t 2000 pomodoro "Interval should be an integer!"
+                exit
+            fi
             timeperiod=$(( $1 * 60 ))
             ;;
     esac
