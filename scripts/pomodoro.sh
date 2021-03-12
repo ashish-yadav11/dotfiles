@@ -30,13 +30,12 @@ flock -n 9 || read -r PID <&9 && kill "$PID" $(pgrep -P "$PID")
 flock -w1 9 || $notify -u critical -t 0 pomodoro "Something went wrong!"
 trap '
     read -r NID </tmp/pomodoro.nid && dunstify -C "$NID"
-    exec 9<&-
-    flock -n 9 && rm -f /tmp/pomodoro.nid /tmp/pomodoro.pid
+    flock -u 9 && flock -n 9 && rm -f /tmp/pomodoro.nid /tmp/pomodoro.pid
     exit
 ' TERM
 echo "$$" >/tmp/pomodoro.pid
 
-block() {
+iter() {
     sleep "$timeperiod"
     $notify -bp -t 0 "$1" >/tmp/pomodoro.nid &
     wait "$!"
@@ -44,7 +43,7 @@ block() {
 }
 
 $notify -t 1000 "🍅🍅🍅🍅"
-block "☑️🍅🍅🍅"
-block "☑️☑️🍅🍅"
-block "☑️☑️☑️🍅"
-block "☑️☑️☑️☑️"
+iter "☑️🍅🍅🍅"
+iter "☑️☑️🍅🍅"
+iter "☑️☑️☑️🍅"
+iter "☑️☑️☑️☑️"
