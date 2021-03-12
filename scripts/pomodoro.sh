@@ -38,7 +38,7 @@ trap '
 ' TERM
 echo "$$" >/tmp/pomodoro.pid
 
-iter() {
+blocknotify() {
     sleep "$timeperiod"
     $notify -bp -t 0 "$1" >/tmp/pomodoro.nid &
     wait "$!"
@@ -46,7 +46,9 @@ iter() {
 }
 
 $notify -t 1000 "🍅🍅🍅🍅"
-iter "☑️🍅🍅🍅"
-iter "☑️☑️🍅🍅"
-iter "☑️☑️☑️🍅"
-iter "☑️☑️☑️☑️"
+blocknotify "☑️🍅🍅🍅"
+blocknotify "☑️☑️🍅🍅"
+blocknotify "☑️☑️☑️🍅"
+sleep "$timeperiod"
+$notify -t 0 "☑️☑️☑️☑️"
+rm -f /tmp/pomodoro.nid /tmp/pomodoro.pid
