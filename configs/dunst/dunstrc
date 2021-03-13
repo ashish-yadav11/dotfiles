@@ -461,6 +461,9 @@
 [pomodoro]
     stack_tag = "pomodoro"
     history_ignore = yes
+[toggletouchpad]
+    stack_tag = "toggletouchpad"
+    history_ignore = yes
 [scrot]
     summary = "Scrot"
     history_ignore = yes
