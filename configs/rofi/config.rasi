@@ -18,7 +18,7 @@ configuration {
 /*	run-command: "{cmd}";*/
 /*	run-list-command: "";*/
 /*	run-shell-command: "{terminal} -e {cmd}";*/
-/*	window-command: "wmctrl -i -R {window}";*/
+	window-command: "xdotool set_window --urgency 1 {window}";
 /*	window-match-fields: "all";*/
 /*	icon-theme: ;*/
 /*	drun-match-fields: "name,generic,exec,categories,keywords";*/
@@ -95,7 +95,7 @@ configuration {
 	kb-remove-to-sol: "Control+u";
 	kb-accept-entry: "Return,Control+m";
 	kb-accept-custom: "Control+Return";
-	kb-accept-alt: "";
+	kb-accept-alt: "Shift+Return,Control+M";
 	kb-delete-entry: "";
 	kb-mode-next: "Control+Tab,Shift+Right";
 	kb-mode-previous: "Control+ISO_Left_Tab,Shift+Left";
@@ -108,7 +108,7 @@ configuration {
 	kb-page-next: "Page_Down";
 	kb-row-first: "Home";
 	kb-row-last: "End";
-	kb-row-select: "Shift+Return";
+	kb-row-select: "Alt+Return";
 	kb-screenshot: "Print";
 	kb-ellipsize: "";
 	kb-toggle-case-sensitivity: "grave";
