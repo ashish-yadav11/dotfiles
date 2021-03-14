@@ -1,4 +1,5 @@
 #!/bin/dash
+dateformat="%H:%M"
 notify="dunstify -h string:x-canonical-private-synchronous:pomodoro"
 
 if [ -n "$1" ] ; then
@@ -40,15 +41,19 @@ echo "$$" >/tmp/pomodoro.pid
 
 blocknotify() {
     sleep "$timeperiod"
-    $notify -bp -t 0 "$1" >/tmp/pomodoro.nid &
+    $notify -bp -t 0 "$(date +"$dateformat") $1" >/tmp/pomodoro.nid &
     wait "$!"
     : >/tmp/pomodoro.nid
 }
 
-$notify -t 1000 "🍅🍅🍅🍅"
+simplenotify() {
+    $notify -t "$1" "$(date +"$dateformat") $2"
+}
+
+simplenotify 1000 "🍅🍅🍅🍅"
 blocknotify "☑️🍅🍅🍅"
 blocknotify "☑️☑️🍅🍅"
 blocknotify "☑️☑️☑️🍅"
 sleep "$timeperiod"
-$notify -t 0 "☑️☑️☑️☑️"
+simplenotify 0 "☑️☑️☑️☑️"
 rm -f /tmp/pomodoro.nid /tmp/pomodoro.pid
