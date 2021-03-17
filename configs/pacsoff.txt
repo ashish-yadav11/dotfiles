@@ -32,7 +32,6 @@ fd
 fdupes
 feh
 ffmpeg
-ffmpegthumbnailer
 file-roller
 fzf
 gcc-fortran
@@ -134,7 +133,6 @@ ttf-font-awesome
 ttf-liberation
 ttf-opensans
 ttf-ubuntu-font-family
-tumbler
 udisks2
 ueberzug
 unclutter
