@@ -229,9 +229,9 @@ function zcurl {
     esac
     [[ $url != http*.pdf ]] && { echo "Invalid URL!"; return ;}
     curl -sfLIo /dev/null "$url" || { echo "Invalid URL or network error!"; return ;}
-    path=/tmp/${url##*/}
-    curl -Lo "$path" "$url" || { rm -f "$path"; echo "Network error!"; return ;}
-    setsid -f dash -c 'zathura "$0"; rm -f "$0"' "$path" 2>/dev/null
+    filepath=/tmp/${url##*/}
+    curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return ;}
+    setsid -f dash -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null
 }
 
 function zpull {
