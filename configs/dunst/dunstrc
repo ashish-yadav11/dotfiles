@@ -443,9 +443,6 @@
 [dictionary]
     summary = "Dictionary"
     history_ignore = yes
-[dwm]
-    summary = "dwm"
-    history_ignore = yes
 [espeak]
     summary = "Espeak"
     history_ignore = yes
@@ -461,8 +458,8 @@
 [pomodoro]
     stack_tag = "pomodoro"
     history_ignore = yes
-[toggletouchpad]
-    stack_tag = "toggletouchpad"
+[scrach]
+    summary = "scratch"
     history_ignore = yes
 [scrot]
     summary = "Scrot"
@@ -478,6 +475,9 @@
     history_ignore = yes
 [telegram]
     appname = "Telegram Desktop"
+    history_ignore = yes
+[toggletouchpad]
+    stack_tag = "toggletouchpad"
     history_ignore = yes
 [usbmount]
     summary = " USB mounter"
