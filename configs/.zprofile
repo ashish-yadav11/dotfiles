@@ -17,7 +17,7 @@ export R_ENVIRON_USER=~/.Renviron
 #export VISUAL=nvim
 
 # fix for pacdiff to use nvim instead of vim
-export DIFFPROG="nvim -d"
+#export DIFFPROG="nvim -d"
 # fix for escape keys in neomutt
 export ESCDELAY=0
 
