@@ -15,5 +15,5 @@ case $(echo "Root\nFocused window\nSelection" | dmenu -i -matching fuzzy -no-cus
         ;;
 esac
 
-scrot -q100 $options '/home/ashish/Pictures/screenshots/%Y-%m-%d-%H%M%S_$wx$h.png' &&
+scrot -q75 $options '/home/ashish/Pictures/screenshots/%Y-%m-%d-%H%M%S_$wx$h.png' &&
     notify-send -t 1000 Scrot "Screenshot captured"
