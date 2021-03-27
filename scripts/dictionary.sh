@@ -19,23 +19,15 @@ case $1 in
         ;;
 esac
 
-dict "$word" >/tmp/dictionary.last.temp 2>&1
+dict "$word" >/tmp/dictionary.last.temp
 case $? in
     0)
-        logfile=/home/ashish/.cache/dictionary.log
-
         mv /tmp/dictionary.last.temp /tmp/dictionary.last
-        awk -v word="$word" '
-            BEGIN {print word; a = 1}
-            a > 1000 {exit}
-            $0 != word {print $0; a++}
-        ' "$logfile" >/tmp/dictionary.log.temp
-        mv /tmp/dictionary.log.temp "$logfile"
         termite --name=floating_Termite -t Dictionary -e "less /tmp/dictionary.last"
         ;;
     21)
-        mv /tmp/dictionary.last.temp /tmp/dictionary.last
-        termite --name=floating_Termite -t Dictionary -e "less /tmp/dictionary.last"
+        termite --name=floating_Termite -t Dictionary -e "less /tmp/dictionary.last.temp"
+        rm -f /tmp/dictionary.last.temp
         ;;
     *)
         rm -f /tmp/dictionary.last.temp
