@@ -24,16 +24,11 @@ main(int argc, char *argv[])
         Window *winc; /* unused */
         XClassHint ch = { NULL, NULL };
 
-        if (argc == 2) {
-                if (strcmp(argv[1], "-c") == 0)
-                        print = Class;
-                else if (strcmp(argv[1], "-i") == 0)
-                        print = Instance;
-                else {
-                        fprintf(stderr, "Usage: %s [-c|-i]\n", argv[0]);
-                        return 2;
-                }
-        } else if (argc != 1) {
+        if (argc == 2 && strcmp(argv[1], "-c") == 0)
+                print = Class;
+        else if (argc == 2 && strcmp(argv[1], "-i") == 0)
+                print = Instance;
+        else if (argc != 1) {
                 fprintf(stderr, "Usage: %s [-c|-i]\n", argv[0]);
                 return 2;
         }

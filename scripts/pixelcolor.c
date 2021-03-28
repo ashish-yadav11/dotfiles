@@ -66,23 +66,21 @@ main(int argc, char *argv[])
         char **pargv = argv + 1;
         int v[4] = { 0, 0, 1, 1 };
 
-        if (!(dpy = XOpenDisplay(NULL))) {
-                fputs("Error: could not open display.\n", stderr);
-                return 1;
-        }
         if (argc > 1 && strcmp(argv[1], "-q") == 0) {
                 quiet = 1;
                 pargc--, pargv++;
         }
-        if (!pargc)
+        for (int i = 0; i < pargc; i++)
+                if (!parseint(pargv[i], &v[i])) {
+                        fprintf(stderr, "Usage: %s [x] [y] [w] [h]\n", argv[0]);
+                        return 1;
+                }
+        if (!(dpy = XOpenDisplay(NULL))) {
+                fputs("Error: could not open display.\n", stderr);
+                return 1;
+        }
+        if (pargc == 0)
                 getmouselocation(&v[0], &v[1]);
-        else
-                for (int i = 0; i < pargc; i++)
-                        if (!parseint(pargv[i], &v[i])) {
-                                fprintf(stderr, "Usage: %s [x] [y] [w] [h]\n", argv[0]);
-                                XCloseDisplay(dpy);
-                                return 1;
-                        }
         printcolors(v[0], v[1], v[2], v[3]);
         XCloseDisplay(dpy);
         return 0;
