@@ -19,7 +19,7 @@ case $1 in
         ;;
 esac
 
-dict "$word" >/tmp/dictionary.last.temp
+dict "$word" >/tmp/dictionary.last.temp 2>&1
 case $? in
     0)
         mv /tmp/dictionary.last.temp /tmp/dictionary.last
