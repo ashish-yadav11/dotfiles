@@ -60,6 +60,8 @@ Plug 'lervag/vimtex'
 
 call plug#end()
 
+delcommand PlugUpgrade
+
 
 " gruvbox
 
