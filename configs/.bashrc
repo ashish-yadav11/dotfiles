@@ -5,6 +5,8 @@
 # return if not running interactively
 [[ $- != *i* ]] && return
 
+HISTIGNORE=$HISTIGNORE:l:m:n:s:t
+
 # aliases
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"

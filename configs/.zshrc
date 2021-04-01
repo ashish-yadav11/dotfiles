@@ -23,8 +23,7 @@ setopt SH_WORD_SPLIT
 
 ## PARAMETERS (man zshparam)
 
-
-HISTORY_IGNORE='(h|pb|pz)'
+HISTORY_IGNORE='(h|pb|pz|l|m|n|s|t)'
 HISTSIZE=12000
 KEYTIMEOUT=1
 PROMPT_EOL_MARK=''
