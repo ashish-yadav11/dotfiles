@@ -459,7 +459,7 @@
     stack_tag = "pomodoro"
     history_ignore = yes
 [scrach]
-    summary = "scratch"
+    stack_tag = "scratch"
     history_ignore = yes
 [scrot]
     summary = "Scrot"
