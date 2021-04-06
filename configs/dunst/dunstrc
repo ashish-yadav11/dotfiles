@@ -455,6 +455,10 @@
 [maintenance]
     stack_tag = "maintenance"
     history_ignore = yes
+[mtpmount]
+    summary = " MTP mounter"
+    body = "No MTP device to mount or unmount"
+    history_ignore = yes
 [pomodoro]
     stack_tag = "pomodoro"
     history_ignore = yes
@@ -481,7 +485,7 @@
     history_ignore = yes
 [usbmount]
     summary = " USB mounter"
-    body = "No USB drives to mount or unmount"
+    body = "No USB drive to mount or unmount"
     history_ignore = yes
 
 # vim: ft=cfg

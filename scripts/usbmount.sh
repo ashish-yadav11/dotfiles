@@ -82,6 +82,6 @@ else
     if [ -n "$drives1" ] ; then
         usbunmount
     else
-        notify-send -t 2000 " USB mounter" "No USB drives to mount or unmount"
+        notify-send -t 2000 " USB mounter" "No USB drive to mount or unmount"
     fi
 fi

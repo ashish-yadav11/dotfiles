@@ -8,6 +8,7 @@ dwm-cust
 etcher-bin
 htop-vim-git
 i3lock-color
+jmtpfs
 kernel-modules-hook
 libxft-bgra
 linux-wifi-hotspot
