@@ -14,7 +14,6 @@ biber
 bleachbit
 breeze
 breeze-gtk
-caja
 calc
 calcurse
 chromium
@@ -49,7 +48,6 @@ grub-customizer
 gthumb
 gtk-engine-murrine
 guvcview
-gvfs-mtp
 imagemagick
 inkscape
 inotify-tools
