@@ -23,8 +23,8 @@ declare -a mtpoints=()
 
 i=0
 while read -r mtpoint ; do
-    for j in "${!devices[@]}" ; do
-        if [[ ${devices[j]} == "${mtpoint##*/}|"* ]] ; then
+    for j in "${!devices0[@]}" ; do
+        if [[ ${devices0[j]} == "${mtpoint##*/}|"* ]] ; then
             devices0=( "${devices0[@]:0:j}" "${devices0[@]:j+1}" )
             devices1[i]=${devices[j]}
             mtpoints[i]=$mtpoint
