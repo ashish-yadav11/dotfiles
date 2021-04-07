@@ -86,8 +86,8 @@ askunmount() {
 }
 
 asktype() {
-    M=$(echo "${devices0[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
-    U=$(echo "${devices1[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
+    M=$(printf "%s\n" "${devices0[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
+    U=$(printf "%s\n" "${devices1[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
 
     echo -e "Mount: ${M%?}\nUnmount: ${U%?}" | $menu -p "What to do?" |
         while read -r chosen ; do
