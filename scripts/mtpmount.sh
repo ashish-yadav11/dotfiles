@@ -1,5 +1,10 @@
 #!/bin/bash
-dmenu="dmenu -i -matching fuzzy -multi-select -no-custom"
+menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -multi-select -no-custom"
+
+# clean stale simple-mtpfs temporary directories
+for dir in /tmp/simple-mtpfs-* ; do
+    output=$(ls -A "$dir" 2>/dev/null) && [ -z "$output" ] && rmdir "$dir"
+done
 
 # plugged-in mtp devices
 mapfile -t devices < <(
@@ -7,10 +12,10 @@ mapfile -t devices < <(
         /^S: libmtp/ {f = 1; next}
         !f {next}
         $0 == "" {f = 0; next}
-        $1 == "E: DEVNAME" {b = $2 "|"; next}
-        $1 == "E: ID_VENDOR" {gsub(/_/, "-", $2); v = $2; b = b $2 " "; next}
-        $1 == "E: ID_MODEL" {gsub(/_/, "-", $2); m = $2; if (v != $2) {b = b $2 " "}; next}
-        $1 == "E: ID_SERIAL_SHORT" {print m "-" $2 "|" b "(" $2 ")"; next}
+        $1 == "E: DEVNAME" {b = $2 "|"; n = $2; sub(/^\/dev\/bus\/usb\//, "", n); sub(/\//, "", n); next}
+        $1 == "E: ID_VENDOR" {gsub(/[ _]/, "-", $2); v = $2; b = b $2 " "; next}
+        $1 == "E: ID_MODEL" {m = $2; gsub(/[ _]/, "-", m); if (v != $2) {gsub(/_/, " ", $2); if (v != $2) {b = b $2 " "}}; next}
+        $1 == "E: ID_SERIAL_SHORT" {print m "-" $2 "-" n "|" b "(" $2 ")"; next}
     '
 )
 
@@ -23,8 +28,9 @@ declare -a mtpoints=()
 
 i=0
 while read -r mtpoint ; do
+    base=${mtpoint##*/}
     for j in "${!devices0[@]}" ; do
-        if [[ ${devices0[j]} == "${mtpoint##*/}|"* ]] ; then
+        if [[ ${devices0[j]} == "$base|"* ]] ; then
             devices0=( "${devices0[@]:0:j}" "${devices0[@]:j+1}" )
             devices1[i]=${devices[j]}
             mtpoints[i]=$mtpoint
@@ -33,8 +39,7 @@ while read -r mtpoint ; do
         fi
     done
     # cleanup orphaned mount points
-    fusermount -u "$mtpoint"
-    rmdir "$mtpoint"
+    fusermount -u "$mtpoint" && rmdir "$mtpoint"
 done < <(awk '$1=="simple-mtpfs" {print $2}' /etc/mtab)
 
 mount() {
@@ -67,14 +72,14 @@ unmount() {
 }
 
 askmount() {
-    printf "%s\n" "${devices0[@]##*|}" | $dmenu -format i -p "Which device(s) to mount?" |
+    printf "%s\n" "${devices0[@]##*|}" | $menu -format i -p "Which device(s) to mount?" |
         while read -r i ; do
             mount "$i"
         done
 }
 
 askunmount() {
-    printf "%s\n" "${devices1[@]##*|}" | $dmenu -format i -p "Which device(s) to unmount?" |
+    printf "%s\n" "${devices1[@]##*|}" | $menu -format i -p "Which device(s) to unmount?" |
         while read -r i ; do
             unmount "$i"
         done
@@ -84,7 +89,7 @@ asktype() {
     M=$(echo "${devices0[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
     U=$(echo "${devices1[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
 
-    echo -e "Mount: ${M%?}\nUnmount: ${U%?}" | $dmenu -p "What to do?" |
+    echo -e "Mount: ${M%?}\nUnmount: ${U%?}" | $menu -p "What to do?" |
         while read -r chosen ; do
             case $chosen in
                 M*)
