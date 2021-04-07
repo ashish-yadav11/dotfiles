@@ -9,13 +9,13 @@ done
 # plugged-in mtp devices
 mapfile -t devices < <(
     udevadm info -n /dev/bus/usb/*/* | awk -F= '
-        /^S: libmtp/ {f = 1; next}
+        /^S: libmtp/ {f=1; next}
         !f {next}
-        $0 == "" {f = 0; next}
-        $1 == "E: DEVNAME" {b = $2 "|"; n = $2; sub(/^\/dev\/bus\/usb\//, "", n); sub(/\//, "", n); next}
-        $1 == "E: ID_VENDOR" {gsub(/[ _]/, "-", $2); v = $2; b = b $2 " "; next}
-        $1 == "E: ID_MODEL" {m = $2; gsub(/[ _]/, "-", m); if (v != $2) {gsub(/_/, " ", $2); if (v != $2) {b = b $2 " "}}; next}
-        $1 == "E: ID_SERIAL_SHORT" {print m "-" $2 "-" n "|" b "(" $2 ")"; next}
+        $0=="" {f=0; next}
+        $1=="E: DEVNAME" {b=$2"|"; n=$2; sub(/^\/dev\/bus\/usb\//,"",n); sub(/\//,"",n); next}
+        $1=="E: ID_VENDOR" {gsub(/_/," ",$2); b=b$2" "; v=$2; next}
+        $1=="E: ID_MODEL" {m=$2; gsub(/[ _]/,"-",m); gsub(/_/," ",$2); if (v!=$2) {b=b$2" "}; next}
+        $1=="E: ID_SERIAL_SHORT" {print m"-"$2"-"n"|"b"("$2")"; next}
     '
 )
 
