@@ -14,17 +14,28 @@ mapfile -t devices < <(
     '
 )
 
-mapfile -t devices1 < <(awk '$1=="simple-mtpfs" {print $2}' /etc/mtab)
+# mtp devices not mounted on the system
+declare -a devices0=( "${devices[@]}" )
+# mtp devices mounted on the system
+declare -a devices1=()
+# mount points
+declare -a mtpoints=()
 
-if (( ${#devices1[@]} )) ; then
-    # mtp devices not mounted on the system
-    mapfile -t devices0 < <(printf "%s\n" "${devices[@]}" | grep -Fvf <(printf "%s|\n" "${devices1[@]##*/}"))
-    # mtp devices mounted on the system
-    mapfile -t devices1 < <(printf "%s\n" "${devices[@]}" | grep -Ff <(printf "%s|\n" "${devices1[@]##*/}"))
-else
-    devices0=( "${devices[@]}" )
-    devices1=()
-fi
+i=0
+while read -r mtpoint ; do
+    for j in "${!devices[@]}" ; do
+        if [[ ${devices[j]} == "${mtpoint##*/}|"* ]] ; then
+            devices0=( "${devices0[@]:0:j}" "${devices0[@]:j+1}" )
+            devices1[i]=${devices[j]}
+            mtpoints[i]=$mtpoint
+            (( i++ ))
+            continue 2
+        fi
+    done
+    # cleanup orphaned mount points
+    fusermount -u "$mtpoint"
+    rmdir "$mtpoint"
+done < <(awk '$1=="simple-mtpfs" {print $2}' /etc/mtab)
 
 mount() {
     device=${devices0[$1]}
@@ -46,7 +57,7 @@ mount() {
 unmount() {
     device=${devices1[$1]}
     name=${device##*|}; name=${name% (*}
-    mtpoint=/run/user/$UID/mtp/${device%%|*}
+    mtpoint=${mtpoints[$1]}
     if fusermount -u "$mtpoint" 2>/dev/null ; then
         notify-send -t 2000 " MTP mounter" "$name unmounted successfully"
         rmdir "$mtpoint"
