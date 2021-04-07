@@ -1,5 +1,5 @@
 #!/bin/bash
-dmenu="dmenu -i -matching fuzzy -multi-select -no-custom -format i"
+dmenu="dmenu -i -matching fuzzy -multi-select -no-custom"
 
 # plugged-in mtp devices
 mapfile -t devices < <(
@@ -7,15 +7,14 @@ mapfile -t devices < <(
         /^S: libmtp/ {f = 1; next}
         !f {next}
         $0 == "" {f = 0; next}
-        $1 == "E: BUSNUM" {b = $2 ","; next}
-        $1 == "E: DEVNUM" {b = b $2 "|"; next}
-        $1 == "E: ID_VENDOR" {v = $2; b = b $2 " "; next}
-        $1 == "E: ID_MODEL" {m = $2; if (v != $2) {b = b $2 " "}; next}
+        $1 == "E: DEVNAME" {b = $2 "|"; next}
+        $1 == "E: ID_VENDOR" {gsub(/_/, "-", $2); v = $2; b = b $2 " "; next}
+        $1 == "E: ID_MODEL" {gsub(/_/, "-", $2); m = $2; if (v != $2) {b = b $2 " "}; next}
         $1 == "E: ID_SERIAL_SHORT" {print m "-" $2 "|" b "(" $2 ")"; next}
     '
 )
 
-mapfile -t devices1 < <(awk '$1=="jmtpfs" {print $2}' /etc/mtab)
+mapfile -t devices1 < <(awk '$1=="simple-mtpfs" {print $2}' /etc/mtab)
 
 if (( ${#devices1[@]} )) ; then
     # mtp devices not mounted on the system
@@ -27,34 +26,46 @@ else
     devices1=()
 fi
 
-mtpmount() {
-    printf "%s\n" "${devices0[@]##*|}" | $dmenu -p "Which device(s) to mount?" |
+mount() {
+    device=${devices0[$1]}
+    name=${device##*|}; name=${name% (*}
+    devname=${device#*|}; devname=${devname%|*}
+    mtpoint=/run/user/$UID/mtp/${device%%|*}
+    mkdir -p "$mtpoint"
+    if output=$(simple-mtpfs "$devname" "$mtpoint" 2>&1) ; then
+        notify-send -t 2000 " MTP mounter" "$name mounted successfully"
+    elif [[ $output == *"make sure the screen is unlocked." ]] ; then
+        notify-send -u critical -t 4000 " MTP mounter" "Error mounting $name\n(make sure the device is unlocked)"
+        rmdir "$mtpoint"
+    else
+        notify-send -u critical " MTP mounter" "Error mounting $name"
+        rmdir "$mtpoint"
+    fi
+}
+
+unmount() {
+    device=${devices1[$1]}
+    name=${device##*|}; name=${name% (*}
+    mtpoint=/run/user/$UID/mtp/${device%%|*}
+    if fusermount -u "$mtpoint" 2>/dev/null ; then
+        notify-send -t 2000 " MTP mounter" "$name unmounted successfully"
+        rmdir "$mtpoint"
+    else
+        notify-send -u critical " MTP mounter" "Error unmounting $name"
+    fi
+}
+
+askmount() {
+    printf "%s\n" "${devices0[@]##*|}" | $dmenu -format i -p "Which device(s) to mount?" |
         while read -r i ; do
-            device=${devices0[$i]}
-            name=${device%%|*}
-            busdev=${device#*|}; busdev=${busdev%|*}
-            mpoint=/run/user/$UID/mtp/$name
-            mkdir -p "$mpoint"
-            if jmtpfs -device="$busdev" "$mpoint" >/dev/null 2>&1 ; then
-                notify-send -t 2000 " MTP mounter" "$name mounted successfully"
-            else
-                notify-send -u critical " MTP mounter" "Error mounting $name"
-            fi
+            mount "$i"
         done
 }
 
-mtpunmount() {
-    printf "%s\n" "${devices1[@]##*|}" | $dmenu -p "Which device(s) to unmount?" |
+askunmount() {
+    printf "%s\n" "${devices1[@]##*|}" | $dmenu -format i -p "Which device(s) to unmount?" |
         while read -r i ; do
-            device=${devices1[$i]}
-            name=${device%%|*}
-            mpoint=/run/user/$UID/mtp/$name
-            if fusermount -u "$mpoint" 2>/dev/null ; then
-                notify-send -t 2000 " MTP mounter" "$name unmounted successfully"
-            else
-                notify-send -u critical " MTP mounter" "Error unmounting $name"
-            fi
-            rmdir "$mpoint"
+            unmount "$i"
         done
 }
 
@@ -65,56 +76,31 @@ asktype() {
     echo -e "Mount: ${M%?}\nUnmount: ${U%?}" | $dmenu -p "What to do?" |
         while read -r chosen ; do
             case $chosen in
-            M*)
-                case $M in
-                *s)
-                    device=${devices0[0]}
-                    name=${device%%|*}
-                    busdev=${device#*|}; busdev=${busdev%|*}
-                    mpoint=/run/user/$UID/mtp/$name
-                    mkdir -p "$mpoint"
-                    if jmtpfs -device="$busdev" "$mpoint" >/dev/null 2>&1 ; then
-                        notify-send -t 2000 " MTP mounter" "$name unmounted successfully"
-                    else
-                        notify-send -u critical " MTP mounter" "Error unmounting $name"
-                    fi
+                M*)
+                    case $M in
+                        *s) mount 0 ;;
+                        *m) askmount ;;
+                    esac
                     ;;
-                *m)
-                    mtpmount
+                U*)
+                    case $U in
+                        *s) unmount 0 ;;
+                        *m) askunmount ;;
+                    esac
                     ;;
-                esac
-                ;;
-            U*)
-                case $U in
-                *s)
-                    device=${devices1[0]}
-                    name=${device%%|*}
-                    mpoint=/run/user/$UID/mtp/$name
-                    if fusermount -u "$mpoint" 2>/dev/null ; then
-                        notify-send -t 2000 " MTP mounter" "$name unmounted successfully"
-                    else
-                        notify-send -u critical " MTP mounter" "Error unmounting $name"
-                    fi
-                    rmdir "$mpoint"
-                    ;;
-                *m)
-                    mtpunmount
-                    ;;
-                esac
-                ;;
             esac
         done
 }
 
 if (( ${#devices0[@]} )) ; then
-    if (( ${devices1[@]} )) ; then
+    if (( ${#devices1[@]} )) ; then
         asktype
     else
-        mtpmount
+        askmount
     fi
 else
     if (( ${#devices1[@]} )) ; then
-        mtpunmount
+        askunmount
     else
         notify-send -t 2000 " MTP mounter" "No MTP device to mount or unmount"
     fi
