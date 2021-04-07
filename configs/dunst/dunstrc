@@ -156,7 +156,7 @@
     stack_duplicates = false
 
     # Hide the count of stacked notifications with the same content
-    hide_duplicate_count = true
+    hide_duplicate_count = false
 
     # Display indicators for URLs (U) and actions (A).
     show_indicators = no
