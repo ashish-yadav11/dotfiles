@@ -46,7 +46,7 @@ mount() {
     if output=$(simple-mtpfs "$devname" "$mtpoint" 2>&1) ; then
         notify-send -t 2000 " MTP mounter" "$name mounted successfully"
     elif [[ $output == *"make sure the screen is unlocked." ]] ; then
-        notify-send -u critical -t 4000 " MTP mounter" "Error mounting $name\n(make sure the device is unlocked)"
+        notify-send -u critical -t 10000 " MTP mounter" "Error mounting $name\nMake sure the device is unlocked and file transfer (MTP) option is selected for the USB connection"
         rmdir "$mtpoint"
     else
         notify-send -u critical " MTP mounter" "Error mounting $name"
