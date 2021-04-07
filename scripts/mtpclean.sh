@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 
 # clean stale simple-mtpfs temporary directories
 for dir in /tmp/simple-mtpfs-* ; do
