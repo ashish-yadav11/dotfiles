@@ -19,7 +19,7 @@ case $1 in
         mogrify -flop "${files[@]}"
         ;;
     w)
-        read -r file
+        IFS='' read -r file
         /home/ashish/.config/sxiv/exec/wallpaper.sh "$file"
         ;;
     d)
@@ -33,7 +33,7 @@ case $1 in
         ;;
     y)
         pwd=$(pwd)
-        while read -r file ; do
+        while IFS='' read -r file ; do
             paths="$paths $(printf %q "$pwd/$file")"
         done
         paths=${paths# }
@@ -44,7 +44,7 @@ case $1 in
         fi
         ;;
     Y)
-        while read -r file ; do
+        while IFS='' read -r file ; do
             paths="$paths $(printf %q "$(realpath "$file")")"
         done
         paths=${paths# }

@@ -25,14 +25,14 @@ unmount() {
 
 askmount() {
     echo "$drives0" | $menu -p "Which drive(s) to mount?" |
-        while read -r chosen ; do
+        while IFS='' read -r chosen ; do
             mount "${chosen%% *}"
         done
 }
 
 askunmount() {
     echo "$drives1" | $menu -p "Which drive(s) to unmount?" |
-        while read -r chosen ; do
+        while IFS='' read -r chosen ; do
             unmount "${chosen%% *}"
         done
 }
@@ -42,7 +42,7 @@ asktype() {
     U=$(echo "$drives1" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
 
     echo "Mount: ${M%?}\nUnmount: ${U%?}" | $menu -p "What to do?" |
-        while read -r chosen ; do
+        while IFS='' read -r chosen ; do
             case $chosen in
                 M*)
                     case $M in

@@ -1,5 +1,5 @@
 #!/bin/dash
-if read -r text </tmp/espeak.last ; then
+if IFS='' read -r text </tmp/espeak.last ; then
     if read -r PID </tmp/espeak.pid ; then
         kill "$PID" $(pgrep -P "$PID")
         exit
