@@ -2,9 +2,7 @@
 menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -multi-select -no-custom"
 
 # clean stale simple-mtpfs temporary directories
-for dir in /tmp/simple-mtpfs-* ; do
-    output=$(ls -A "$dir" 2>/dev/null) && [ -z "$output" ] && rmdir "$dir"
-done
+find /tmp -maxdepth 1 -type d -name 'simple-mtpfs-??????' -exec rmdir {} + 2>/dev/null
 
 # plugged-in mtp devices
 mapfile -t devices < <(
@@ -27,7 +25,7 @@ declare -a devices1=()
 declare -a mtpoints=()
 
 i=0
-while read -r mtpoint ; do
+while IFS='' read -r mtpoint ; do
     base=${mtpoint##*/}
     for j in "${!devices0[@]}" ; do
         if [[ ${devices0[j]} == "$base|"* ]] ; then
@@ -73,14 +71,14 @@ unmount() {
 
 askmount() {
     printf "%s\n" "${devices0[@]##*|}" | $menu -format i -p "Which device(s) to mount?" |
-        while read -r i ; do
+        while IFS='' read -r i ; do
             mount "$i"
         done
 }
 
 askunmount() {
     printf "%s\n" "${devices1[@]##*|}" | $menu -format i -p "Which device(s) to unmount?" |
-        while read -r i ; do
+        while IFS='' read -r i ; do
             unmount "$i"
         done
 }
@@ -90,7 +88,7 @@ asktype() {
     U=$(printf "%s\n" "${devices1[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
 
     echo -e "Mount: ${M%?}\nUnmount: ${U%?}" | $menu -p "What to do?" |
-        while read -r chosen ; do
+        while IFS='' read -r chosen ; do
             case $chosen in
                 M*)
                     case $M in
