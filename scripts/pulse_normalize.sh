@@ -8,7 +8,7 @@ volume=$(
                 }
                 if ($1 == "volume:") {
                     v = $3 <= $10 ? $5 : $12
-                    gsub(/%/, "", v)
+                    sub(/%/, "", v)
                     v = int(v / 5) * 5
                 }
             } else if ($1 == "*" && $2 == "index:") {
