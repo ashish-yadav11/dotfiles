@@ -24,3 +24,4 @@ simple-mtpfs
 timeshift
 woeusb-ng
 yay
+youtube-dlp
