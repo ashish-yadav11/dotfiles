@@ -27,7 +27,6 @@ i3lock \
 --no-modkeytext \
 --noinputtext="" \
 --radius=115 \
---refresh-rate=0.5 \
 --ring-width=15 \
 --ringcolor="$default" \
 --ringvercolor="$default" \
