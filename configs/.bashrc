@@ -11,6 +11,7 @@ HISTIGNORE=$HISTIGNORE:l:m:n:s:t
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
+alias md='youtube-dl --output "%(title)s (%(id)s).%(ext)s" --extract-audio --audio-format best --audio-quality 0'
 alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
 
 alias l="nvim ~/Documents/.lag"

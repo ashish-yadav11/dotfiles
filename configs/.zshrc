@@ -146,10 +146,11 @@ alias sudo="sudo "
 alias vi=nvim
 alias vim=nvim
 
-# scripts
+# scripts and commands
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
+alias md='youtube-dl --output "%(title)s (%(id)s).%(ext)s" --extract-audio --audio-format best --audio-quality 0'
 
 # files
 alias l="nvim ~/Documents/.lag"
