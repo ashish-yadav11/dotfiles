@@ -40,7 +40,6 @@ trap '
 echo "$$" >/tmp/pomodoro.pid
 
 blocknotify() {
-    sleep "$timeperiod"
     $notify -bp -t 0 "$(date +"$dateformat") $1" >/tmp/pomodoro.nid &
     wait "$!"
     : >/tmp/pomodoro.nid
@@ -51,8 +50,11 @@ simplenotify() {
 }
 
 simplenotify 1000 "🍅🍅🍅🍅"
+sleep "$timeperiod"
 blocknotify "☑️🍅🍅🍅"
+sleep "$timeperiod"
 blocknotify "☑️☑️🍅🍅"
+sleep "$timeperiod"
 blocknotify "☑️☑️☑️🍅"
 sleep "$timeperiod"
 simplenotify 0 "☑️☑️☑️☑️"
