@@ -1,5 +1,5 @@
 # vim: filetype=mailcap
-text/plain; /home/ashish/.config/mutt/scripts/url_highlight_less.sh %s; edit=$EDITOR %s
+text/plain; /home/ashish/.config/mutt/scripts/url_highlight.sh; edit=$EDITOR %s
 text/html; setsid -f $BROWSER %s >/dev/null 2>&1; nametemplate=%s.html; x-neomutt-keep
 text/html; ; edit=$EDITOR %s; nametemplate=%s.html
 text/html; elinks; copiousoutput

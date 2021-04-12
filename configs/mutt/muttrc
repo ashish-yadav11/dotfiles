@@ -365,8 +365,8 @@ macro index,pager s "<enter-command>set my_delete=\$delete delete=yes<Enter><syn
 macro index o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=$my_config_folder/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter><clear-flag>N" "open in browser/less with url highlighting"
 macro pager o "<enter-command>set my_mailcap_path=\$mailcap_path mailcap_path=$my_config_folder/mailcap2<Enter><view-attachments><search>html<Enter><view-mailcap><exit><enter-command>set mailcap_path=\$my_mailcap_path; unset my_mailcap_path<Enter>" "open in browser/less with url highlighting"
 
-macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>$my_scripts_folder/url_highlight_less.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter><clear-flag>N" "pipe message to less with url highlighting"
-macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>$my_scripts_folder/url_highlight_less.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "pipe message to less with url highlighting"
+macro index V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>$my_scripts_folder/url_highlight.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter><clear-flag>N" "pipe message to less with url highlighting"
+macro pager V "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode=yes my_wait_key=\$wait_key wait_key=no<Enter><pipe-message>$my_scripts_folder/url_highlight.sh<Enter><enter-command>set pipe_decode=\$my_pipe_decode wait_key=\$my_wait_key; unset my_pipe_decode my_wait_key<Enter>" "pipe message to less with url highlighting"
 
 
 #--------#
