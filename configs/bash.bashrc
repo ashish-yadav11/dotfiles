@@ -32,6 +32,9 @@ export HISTSIZE=10000
 
 HISTIGNORE=h:pb:pz
 
+# locale
+LC_ALL=C
+
 # termite tabbing
 source /etc/profile.d/vte.sh
 
