@@ -64,7 +64,7 @@ unmount() {
         notify-send -t 2000 " MTP mounter" "$name unmounted successfully"
         rmdir "$mtpoint"
     else
-        notify-send -u critical " MTP mounter" "Error unmounting $name\nTarget might be busy"
+        notify-send -u critical " MTP mounter" "Error unmounting $name\nResource might be busy"
     fi
 }
 
