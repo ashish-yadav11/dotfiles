@@ -19,7 +19,7 @@ unmount() {
     if output=$(udisksctl unmount -b "$1") ; then
         notify-send -t 2000 " USB mounter" "${output%.}"
     else
-        notify-send -u critical " USB mounter" "Error unmounting $1"
+        notify-send -u critical " USB mounter" "Error unmounting $1\nTarget might be busy"
     fi
 }
 
