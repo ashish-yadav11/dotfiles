@@ -8,6 +8,7 @@ dwm-cust
 etcher-bin
 htop-vim-git
 i3lock-color
+jmtpfs
 kernel-modules-hook
 libxft-bgra
 linux-wifi-hotspot
@@ -20,7 +21,6 @@ pam-gnupg
 pass-git-helper
 rofi-dmenu-cust
 siji-git
-simple-mtpfs
 timeshift
 woeusb-ng
 yay

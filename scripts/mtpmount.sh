@@ -1,19 +1,16 @@
 #!/bin/bash
 menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -multi-select -no-custom"
 
-# clean stale simple-mtpfs temporary directories
-find /tmp -maxdepth 1 -type d -name 'simple-mtpfs-??????' -exec rmdir {} + 2>/dev/null
-
 # plugged-in mtp devices
 mapfile -t devices < <(
     udevadm info -n /dev/bus/usb/*/* | awk -F= '
         /^S: libmtp/ {f=1; next}
         !f {next}
         $0=="" {f=0; next}
-        $1=="E: DEVNAME" {b=$2"|"; n=$2; sub(/^\/dev\/bus\/usb\//,"",n); sub(/\//,"",n); next}
-        $1=="E: ID_VENDOR" {gsub(/_/," ",$2); b=b$2" "; v=$2; next}
-        $1=="E: ID_MODEL" {m=$2; gsub(/[ _]/,"-",m); gsub(/_/," ",$2); if (v!=$2) {b=b$2" "}; next}
-        $1=="E: ID_SERIAL_SHORT" {print m"-"$2"-"n"|"b"("$2")"; next}
+        $1=="E: DEVNAME" {b=substr($2,14,3); d=substr($2,18); next}
+        $1=="E: ID_VENDOR" {gsub(/_/," ",$2); v=$2; next}
+        $1=="E: ID_MODEL" {m=$2; gsub(/[ _]/,"-",m); gsub(/_/," ",$2); s=v==$2?v:v" "$2; next}
+        $1=="E: ID_SERIAL_SHORT" {print m"-"$2"-"b d"|"b","d"|"s" ("$2")"; next}
     '
 )
 
@@ -38,19 +35,21 @@ while IFS='' read -r mtpoint ; do
     done
     # cleanup orphaned mount points
     fusermount -u "$mtpoint" && rmdir "$mtpoint"
-done < <(awk '$1=="simple-mtpfs" {print $2}' /etc/mtab)
+done < <(awk '$1=="jmtpfs" {print $2}' /etc/mtab)
 
 mount() {
     device=${devices0[$1]}
     name=${device##*|}; name=${name% (*}
-    devname=${device#*|}; devname=${devname%|*}
+    busdev=${device#*|}; busdev=${busdev%|*}
     mtpoint=/run/user/$UID/mtp/${device%%|*}
     mkdir -p "$mtpoint"
-    if output=$(simple-mtpfs "$devname" "$mtpoint" 2>&1) ; then
-        notify-send -t 2000 " MTP mounter" "$name mounted successfully"
-    elif [[ $output == *"make sure the screen is unlocked." ]] ; then
-        notify-send -u critical -t 10000 " MTP mounter" "Error mounting $name\nMake sure the device is unlocked and file transfer (MTP) option is selected for the USB connection"
-        rmdir "$mtpoint"
+    if jmtpfs -device="$busdev" "$mtpoint" >/dev/null 2>&1 ; then
+        if [[ -d $mtpoint ]] ; then
+            notify-send -t 2000 " MTP mounter" "$name mounted successfully"
+        else
+            notify-send -u critical -t 10000 " MTP mounter" "Error mounting $name\nMake sure the device is unlocked and file transfer (MTP) option is selected for the USB connection"
+            fusermount -u "$mtpoint" && rmdir "$mtpoint"
+        fi
     else
         notify-send -u critical " MTP mounter" "Error mounting $name"
         rmdir "$mtpoint"
@@ -65,7 +64,7 @@ unmount() {
         notify-send -t 2000 " MTP mounter" "$name unmounted successfully"
         rmdir "$mtpoint"
     else
-        notify-send -u critical " MTP mounter" "Error unmounting $name"
+        notify-send -u critical " MTP mounter" "Error unmounting $name\nTarget might be busy"
     fi
 }
 
