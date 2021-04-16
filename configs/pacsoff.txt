@@ -1,6 +1,7 @@
 abook
 alacritty
 amd-ucode
+android-file-transfer
 android-tools
 arduino
 arduino-avr-core
