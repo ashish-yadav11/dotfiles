@@ -3,6 +3,7 @@ alacritty
 amd-ucode
 android-file-transfer
 android-tools
+android-udev
 arduino
 arduino-avr-core
 arduino-cli
