@@ -6,5 +6,5 @@ $notify -t 1000 Reflector "Reflector initiated"
 if sudo $reflector ; then
     $notify Reflector "Pacman mirrorlist was successfully updated"
 else
-    $notify Reflector "Some error occured in updating the mirrorlist"
+    $notify -u critical Reflector "Some error occured in updating the mirrorlist"
 fi
