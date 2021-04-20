@@ -66,8 +66,8 @@ set notification-warning-fg     "#fabd2f"
 set notification-bg             "#1d2021"
 set notification-fg             "#b8bb26"
 
-set recolor-darkcolor           "#000000"
-set recolor-lightcolor          "#bdae93"
+set recolor-darkcolor           "#ebdbb2"
+set recolor-lightcolor          "#1c1c1c"
 
 set render-loading-bg           "#1d2021"
 set render-loading-fg           "#ebdbb2"
