@@ -93,8 +93,11 @@ zcurl() {
         1) url=$1 ;;
         *) echo "Usage: zcurl [url]" ;;
     esac
-    [[ $url != http*.pdf ]] && { echo "Invalid URL!"; return ;}
     curl -sfLIo /dev/null "$url" || { echo "Invalid URL or network error!"; return ;}
+    if [[ $url != http*.pdf ]] ; then
+        read -r -p "Are you sure you want to zcurl $url [y/N]: " confirm
+        [[ $confirm != y && $confirm != Y ]] && return
+    fi
     filepath=/tmp/${url##*/}
     curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return ;}
     setsid -f dash -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null

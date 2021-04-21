@@ -93,18 +93,18 @@ bindkey -a "K" history-search-backward
 bindkey -v "\C-n" down-history
 bindkey -v "\C-p" up-history
 
-function launch-ranger-0 {
+function exec-ranger-0 {
     echo -ne "$defcursor"
     exec ranger --cmd="set show_hidden=false" <"$TTY"
 }
-function launch-ranger-1 {
+function exec-ranger-1 {
     echo -ne "$defcursor"
     exec ranger <"$TTY"
 }
-zle -N launch-ranger-0
-zle -N launch-ranger-1
-bindkey -v "\er" launch-ranger-0
-bindkey -v "\eR" launch-ranger-1
+zle -N exec-ranger-0
+zle -N exec-ranger-1
+bindkey -v "\er" exec-ranger-0
+bindkey -v "\eR" exec-ranger-1
 
 function fzf-select-bookmark {
     local selected lbuffer
@@ -241,8 +241,11 @@ function zcurl {
         1) url=$1 ;;
         *) echo "Usage: zcurl [url]" ;;
     esac
-    [[ $url != http*.pdf ]] && { echo "Invalid URL!"; return ;}
     curl -sfLIo /dev/null "$url" || { echo "Invalid URL or network error!"; return ;}
+    if [[ $url != http*.pdf ]] ; then
+        read -r "?Are you sure you want to zcurl $url [y/N]: " confirm
+        [[ $confirm != y && $confirm != Y ]] && return
+    fi
     filepath=/tmp/${url##*/}
     curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return ;}
     setsid -f dash -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null
