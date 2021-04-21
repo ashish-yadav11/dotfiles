@@ -16,8 +16,8 @@ if ! flock -n 8 ; then
 fi
 echo "$$" >&8
 mbsync "$mbsync_channel"
-: >/tmp/mailsync.1.lock
 sigval=$?
+: >/tmp/mailsync.1.lock
 find "$trash_folder"/* -type f | mflag -S
 notmuch new
 flock -n 9 && sigdsblocks 3 "$sigval"
