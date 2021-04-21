@@ -93,6 +93,19 @@ bindkey -a "K" history-search-backward
 bindkey -v "\C-n" down-history
 bindkey -v "\C-p" up-history
 
+function launch-ranger-0 {
+    echo -ne "$defcursor"
+    exec ranger --cmd="set show_hidden=false" <"$TTY"
+}
+function launch-ranger-1 {
+    echo -ne "$defcursor"
+    exec ranger <"$TTY"
+}
+zle -N launch-ranger-0
+zle -N launch-ranger-1
+bindkey -v "\er" launch-ranger-0
+bindkey -v "\eR" launch-ranger-1
+
 function fzf-select-bookmark {
     local selected lbuffer
     lbuffer=$LBUFFER

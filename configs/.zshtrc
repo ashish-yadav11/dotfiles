@@ -14,6 +14,7 @@ chpwd
 
 ## ZLE (man zshzle)
 
+defcursor="\e[2 q"
 cmdcursor="\e[2 q"
 inscursor="\e[6 q"
 repcursor="\e[4 q"
@@ -47,7 +48,7 @@ bindkey -a "\e[F" end-of-line
 
 # restore block cursor before running external commands
 function preexec {
-    echo -ne "$cmdcursor"
+    echo -ne "$defcursor"
 }
 
 
