@@ -23,7 +23,7 @@ setopt SH_WORD_SPLIT
 
 ## PARAMETERS (man zshparam)
 
-HISTORY_IGNORE='(dm|h|l|m|n|pb|pz|s|spull|t|zcurl|zpull)'
+HISTORY_IGNORE='(dm|h|l|m|n|pb|pz|s|spull|t|zcurl|zcurle|zpull)'
 HISTSIZE=12000
 KEYTIMEOUT=1
 LC_ALL=C
@@ -164,6 +164,7 @@ alias vim=nvim
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
+alias zcurle="zcurl && exit"
 
 # files
 alias l="nvim ~/Documents/.lag"

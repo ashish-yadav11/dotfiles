@@ -5,13 +5,14 @@
 # return if not running interactively
 [[ $- != *i* ]] && return
 
-HISTIGNORE=$HISTIGNORE:dm:l:m:n:s:spull:t:zcurl:zpull
+HISTIGNORE=$HISTIGNORE:dm:l:m:n:s:spull:t:zcurl:zcurle:zpull
 
 # aliases
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
+alias zcurle="zcurl && exit"
 
 alias l="nvim ~/Documents/.lag"
 alias n="nvim ~/Documents/.notes"
