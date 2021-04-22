@@ -5,7 +5,7 @@
 # return if not running interactively
 [[ $- != *i* ]] && return
 
-HISTIGNORE=$HISTIGNORE:dm:l:m:n:s:spull:t:zcurl:zcurle:zpull
+HISTIGNORE=$HISTIGNORE:l:m:n:s:t
 
 # aliases
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
