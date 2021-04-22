@@ -5,11 +5,10 @@
 # return if not running interactively
 [[ $- != *i* ]] && return
 
-HISTIGNORE=$HISTIGNORE:l:m:n:s:t
+HISTIGNORE=$HISTIGNORE:dm:l:m:n:s:spull:t:zcurl:zpull
 
 # aliases
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
-alias dm='youtube-dl --output "%(title)s (%(id)s).%(ext)s" --extract-audio --audio-format best --audio-quality 0'
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
@@ -33,6 +32,15 @@ bind -m vi-command -x '"\eb": __fzf_select_bookmark'
 bind -m vi-insert -x '"\eb": __fzf_select_bookmark'
 
 # functions
+dm() {
+    case $# in
+        0) url=$(xsel -ob) || { echo "Nothing in clipboard!"; return ;} ;;
+        1) url=$1 ;;
+        *) echo "Usage: dm [url]" ;;
+    esac
+    youtube-dl --output "%(title)s (%(id)s).%(ext)s" --extract-audio --audio-format best --audio-quality 0 "$url"
+}
+
 m() {
     if [[ -x ./make.sh ]] ; then
         ./make.sh "$@"
@@ -55,14 +63,14 @@ s() {
 }
 
 share() {
-    local link
+    local url
     if [[ ! -f $1 ]] ; then
         printf "file %q doesn't exist!" "$1"
         return
     fi
-    if link=$(curl -F"file=@$1" "https://0x0.st") ; then
-        echo -n "$link" | xsel -ib
-        echo "$link"
+    if url=$(curl -F"file=@$1" "https://0x0.st") ; then
+        echo -n "$url" | xsel -ib
+        echo "$url"
     fi
 }
 

@@ -23,7 +23,7 @@ setopt SH_WORD_SPLIT
 
 ## PARAMETERS (man zshparam)
 
-HISTORY_IGNORE='(h|pb|pz|l|m|n|s|t)'
+HISTORY_IGNORE='(dm|h|l|m|n|pb|pz|s|spull|t|zcurl|zpull)'
 HISTSIZE=12000
 KEYTIMEOUT=1
 LC_ALL=C
@@ -162,7 +162,6 @@ alias vim=nvim
 
 # scripts and commands
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
-alias dm='youtube-dl --output "%(title)s (%(id)s).%(ext)s" --extract-audio --audio-format best --audio-quality 0'
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
 
@@ -176,6 +175,15 @@ alias h='nvim -c "normal G" ~/.zsh_history'
 alias pb='bash --rcfile <(echo '\''source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
 alias pz="INCOGNITO=1 zsh"
 
+
+function dm {
+    case $# in
+        0) url=$(xsel -ob) || { echo "Nothing in clipboard!"; return ;} ;;
+        1) url=$1 ;;
+        *) echo "Usage: dm [url]" ;;
+    esac
+    youtube-dl --output "%(title)s (%(id)s).%(ext)s" --extract-audio --audio-format best --audio-quality 0 "$url"
+}
 
 function m {
     if [[ -x ./make.sh ]] ; then
@@ -203,14 +211,14 @@ function s {
 }
 
 function share {
-    local link
+    local url
     if [[ ! -f $1 ]] ; then
         printf "file %q doesn't exist!" "$1"
         return
     fi
-    if link=$(curl -F"file=@$1" "https://0x0.st") ; then
-        echo -n "$link" | xsel -ib
-        echo "$link"
+    if url=$(curl -F"file=@$1" "https://0x0.st") ; then
+        echo -n "$url" | xsel -ib
+        echo "$url"
     fi
 }
 
