@@ -35,11 +35,6 @@ if [ "$time" -ge 2200 ] || [ "$time" -lt 0600 ] ; then
     redshift -PO 4500
 fi
 
-# fixes for telegram
-export TDESKTOP_USE_GTK_FILE_DIALOG=1
-export TDESKTOP_I_KNOW_ABOUT_GTK_INCOMPATIBILITY=1
-export DESKTOPINTEGRATION=1
-
 # fix for java programs in dwm
 wmname LG3D
 export _JAVA_AWT_WM_NONREPARENTING=1

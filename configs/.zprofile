@@ -20,6 +20,10 @@ export R_ENVIRON_USER=~/.Renviron
 #export DIFFPROG="nvim -d"
 # fix for escape keys in neomutt
 export ESCDELAY=0
+# fixes for telegram
+export TDESKTOP_USE_GTK_FILE_DIALOG=1
+export TDESKTOP_I_KNOW_ABOUT_GTK_INCOMPATIBILITY=1
+export DESKTOPINTEGRATION=1
 
 
 ## MISCELLANEOUS
