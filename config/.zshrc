@@ -183,7 +183,7 @@ function dm {
         1) url=$1 ;;
         *) echo "Usage: dm [url]" ;;
     esac
-    youtube-dl --output "%(title)s (%(id)s).%(ext)s" --extract-audio --audio-format best --audio-quality 0 --no-playlist "$url"
+    youtube-dl --extract-audio --audio-format best --audio-quality 0 --no-playlist --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
 }
 
 function m {
