@@ -9,7 +9,7 @@ mapfile -t devices < <(
         $0=="" {f=0; next}
         $1=="E: DEVNAME" {d=substr($2,14,3) substr($2,18); next}
         $1=="E: ID_VENDOR" {gsub(/_/," ",$2); v=$2; next}
-        $1=="E: ID_MODEL" {m=$2; gsub(/[ _]/,"-",m); gsub(/_/," ",$2); n=v==$2?v:v" "$2; next}
+        $1=="E: ID_MODEL" {m=$2; gsub(/[ _]/,"-",m); gsub(/_/," ",$2); n=v==$2 ? v : v" "$2; next}
         $1=="E: ID_SERIAL_SHORT" {print m"-"$2"-"d"|"n" ("$2")"; next}
     '
 )
