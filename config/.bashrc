@@ -9,6 +9,7 @@ HISTIGNORE=$HISTIGNORE:l:m:n:s:t
 
 # aliases
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
+alias dme="dm && exit"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
