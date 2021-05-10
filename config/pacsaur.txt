@@ -1,3 +1,4 @@
+abook
 brave-bin
 cyrus-sasl-xoauth2-git
 dashbinsh
