@@ -180,7 +180,7 @@ alias pz="INCOGNITO=1 zsh"
 
 function dm {
     case $# in
-        0) url=$(xsel -ob) || { echo "Nothing in clipboard!"; return ;} ;;
+        0) url=$(xsel -ob) || { echo "Nothing in clipboard!"; return 1 ;} ;;
         1) url=$1 ;;
         *) echo "Usage: dm [url]" ;;
     esac
@@ -216,7 +216,7 @@ function share {
     local url
     if [[ ! -f $1 ]] ; then
         printf "file %q doesn't exist!" "$1"
-        return
+        return 1
     fi
     if url=$(curl -F"file=@$1" "https://0x0.st") ; then
         echo -n "$url" | xsel -ib
@@ -247,17 +247,17 @@ function trash-list {
 
 function zcurl {
     case $# in
-        0) url=$(xsel -ob) || { echo "Nothing in clipboard!"; return ;} ;;
+        0) url=$(xsel -ob) || { echo "Nothing in clipboard!"; return 1 ;} ;;
         1) url=$1 ;;
         *) echo "Usage: zcurl [url]" ;;
     esac
-    curl -sfLIo /dev/null "$url" || { echo "Invalid URL or network error!"; return ;}
+    curl -sfLIo /dev/null "$url" || { echo "Invalid URL or network error!"; return 1 ;}
     if [[ $url != http*.pdf ]] ; then
         read -r "?Are you sure you want to zcurl $url [y/N]: " confirm
-        [[ $confirm != y && $confirm != Y ]] && return
+        [[ $confirm != y && $confirm != Y ]] && return 0
     fi
     filepath=/tmp/${url##*/}
-    curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return ;}
+    curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return 1 ;}
     setsid -f dash -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null
 }
 
