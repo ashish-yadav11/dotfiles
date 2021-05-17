@@ -27,6 +27,7 @@ autocmd FileType go setlocal noexpandtab smarttab shiftwidth=0 tabstop=8
 
 set clipboard+=unnamedplus
 set expandtab smarttab shiftwidth=4 tabstop=8
+set nojoinspaces
 set mouse=a
 set number relativenumber
 set splitbelow splitright
