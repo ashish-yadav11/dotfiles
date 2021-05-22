@@ -1,1 +1,2 @@
-/home/ashish/.scripts/brave-cont.sh
+#!/bin/dash
+killall -CONT /usr/lib/brave-bin/brave

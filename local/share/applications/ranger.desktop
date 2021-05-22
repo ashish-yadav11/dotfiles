@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
-Name=ranger
+Name=Ranger
 Comment=Launches the ranger file manager
-Icon=ranger
+Icon=Ranger
 TryExec=ranger
-Exec=termopen ranger %F
+Exec=termopen Ranger %F
 Categories=System;FileTools;FileManager
 MimeType=inode/directory;
 Keywords=File;Manager;Browser;Explorer;Launcher;Vi;Vim;Python
