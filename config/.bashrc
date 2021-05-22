@@ -110,5 +110,5 @@ zcurl() {
     fi
     filepath=/tmp/${url##*/}
     curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return 1 ;}
-    setsid -f dash -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null
+    setsid -f sh -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null
 }

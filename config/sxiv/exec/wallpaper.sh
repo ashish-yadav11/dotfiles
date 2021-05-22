@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 xwallpaper --stretch "$1"
 rm -f /home/ashish/.config/wall*
 filename=$(basename "$1")

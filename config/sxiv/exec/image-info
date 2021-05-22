@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 
 # Called by sxiv(1) whenever an image gets loaded,
 # with the name of the image file as its first argument.
