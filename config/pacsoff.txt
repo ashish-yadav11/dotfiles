@@ -153,6 +153,7 @@ xorg-xinput
 xorg-xkill
 xorg-xsetroot
 xorg-xwininfo
+xournalpp
 xsel
 xwallpaper
 yad
