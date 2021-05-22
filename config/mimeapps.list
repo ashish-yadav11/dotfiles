@@ -1,15 +1,15 @@
 [Default Applications]
 application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
-application/x-shellscript=nvim-qt.desktop
+application/x-shellscript=nvim.desktop
 image/jpeg=sxiv.desktop
 image/jpg=sxiv.desktop
 image/png=sxiv.desktop
 image/vnd.djvu+multipage=org.pwmt.zathura-djvu.desktop
 inode/directory=ranger.desktop
 text/html=brave-browser.desktop
-text/plain=nvim-qt.desktop
-text/x-aurdino=nvim-qt.desktop
-text/x-python=nvim-qt.desktop
+text/plain=nvim.desktop
+text/x-aurdino=nvim.desktop
+text/x-python=nvim.desktop
 video/mp4=mpv.desktop
 x-scheme-handler/etcher=balena-etcher-electron.desktop
 x-scheme-handler/http=brave-browser.desktop
