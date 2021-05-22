@@ -1,2 +1,1 @@
-#!/bin/dash
-killall -STOP /usr/lib/brave-bin/brave
+/home/ashish/.scripts/brave-stop.sh
