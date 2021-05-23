@@ -38,7 +38,7 @@ set show-hidden true
 set statusbar-basename true
 set window-title-basename true
 
-set default-bg                  "#1d2021"
+set default-bg                  "#282828"
 set default-fg                  "#ebdbb2"
 
 set highlight-color             "#d79921"
