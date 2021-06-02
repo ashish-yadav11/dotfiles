@@ -10,35 +10,35 @@ transparent="#00000000"
 wrong="#ff4040ff"
 
 i3lock \
---bshlcolor="$backspace" \
+--bshl-color="$backspace" \
 --clock \
 --color="$blank" \
---datecolor="$date" \
---datepos=683:415 \
---datesize=35 \
---datestr="%a, %b %d" \
+--date-color="$date" \
+--date-pos=683:415 \
+--date-size=35 \
+--date-str="%a, %b %d" \
 --image=/media/storage/Pictures/wall6.png \
 --indicator \
---insidecolor="$blank" \
---insidevercolor="$blank" \
---insidewrongcolor="$wrong" \
---keyhlcolor="$highlight" \
---linecolor="$transparent" \
---no-modkeytext \
---noinputtext="" \
+--inside-color="$blank" \
+--insidever-color="$blank" \
+--insidewrong-color="$wrong" \
+--keyhl-color="$highlight" \
+--line-color="$transparent" \
+--no-modkey-text \
+--noinput-text="" \
 --radius=115 \
 --ring-width=15 \
---ringcolor="$default" \
---ringvercolor="$default" \
---ringwrongcolor="$wrong" \
---separatorcolor="$default" \
---timecolor="$time" \
---timepos=683:375 \
---timesize=35 \
---timestr="%R" \
---verifcolor="$text" \
---verifsize=35 \
---veriftext="Verifying.." \
---wrongcolor="$text" \
---wrongsize=35 \
---wrongtext=""
+--ring-color="$default" \
+--ringver-color="$default" \
+--ringwrong-color="$wrong" \
+--separator-color="$default" \
+--time-color="$time" \
+--time-pos=683:375 \
+--time-size=35 \
+--time-str="%R" \
+--verif-color="$text" \
+--verif-size=35 \
+--verif-text="Verifying.." \
+--wrong-color="$text" \
+--wrong-size=35 \
+--wrong-text=""
