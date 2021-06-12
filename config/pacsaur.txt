@@ -25,6 +25,7 @@ riseup-vpn
 rofi-dmenu-cust
 siji-git
 timeshift
+ventoy-bin
 woeusb-ng
 yay
 youtube-dlp-bin
