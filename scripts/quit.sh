@@ -1,7 +1,7 @@
 #!/bin/dash
 menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -i -matching fuzzy -no-custom"
 
-case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown" | $menu -p Quit) in
+case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown\nSuspend\nHibernate" | $menu -p Quit) in
     "Turn off Display")
         screen off
         ;;
@@ -34,6 +34,16 @@ case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutd
         case $(echo "Yes\nNo" | $menu -p "Do you really want to shutdown the pc?") in
             Yes)
                 systemctl poweroff
+                ;;
+        esac
+        ;;
+    Suspend)
+        systemctl suspend
+        ;;
+    Hibernate)
+        case $(echo "Yes\nNo" | $menu -p "Do you really want to hibernate the pc?") in
+            Yes)
+                systemctl hibernate
                 ;;
         esac
         ;;
