@@ -27,4 +27,4 @@ siji-git
 timeshift
 woeusb-ng
 yay
-youtube-dlp
+youtube-dlp-bin
