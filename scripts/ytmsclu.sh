@@ -25,16 +25,16 @@ hide_exit() {
     exit
 }
 
-press_key() {
+press_keys() {
     case $(xinput query-state "$keyboard") in
         *"key[$modifier]=down"*)
-            xdotool keyup --delay 200 "$modifier" key "$1" keydown --delay 0 "$modifier"
+            xdotool keyup --delay 200 "$modifier" key "$@" keydown --delay 0 "$modifier"
             case $(xinput query-state "$keyboard") in
                 *"key[$modifier]=up"*) xdotool keyup --delay 0 "$modifier" ;;
             esac
             ;;
         *)
-            xdotool key "$1"
+            xdotool key "$@"
             ;;
     esac
 }
@@ -115,7 +115,7 @@ if [ "$1" = 1 ] ; then
         END {
             exit !e
         }
-    ' && press_key plus
+    ' && press_keys y y plus
 else
     pixelcolor "$x0" "$y0" "$s" | awk -F[,:] '
         $3 ~ /#[d-f].[d-f].[d-f].$/ {
@@ -133,6 +133,6 @@ else
         END {
             exit !e
         }
-    ' && press_key plus
+    ' && press_keys plus
 fi
 hide_exit
