@@ -1,6 +1,6 @@
 #!/bin/dash
 # merge redundant descriptions for running jobs
-at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,4 -k5,5 | awk '
+at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,5 | awk '
     BEGIN {
         cid = "\033[32m"
         ctm = "\033[33m"
