@@ -148,15 +148,14 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
 
-# color and aesthetics
+# re-definitions
 alias diffc="diff --color=always"
+alias info="info --vi-keys"
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
-alias tree="tree -C"
-
-# re-definitions
 alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
 alias sudo="sudo "
+alias tree="tree -C"
 alias vi=nvim
 alias vim=nvim
 

@@ -60,11 +60,11 @@ alias mv="mv -i"
 alias rm="rm -i"
 
 alias diffc="diff --color=always"
+alias info="info --vi-keys"
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
-alias tree="tree -C"
-
 alias sudo="sudo "
+alias tree="tree -C"
 alias vi=nvim
 alias vim=nvim
 
