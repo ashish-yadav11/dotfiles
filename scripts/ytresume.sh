@@ -1,22 +1,23 @@
 #!/bin/dash
 modifier=108
 keyboard="AT Translated Set 2 keyboard"
+lockfile=$XDG_RUNTIME_DIR/ytm.hide
 
 ntwarnsize="The size of the YouTube Music window is less than can be tolerated by the script."
 ntwarnpos="The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
 
-exec 9<>/tmp/ytm.hide
+exec 9<>"$lockfile"
 flock 9
 
 hide_exit() {
-    if [ -s /tmp/ytm.hide ] && flock -u 9 && flock -n 9 ; then
-        : >/tmp/ytm.hide
+    if [ -s "$lockfile" ] && flock -u 9 && flock -n 9 ; then
+        : >"$lockfile"
         sigdwm "scrh i 2"
     elif [ -z "$ytaf" ] ; then
         if flock -u 9 && flock -n 9 ; then
             sigdwm "scrh i 2"
         else
-            echo 1 >/tmp/ytm.hide
+            echo 1 >"$lockfile"
         fi
     fi
     exit

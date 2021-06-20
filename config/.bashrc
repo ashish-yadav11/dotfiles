@@ -108,7 +108,7 @@ zcurl() {
         read -r -p "Are you sure you want to zcurl $url [y/N]: " confirm
         [[ $confirm != y && $confirm != Y ]] && return 0
     fi
-    filepath=/tmp/${url##*/}
+    filepath=/var/tmp/${url##*/}
     curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return 1 ;}
     setsid -f sh -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null
 }

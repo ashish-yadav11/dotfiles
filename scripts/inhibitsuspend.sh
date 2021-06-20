@@ -1,5 +1,6 @@
 #!/bin/bash
 notify="dunstify -h string:x-canonical-private-synchronous:inhibitsuspend -h int:transient:1"
+pidfileroot=$XDG_RUNTIME_DIR/inhibitsuspend
 
 if [[ $1 == lock ]] ; then
     s=1 o=0
@@ -10,14 +11,14 @@ else
     notification="System will not sleep if lid is closed within next 15 seconds"
 fi
 
-read -r PIDo <"/tmp/inhibitsuspend.$o.pid" && kill "$PIDo"
-if read -r PIDs <"/tmp/inhibitsuspend.$s.pid" && kill "$PIDs" ; then
+read -r PIDo <"$pidfileroot.$o.pid" && kill "$PIDo"
+if read -r PIDs <"$pidfileroot.$s.pid" && kill "$PIDs" ; then
     $notify -t 2000 "System will now sleep normally on closing the lid"
     exit
 fi
 
-trap "rm -f /tmp/inhibitsuspend.$s.pid" EXIT
-echo "$$" >"/tmp/inhibitsuspend.$s.pid"
+trap "rm -f $pidfileroot.$s.pid" EXIT
+echo "$$" >"$pidfileroot.$s.pid"
 
 id=$($notify -p -t 0 "$notification")
 SECONDS=0

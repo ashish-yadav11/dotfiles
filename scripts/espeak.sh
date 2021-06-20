@@ -1,7 +1,10 @@
 #!/bin/dash
+lastfile=/tmp/espeak.last
+pidfile=$XDG_RUNTIME_DIR/espeak.pid
+
 case $1 in
     selection)
-        if read -r PID </tmp/espeak.pid ; then
+        if read -r PID <"$pidfile" ; then
             kill "$PID" $(pgrep -P "$PID")
             exit
         fi
@@ -12,14 +15,14 @@ case $1 in
         fi
         ;;
     *)
-        read -r PID </tmp/espeak.pid && kill "$PID" $(pgrep -P "$PID")
+        read -r PID <"$pidfile" && kill "$PID" $(pgrep -P "$PID")
         text=$(yad --image=gespeaker --no-buttons --entry --text=Espeak --entry-label="Text:")
         [ -z "$text" ] && exit
         ;;
 esac
 
-trap 'rm -f /tmp/espeak.pid; exit' HUP INT TERM
-echo "$$" >/tmp/espeak.pid
-echo "$text" >/tmp/espeak.last
+trap 'rm -f "$pidfile"; exit' HUP INT TERM
+echo "$$" >"$pidfile"
+echo "$text" >"$lastfile"
 espeak "$text"
-rm -f /tmp/espeak.pid
+rm -f "$pidfile"

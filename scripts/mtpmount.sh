@@ -44,7 +44,7 @@ mount() {
     device=${devices0[$1]}
     name=${device##*|}; name=${name% (*}
     serial=${device#* (}; serial=${serial%)}
-    mtpoint=/run/user/$UID/mtp/${device%%|*}
+    mtpoint=$XDG_RUNTIME_DIR/mtp/${device%%|*}
     mkdir -p "$mtpoint"
     setsid -f go-mtpfs -dev "$serial" "$mtpoint" &>"$mtpoint.log"
     sleep 0.1

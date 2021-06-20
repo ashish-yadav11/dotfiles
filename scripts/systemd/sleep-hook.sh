@@ -3,10 +3,11 @@ exec >/dev/null 2>&1
 
 case $1 in
     pre)
+        rundir=/run/user/1000
         hotspot=/home/ashish/.scripts/hotspot.sh
 
-        read -r PID </tmp/sleep_dine.pid && kill "$PID" $(pgrep -P "$PID")
-        [ -s /tmp/pomodoro.nid ] || { read -r PID </tmp/pomodoro.pid && kill "$PID" $(pgrep -P "$PID") ;}
+        read -r PID <"$rundir/sleep-dine.pid" && kill "$PID" $(pgrep -P "$PID")
+        [ -s "$rundir/pomodoro.nid" ] || { read -r PID <"$rundir/pomodoro.pid" && kill "$PID" $(pgrep -P "$PID") ;}
 
         $hotspot terminate
         ;;

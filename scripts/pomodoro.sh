@@ -2,10 +2,13 @@
 dateformat="%H:%M"
 notify="dunstify -h string:x-canonical-private-synchronous:pomodoro"
 
+nidfile=$XDG_RUNTIME_DIR/pomodoro.nid
+pidfile=$XDG_RUNTIME_DIR/pomodoro.pid
+
 if [ -n "$1" ] ; then
     case $1 in
         status)
-            if read -r PID 2>/dev/null </tmp/pomodoro.pid && kill -0 "$PID" ; then
+            if read -r PID 2>/dev/null <"$pidfile" && kill -0 "$PID" ; then
                 $notify -t 1000 "pomodoro up"
             else
                 $notify -t 1000 "pomodoro down"
@@ -13,7 +16,7 @@ if [ -n "$1" ] ; then
             exit
             ;;
         stop)
-            read -r PID 2>/dev/null </tmp/pomodoro.pid && kill "$PID" $(pgrep -P "$PID")
+            read -r PID 2>/dev/null <"$pidfile" && kill "$PID" $(pgrep -P "$PID")
             $notify -t 1000 "pomodoro terminated"
             exit
             ;;
@@ -29,20 +32,20 @@ else
     timeperiod=1500
 fi
 
-exec 9<>/tmp/pomodoro.pid
+exec 9<>"$pidfile"
 flock -n 9 || { read -r PID 2>/dev/null <&9 && kill "$PID" $(pgrep -P "$PID") ;}
 flock -w1 9 || $notify -u critical -t 0 pomodoro "Something went wrong!"
 trap '
-    read -r NID 2>/dev/null </tmp/pomodoro.nid && dunstify -C "$NID"
-    flock -u 9 && flock -n 9 && rm -f /tmp/pomodoro.nid /tmp/pomodoro.pid
+    read -r NID 2>/dev/null <"$nidfile" && dunstify -C "$NID"
+    flock -u 9 && flock -n 9 && rm -f "$nidfile" "$pidfile"
     exit
 ' HUP INT TERM
-echo "$$" >/tmp/pomodoro.pid
+echo "$$" >"$pidfile"
 
 blocknotify() {
-    $notify -bp -t 0 "$(date +"$dateformat") $1" >/tmp/pomodoro.nid &
+    $notify -bp -t 0 "$(date +"$dateformat") $1" >"$nidfile" &
     wait "$!"
-    : >/tmp/pomodoro.nid
+    : >"$nidfile"
 }
 
 simplenotify() {
@@ -58,4 +61,4 @@ sleep "$timeperiod"
 blocknotify "☑️☑️☑️🍅"
 sleep "$timeperiod"
 simplenotify 0 "☑️☑️☑️☑️"
-rm -f /tmp/pomodoro.nid /tmp/pomodoro.pid
+rm -f "$nidfile" "$pidfile"
