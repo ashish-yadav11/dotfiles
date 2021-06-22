@@ -1,6 +1,6 @@
 #!/bin/dash
 notify="dunstify -h string:x-canonical-private-synchronous:sleepdine"
-pidfile=$XDG_RUNTIME_DIR/sleep-dine.pid
+pidfile=/run/user/1000/sleep-dine.pid
 
 trap '[ -n "$id" ] && dunstify -C "$id"; rm -f "$pidfile"; exit' TERM
 echo "$$" >"$pidfile"
