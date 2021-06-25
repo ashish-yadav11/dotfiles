@@ -13,7 +13,7 @@ ntwarnyank="The URL couldn't be yanked."
 exec 9<>"$lockfile"
 flock 9
 
-hide_exit() {
+hide() {
     if [ -s "$lockfile" ] && flock -u 9 && flock -n 9 ; then
         : >"$lockfile"
         sigdwm "scrh i 2"
@@ -24,7 +24,7 @@ hide_exit() {
             echo 1 >"$lockfile"
         fi
     fi
-    exit
+    flock -u 9 # forked processes inherit file descriptor and thus lock (think xsel -ib)
 }
 
 press_keys() {
@@ -151,4 +151,4 @@ else
         }
     ' && press_keys plus
 fi
-hide_exit
+hide
