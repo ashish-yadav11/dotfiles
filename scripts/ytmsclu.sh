@@ -126,6 +126,7 @@ if [ "$1" = 1 ] ; then
     case $url in
         "https://music.youtube.com/watch?v="*)
             url=${url%&list=*}
+            sleep 0.1
             echo -n "$url" | xsel -ib
             ;;
         *)
