@@ -6,7 +6,6 @@ lockfile=$XDG_RUNTIME_DIR/ytm.hide
 ntwarnsize="The size of the YouTube Music window is less than that required by the script."
 ntwarnpos="The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
 ntwarnuncertain="Something is wrong!"
-ntwarnyank="The URL couldn't be yanked."
 
 [ "$1" != 1 ] && [ "$1" != 0 ] && { echo "Usage: $0 1|0"; exit ;}
 
@@ -101,38 +100,24 @@ if [ "$(( x0 < 0 || x0 > 1365 || (x0 + s) > 1365 || y < 0 || y > 767 ))" = 1 ] ;
     exit
 fi
 if [ "$1" = 1 ] ; then
-    if pixelcolor "$x0" "$y0" "$s" | awk -F[,:] '
-            $3 ~ /#[7-9].[7-9].[7-9].$/ {
-                x[++i % 6] = $1
-                if (s != 5) {
-                    if (x[(i - 1) % 6] == $1 - 1 &&
-                        x[(i - 5) % 6] == $1 - 7) {
-                        e = 1
-                        exit
-                    }
-                } else {
-                    s++
+    pixelcolor "$x0" "$y0" "$s" | awk -F[,:] '
+        $3 ~ /#[7-9].[7-9].[7-9].$/ {
+            x[++i % 6] = $1
+            if (s != 5) {
+                if (x[(i - 1) % 6] == $1 - 1 &&
+                    x[(i - 5) % 6] == $1 - 7) {
+                    e = 1
+                    exit
                 }
+            } else {
+                s++
             }
-            END {
-                exit !e
-            }' ; then
-        press_keys y y plus
-    else
-        press_keys y y
-    fi
-    sleep 0.1
-    url=$(xsel -ob)
-    case $url in
-        "https://music.youtube.com/watch?v="*)
-            url=${url%&list=*}
-            sleep 0.1
-            echo -n "$url" | xsel -ib
-            ;;
-        *)
-            notify-send -u critical -t 2000 ytmsclu "$ntwarnyank"
-            ;;
-    esac
+        }
+        END {
+            exit !e
+        }
+    ' && press_keys plus
+    press_keys y y
 else
     pixelcolor "$x0" "$y0" "$s" | awk -F[,:] '
         $3 ~ /#[d-f].[d-f].[d-f].$/ {
