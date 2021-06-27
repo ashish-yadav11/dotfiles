@@ -179,11 +179,19 @@ alias pz="INCOGNITO=1 zsh"
 
 function dm {
     case $# in
-        0) url=$(xsel -ob) || { echo "Nothing in clipboard!"; return 1 ;} ;;
-        1) url=$1 ;;
-        *) echo "Usage: dm [url]" ;;
+        0)
+            url=$(xsel -ob) || { echo "Nothing in clipboard!"; return 1 ;}
+            url=${url%%&*}
+            echo -n "$url" | xsel -ib
+            ;;
+        1)
+            url=$1
+            ;;
+        *)
+            echo "Usage: dm [url]"
+            ;;
     esac
-    youtube-dl --extract-audio --audio-format best --audio-quality 0 --no-playlist --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
+    youtube-dl --extract-audio --audio-format best --audio-quality 0 --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
 }
 
 function m {
