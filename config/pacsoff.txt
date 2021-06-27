@@ -39,7 +39,6 @@ gdb
 gimp
 gimp-help-en
 git
-gnome-disk-utility
 gnome-icon-theme
 gnuplot
 go
