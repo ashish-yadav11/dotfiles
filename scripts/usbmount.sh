@@ -1,5 +1,5 @@
 #!/bin/dash
-menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -i -matching fuzzy -multi-select -no-custom"
+menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -multi-select -no-custom"
 
 # external drives not mounted in the filesystem
 drives0=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3=="" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')

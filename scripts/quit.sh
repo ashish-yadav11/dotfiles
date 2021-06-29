@@ -1,5 +1,5 @@
 #!/bin/dash
-menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -i -matching fuzzy -no-custom"
+menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -no-custom"
 
 case $(echo "Turn off Display\nLock Screen\nRestart dwm\nExit dwm\nReboot\nShutdown\nSuspend\nHibernate" | $menu -p Quit) in
     "Turn off Display")
