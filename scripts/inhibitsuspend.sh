@@ -11,8 +11,8 @@ else
     notification="System will not sleep if lid is closed within next 15 seconds"
 fi
 
-read -r PIDo <"$pidfileroot.$o.pid" && kill "$PIDo"
-if read -r PIDs <"$pidfileroot.$s.pid" && kill "$PIDs" ; then
+read -r PIDo 2>/dev/null <"$pidfileroot.$o.pid" && kill "$PIDo"
+if read -r PIDs 2>/dev/null <"$pidfileroot.$s.pid" && kill "$PIDs" ; then
     $notify -t 2000 "System will now sleep normally on closing the lid"
     exit
 fi

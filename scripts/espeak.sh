@@ -4,7 +4,7 @@ pidfile=$XDG_RUNTIME_DIR/espeak.pid
 
 case $1 in
     selection)
-        if read -r PID <"$pidfile" ; then
+        if read -r PID 2>/dev/null <"$pidfile" ; then
             kill "$PID" $(pgrep -P "$PID")
             exit
         fi
@@ -15,7 +15,7 @@ case $1 in
         fi
         ;;
     *)
-        read -r PID <"$pidfile" && kill "$PID" $(pgrep -P "$PID")
+        read -r PID 2>/dev/null <"$pidfile" && kill "$PID" $(pgrep -P "$PID")
         text=$(yad --image=gespeaker --no-buttons --entry --text=Espeak --entry-label="Text:")
         [ -z "$text" ] && exit
         ;;
