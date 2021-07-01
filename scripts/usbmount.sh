@@ -8,7 +8,7 @@ drives0=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part
 drives1=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3!="" && $3!="/" && $3!="/efi" && $3!="[SWAP]" && $3!="/media/backup" && $3!="/media/storage" && $3!="/run/timeshift/backup" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')
 
 mount() {
-    if output=$(udisksctl mount -b "$1") ; then
+    if output=$(udisksctl mount --no-user-interaction -b "$1") ; then
         notify-send -t 2000 " USB mounter" "$output"
     else
         notify-send -u critical " USB mounter" "Error mounting $1"
@@ -16,7 +16,7 @@ mount() {
 }
 
 unmount() {
-    if output=$(udisksctl unmount -b "$1") ; then
+    if output=$(udisksctl unmount --no-user-interaction -b "$1") ; then
         notify-send -t 2000 " USB mounter" "${output%.}"
     else
         notify-send -u critical " USB mounter" "Error unmounting $1\nResource might be busy"
