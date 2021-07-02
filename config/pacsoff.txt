@@ -88,6 +88,7 @@ pass
 pavucontrol-qt
 pdftk
 picom
+playerctl
 polkit-kde-agent
 pulseaudio
 pulseaudio-alsa
