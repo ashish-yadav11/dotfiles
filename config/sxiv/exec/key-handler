@@ -8,15 +8,15 @@ case $1 in
         ;;
     r)
         mapfile -t files
-        mogrify -rotate 90 "${files[@]}"
+        mogrify -rotate 90 -- "${files[@]}"
         ;;
     R)
         mapfile -t files
-        mogrify -rotate -90 "${files[@]}"
+        mogrify -rotate -90 -- "${files[@]}"
         ;;
     f)
         mapfile -t files
-        mogrify -flop "${files[@]}"
+        mogrify -flop -- "${files[@]}"
         ;;
     w)
         IFS='' read -r file
@@ -25,7 +25,7 @@ case $1 in
     d)
         mapfile -t files
         [[ $(echo -e "Yes\nNo" | dmenu -i -p "Do you really want to delete the selected image(s)?") == Yes ]] &&
-            if rm -f "${files[@]}" ; then
+            if rm -f -- "${files[@]}" ; then
                 notify-send -t 1000 Sxiv "Deletion successful"
             else
                 notify-send -u critical Sxiv "Deletion failed"
