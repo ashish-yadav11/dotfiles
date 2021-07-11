@@ -88,10 +88,10 @@ pass
 pavucontrol-qt
 pdftk
 picom
+pipewire-alsa
+pipewire-pulse
 playerctl
 polkit-kde-agent
-pulseaudio
-pulseaudio-alsa
 python-matplotlib
 python-pip
 python-scipy
@@ -110,7 +110,6 @@ signal-desktop
 strace
 sxiv
 telegram-desktop
-termite
 texlive-bibtexextra
 texlive-core
 texlive-fontsextra

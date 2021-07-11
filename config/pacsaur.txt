@@ -25,6 +25,7 @@ r-islr
 riseup-vpn
 rofi-dmenu-cust
 siji-git
+termite
 timeshift
 ventoy-bin
 woeusb-ng
