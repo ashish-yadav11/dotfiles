@@ -11,8 +11,9 @@ pactl list sinks | awk '
                 vl = $5
                 vr = $12
             }
-        } else if ($1 == "Active" && $2 == "Port:" && tolower($3) ~ /headphone/) {
-            i += 2
+        } else if ($1 == "Active" && $2 == "Port:") {
+            if (tolower($3) ~ /headphone/)
+                i += 2
             exit
         }
         next
