@@ -1,26 +1,18 @@
 #!/bin/dash
 volume=$(
-    pacmd list-sinks | awk '
-        {
-            if (f) {
-                if ($1 == "index:") {
-                    exit
-                }
-                if ($1 == "volume:") {
-                    v = $3 <= $10 ? $5 : $12
-                    sub(/%/, "", v)
-                    v = int(v / 5) * 5
-                }
-            } else if ($1 == "*" && $2 == "index:") {
-                f = 1
-            }
+    pactl list sinks | awk '
+        $1 == "Volume:" {
+            f=1
+            v = $3 <= $10 ? $5 : $12
+            sub(/%/, "", v)
+            v = int(v / 5) * 5
+            exit
         }
         END {
-            if (f) {
+            if (f)
                 print v
-            } else {
+            else
                 exit 1
-            }
         }
     '
 ) && pactl set-sink-volume @DEFAULT_SINK@ "$volume%"

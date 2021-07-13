@@ -1,33 +1,28 @@
 #!/bin/dash
-pacmd list-sinks | awk '
+pactl list sinks | awk '
     {
-        if (f) {
-            if ($1 == "index:") {
-                exit
+        if ($1 == "Mute:" && $2 == "yes")
+            i += 1
+        else if ($1 == "Volume:") {
+            f=1
+            if ($3 == $10)
+                vb = $5
+            else {
+                vl = $5
+                vr = $12
             }
-            if ($1 == "muted:" && $2 == "yes") {
-                i += 1
-            } else if ($1 == "volume:") {
-                if ($3 == $10) {
-                    vb = $5
-                } else {
-                    vl = $5
-                    vr = $12
-                }
-            } else if ($1 == "active" && $2 == "port:" && $3 ~ /headphone/) {
-                i += 2
-            }
-        } else if ($1 == "*" && $2 == "index:") {
-            f = 1
+        } else if ($1 == "Active" && $2 == "Port:" && tolower($3) ~ /headphone/) {
+            i += 2
+            exit
         }
+        next
     }
     END {
         if (f) {
-            if (vb) {
+            if (vb)
                 printf "%d%s", i, vb
-            } else {
+            else
                 printf "%dL%s R%s", i, vl, vr
-            }
         }
     }
 '
