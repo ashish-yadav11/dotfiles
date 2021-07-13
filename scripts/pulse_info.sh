@@ -1,13 +1,13 @@
 #!/bin/dash
 pactl list sinks | awk '
     {
-        if ($1 == "Mute:" && $2 == "yes")
+        if ($1 == "Mute:" && $2 == "yes") {
             i += 1
-        else if ($1 == "Volume:") {
+        } else if ($1 == "Volume:") {
             f=1
-            if ($3 == $10)
+            if ($3 == $10) {
                 vb = $5
-            else {
+            } else {
                 vl = $5
                 vr = $12
             }
