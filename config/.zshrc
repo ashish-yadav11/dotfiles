@@ -164,7 +164,7 @@ alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias dme="dm && exit"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
-alias ms='rsync -avu --delete /media/storage/Music/ /run/user/1000/mtp/RMX1831-9PLF7LKZKNFYLR5H-*/"Internal shared storage"/Music'
+alias mse="ms && exit"
 alias zcurle="zcurl && exit"
 
 # files
@@ -205,6 +205,19 @@ function m {
 
 function mkcd {
     mkdir "$1" && cd "$1"
+}
+
+function ms {
+    src=/media/storage/Music/
+    unsetopt NOMATCH
+    dst=( "$XDG_RUNTIME_DIR/mtp/RMX1831-9PLF7LKZKNFYLR5H-"*"/Internal shared storage/Music" )
+    setopt NOMATCH
+    if [[ -d "$dst[1]" ]] ; then
+        rsync -avu --delete "$src" "$dst[1]"
+    else
+        echo "Destination device not mounted!"
+        return 1
+    fi
 }
 
 function neomutt {

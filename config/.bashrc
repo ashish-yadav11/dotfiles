@@ -12,7 +12,7 @@ alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias dme="dm && exit"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
-alias ms='rsync -avu --delete /media/storage/Music/ /run/user/1000/mtp/RMX1831-9PLF7LKZKNFYLR5H-*/"Internal shared storage"/Music'
+alias mse="ms && exit"
 alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
 alias zcurle="zcurl && exit"
 
@@ -57,6 +57,17 @@ m() {
         ./make.sh "$@"
     else
         echo "No make.sh in this directory!"
+    fi
+}
+
+ms() {
+    src=/media/storage/Music/
+    dst=( "$XDG_RUNTIME_DIR/mtp/RMX1831-9PLF7LKZKNFYLR5H-"*"/Internal shared storage/Music" )
+    if [[ -d ${dst[0]} ]] ; then
+        rsync -avu --delete "$src" "${dst[0]}"
+    else
+        echo "Destination device not mounted!"
+        return 1
     fi
 }
 
