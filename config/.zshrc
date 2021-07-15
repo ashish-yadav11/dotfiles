@@ -164,6 +164,7 @@ alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias dme="dm && exit"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias kynm=/home/ashish/.scripts/xevcn.sh
+alias ms='rsync -avu --delete /media/storage/Music/ /run/user/1000/mtp/RMX1831-9PLF7LKZKNFYLR5H-*/"Internal shared storage"/Music'
 alias zcurle="zcurl && exit"
 
 # files
