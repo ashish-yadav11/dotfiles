@@ -63,3 +63,8 @@ case $(echo "$items" | $menu -p Select) in
 esac
 adb shell svc usb setFunctions "$function"
 :> /tmp/usbtether.lock
+if [ "$function" = mtp ] ; then
+    timeout 10 adb wait-for-usb-device && mtpmount
+elif [ "$f" = 1 ] ; then
+    timeout 10 adb wait-for-usb-device && mtpclean
+fi

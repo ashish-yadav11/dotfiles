@@ -24,14 +24,14 @@ unmount() {
 }
 
 askmount() {
-    echo "$drives0" | $menu -p "Which drive(s) to mount?" |
+    echo "$drives0" | $menu -p Mount: |
         while IFS='' read -r chosen ; do
             mount "${chosen%% *}"
         done
 }
 
 askunmount() {
-    echo "$drives1" | $menu -p "Which drive(s) to unmount?" |
+    echo "$drives1" | $menu -p Unmount: |
         while IFS='' read -r chosen ; do
             unmount "${chosen%% *}"
         done

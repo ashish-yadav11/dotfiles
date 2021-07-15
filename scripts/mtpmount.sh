@@ -87,14 +87,14 @@ unmount() {
 }
 
 askmount() {
-    printf "%s\n" "${devices0[@]##*|}" | $menu -format i -p "Which device(s) to mount?" |
+    printf "%s\n" "${devices0[@]##*|}" | $menu -format i -p Mount: |
         while IFS='' read -r i ; do
             mount "$i"
         done
 }
 
 askunmount() {
-    printf "%s\n" "${devices1[@]##*|}" | $menu -format i -p "Which device(s) to unmount?" |
+    printf "%s\n" "${devices1[@]##*|}" | $menu -format i -p Unmount: |
         while IFS='' read -r i ; do
             unmount "$i"
         done
