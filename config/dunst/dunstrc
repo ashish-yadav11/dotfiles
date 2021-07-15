@@ -518,6 +518,9 @@
 [toggletouchpad]
     stack_tag = "toggletouchpad"
     history_ignore = yes
+[usbmode]
+    stack_tag = "usbmode"
+    history_ignore = yes
 [usbmount]
     summary = " USB mounter"
     body = "No USB drive to mount or unmount"
