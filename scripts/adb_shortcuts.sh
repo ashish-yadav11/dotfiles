@@ -21,9 +21,9 @@ if adb shell service call connectivity 27 |
     wifi="Enable Wi-Fi Hotspot"
     wificmd="su -c service call connectivity 24 i32 0 i32 0 i32 0 s16 adb"
     case $f in
-        0) items="$mtp + $wifi\n$mtp\n$wifi\n$none" ;;
+        0) items="$wifi\n$mtp + $wifi\n$mtp\n$none" ;;
         1) items="$rndis\n$wifi\n$none" ;;
-        2) items="$rndis\n$mtp + $wifi\n$mtp\n$wifi" ;;
+        2) items="$rndis\n$wifi\n$mtp + $wifi\n$mtp" ;;
     esac
 else
     wifi="Disable Wi-Fi Hotspot"
