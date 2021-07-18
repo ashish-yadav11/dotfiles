@@ -174,7 +174,7 @@ alias t="nvim ~/Documents/.todo"
 
 # history
 alias h='nvim -c "normal G" ~/.zsh_history'
-alias pb='bash --rcfile <(echo '\''source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
+alias pb='bash --rcfile <(echo '\''[[ -f ~/.bashrc ]] && source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
 alias pz="INCOGNITO=1 zsh"
 
 
