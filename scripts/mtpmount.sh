@@ -6,12 +6,12 @@ mapfile -t devices < <(
     udevadm info -n /dev/bus/usb/*/* | awk -F= '
         /^S: libmtp/ {f=1; next}
         !f {next}
-        $0=="" {f=0; next}
         $1=="E: DEVNAME" {d=substr($2,14,3) substr($2,18); next}
         $1=="E: ID_VENDOR" {gsub(/_/," ",$2); v=$2; next}
         $1=="E: ID_MODEL" {m=$2; gsub(/[ _]/,"-",m); gsub(/_/," ",$2);
             if (index($2,v)) {n=$2} else if (index(v,$2)) {n=v} else {n=v" "$2}; next}
         $1=="E: ID_SERIAL_SHORT" {print m"-"$2"-"d"|"n" ("$2")"; next}
+        $0=="" {f=0; next}
     '
 )
 

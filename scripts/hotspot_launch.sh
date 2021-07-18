@@ -16,5 +16,5 @@ else
             ;;
     esac
     sudo $hotspot initiate ||
-        $notify -u critical Hotspot "Some error occured in initiating hotspot"
+        $notify -u critical Hotspot "Some error occured in initiating hotspot!"
 fi
