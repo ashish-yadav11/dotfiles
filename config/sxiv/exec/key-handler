@@ -32,9 +32,8 @@ case $1 in
             fi
         ;;
     y)
-        pwd=$(pwd)
         while IFS='' read -r file ; do
-            paths="$paths $(printf %q "$pwd/$file")"
+            paths="$paths $(printf %q "$(realpath -s "$file")")"
         done
         paths=${paths# }
         if echo -n "$paths" | xsel -ib ; then
