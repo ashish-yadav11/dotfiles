@@ -1,13 +1,13 @@
 pkgname=rofi-dmenu-cust
 pkgver=1
 pkgrel=1
-pkgdesc="Use Rofi as a drop-in replacement to dmenu"
-arch=('any')
-url="https://github.com/davatorium/rofi"
-license=('MIT')
-depends=('rofi')
-provides=('dmenu')
-conflicts=('dmenu')
+pkgdesc='Use Rofi as a drop-in replacement to dmenu'
+arch=(any)
+url='https://github.com/davatorium/rofi'
+license=(MIT)
+depends=(rofi)
+provides=(dmenu)
+conflicts=(dmenu)
 
 package() {
     install -d "${pkgdir}/usr/bin"
