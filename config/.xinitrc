@@ -49,6 +49,7 @@ pidof -sx /home/ashish/.scripts/pulse_daemon.sh >/dev/null 2>&1 ||
     /home/ashish/.scripts/pulse_daemon.sh &
 playerctld daemon &
 unclutter &
+adb start-server &
 
 #exec valgrind --leak-check=full dwm
 exec dwm
