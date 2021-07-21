@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cleaner id="riseup vpn">
+  <label>Riseup VPN</label>
+  <description>Personal VPN service</description>
+  <option id="systray log">
+    <label>Systray log</label>
+    <description>Clear systray log</description>
+    <action search="file" command="truncate" path="~/.config/leap/systray.log"/>
+  </option>
+</cleaner>
