@@ -30,7 +30,7 @@ LC_ALL=C
 PROMPT_EOL_MARK=''
 READNULLCMD=less
 SAVEHIST=10000
-zle_highlight=(region:bg=19 special:none suffix:bold isearch:underline paste:none)
+zle_highlight=(region:bg=239 special:none suffix:bold isearch:underline paste:none)
 
 
 ## INCOGNITO MODE
