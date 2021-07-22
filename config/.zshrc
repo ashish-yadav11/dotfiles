@@ -133,8 +133,8 @@ compinit -d ~/.cache/zcompdump
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey -v "\C-e" edit-command-line
-bindkey -a "\C-e" edit-command-line
+bindkey -v "\C-o" edit-command-line
+bindkey -a "\C-o" edit-command-line
 
 unalias run-help
 autoload -Uz run-help
