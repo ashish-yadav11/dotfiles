@@ -13,7 +13,7 @@ export PATH=~/.local/bin:$PATH
 #export QT_QPA_PLATFORMTHEME=qt5ct
 #export RANGER_LOAD_DEFAULT_RC=FALSE
 export R_ENVIRON_USER=~/.Renviron
-#export TERMINAL=termite
+#export TERMINAL=terminal
 #export VISUAL=nvim
 
 # fix for pacdiff to use nvim instead of vim
