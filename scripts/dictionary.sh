@@ -23,10 +23,10 @@ dict "$word" >/tmp/dictionary.last.temp 2>&1
 case $? in
     0)
         mv /tmp/dictionary.last.temp /tmp/dictionary.last
-        termite --name=floating_Termite -t Dictionary -e "less /tmp/dictionary.last"
+        st -n floating-st -t Dictionary less /tmp/dictionary.last
         ;;
     21)
-        termite --name=floating_Termite -t Dictionary -e "less /tmp/dictionary.last.temp"
+        st -n floating-st -t Dictionary less /tmp/dictionary.last.temp
         rm -f /tmp/dictionary.last.temp
         ;;
     *)
