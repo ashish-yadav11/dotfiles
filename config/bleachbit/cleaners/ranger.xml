@@ -7,4 +7,9 @@
     <description>Delete command history</description>
     <action search="file" command="truncate" path="~/.local/share/ranger/history"/>
   </option>
+  <option id="tagged">
+    <label>Tagged</label>
+    <description>Remove tagged entries</description>
+    <action search="file" command="truncate" path="~/.local/share/ranger/tagged"/>
+  </option>
 </cleaner>
