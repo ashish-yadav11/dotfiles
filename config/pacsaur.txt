@@ -27,7 +27,6 @@ riseup-vpn
 rofi-dmenu-cust
 siji-git
 st-cust
-terminal-shortcuts
 termite
 timeshift
 ventoy-bin
