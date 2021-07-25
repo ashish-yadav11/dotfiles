@@ -19,6 +19,7 @@ case $TERM in
         chpwd_functions+=(savepwd settitle)
         ;;
     *termite*)
+        settitle
         chpwd_functions+=(settitle)
         source /etc/profile.d/vte.sh
         ;;
