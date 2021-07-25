@@ -46,7 +46,7 @@ fi
 # title, st newterm and termite tabbing
 case $TERM in
     st*)
-        [[ -n $ST_NEWTERM_PWD ]] && { cd "$ST_NEWTERM_PWD"; unset ST_NEWTERM_PWD ;}
+        [[ -n $NEWTERM_PWD ]] && { cd "$NEWTERM_PWD"; unset NEWTERM_PWD ;}
         PROMPT_COMMAND=$PROMPT_COMMAND'
 printf "\e]7;%s\e\\" "$PWD"
 printf "\e]0;%s@%s:%s\e\\" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'

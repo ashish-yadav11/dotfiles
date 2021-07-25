@@ -14,7 +14,7 @@ function savepwd {
 }
 case $TERM in
     st*)
-        [[ -n $ST_NEWTERM_PWD ]] && { cd "$ST_NEWTERM_PWD"; unset ST_NEWTERM_PWD ;}
+        [[ -n $NEWTERM_PWD ]] && { cd "$NEWTERM_PWD"; unset NEWTERM_PWD ;}
         savepwd
         settitle
         chpwd_functions+=(savepwd settitle)
