@@ -12,7 +12,7 @@ function settitle {
 function savepwd {
     print -Pn "\e]7;%d\e\\"
 }
-case $TERM in
+case "$TERM" in
     st*)
         savepwd
         settitle

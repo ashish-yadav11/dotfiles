@@ -3,11 +3,11 @@
 #
 
 # return if not running interactively
-[[ $- != *i* ]] && return
+[[ "$-" != *i* ]] && return
 
-[[ -n $DISPLAY ]] && shopt -s checkwinsize
+[[ -n "$DISPLAY" ]] && shopt -s checkwinsize
 
-[[ -n $NEWTERM_PWD ]] && { cd "$NEWTERM_PWD"; unset NEWTERM_PWD ;}
+[[ -n "$NEWTERM_PWD" ]] && { cd "$NEWTERM_PWD"; unset NEWTERM_PWD ;}
 
 # autocd
 shopt -s autocd
@@ -38,27 +38,27 @@ HISTIGNORE=h:pb:pz
 LC_ALL=C
 
 # save history immediately
-if [[ -n $PROMPT_COMMAND ]] ; then
-    PROMPT_COMMAND=$PROMPT_COMMAND'
+if [[ -n "$PROMPT_COMMAND" ]] ; then
+    PROMPT_COMMAND="$PROMPT_COMMAND"'
 history -a'
 else
     PROMPT_COMMAND='history -a'
 fi
 
 # title, st newterm and termite tabbing
-case $TERM in
+case "$TERM" in
     st*)
-        PROMPT_COMMAND=$PROMPT_COMMAND'
+        PROMPT_COMMAND="$PROMPT_COMMAND"'
 printf "\e]7;%s\e\\" "$PWD"
 printf "\e]0;%s@%s:%s\e\\" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
         ;;
     *termite*)
-        PROMPT_COMMAND=$PROMPT_COMMAND'
+        PROMPT_COMMAND="$PROMPT_COMMAND"'
 printf "\e]0;%s@%s:%s\e\\" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
         source /etc/profile.d/vte.sh
         ;;
     alacritty*)
-        PROMPT_COMMAND=$PROMPT_COMMAND'
+        PROMPT_COMMAND="$PROMPT_COMMAND"'
 printf "\e]0;%s@%s:%s\e\\" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
         ;;
 esac

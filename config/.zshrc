@@ -1,11 +1,11 @@
 ## COMMANDS ON STARTUP
 
-[[ -n $NEWTERM_PWD ]] && { cd "$NEWTERM_PWD"; unset NEWTERM_PWD ;}
+[[ -n "$NEWTERM_PWD" ]] && { cd "$NEWTERM_PWD"; unset NEWTERM_PWD ;}
 
 
 ## CONSOLE/TERMINAL SPECIFIC
 
-if [[ $TERM == linux ]] ; then
+if [[ "$TERM" == linux ]] ; then
     source ~/.zshcrc
 else
     source ~/.zshtrc
@@ -40,11 +40,11 @@ zle_highlight=(region:bg=239 special:none suffix:bold isearch:underline paste:no
 
 ## INCOGNITO MODE
 
-if [[ -z $INCOGNITO ]] ; then
-    HISTFILE=~/.zsh_history
-else
+if [[ -n "$INCOGNITO" ]] ; then
     PS1="%F{blue}%f $PS1"
     unset INCOGNITO
+else
+    HISTFILE=~/.zsh_history
 fi
 
 
@@ -55,13 +55,13 @@ bindkey -v
 
 # fix backspace and change cursor shape according to active mode
 function zle-line-init zle-keymap-select {
-    case $KEYMAP in
+    case "$KEYMAP" in
         vicmd)
             echo -ne "$cmdcursor"
             ;;
         viins|main)
-            if [[ $ZLE_STATE == *overwrite* ]] ; then
-                UNDO_REPLACE_NO=$UNDO_CHANGE_NO
+            if [[ "$ZLE_STATE" == *overwrite* ]] ; then
+                UNDO_REPLACE_NO="$UNDO_CHANGE_NO"
                 echo -ne "$repcursor"
             else
                 echo -ne "$inscursor"
@@ -73,7 +73,7 @@ function zle-line-init zle-keymap-select {
     esac
 }
 function viins-backward-delete-char {
-    if [[ $ZLE_STATE == *overwrite* ]] ; then
+    if [[ "$ZLE_STATE" == *overwrite* ]] ; then
         if (( UNDO_CHANGE_NO > UNDO_REPLACE_NO )) ; then
             zle undo
             (( UNDO_REPLACE_NO++ ))
@@ -113,14 +113,14 @@ bindkey -v "\eR" exec-ranger-1
 
 function fzf-select-bookmark {
     local selected lbuffer
-    lbuffer=$LBUFFER
-    LBUFFER=''
+    lbuffer="$LBUFFER"
+    LBUFFER=""
     zle -R
-    if selected=$(grep -Ev '^(#|\s*$)' ~/.bookmarks |
-                      fzf --height 40% -d' #' -n2.. -q "$lbuffer") ; then
-        LBUFFER=${selected%% #*}
+    if selected="$(grep -Ev '^(#|\s*$)' ~/.bookmarks |
+                      fzf --height 40% -d' #' -n2.. -q "$lbuffer")" ; then
+        LBUFFER="${selected%% #*}"
     else
-        LBUFFER=$lbuffer
+        LBUFFER="$lbuffer"
     fi
     zle reset-prompt
 }
@@ -158,7 +158,6 @@ alias diffc="diff --color=always"
 alias info="info --vi-keys"
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
-alias startx='startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"'
 alias sudo="sudo "
 alias tree="tree -C"
 alias vi=nvim
@@ -184,14 +183,14 @@ alias pz="INCOGNITO=1 zsh"
 
 
 function dm {
-    case $# in
+    case "$#" in
         0)
-            url=$(xsel -ob) || { echo "Nothing in clipboard!"; return 1 ;}
-            url=${url%%&*}
+            url="$(xsel -ob)" || { echo "Nothing in clipboard!"; return 1 ;}
+            url="${url%%&*}"
             echo -n "$url" | xsel -ib
             ;;
         1)
-            url=$1
+            url="$1"
             ;;
         *)
             echo "Usage: dm [url]"
@@ -240,11 +239,11 @@ function s {
 
 function share {
     local url
-    if [[ ! -f $1 ]] ; then
+    if [[ ! -f "$1" ]] ; then
         printf "file %q doesn't exist!" "$1"
         return 1
     fi
-    if url=$(curl -F"file=@$1" "https://0x0.st") ; then
+    if url="$(curl -F"file=@$1" "https://0x0.st")" ; then
         echo -n "$url" | xsel -ib
         echo "$url"
     fi
@@ -264,25 +263,30 @@ function spull {
     git -C /media/storage/.temporary/suckless-software/scroll pull
 }
 
+function startx {
+    [[ -f "$XLOGFILE" ]] && { mv -f "$XLOGFILE" "$XLOGFILE.old" ;}
+    startx &>"$XLOGFILE"
+}
+
 function trash-list {
-    case $1 in
+    case "$1" in
         -n) /usr/bin/trash-list | sort -k3,3 ;;
          *) /usr/bin/trash-list | sort ;;
     esac
 }
 
 function zcurl {
-    case $# in
-        0) url=$(xsel -ob) || { echo "Nothing in clipboard!"; return 1 ;} ;;
-        1) url=$1 ;;
+    case "$#" in
+        0) url="$(xsel -ob)" || { echo "Nothing in clipboard!"; return 1 ;} ;;
+        1) url="$1" ;;
         *) echo "Usage: zcurl [url]" ;;
     esac
     curl -sfLIo /dev/null "$url" || { echo "Invalid URL or network error!"; return 1 ;}
-    if [[ $url != http*.pdf ]] ; then
+    if [[ "$url" != http*.pdf ]] ; then
         read -r "?Are you sure you want to zcurl $url [y/N]: " confirm
-        [[ $confirm != y && $confirm != Y ]] && return 0
+        [[ "$confirm" != y && "$confirm" != Y ]] && return 0
     fi
-    filepath=/var/tmp/${url##*/}
+    filepath="/var/tmp/${url##*/}"
     curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return 1 ;}
     setsid -f sh -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null
 }

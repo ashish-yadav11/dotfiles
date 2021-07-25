@@ -9,12 +9,13 @@ export BROWSER=brave
 export GOPATH=~/.local/lib/go
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 #export PAGER="less -R"
-export PATH=~/.local/bin:$PATH
+export PATH=~"/.local/bin:$PATH"
 #export QT_QPA_PLATFORMTHEME=qt5ct
 #export RANGER_LOAD_DEFAULT_RC=FALSE
 export R_ENVIRON_USER=~/.Renviron
 #export TERMINAL=terminal
 #export VISUAL=nvim
+export XLOGFILE=~"/.local/share/xorg/startx.$XDG_VTNR.log"
 
 # fix for pacdiff to use nvim instead of vim
 #export DIFFPROG="nvim -d"
@@ -28,6 +29,7 @@ export DESKTOPINTEGRATION=1
 
 ## MISCELLANEOUS
 
-if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] ; then
-    startx &>"$HOME/.local/share/xorg/startx.$XDG_VTNR.log"
+if [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 ]] ; then
+    [[ -f "$XLOGFILE" ]] && { mv -f "$XLOGFILE" "$XLOGFILE.old" ;}
+    startx &>"$XLOGFILE"
 fi
