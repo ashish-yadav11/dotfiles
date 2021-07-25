@@ -15,6 +15,7 @@ libxft-bgra
 linux-wifi-hotspot
 mblaze-git
 mpv-mpris
+nawkbinawk
 neovim-plug
 neovim-remote
 netlogo
@@ -26,6 +27,7 @@ riseup-vpn
 rofi-dmenu-cust
 siji-git
 st-cust
+terminal-shortcuts
 termite
 timeshift
 ventoy-bin

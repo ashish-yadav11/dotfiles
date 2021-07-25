@@ -1,16 +1,18 @@
+# Maintainer: Ashish Kumar Yadav <ashishkumar.yadav@students.iiserpune.ac.in>
+
 pkgname=rofi-dmenu-cust
 pkgver=1
 pkgrel=1
-pkgdesc='Use Rofi as a drop-in replacement to dmenu'
+pkgdesc="Use Rofi as a drop-in replacement to dmenu"
 arch=(any)
-url='https://github.com/davatorium/rofi'
+url="https://github.com/davatorium/rofi"
 license=(MIT)
 depends=(rofi)
 provides=(dmenu)
 conflicts=(dmenu)
 
 package() {
-    mkdir -p "${pkgdir}/usr/bin"
-    echo -e "#!/bin/sh\n$(which rofi) -dmenu -location 1 -width 100 -lines 1 -columns 9 "'"$@"' >"${pkgdir}/usr/bin/dmenu"
-    chmod 755 "${pkgdir}/usr/bin/dmenu"
+    mkdir -p "$pkgdir/usr/bin"
+    echo -e "#!/bin/sh\n$(which rofi) -dmenu -location 1 -width 100 -lines 1 -columns 9 "'"$@"' >"$pkgdir/usr/bin/dmenu"
+    chmod 755 "$pkgdir/usr/bin/dmenu"
 }

@@ -1,0 +1,20 @@
+# Maintainer: Ashish Kumar Yadav <ashishkumar.yadav@students.iiserpune.ac.in>
+
+pkgname=nawkbinawk
+pkgver=1
+pkgrel=1
+pkgdesc="Relink /bin/awk to nawk"
+arch=(any)
+license=(GPL)
+depends=(nawk)
+provides=(awk)
+install=${pkgname}.install
+source=("$pkgname.hook"
+        "$pkgname.install")
+sha256sums=(SKIP
+            SKIP)
+
+package() {
+    cd "$srcdir"
+    install -Dm644 "$pkgname.hook" "$pkgdir/usr/share/libalpm/hooks/$pkgname.hook"
+}

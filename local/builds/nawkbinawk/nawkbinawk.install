@@ -1,0 +1,15 @@
+post_install() {
+    /usr/bin/ln -sfT nawk /usr/bin/awk
+}
+
+post_upgrade() {
+    post_install
+}
+
+post_remove() {
+    if [[ -f /usr/bin/gawk ]] ; then
+        /usr/bin/ln -sfT gawk /usr/bin/awk
+    else
+        /usr/bin/rm -f /usr/bin/awk
+    fi
+}
