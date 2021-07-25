@@ -31,5 +31,5 @@ export DESKTOPINTEGRATION=1
 
 if [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 ]] ; then
     [[ -f "$XLOGFILE" ]] && { mv -f "$XLOGFILE" "$XLOGFILE.old" ;}
-    startx &>"$XLOGFILE"
+    startx &>>"$XLOGFILE"
 fi
