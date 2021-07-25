@@ -112,7 +112,6 @@ class archive_highlighted(Command):
 
         cwd = self.fm.thisdir
         tfile = self.fm.thisfile
-
         if not cwd or not tfile:
             self.fm.notify("Error: no file highlighted for archiving!", bad=True)
             return
@@ -151,6 +150,7 @@ class archive_highlighted(Command):
             else:
                 shutil.copy2(src, dst, follow_symlinks=False)
                 os.unlink(src)
+
         self.fm.notify(f"Archiving {tfile.relative_path}!")
 
 class archive_selection(Command):
@@ -160,7 +160,6 @@ class archive_selection(Command):
 
         cwd = self.fm.thisdir
         tfile = self.fm.thisfile
-
         if not cwd or not tfile:
             self.fm.notify("Error: no file selected for archiving!", bad=True)
             return
@@ -174,7 +173,6 @@ class archive_selection(Command):
             return
 
         relative_paths = ', '.join([f.relative_path for f in files])
-
         if cwd.marked_items or is_directory_with_files(tfile.path):
             self.fm.ui.console.ask(
                 f"Confirm archiving of: {relative_paths} (y/N)",
@@ -195,6 +193,7 @@ class archive_selection(Command):
         for f in files:
             src = f.path
             dst = get_safe_path(os.path.join(archive_folder, os.path.basename(src)))
+
             try:
                 os.rename(src, dst)
             except OSError:
@@ -204,6 +203,7 @@ class archive_selection(Command):
                 else:
                     shutil.copy2(src, dst, follow_symlinks=False)
                     os.unlink(src)
+
         self.fm.notify(f"Archiving {relative_paths}!")
 
 
@@ -214,7 +214,6 @@ class trash_highlighted(Command):
 
         cwd = self.fm.thisdir
         tfile = self.fm.thisfile
-
         if not cwd or not tfile:
             self.fm.notify("Error: no file highlighted for trashing!", bad=True)
             return
@@ -252,7 +251,6 @@ class trash_selection(Command):
 
         files = self.fm.thistab.get_selection()
         relative_paths = ', '.join([f.relative_path for f in files])
-
         if cwd.marked_items or is_directory_with_files(tfile.path):
             self.fm.ui.console.ask(
                 f"Confirm trashing of: {relative_paths} (y/N)",
@@ -280,7 +278,6 @@ class delete_highlighted(Command):
 
         cwd = self.fm.thisdir
         tfile = self.fm.thisfile
-
         if not cwd or not tfile:
             self.fm.notify("Error: no file highlighted for deletion!", bad=True)
             return
@@ -306,11 +303,10 @@ class terminal_curdir(Command):
         from ranger.ext.shell_escape import shell_escape
 
         cwd = self.fm.thisdir
+        if cwd:
+            os.environ['NEWTERM_PWD'] = cwd.path
 
-        if not cwd:
-            self.fm.execute_command("termite", flags='fs')
-        else:
-            self.fm.execute_command(f"termite -d {shell_escape(cwd.path)}", flags='fs')
+        self.fm.execute_command("terminal", flags='fs')
 
 class ranger_curfile(Command):
 
@@ -318,12 +314,11 @@ class ranger_curfile(Command):
         from ranger.ext.shell_escape import shell_escape
 
         tfile = self.fm.thisfile
-
-        if not tfile:
-            self.fm.execute_command("RANGER_LEVEL=0 termite -e ranger", flags='fs')
+        if tfile:
+            ranger_command = f"ranger --selectfile={shell_escape(tfile.path)}"
+            self.fm.execute_command(f"RANGER_LEVEL=0 termopen {ranger_command}", flags='fs')
         else:
-            ranger_command = shell_escape(f"ranger --selectfile={shell_escape(tfile.path)}")
-            self.fm.execute_command(f"RANGER_LEVEL=0 termite -e {ranger_command}", flags='fs')
+            self.fm.execute_command("RANGER_LEVEL=0 termopen ranger", flags='fs')
 
 class ranger_curdir(Command):
 
@@ -331,9 +326,8 @@ class ranger_curdir(Command):
         from ranger.ext.shell_escape import shell_escape
 
         cwd = self.fm.thisdir
-
-        if not cwd:
-            self.fm.execute_command("RANGER_LEVEL=0 termite -e ranger", flags='fs')
+        if cwd:
+            ranger_command = f"ranger {shell_escape(cwd.path)}"
+            self.fm.execute_command(f"RANGER_LEVEL=0 termopen {ranger_command}", flags='fs')
         else:
-            ranger_command = shell_escape(f"ranger {shell_escape(cwd.path)}")
-            self.fm.execute_command(f"RANGER_LEVEL=0 termite -e {ranger_command}", flags='fs')
+            self.fm.execute_command("RANGER_LEVEL=0 termopen ranger", flags='fs')
