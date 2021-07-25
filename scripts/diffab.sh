@@ -1,6 +1,6 @@
 #!/bin/bash
-mdiff_cmd="diff --color=always -r"
-mdiff_str="diff '--color=always' -r"
+mdiff_cmd="diff --no-dereference --color=always -r"
+mdiff_str="diff --no-dereference '--color=always' -r"
 sdiff_cmd="diff --color=always"
 dotfiles=/home/ashish/.local/dotfiles
 
