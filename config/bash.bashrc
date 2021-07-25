@@ -35,9 +35,6 @@ HISTIGNORE=h:pb:pz
 # locale
 LC_ALL=C
 
-# termite tabbing
-source /etc/profile.d/vte.sh
-
 # save history immediately
 if [[ -n $PROMPT_COMMAND ]] ; then
     PROMPT_COMMAND=$PROMPT_COMMAND'
@@ -46,11 +43,22 @@ else
     PROMPT_COMMAND='history -a'
 fi
 
-# set title
+# title, st newterm and termite tabbing
 case $TERM in
-    *termite*|*st*|*alacritty*)
+    st*)
+        [[ -n $ST_NEWTERM_PWD ]] && { cd "$ST_NEWTERM_PWD"; unset ST_NEWTERM_PWD ;}
         PROMPT_COMMAND=$PROMPT_COMMAND'
-printf "\e]0;%s@%s:%s\a" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
+printf "\e]7;%s\e\\" "$PWD"
+printf "\e]0;%s@%s:%s\e\\" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
+        ;;
+    *termite*)
+        PROMPT_COMMAND=$PROMPT_COMMAND'
+printf "\e]0;%s@%s:%s\e\\" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
+        source /etc/profile.d/vte.sh
+        ;;
+    alacritty*)
+        PROMPT_COMMAND=$PROMPT_COMMAND'
+printf "\e]0;%s@%s:%s\e\\" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
         ;;
 esac
 

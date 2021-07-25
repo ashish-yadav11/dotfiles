@@ -5,11 +5,34 @@ PS1='%167F[%11F%n%10F@%12F%M%139F %1~%167F]%f$ '
 
 ## MISCELLANEOUS (man zshmisc)
 
-# terminal title
-function chpwd {
-    print -Pn "\e]0;%n@%M:%~\a"
+# title, st newterm and termite tabbing
+function settitle {
+    print -Pn "\e]0;%n@%M:%~\e\\"
 }
-chpwd
+function savepwd {
+    print -Pn "\e]7;%d\e\\"
+}
+case $TERM in
+    st*)
+        [[ -n $ST_NEWTERM_PWD ]] && { cd "$ST_NEWTERM_PWD"; unset ST_NEWTERM_PWD ;}
+        savepwd
+        settitle
+        chpwd_functions+=(savepwd settitle)
+        ;;
+    *termite*)
+        chpwd_functions+=(settitle)
+        source /etc/profile.d/vte.sh
+        ;;
+    alacritty*)
+        settitle
+        chpwd_functions+=(settitle)
+        ;;
+esac
+
+# restore block cursor before running external commands
+function preexec {
+    echo -ne "$defcursor"
+}
 
 
 ## ZLE (man zshzle)
@@ -42,17 +65,3 @@ bindkey -a "\e[6~" history-search-forward
 # end key
 bindkey -v "\e[F" end-of-line
 bindkey -a "\e[F" end-of-line
-
-
-## MISCELLANEOUS (man zshmisc)
-
-# restore block cursor before running external commands
-function preexec {
-    echo -ne "$defcursor"
-}
-
-
-## PLUGINS
-
-# termite tabbing
-source /etc/profile.d/vte.sh
