@@ -1,6 +1,6 @@
 #!/bin/dash
 lastfile=/tmp/espeak.last
-pidfile=$XDG_RUNTIME_DIR/espeak.pid
+pidfile="$XDG_RUNTIME_DIR/espeak.pid"
 
 if IFS='' read -r text 2>/dev/null <"$lastfile" ; then
     if read -r PID 2>/dev/null <"$pidfile" ; then

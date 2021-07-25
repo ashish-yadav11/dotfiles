@@ -11,11 +11,11 @@
 #     user=<gmail username>
 #     client_id=<oauth2 client id>
 #     cleint_secret=<oauth2 client secret>
-#     data_dir=/home/ashish/.local/share/gmail-oauth2/$user
+#     data_dir="/home/ashish/.local/share/gmail-oauth2/$user"
 #     oauth2_script=/home/ashish/.scripts/oauth2.py
 #
 #     mkdir -p "$data_dir"
-#     current_time=$(date +%s)
+#     current_time="$(date +%s)"
 #     $oauth2_script \
 #         --client_id="$client_id" \
 #         --client_secret="$client_secret" \
@@ -34,35 +34,35 @@
 #   (in case access token got corrupted)
 #
 #     user=<gmail username>
-#     data_dir=/home/ashish/.local/share/gmail-oauth2/$user
+#     data_dir="/home/ashish/.local/share/gmail-oauth2/$user"
 #
 #     date +%s >"$data_dir/expiry_time"
 
-user=$1
-data_dir=/home/ashish/.local/share/gmail-oauth2/$user
+user="$1"
+data_dir="/home/ashish/.local/share/gmail-oauth2/$user"
 
 get_access_token() {
     oauth2_script=/home/ashish/.scripts/oauth2.py
 
     IFS='' read -r client_id <"$data_dir/client_id"
     IFS='' read -r client_secret <"$data_dir/client_secret"
-    refresh_token=$(pass "gmail-oauth2/$user/refresh_token")
-    output=$(
+    refresh_token="$(pass "gmail-oauth2/$user/refresh_token")"
+    output="$(
         $oauth2_script \
             --client_id="$client_id" \
             --client_secret="$client_secret" \
             --refresh_token="$refresh_token"
-    )
+    )"
     newline='
 '
-    output=${output#Access Token: }
-    access_token=${output%"${newline}"*}
-    expiry_time=${output#*"${newline}Access Token Expiration Seconds: "}
+    output="${output#Access Token: }"
+    access_token="${output%"${newline}"*}"
+    expiry_time="${output#*"${newline}Access Token Expiration Seconds: "}"
 }
 
 IFS='' read -r access_token <"$data_dir/access_token"
 IFS='' read -r expiry_time <"$data_dir/expiry_time"
-current_time=$(date +%s)
+current_time="$(date +%s)"
 
 if [ "$current_time" -lt "$expiry_time" ] ; then
     echo "$access_token"

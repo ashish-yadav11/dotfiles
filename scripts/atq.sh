@@ -23,7 +23,7 @@ at -l | LC_ALL=C sort -k6,6 -k3,3M -k4,5 | awk '
         echo "$n${job%|*}"
         n="\n"
         # only print commands which were supplied by the user
-        case $job in
+        case "$job" in
             *~*)
                 at -c "${job##*|}" | awk '{
                         if (p) {

@@ -2,13 +2,13 @@
 menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -multi-select -no-custom"
 
 # external drives not mounted in the filesystem
-drives0=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3=="" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')
+drives0="$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3=="" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')"
 
 # external drives mounted in the filesystem
-drives1=$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3!="" && $3!="/" && $3!="/efi" && $3!="[SWAP]" && $3!="/media/backup" && $3!="/media/storage" && $3!="/run/timeshift/backup" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')
+drives1="$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3!="" && $3!="/" && $3!="/efi" && $3!="[SWAP]" && $3!="/media/backup" && $3!="/media/storage" && $3!="/run/timeshift/backup" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')"
 
 mount() {
-    if output=$(udisksctl mount --no-user-interaction -b "$1") ; then
+    if output="$(udisksctl mount --no-user-interaction -b "$1")" ; then
         notify-send -t 2000 " USB mounter" "$output"
     else
         notify-send -u critical " USB mounter" "Error mounting $1"
@@ -16,7 +16,7 @@ mount() {
 }
 
 unmount() {
-    if output=$(udisksctl unmount --no-user-interaction -b "$1") ; then
+    if output="$(udisksctl unmount --no-user-interaction -b "$1")" ; then
         notify-send -t 2000 " USB mounter" "${output%.}"
     else
         notify-send -u critical " USB mounter" "Error unmounting $1\nResource might be busy"
@@ -38,20 +38,20 @@ askunmount() {
 }
 
 asktype() {
-    M=$(echo "$drives0" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
-    U=$(echo "$drives1" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
+    M="$(echo "$drives0" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')"
+    U="$(echo "$drives1" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')"
 
     echo "Mount: ${M%?}\nUnmount: ${U%?}" | $menu -p "What to do?" |
         while IFS='' read -r chosen ; do
-            case $chosen in
+            case "$chosen" in
                 M*)
-                    case $M in
+                    case "$M" in
                         *s) mount "${drives0%% *}" ;;
                         *m) askmount ;;
                     esac
                     ;;
                 U*)
-                    case $U in
+                    case "$U" in
                         *s) unmount "${drives1%% *}" ;;
                         *m) askunmount ;;
                     esac

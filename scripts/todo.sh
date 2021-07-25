@@ -5,7 +5,7 @@ if [ "$#" = 0 ] ; then
     [ -f "$todo_file" ] && nl -b a "$todo_file"
     exit
 fi
-case $1 in
+case "$1" in
     -e)
         [ -f "$todo_file" ] || touch "$todo_file"
         nvim "$todo_file"
@@ -14,9 +14,9 @@ case $1 in
         : >"$todo_file"
         ;;
     -r*)
-        [ -f $todo_file ] || exit
-        index=${1#-r}
-        index=${index:-$2}
+        [ -f "$todo_file" ] || exit
+        index="${1#-r}"
+        index="${index:-"$2"}"
         if [ "$index" -gt 0 ] 2>/dev/null ; then
             sed -i "${index}d" "$todo_file"
         else

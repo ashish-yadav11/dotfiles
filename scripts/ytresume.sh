@@ -1,7 +1,7 @@
 #!/bin/dash
 modifier=108
 keyboard="AT Translated Set 2 keyboard"
-lockfile=$XDG_RUNTIME_DIR/ytm.hide
+lockfile="$XDG_RUNTIME_DIR/ytm.hide"
 
 ntwarnsize="The size of the YouTube Music window is less than can be tolerated by the script."
 ntwarnpos="The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
@@ -24,10 +24,10 @@ hide_exit() {
 }
 
 press_key() {
-    case $(xinput query-state "$keyboard") in
+    case "$(xinput query-state "$keyboard")" in
         *"key[$modifier]=down"*)
             xdotool keyup --delay 200 "$modifier" key "$1" keydown --delay 0 "$modifier"
-            case $(xinput query-state "$keyboard") in
+            case "$(xinput query-state "$keyboard")" in
                 *"key[$modifier]=up"*) xdotool keyup --delay 0 "$modifier" ;;
             esac
             ;;
@@ -47,7 +47,7 @@ checkpixelpos() {
 if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     ytaf=1
 else
-    case $(xwininfo -children -root) in
+    case "$(xwininfo -children -root)" in
         *': ("crx_cinhimbnkkaeohfgghhklpknlkffjgod" '*)
             sigdwm "scrs i 2"
             sleep 0.1
@@ -58,7 +58,7 @@ else
     esac
 fi
 
-case $(xdotool getactivewindow getwindowname) in
+case "$(xdotool getactivewindow getwindowname)" in
     *"YouTube Music")
         ;;
     *)
@@ -68,32 +68,32 @@ case $(xdotool getactivewindow getwindowname) in
         ;;
 esac
 
-geometry=$(xdotool getactivewindow getwindowgeometry)
-geometry=${geometry#*Position: }
-position=${geometry% (screen: *}
-size=${geometry#*Geometry: }
-x=${position%,*}
-y=${position#*,}
-w=${size%x*}
-h=${size#*x}
+geometry="$(xdotool getactivewindow getwindowgeometry)"
+geometry="${geometry#*Position: }"
+position="${geometry% (screen: *}"
+size="${geometry#*Geometry: }"
+x="${position%,*}"
+y="${position#*,}"
+w="${size%x*}"
+h="${size#*x}"
 if [ "$w" -lt 944 ] || [ "$h" -lt 65 ] ; then
     notify-send -u critical -t 3000 ytresume "$ntwarnsize"
     exit
 fi
 
-xp=$(( x + 87 ))
-yp=$(( y + h - 42 ))
+xp="$(( x + 87 ))"
+yp="$(( y + h - 42 ))"
 checkpixelpos "$xp" "$yp"
 if [ "$(pixelcolor -q "$xp" "$yp")" = "#ffffff" ] ; then
     press_key space
     hide_exit
 fi
 
-xw=$(( x + 32 ))
-yw=$(( y + 59 ))
+xw="$(( x + 32 ))"
+yw="$(( y + 59 ))"
 checkpixelpos "$xw" "$yw"
 
-case $(pixelcolor -q "$xw" "$yw") in
+case "$(pixelcolor -q "$xw" "$yw")" in
     "#333333")
         press_key Escape
         hide_exit

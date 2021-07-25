@@ -1,7 +1,7 @@
 #!/bin/dash
 menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -no-custom"
 
-case $(echo "Root\nFocused window\nSelection" | $menu -p Scrot) in
+case "$(echo "Root\nFocused window\nSelection" | $menu -p Scrot)" in
     Root)
         sleep 0.100
         ;;

@@ -1,7 +1,7 @@
 #!/bin/dash
 exec >/dev/null 2>&1
 
-case $1 in
+case "$1" in
     pre)
         rundir=/run/user/1000
         hotspot=/home/ashish/.scripts/hotspot.sh
@@ -20,7 +20,7 @@ case $1 in
         sigdsblocks 5
         sigdsblocks 6
 
-        time=$(date +%H%M)
+        time="$(date +%H%M)"
         if [ "$time" -ge 2200 ] || [ "$time" -lt 0600 ] ; then
             redshift -PO 4500
         else

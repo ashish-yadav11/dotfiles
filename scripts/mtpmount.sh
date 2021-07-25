@@ -24,12 +24,12 @@ declare -a mtpoints=()
 
 i=0
 while IFS='' read -r mtpoint ; do
-    base=${mtpoint##*/}
+    base="${mtpoint##*/}"
     for j in "${!devices0[@]}" ; do
-        if [[ ${devices0[j]} == "$base|"* ]] ; then
+        if [[ "${devices0[j]}" == "$base|"* ]] ; then
             devices0=( "${devices0[@]:0:j}" "${devices0[@]:j+1}" )
-            devices1[i]=${devices[j]}
-            mtpoints[i]=$mtpoint
+            devices1[i]="${devices[j]}"
+            mtpoints[i]="$mtpoint"
             (( i++ ))
             continue 2
         fi
@@ -42,18 +42,18 @@ while IFS='' read -r mtpoint ; do
 done < <(awk '$1=="rawBridge" && $2~/^\/run\/user\/[0-9]*\/mtp\// {print $2}' /etc/mtab)
 
 mount() {
-    device=${devices0[$1]}
-    name=${device##*|}; name=${name% (*}
-    serial=${device#* (}; serial=${serial%)}
-    mtpoint=$XDG_RUNTIME_DIR/mtp/${device%%|*}
+    device="${devices0[$1]}"
+    name="${device##*|}"; name="${name% (*}"
+    serial="${device#* (}"; serial="${serial%)}"
+    mtpoint="$XDG_RUNTIME_DIR/mtp/${device%%|*}"
     mkdir -p "$mtpoint"
     setsid -f go-mtpfs -dev "$serial" "$mtpoint" &>"$mtpoint.log"
     sleep 0.1
     while IFS='' read -r line <"$mtpoint.log" ; do
-        [[ -n $line ]] && break
+        [[ -n "$line" ]] && break
         sleep 0.1
     done
-    if [[ $line == *"FUSE mounted" ]] ; then
+    if [[ "$line" == *"FUSE mounted" ]] ; then
         shopt -s nullglob dotglob
         files=( "$mtpoint"/* )
         shopt -u nullglob dotglob
@@ -74,9 +74,9 @@ mount() {
 }
 
 unmount() {
-    device=${devices1[$1]}
-    name=${device##*|}; name=${name% (*}
-    mtpoint=${mtpoints[$1]}
+    device="${devices1[$1]}"
+    name="${device##*|}"; name="${name% (*}"
+    mtpoint="${mtpoints[$1]}"
     if fusermount -u "$mtpoint" 2>/dev/null ; then
         notify-send -t 2000 " MTP mounter" "$name unmounted successfully"
         rmdir "$mtpoint"
@@ -101,20 +101,20 @@ askunmount() {
 }
 
 asktype() {
-    M=$(printf "%s\n" "${devices0[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
-    U=$(printf "%s\n" "${devices1[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')
+    M="$(printf "%s\n" "${devices0[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')"
+    U="$(printf "%s\n" "${devices1[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')"
 
     echo -e "Mount: ${M%?}\nUnmount: ${U%?}" | $menu -p "What to do?" |
         while IFS='' read -r chosen ; do
-            case $chosen in
+            case "$chosen" in
                 M*)
-                    case $M in
+                    case "$M" in
                         *s) mount 0 ;;
                         *m) askmount ;;
                     esac
                     ;;
                 U*)
-                    case $U in
+                    case "$U" in
                         *s) unmount 0 ;;
                         *m) askunmount ;;
                     esac

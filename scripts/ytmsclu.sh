@@ -1,7 +1,7 @@
 #!/bin/dash
 modifier=108
 keyboard="AT Translated Set 2 keyboard"
-lockfile=$XDG_RUNTIME_DIR/ytm.hide
+lockfile="$XDG_RUNTIME_DIR/ytm.hide"
 
 ntwarnsize="The size of the YouTube Music window is less than that required by the script."
 ntwarnpos="The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
@@ -27,10 +27,10 @@ hide() {
 }
 
 press_keys() {
-    case $(xinput query-state "$keyboard") in
+    case "$(xinput query-state "$keyboard")" in
         *"key[$modifier]=down"*)
             xdotool keyup --delay 200 "$modifier" key "$@" keydown --delay 0 "$modifier"
-            case $(xinput query-state "$keyboard") in
+            case "$(xinput query-state "$keyboard")" in
                 *"key[$modifier]=up"*) xdotool keyup --delay 0 "$modifier" ;;
             esac
             ;;
@@ -44,7 +44,7 @@ if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
     # YouTube Music window already focused
     ytaf=1
 else
-    case $(xwininfo -children -root) in
+    case "$(xwininfo -children -root)" in
         *': ("crx_cinhimbnkkaeohfgghhklpknlkffjgod" '*)
             sigdwm "scrs i 2"
             sleep 0.1
@@ -56,29 +56,29 @@ else
 fi
 
 # exit if the focused window doesn't have YouTube Music at the end of its title
-case $(xdotool getactivewindow getwindowname) in
+case "$(xdotool getactivewindow getwindowname)" in
     *"YouTube Music") ;;
     *) exit ;;
 esac
 
-geometry=$(xdotool getactivewindow getwindowgeometry)
-geometry=${geometry#*Position: }
-position=${geometry% (screen: *}
-size=${geometry#*Geometry: }
+geometry="$(xdotool getactivewindow getwindowgeometry)"
+geometry="${geometry#*Position: }"
+position="${geometry% (screen: *}"
+size="${geometry#*Geometry: }"
 # coordinates of right upper corner of the YouTube Music window
-x=${position%,*}
-y=${position#*,}
+x="${position%,*}"
+y="${position#*,}"
 # size of the YouTube Music window
-w=${size%x*}
-h=${size#*x}
+w="${size%x*}"
+h="${size#*x}"
 if [ "$w" -lt 944 ] || [ "$h" -lt 65 ] ; then
     notify-send -u critical -t 3000 ytmsclu "$ntwarnsize"
     exit
 fi
 
 # coordinates of a black pixel on the left side of the bottom status bar
-xb=$(( x + 9 ))
-yb=$(( y + h - 40 ))
+xb="$(( x + 9 ))"
+yb="$(( y + h - 40 ))"
 if [ "$xb" -lt 0 ] || [ "$xb" -gt 1365 ] || [ "$yb" -lt 0 ] || [ "$yb" -gt 767 ] ; then
     notify-send -u critical -t 4000 ytmsclu "$ntwarnpos"
     exit
@@ -89,12 +89,12 @@ if [ "$(pixelcolor -q "$xb" "$yb")" != "#212121" ] ; then
 fi
 
 # size of the pixel array to capture and analyze; 500 cut from left side and 300 from right
-s=$(( w - 800 ))
+s="$(( w - 800 ))"
 # coordinates of the pixel which will be the leftmost point of the pixel array to be captured
 # on x-axis start from 504 right from the left border
-x0=$(( x + 504 ))
+x0="$(( x + 504 ))"
 # on y-axis start from 35 above from the bottom border
-y0=$(( y + h - 35 ))
+y0="$(( y + h - 35 ))"
 if [ "$(( x0 < 0 || x0 > 1365 || (x0 + s) > 1365 || y < 0 || y > 767 ))" = 1 ] ; then
     notify-send -u critical -t 4000 ytmsclu "$ntwarnpos"
     exit

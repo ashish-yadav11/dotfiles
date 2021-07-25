@@ -1,5 +1,5 @@
 #!/bin/dash
-volume=$(
+volume="$(
     pactl list sinks | awk '
         $1 == "Volume:" {
             f=1
@@ -15,4 +15,4 @@ volume=$(
                 exit 1
         }
     '
-) && pactl set-sink-volume @DEFAULT_SINK@ "$volume%"
+)" && pactl set-sink-volume @DEFAULT_SINK@ "$volume%"

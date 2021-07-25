@@ -2,8 +2,8 @@
 mbsync_channel=iiser
 trash_folder="/home/ashish/.local/share/mail/iiser/[Gmail].Trash"
 
-lockfile1=$XDG_RUNTIME_DIR/mailsync.1.lock
-lockfile2=$XDG_RUNTIME_DIR/mailsync.2.lock
+lockfile1="$XDG_RUNTIME_DIR/mailsync.1.lock"
+lockfile2="$XDG_RUNTIME_DIR/mailsync.2.lock"
 
 # At max two instances of the script are allowed to run simultaneously,
 # one syncing and one waiting for the other to finish syncing.
@@ -15,7 +15,7 @@ if ! flock -n 8 ; then
     flock 8
 fi
 mbsync "$mbsync_channel"
-sigval=$?
+sigval="$?"
 find "$trash_folder"/* -type f | mflag -S
 notmuch new
 flock -n 9 && sigdsblocks 3 "$sigval"

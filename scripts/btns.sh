@@ -16,7 +16,7 @@ incbtns() {
         echo "Brightness is at its maximum value of 255"
         exit
     fi
-    btns=$(( btns + inc ))
+    btns="$(( btns + inc ))"
     if [ "$btns" -gt 255 ] ; then
         echo 255 >"$setbtnsfile"
         [ -z "$quiet" ] && echo 255/255
@@ -33,7 +33,7 @@ decbtns() {
         echo "Brightness is at its minimum value of 1"
         exit
     fi
-    btns=$(( btns - dec ))
+    btns="$(( btns - dec ))"
     if [ "$btns" -lt 1 ] ; then
         echo 1 >"$setbtnsfile"
         [ -z "$quiet" ] && echo "1/255"
@@ -50,19 +50,19 @@ else
     [ "$1" = -q ] && { quiet=1; shift ;}
     case "$1" in
         [+ip]*)
-            inc=${1#?}
+            inc="${1#?}"
             incbtns
             ;;
         [-dm]*)
-            dec=${1#?}
+            dec="${1#?}"
             decbtns
             ;;
         *[+ip])
-            inc=${1%?}
+            inc="${1%?}"
             incbtns
             ;;
         *[-dm])
-            dec=${1%?}
+            dec="${1%?}"
             decbtns
             ;;
         *)

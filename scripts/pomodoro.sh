@@ -2,11 +2,11 @@
 dateformat="%H:%M"
 notify="dunstify -h string:x-canonical-private-synchronous:pomodoro"
 
-nidfile=$XDG_RUNTIME_DIR/pomodoro.nid
-pidfile=$XDG_RUNTIME_DIR/pomodoro.pid
+nidfile="$XDG_RUNTIME_DIR/pomodoro.nid"
+pidfile="$XDG_RUNTIME_DIR/pomodoro.pid"
 
 if [ -n "$1" ] ; then
-    case $1 in
+    case "$1" in
         status)
             if read -r PID 2>/dev/null <"$pidfile" && kill -0 "$PID" ; then
                 $notify -t 1000 "pomodoro up"
@@ -25,7 +25,7 @@ if [ -n "$1" ] ; then
                 $notify -u critical -t 2000 pomodoro "Interval should be an integer!"
                 exit
             fi
-            timeperiod=$(( $1 * 60 ))
+            timeperiod="$(( $1 * 60 ))"
             ;;
     esac
 else

@@ -1,8 +1,8 @@
 #!/bin/bash
 notify="dunstify -h string:x-canonical-private-synchronous:inhibitsuspend -h int:transient:1"
-pidfileroot=$XDG_RUNTIME_DIR/inhibitsuspend
+pidfileroot="$XDG_RUNTIME_DIR/inhibitsuspend"
 
-if [[ $1 == lock ]] ; then
+if [[ "$1" == lock ]] ; then
     s=1 o=0
     notification="System will lock without sleeping if lid is closed within next 15 seconds"
     lock=1
@@ -17,19 +17,19 @@ if read -r PIDs 2>/dev/null <"$pidfileroot.$s.pid" && kill "$PIDs" ; then
     exit
 fi
 
-trap "rm -f $pidfileroot.$s.pid" EXIT
+trap 'rm -f "$pidfileroot"'".$s."'pid' EXIT
 echo "$$" >"$pidfileroot.$s.pid"
 
-id=$($notify -p -t 0 "$notification")
+id="$($notify -p -t 0 "$notification")"
 SECONDS=0
 while (( SECONDS < 15 )) ; do
     sleep 1
     read -r state </proc/acpi/button/lid/LID/state
-    if [[ $state == *closed ]] ; then
+    if [[ "$state" == *closed ]] ; then
         dunstify -C "$id"
-        [[ -n $lock ]] && systemctl start lock.service
+        [[ -n "$lock" ]] && systemctl start lock.service
         screen off
-        while [[ $state == *closed ]] ; do
+        while [[ "$state" == *closed ]] ; do
             sleep 2
             read -r state </proc/acpi/button/lid/LID/state
         done

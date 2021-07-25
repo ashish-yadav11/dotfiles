@@ -5,8 +5,8 @@ setsid -f $mtpclean
 
 mkfifo /tmp/realme-u1-mount.fifo
 udevadm monitor -up -s usb >/tmp/realme-u1-mount.fifo &
-PID=$!
-device=$(
+PID="$!"
+device="$(
     awk -F= '
         $1=="ACTION" && $2=="bind" {f=1; next}
         !f {next};
@@ -16,12 +16,12 @@ device=$(
         $1=="ID_MTP_DEVICE" && $2=="1" {print b; exit}
         $0=="" {f=0; b=""; next};
     ' </tmp/realme-u1-mount.fifo
-)
+)"
 kill "$PID"
 rm -f /tmp/realme-u1-mount.fifo
 
-serial=${device#*|}
-mtpoint=$XDG_RUNTIME_DIR/mtp/${device%|*}
+serial="${device#*|}"
+mtpoint="$XDG_RUNTIME_DIR/mtp/${device%|*}"
 mkdir -p "$mtpoint"
 setsid -f go-mtpfs -dev "$serial" "$mtpoint" >"$mtpoint.log" 2>&1
 sleep 0.1
@@ -29,7 +29,7 @@ while IFS='' read -r line <"$mtpoint.log" ; do
     [ -n "$line" ] && break
     sleep 0.1
 done
-case $line in
+case "$line" in
     *"FUSE mounted")
         notify-send -t 1500 " Realme U1" "Device mounted successfully"
         ;;

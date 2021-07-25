@@ -11,9 +11,9 @@ mapfile -t devices < <(
 )
 awk '$1=="rawBridge" && $2~/^\/run\/user\/[0-9]*\/mtp\// {print $2}' /etc/mtab |
     while IFS='' read -r mtpoint ; do
-        base=${mtpoint##*/}
+        base="${mtpoint##*/}"
         for device in "${devices[@]}" ; do
-            [[ $device == "$base" ]] && continue 2
+            [[ "$device" == "$base" ]] && continue 2
         done
         if fusermount -u "$mtpoint" ; then
             rmdir "$mtpoint"
