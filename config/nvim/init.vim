@@ -9,11 +9,12 @@ nnoremap        <silent>        yp                      :let @+=expand("%:p")<CR
 nnoremap        <silent>        <Leader><Esc>           :nohlsearch<CR>
 nnoremap                        <Leader>b               :buffers<CR>:buffer<Space>
 nnoremap        <silent>        <Leader>p               :lcd %:p:h<CR>
-nnoremap        <silent>        <Leader>t               :execute ':silent !NEWTERM_PWD='.shellescape(expand("%:p:h"), 1).' setsid -f terminal'<CR>
-nnoremap        <silent>        <Leader><C-t>           :execute ':silent !NEWTERM_PWD='.shellescape(expand(getcwd()), 1).' setsid -f terminal'<CR>
-nnoremap        <silent>        <Leader>r               :execute ':silent !RANGER_LEVEL=0 setsid -f termopen ranger --selectfile='.shellescape(expand("%:p"), 1)<CR>
-nnoremap        <silent>        <Leader>R               :execute ':silent !RANGER_LEVEL=0 setsid -f termopen ranger '.shellescape(expand("%:p:h"), 1)<CR>
-nnoremap        <silent>        <Leader><C-r>           :execute ':silent !RANGER_LEVEL=0 setsid -f termopen ranger '.shellescape(expand(getcwd()), 1)<CR>
+nnoremap        <silent>        <Leader>t               :call SpawnTerm("td")<CR>
+nnoremap        <silent>        <Leader>T               :call SpawnTerm("tc")<CR>
+nnoremap        <silent>        <Leader><C-t>           :call SpawnTerm("tc")<CR>
+nnoremap        <silent>        <Leader>r               :call SpawnTerm("rp")<CR>
+nnoremap        <silent>        <Leader>R               :call SpawnTerm("rd")<CR>
+nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rc")<CR>
 inoremap                        <S-Tab>                 <C-v><Tab>
 
 
@@ -101,3 +102,39 @@ let g:latex_to_unicode_file_types = '.*'
 
 let g:tex_flavor = 'latex'
 let g:vimtex_view_method = 'zathura'
+
+
+" spawnterm
+
+function SpawnTerm(arg = "tc")
+    let l:shell = &shell
+    set shell=/bin/dash
+
+    let l:env = 'RANGER_LEVEL=0'
+    let l:cmd = 'st'
+
+    if a:arg ==# "td"
+        let l:dir = expand("%:p:h")
+        if ! empty(l:dir)
+            let l:env = l:env.' NEWTERM_PWD='.shellescape(l:dir, 1)
+        endif
+    elseif a:arg ==# "rc"
+        let l:cmd = l:cmd.' -e ranger'
+    elseif a:arg ==# "rd"
+        let l:cmd = l:cmd.' -e ranger'
+        let l:dir = expand("%:p:h")
+        if ! empty(l:dir)
+            let l:cmd = l:cmd.' '.shellescape(l:dir, 1)
+        endif
+    elseif a:arg ==# "rp"
+        let l:cmd = l:cmd.' -e ranger'
+        let l:path = expand("%:p")
+        if ! empty(l:path)
+            let l:cmd = l:cmd.' --selectfile='.shellescape(l:path, 1)
+        endif
+    endif
+
+    silent execute '!'.l:env.' setsid -f '.l:cmd.' >>"${XLOGFILE:-/dev/null}" 2>&1'
+
+    let &shell = l:shell
+endfunction
