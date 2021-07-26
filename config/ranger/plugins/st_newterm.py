@@ -17,5 +17,5 @@ def hook_init(fm):
     fm.signal_bind('cd', send_pwd)
 
 # Finally, "monkey patch" the existing hook_init function with our replacement:
-if os.environ['TERM'].startswith('st'):
+if os.environ.get('TERM', '').startswith('st'):
     ranger.api.hook_init = hook_init

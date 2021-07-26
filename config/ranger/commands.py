@@ -300,13 +300,12 @@ class delete_highlighted(Command):
 class terminal_curdir(Command):
 
     def execute(self):
-        from ranger.ext.shell_escape import shell_escape
 
         cwd = self.fm.thisdir
         if cwd:
             os.environ['NEWTERM_PWD'] = cwd.path
 
-        self.fm.execute_command("terminal", flags='fs')
+        self.fm.execute_command(f'st >>"${{XLOGFILE:-/dev/null}}" 2>&1', flags='fs')
 
 class ranger_curfile(Command):
 
@@ -316,9 +315,9 @@ class ranger_curfile(Command):
         tfile = self.fm.thisfile
         if tfile:
             ranger_command = f"ranger --selectfile={shell_escape(tfile.path)}"
-            self.fm.execute_command(f"RANGER_LEVEL=0 termopen {ranger_command}", flags='fs')
+            self.fm.execute_command(f'RANGER_LEVEL=0 st -e {ranger_command} >>"${{XLOGFILE:-/dev/null}}" 2>&1', flags='fs')
         else:
-            self.fm.execute_command("RANGER_LEVEL=0 termopen ranger", flags='fs')
+            self.fm.execute_command(f'RANGER_LEVEL=0 st -e ranger >>"${{XLOGFILE:-/dev/null}}" 2>&1', flags='fs')
 
 class ranger_curdir(Command):
 
@@ -328,6 +327,6 @@ class ranger_curdir(Command):
         cwd = self.fm.thisdir
         if cwd:
             ranger_command = f"ranger {shell_escape(cwd.path)}"
-            self.fm.execute_command(f"RANGER_LEVEL=0 termopen {ranger_command}", flags='fs')
+            self.fm.execute_command(f'RANGER_LEVEL=0 st -e {ranger_command} >>"${{XLOGFILE:-/dev/null}}" 2>&1', flags='fs')
         else:
-            self.fm.execute_command("RANGER_LEVEL=0 termopen ranger", flags='fs')
+            self.fm.execute_command(f'RANGER_LEVEL=0 st -e ranger >>"${{XLOGFILE:-/dev/null}}" 2>&1', flags='fs')
