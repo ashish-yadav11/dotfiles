@@ -87,6 +87,7 @@ papirus-icon-theme
 pass
 pavucontrol-qt
 pdftk
+perl-file-mimeinfo
 picom
 pipewire-alsa
 pipewire-pulse
@@ -141,6 +142,7 @@ wmname
 xcape
 xclip
 xdg-user-dirs
+xdg-utils
 xdotool
 xf86-video-ati
 xf86-video-vesa
