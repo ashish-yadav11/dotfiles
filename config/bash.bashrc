@@ -78,7 +78,7 @@ alias vi=nvim
 alias vim=nvim
 
 alias h='nvim -c "normal G" ~/.bash_history'
-alias pb='bash --rcfile <(echo '\''[[ -f ~/.bashrc ]] && source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
+alias pb='bash --rcfile <(echo '\''[[ -f ~/.bashrc ]] && source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]I\[\e[0m\]$PS1"'\'')'
 alias pz="INCOGNITO=1 zsh"
 
 # fzf keybindings

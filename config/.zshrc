@@ -41,7 +41,7 @@ zle_highlight=(region:bg=239 special:none suffix:bold isearch:underline paste:no
 ## INCOGNITO MODE
 
 if [[ -n "$INCOGNITO" ]] ; then
-    PS1="%F{blue}%f $PS1"
+    PS1="%F{blue}I%f$PS1"
     unset INCOGNITO
 else
     HISTFILE=~/.zsh_history
@@ -178,7 +178,7 @@ alias t="nvim ~/Documents/.todo"
 
 # history
 alias h='nvim -c "normal G" ~/.zsh_history'
-alias pb='bash --rcfile <(echo '\''[[ -f ~/.bashrc ]] && source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]\[\e[0m\] $PS1"'\'')'
+alias pb='bash --rcfile <(echo '\''[[ -f ~/.bashrc ]] && source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]I\[\e[0m\]$PS1"'\'')'
 alias pz="INCOGNITO=1 zsh"
 
 
