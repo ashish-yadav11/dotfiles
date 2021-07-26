@@ -60,7 +60,7 @@ let g:clipboard = {
   \     },
   \     'cache_enabled': 1,
   \ }
-let g:netrw_browsex_viewer = 'xdg-open'
+let g:netrw_browsex_viewer = 'setsid -f xdg-open'
 let g:netrw_nogx = 1
 
 
@@ -218,7 +218,7 @@ function XdgOpen(normal = 1)
     endif
 
     let l:env = 'unset NVIM_LISTEN_ADDRESS; RANGER_LEVEL=0'
-    silent execute '!' l:env 'xdg-open' l:arg '>>"${XLOGFILE:-/dev/null}" 2>&1'
+    silent execute '!' l:env 'setsid -f xdg-open' l:arg '>>"${XLOGFILE:-/dev/null}" 2>&1'
 
     let &shell = l:shell
 endfunction
