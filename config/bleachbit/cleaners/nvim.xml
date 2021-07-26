@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cleaner id="neovim">
+  <label>Neovim</label>
+  <description>Text editor</description>
+  <option id="shada">
+    <label>Shared data</label>
+    <description>Delete shared data (command history, search history, etc.)</description>
+    <action search="walk.files" command="delete" path="~/.local/share/nvim/shada/"/>
+  </option>
+  <option id="swap files">
+    <label>Swap files</label>
+    <description>Delete swap files</description>
+    <action search="walk.files" command="delete" path="~/.local/share/nvim/swap/"/>
+  </option>
+</cleaner>
