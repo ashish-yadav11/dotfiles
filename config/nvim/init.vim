@@ -110,7 +110,7 @@ function SpawnTerm(arg = "tc")
     let l:shell = &shell
     set shell=/bin/dash
 
-    let l:env = 'RANGER_LEVEL=0'
+    let l:env = 'unset NVIM_LISTEN_ADDRESS; RANGER_LEVEL=0'
     let l:cmd = 'st'
 
     if a:arg ==# "td"
