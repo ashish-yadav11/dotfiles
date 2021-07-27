@@ -265,7 +265,7 @@ function spull {
 
 function startx {
     [[ -f "$XLOGFILE" ]] && { mv -f "$XLOGFILE" "$XLOGFILE.old" ;}
-    startx &>>"$XLOGFILE"
+    /usr/bin/startx &>>"$XLOGFILE"
 }
 
 function trash-list {

@@ -111,7 +111,7 @@ spull() {
 
 startx() {
     [[ -f "$XLOGFILE" ]] && { mv -f "$XLOGFILE" "$XLOGFILE.old" ;}
-    startx &>>"$XLOGFILE"
+    /usr/bin/startx &>>"$XLOGFILE"
 }
 
 trash-list() {
