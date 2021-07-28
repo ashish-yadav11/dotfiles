@@ -69,6 +69,7 @@ alias mv="mv -i"
 alias rm="rm -i"
 
 alias diffc="diff --color=always"
+alias diffcc="diff -pu --color=always"
 alias info="info --vi-keys"
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"

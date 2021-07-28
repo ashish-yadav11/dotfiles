@@ -35,7 +35,7 @@ LC_ALL=C
 PROMPT_EOL_MARK=''
 READNULLCMD=less
 SAVEHIST=10000
-zle_highlight=(region:bg=239 special:none suffix:bold isearch:underline paste:none)
+zle_highlight=(region:bg=#504945 special:none suffix:bold isearch:underline paste:none)
 
 
 ## INCOGNITO MODE
@@ -155,7 +155,9 @@ alias rm="rm -i"
 
 # re-definitions
 alias diffc="diff --color=always"
+alias diffcc="diff -pu --color=always"
 alias info="info --vi-keys"
+alias lessc="less -R"
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
 alias sudo="sudo "
