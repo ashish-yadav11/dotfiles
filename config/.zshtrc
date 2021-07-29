@@ -9,14 +9,14 @@ PS1='%167F[%11F%n%10F@%12F%M%139F %1~%167F]%f$ '
 function settitle {
     print -Pn "\e]0;%n@%M:%~\e\\"
 }
-function savepwd {
+function sendpwd {
     print -Pn "\e]7;%d\e\\"
 }
 case "$TERM" in
     st*)
-        savepwd
+        sendpwd
         settitle
-        chpwd_functions+=(savepwd settitle)
+        chpwd_functions+=(sendpwd settitle)
         ;;
     *termite*)
         settitle

@@ -1,8 +1,3 @@
-## COMMANDS ON STARTUP
-
-[[ -n "$NEWTERM_PWD" ]] && { cd "$NEWTERM_PWD"; unset NEWTERM_PWD ;}
-
-
 ## CONSOLE/TERMINAL SPECIFIC
 
 if [[ "$TERM" == linux ]] ; then

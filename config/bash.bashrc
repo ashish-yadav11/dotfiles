@@ -7,8 +7,6 @@
 
 [[ -n "$DISPLAY" ]] && shopt -s checkwinsize
 
-[[ -n "$NEWTERM_PWD" ]] && { cd "$NEWTERM_PWD"; unset NEWTERM_PWD ;}
-
 # autocd
 shopt -s autocd
 
