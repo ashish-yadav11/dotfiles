@@ -29,7 +29,7 @@ KEYTIMEOUT=1
 LC_ALL=C
 PROMPT_EOL_MARK=''
 READNULLCMD=less
-SAVEHIST=10000
+SAVEHIST=20000
 zle_highlight=(region:bg=#504945 special:none suffix:bold isearch:underline paste:none)
 
 

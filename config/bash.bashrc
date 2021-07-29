@@ -28,7 +28,7 @@ PS1="${red}[${yellow}\u${green}@${blue}\h ${violet}\W${red}]${white}$ "
 
 # history (export to prevent history truncation when running sh)
 export HISTCONTROL=ignoredups
-export HISTSIZE=10000
+export HISTSIZE=20000
 
 HISTIGNORE=h:pb:pz
 
