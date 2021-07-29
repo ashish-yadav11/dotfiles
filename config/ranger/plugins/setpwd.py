@@ -11,11 +11,10 @@ HOOK_INIT_OLD = ranger.api.hook_init
 def hook_init(fm):
     HOOK_INIT_OLD(fm)
 
-    def send_pwd(sig):
-        print(f"\033]7;{sig.new}\033\\", end='', flush=True)
+    def setpwd(sig):
+        os.environ['PWD'] = sig.new.path
 
-    fm.signal_bind('cd', send_pwd)
+    fm.signal_bind('cd', setpwd)
 
 # Finally, "monkey patch" the existing hook_init function with our replacement:
-if os.environ.get('TERM', '').startswith('st'):
-    ranger.api.hook_init = hook_init
+ranger.api.hook_init = hook_init
