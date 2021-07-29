@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cleaner id="calc">
+  <label>Calc</label>
+  <description>Command-line calculator</description>
+  <option id="history">
+    <label>History</label>
+    <description>Delete history</description>
+    <action search="file" command="delete" path="~/.calc_history"/>
+  </option>
+</cleaner>

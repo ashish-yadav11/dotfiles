@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cleaner id="less">
+  <label>Python</label>
+  <description>Programming language</description>
+  <option id="history">
+    <label>History</label>
+    <description>Delete command history</description>
+    <action search="file" command="delete" path="~/.python_history"/>
+  </option>
+</cleaner>

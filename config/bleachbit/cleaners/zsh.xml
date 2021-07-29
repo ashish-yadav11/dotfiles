@@ -5,6 +5,6 @@
   <option id="history">
     <label>History</label>
     <description>Delete the command history</description>
-    <action search="file" command="truncate" path="~/.zsh_history"/>
+    <action search="file" command="delete" path="~/.zsh_history"/>
   </option>
 </cleaner>

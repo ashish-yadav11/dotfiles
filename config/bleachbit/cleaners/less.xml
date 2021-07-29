@@ -4,7 +4,7 @@
   <description>Pager</description>
   <option id="cache">
     <label>Cache</label>
-    <description>Delete the cache</description>
-    <action search="file" command="truncate" path="~/.lesshst"/>
+    <description>Delete cache</description>
+    <action search="file" command="delete" path="~/.lesshst"/>
   </option>
 </cleaner>

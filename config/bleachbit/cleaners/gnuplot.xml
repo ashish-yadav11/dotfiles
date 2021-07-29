@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cleaner id="gnuplot">
+  <label>Gnuplot</label>
+  <description>Command-line plotting utility</description>
+  <option id="history">
+    <label>History</label>
+    <description>Delete command history</description>
+    <action search="file" command="delete" path="~/.gnuplot_history"/>
+  </option>
+</cleaner>
