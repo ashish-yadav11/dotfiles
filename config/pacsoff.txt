@@ -94,10 +94,10 @@ pipewire-pulse
 playerctl
 polkit-kde-agent
 python-cairo
-python-gobject
 python-matplotlib
 python-numpy
 python-pip
+python-pyqt5
 python-scipy
 qbittorrent
 qt5ct
