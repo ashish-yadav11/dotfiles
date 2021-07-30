@@ -93,6 +93,8 @@ pipewire-alsa
 pipewire-pulse
 playerctl
 polkit-kde-agent
+python-cairo
+python-gobject
 python-matplotlib
 python-pip
 python-scipy
