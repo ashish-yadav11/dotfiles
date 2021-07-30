@@ -11,6 +11,11 @@ xnoremap        <silent>        <C-w>gf                 :<C-u>call EditVisualFil
 " fix broken netrw gx (https://github.com/vim/vim/issues?=1/4738)
 nnoremap        <silent>        gx                      :call XdgOpen(1)<CR>
 xnoremap        <silent>        gx                      :<C-u>call XdgOpen(0)<CR>
+" switching between splits
+nnoremap        <silent>        <C-j>                   <C-w>j
+nnoremap        <silent>        <C-k>                   <C-w>k
+nnoremap        <silent>        <C-l>                   <C-w>l
+nnoremap        <silent>        <C-h>                   <C-w>h
 " yank path and directory of the current file
 nnoremap        <silent>        yp                      :let @+=expand("%:p")<CR>
 nnoremap        <silent>        yd                      :let @+=expand("%:p:h")<CR>
@@ -27,6 +32,8 @@ nnoremap        <silent>        <Leader><C-t>           :call SpawnTerm("td")<CR
 nnoremap        <silent>        <Leader>r               :call SpawnTerm("rc")<CR>
 nnoremap        <silent>        <Leader>R               :call SpawnTerm("rd")<CR>
 nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rp")<CR>
+" undotree toggle
+nnoremap        <silent>        <Leader>u               :UndotreeToggle<CR>
 " literal tab character on shift-tab
 inoremap                        <S-Tab>                 <C-v><Tab>
 
@@ -72,6 +79,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'morhetz/gruvbox'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'neomutt/neomutt.vim'
+Plug 'mbbill/undotree'
 Plug 'lervag/vimtex'
 
 call plug#end()
@@ -110,6 +118,13 @@ command! -bang -nargs=* Rg
 
 let g:latex_to_unicode_eager = 0
 let g:latex_to_unicode_file_types = '.*'
+
+
+" undotree
+let g:undotree_WindowLayout = 3
+let g:undotree_ShortIndicators = 1
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_RelativeTimestamp = 0
 
 
 " vimtex
