@@ -53,7 +53,8 @@ else
             sleep 0.1
             ;;
         *)
-            exec brave --app-id=cinhimbnkkaeohfgghhklpknlkffjgod
+            sigdwm "scrs i 2"
+            exit
             ;;
     esac
 fi
