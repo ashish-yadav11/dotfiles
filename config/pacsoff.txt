@@ -96,6 +96,7 @@ polkit-kde-agent
 python-cairo
 python-gobject
 python-matplotlib
+python-numpy
 python-pip
 python-scipy
 qbittorrent
