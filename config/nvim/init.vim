@@ -86,6 +86,16 @@ call plug#end()
 
 delcommand PlugUpgrade
 
+if $USER ==# 'root'
+    delcommand Plug
+    delcommand PlugClean
+    delcommand PlugDiff
+    delcommand PlugInstall
+    delcommand PlugSnapshot
+    delcommand PlugStatus
+    delcommand PlugUpdate
+endif
+
 
 " gruvbox
 
