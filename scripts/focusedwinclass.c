@@ -53,12 +53,9 @@ main(int argc, char *argv[])
                                ch.res_name ? ch.res_name : "");
                         break;
         }
-        if (winc)
-                XFree(winc);
-        if (ch.res_class)
-                XFree(ch.res_class);
-        if (ch.res_name)
-                XFree(ch.res_name);
+        XFree(winc);
+        XFree(ch.res_class);
+        XFree(ch.res_name);
         XCloseDisplay(dpy);
         return 0;
 }
