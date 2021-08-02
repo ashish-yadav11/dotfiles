@@ -86,14 +86,20 @@ zle -N viins-backward-delete-char
 bindkey -v '\C-h' viins-backward-delete-char
 bindkey -v '\C-?' viins-backward-delete-char
 
-# cleaner clear-screen
 function cleaner-clear-screen {
     echo -ne '\e[2;K' # clear current prompt
-    zle clear-screen  # clear screen
+    zle clear-screen
+}
+function reset-screen {
+    echo -ne '\ec' # reset screen
+    zle redisplay
 }
 zle -N cleaner-clear-screen
+zle -N reset-screen
 bindkey -v '\C-l' cleaner-clear-screen
 bindkey -a '\C-l' cleaner-clear-screen
+bindkey -v '\el' reset-screen
+bindkey -a '\el' reset-screen
 
 bindkey -v '\C-s' transpose-chars
 
