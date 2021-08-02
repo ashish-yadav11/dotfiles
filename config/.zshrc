@@ -83,25 +83,25 @@ function viins-backward-delete-char {
 zle -N zle-line-init
 zle -N zle-keymap-select
 zle -N viins-backward-delete-char
-bindkey -v "\C-h" viins-backward-delete-char
-bindkey -v "\C-?" viins-backward-delete-char
+bindkey -v '\C-h' viins-backward-delete-char
+bindkey -v '\C-?' viins-backward-delete-char
 
 # cleaner clear-screen
 function cleaner-clear-screen {
-    echo -ne "\e[2;K" # clear current prompt
+    echo -ne '\e[2;K' # clear current prompt
     zle clear-screen  # clear screen
 }
 zle -N cleaner-clear-screen
-bindkey -v "\C-l" cleaner-clear-screen
-bindkey -a "\C-l" cleaner-clear-screen
+bindkey -v '\C-l' cleaner-clear-screen
+bindkey -a '\C-l' cleaner-clear-screen
 
-bindkey -v "\C-s" transpose-chars
+bindkey -v '\C-s' transpose-chars
 
-bindkey -a "J" history-search-forward
-bindkey -a "K" history-search-backward
+bindkey -a 'J' history-search-forward
+bindkey -a 'K' history-search-backward
 
-bindkey -v "\C-n" down-history
-bindkey -v "\C-p" up-history
+bindkey -v '\C-n' down-history
+bindkey -v '\C-p' up-history
 
 function exec-ranger-0 {
     echo -ne "$defcursor"
@@ -113,8 +113,8 @@ function exec-ranger-1 {
 }
 zle -N exec-ranger-0
 zle -N exec-ranger-1
-bindkey -v "\er" exec-ranger-0
-bindkey -v "\eR" exec-ranger-1
+bindkey -v '\er' exec-ranger-0
+bindkey -v '\eR' exec-ranger-1
 
 function fzf-select-bookmark {
     local selected lbuffer
@@ -130,7 +130,7 @@ function fzf-select-bookmark {
     zle reset-prompt
 }
 zle -N fzf-select-bookmark
-bindkey -v "\eb" fzf-select-bookmark
+bindkey -v '\C-b' fzf-select-bookmark
 
 
 ## COMPLETION (man zshcompsys)
@@ -143,8 +143,8 @@ compinit -d ~/.cache/zcompdump
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey -v "\C-o" edit-command-line
-bindkey -a "\C-o" edit-command-line
+bindkey -v '\C-o' edit-command-line
+bindkey -a '\C-o' edit-command-line
 
 unalias run-help
 autoload -Uz run-help
@@ -202,7 +202,8 @@ function dm {
             echo "Usage: dm [url]"
             ;;
     esac
-    youtube-dl --extract-audio --audio-format best --audio-quality 0 --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
+    youtube-dl --extract-audio --audio-format best --audio-quality 0 \
+               --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
 }
 
 function m {
@@ -256,16 +257,16 @@ function share {
 }
 
 function spull {
-    echo -e "\e[1;32msuckless sites\e[0m"
+    echo -e '\e[1;32msuckless sites\e[0m'
     git -C /media/storage/.temporary/suckless-sites pull
 
-    echo -e "\n\e[1;32mdwm\e[0m"
+    echo -e '\n\e[1;32mdwm\e[0m'
     git -C /media/storage/.temporary/suckless-software/dwm pull
 
-    echo -e "\n\e[1;32mst\e[0m"
+    echo -e '\n\e[1;32mst\e[0m'
     git -C /media/storage/.temporary/suckless-software/st pull
 
-    echo -e "\n\e[1;32mscroll\e[0m"
+    echo -e '\n\e[1;32mscroll\e[0m'
     git -C /media/storage/.temporary/suckless-software/scroll pull
 }
 
@@ -298,10 +299,10 @@ function zcurl {
 }
 
 function zpull {
-    echo -e "\e[1;32mfzf-tab\e[0m"
+    echo -e '\e[1;32mfzf-tab\e[0m'
     git -C ~/.local/share/zsh/plugins/fzf-tab pull
 
-    echo -e "\n\e[1;32mzsh-system-clipboard\e[0m"
+    echo -e '\n\e[1;32mzsh-system-clipboard\e[0m'
     git -C ~/.local/share/zsh/plugins/zsh-system-clipboard pull
 }
 

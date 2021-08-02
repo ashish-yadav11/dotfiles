@@ -29,9 +29,9 @@ __fzf_select_bookmark() {
     READLINE_POINT="${#READLINE_LINE}"
 }
 
-bind -m emacs-standard -x '"\eb": __fzf_select_bookmark'
-bind -m vi-command -x '"\eb": __fzf_select_bookmark'
-bind -m vi-insert -x '"\eb": __fzf_select_bookmark'
+bind -m emacs-standard -x '"\C-b": __fzf_select_bookmark'
+bind -m vi-command -x '"\C-b": __fzf_select_bookmark'
+bind -m vi-insert -x '"\C-b": __fzf_select_bookmark'
 
 # functions
 dm() {
@@ -48,7 +48,8 @@ dm() {
             echo "Usage: dm [url]"
             ;;
     esac
-    youtube-dl --extract-audio --audio-format best --audio-quality 0 --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
+    youtube-dl --extract-audio --audio-format best --audio-quality 0 \
+               --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
 }
 
 m() {
@@ -96,16 +97,16 @@ share() {
 }
 
 spull() {
-    echo -e "\e[1;32msuckless sites\e[0m"
+    echo -e '\e[1;32msuckless sites\e[0m'
     git -C /media/storage/.temporary/suckless-sites pull
 
-    echo -e "\n\e[1;32mdwm\e[0m"
+    echo -e '\n\e[1;32mdwm\e[0m'
     git -C /media/storage/.temporary/suckless-software/dwm pull
 
-    echo -e "\n\e[1;32mst\e[0m"
+    echo -e '\n\e[1;32mst\e[0m'
     git -C /media/storage/.temporary/suckless-software/st pull
 
-    echo -e "\n\e[1;32mscroll\e[0m"
+    echo -e '\n\e[1;32mscroll\e[0m'
     git -C /media/storage/.temporary/suckless-software/scroll pull
 }
 

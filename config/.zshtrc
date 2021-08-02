@@ -7,10 +7,10 @@ PS1='%167F[%11F%n%10F@%12F%M%139F %1~%167F]%f$ '
 
 # title, st newterm and termite tabbing
 function settitle {
-    print -Pn "\e]0;%n@%M:%~\e\\"
+    print -Pn '\e]0;%n@%M:%~\e\'
 }
 function sendpwd {
-    print -Pn "\e]7;%d\e\\"
+    print -Pn '\e]7;%d\e\'
 }
 case "$TERM" in
     st*)
@@ -37,31 +37,31 @@ function preexec {
 
 ## ZLE (man zshzle)
 
-defcursor="\e[2 q"
-cmdcursor="\e[2 q"
-inscursor="\e[6 q"
-repcursor="\e[4 q"
+defcursor='\e[2 q'
+cmdcursor='\e[2 q'
+inscursor='\e[6 q'
+repcursor='\e[4 q'
 
 # insert key
-bindkey -v "\e[2~" overwrite-mode
-bindkey -a "\e[2~" vi-insert
+bindkey -v '\e[2~' overwrite-mode
+bindkey -a '\e[2~' vi-insert
 
 # delete key
-bindkey -v "\e[3~" delete-char
-bindkey -a "\e[3~" delete-char
+bindkey -v '\e[3~' delete-char
+bindkey -a '\e[3~' delete-char
 
 # home key
-bindkey -v "\e[H" beginning-of-line
-bindkey -a "\e[H" beginning-of-line
+bindkey -v '\e[H' beginning-of-line
+bindkey -a '\e[H' beginning-of-line
 
 # pgup key
-bindkey -v "\e[5~" history-search-backward
-bindkey -a "\e[5~" history-search-backward
+bindkey -v '\e[5~' history-search-backward
+bindkey -a '\e[5~' history-search-backward
 
 # pgdn key
-bindkey -v "\e[6~" history-search-forward
-bindkey -a "\e[6~" history-search-forward
+bindkey -v '\e[6~' history-search-forward
+bindkey -a '\e[6~' history-search-forward
 
 # end key
-bindkey -v "\e[F" end-of-line
-bindkey -a "\e[F" end-of-line
+bindkey -v '\e[F' end-of-line
+bindkey -a '\e[F' end-of-line

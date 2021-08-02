@@ -14,14 +14,14 @@ shopt -s autocd
 stty -ixon
 
 # change cursor to block before entering external programs
-PS0="\e[2 q"
+PS0='\e[2 q'
 
-blue="\[\e[38;5;12m\]"
-green="\[\e[38;5;10m\]"
-red="\[\e[38;5;167m\]"
-violet="\[\e[38;5;139m\]"
-white="\[\e[0m\]"
-yellow="\[\e[38;5;11m\]"
+blue='\[\e[38;5;12m\]'
+green='\[\e[38;5;10m\]'
+red='\[\e[38;5;167m\]'
+violet='\[\e[38;5;139m\]'
+white='\[\e[0m\]'
+yellow='\[\e[38;5;11m\]'
 
 # prompt
 PS1="${red}[${yellow}\u${green}@${blue}\h ${violet}\W${red}]${white}$ "

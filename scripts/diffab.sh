@@ -8,12 +8,12 @@ print_mdiff() {
     if [[ -n "$mdiff" ]] ; then
         printf "%s\n\n" "$mdiff"
     else
-        echo -e "No changes\n"
+        echo -e 'No changes\n'
     fi
 }
 
 
-echo -e "\e[1;32mbackup\e[0m"
+echo -e '\e[1;32mbackup\e[0m'
 mdiff="$(
     $mdiff_cmd /media/storage/.backup /home/ashish |
         grep -Ev '^Only in ' |
@@ -30,7 +30,7 @@ mdiff="$(
 print_mdiff
 
 
-echo -e "\e[1;32mdotfiles\e[0m"
+echo -e '\e[1;32mdotfiles\e[0m'
 mdiff="$(
     sdiff="$(
         $sdiff_cmd "$dotfiles/config/bash.bashrc" /etc/bash.bashrc
@@ -62,7 +62,7 @@ mdiff="$(
 print_mdiff
 
 
-echo -e "\e[1;32mpackage list\e[0m"
+echo -e '\e[1;32mpackage list\e[0m'
 mdiff="$(
     sdiff="$(
         $sdiff_cmd "$dotfiles/config/pacsoff.txt" <(pacman -Qqen | grep -Fxvf <(pacman -Qqg base-devel) |
