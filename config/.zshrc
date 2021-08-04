@@ -136,7 +136,7 @@ function fzf-select-bookmark {
     zle reset-prompt
 }
 zle -N fzf-select-bookmark
-bindkey -v '\C-b' fzf-select-bookmark
+bindkey -v '\eb' fzf-select-bookmark
 
 
 ## COMPLETION (man zshcompsys)

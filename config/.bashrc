@@ -28,7 +28,7 @@ __fzf_select_bookmark() {
     READLINE_LINE="${selected%% #*}"
     READLINE_POINT="${#READLINE_LINE}"
 }
-bind -m vi-insert -x '"\C-b": __fzf_select_bookmark'
+bind -m vi-insert -x '"\eb": __fzf_select_bookmark'
 
 # functions
 dm() {
