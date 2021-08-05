@@ -30,23 +30,32 @@ if [ -d /etc/X11/xinit/xinitrc.d ] ; then
 fi
 
 # redshift
+{
 time="$(date +%H%M)"
 if [ "$time" -ge 2200 ] || [ "$time" -lt 0600 ] ; then
     redshift -PO 4500
 fi
+} &
 
 # fix for java programs in dwm
-wmname LG3D
+wmname LG3D &
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 xwallpaper --stretch /home/ashish/.config/wall* &
+{
 pidof -s /usr/lib/polkit-kde-authentication-agent-1 >/dev/null 2>&1 ||
-    /usr/lib/polkit-kde-authentication-agent-1 &
-pidof -s /usr/bin/nm-applet >/dev/null 2>&1 || nm-applet &
-clipdaemon &
-dsblocks &
+    /usr/lib/polkit-kde-authentication-agent-1
+} &
+{
+pidof -s /usr/bin/nm-applet >/dev/null 2>&1 ||
+    nm-applet
+} &
+{
+dsblocks
 pidof -sx /home/ashish/.scripts/pulse_daemon.sh >/dev/null 2>&1 ||
-    /home/ashish/.scripts/pulse_daemon.sh &
+    /home/ashish/.scripts/pulse_daemon.sh
+} &
+clipdaemon &
 playerctld daemon &
 unclutter &
 adb start-server &
