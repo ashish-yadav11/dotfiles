@@ -46,7 +46,6 @@ syntax on
 autocmd FileType c,cpp setlocal cindent shiftwidth=8
 autocmd FileType go setlocal noexpandtab smarttab shiftwidth=0 tabstop=8
 
-set clipboard+=unnamedplus
 set expandtab smarttab shiftwidth=4 tabstop=8
 set nojoinspaces
 set mouse=a
@@ -55,20 +54,24 @@ set splitbelow splitright
 set termguicolors
 set title titlelen=0
 
-let g:clipboard = {
-  \     'name': 'xsel',
-  \     'copy': {
-  \         '+': 'xsel -nib',
-  \         '*': 'xsel -nip',
-  \     },
-  \     'paste': {
-  \         '+': 'xsel -ob',
-  \         '*': 'xsel -op',
-  \     },
-  \     'cache_enabled': 1,
-  \ }
 let g:netrw_browsex_viewer = 'setsid -f xdg-open'
 let g:netrw_nogx = 1
+
+if $TERM !=# 'linux'
+    let g:clipboard = {
+      \     'name': 'xsel',
+      \     'copy': {
+      \         '+': 'xsel -nib',
+      \         '*': 'xsel -nip',
+      \     },
+      \     'paste': {
+      \         '+': 'xsel -ob',
+      \         '*': 'xsel -op',
+      \     },
+      \     'cache_enabled': 1,
+      \ }
+    set clipboard+=unnamedplus
+endif
 
 
 " vim-plug
