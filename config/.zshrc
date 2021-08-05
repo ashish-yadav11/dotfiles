@@ -87,7 +87,7 @@ bindkey -v '\C-h' viins-backward-delete-char
 bindkey -v '\C-?' viins-backward-delete-char
 
 function cleaner-clear-screen {
-    echo -ne '\e[2;K' # clear current prompt
+    echo -ne '\e[2K' # clear current prompt
     zle clear-screen
 }
 function reset-screen {
