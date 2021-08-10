@@ -70,7 +70,7 @@ ms() {
 
 neomutt() {
     /usr/bin/neomutt "$@"
-    pidof -s /usr/bin/neomutt &>/dev/null || rm -rf /tmp/neomutt/
+    pidof -sq /usr/bin/neomutt || rm -rf /tmp/neomutt/
 }
 
 s() {
