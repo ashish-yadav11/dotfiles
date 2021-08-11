@@ -19,6 +19,7 @@ calc
 calcurse
 chromium
 chrony
+clang
 crda
 cronie
 dash
