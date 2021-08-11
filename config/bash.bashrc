@@ -89,7 +89,7 @@ source /usr/share/fzf/key-bindings.bash
 
 # functions
 mkcd() {
-    mkdir "$1" && cd "$1"
+    mkdir "$@" && cd "${@: -1}"
 }
 
 # autocompletion
