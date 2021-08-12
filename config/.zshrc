@@ -133,6 +133,10 @@ typeset -g -A key
  key[PageDown]="${terminfo[knp]}"
 #key[Shift-Tab]="${terminfo[kcbt]}"
 
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
 # setup key accordingly
  [[ -n "${key[Home]}"      ]] &&   bindkeyboth   "${key[Home]}"       beginning-of-line
  [[ -n "${key[End]}"       ]] &&   bindkeyboth   "${key[End]}"        end-of-line
@@ -141,12 +145,12 @@ typeset -g -A key
  [[ -n "${key[Backspace]}" ]] && { bindkey -v -- "${key[Backspace]}"  viins-backward-delete-char
                                    bindkey -a -- "${key[Backspace]}"  backward-char ;}
  [[ -n "${key[Delete]}"    ]] &&   bindkeyboth   "${key[Delete]}"     delete-char
- [[ -n "${key[Up]}"        ]] &&   bindkeyboth   "${key[Up]}"         up-line-or-history
- [[ -n "${key[Down]}"      ]] &&   bindkeyboth   "${key[Down]}"       down-line-or-history
+ [[ -n "${key[Up]}"        ]] &&   bindkeyboth   "${key[Up]}"         up-line-or-beginning-search
+ [[ -n "${key[Down]}"      ]] &&   bindkeyboth   "${key[Down]}"       down-line-or-beginning-search
  [[ -n "${key[Left]}"      ]] &&   bindkeyboth   "${key[Left]}"       backward-char
  [[ -n "${key[Right]}"     ]] &&   bindkeyboth   "${key[Right]}"      forward-char
- [[ -n "${key[PageUp]}"    ]] &&   bindkeyboth   "${key[PageUp]}"     history-search-backward
- [[ -n "${key[PageDown]}"  ]] &&   bindkeyboth   "${key[PageDown]}"   history-search-forward
+ [[ -n "${key[PageUp]}"    ]] &&   bindkeyboth   "${key[PageUp]}"     history-beginning-search-backward
+ [[ -n "${key[PageDown]}"  ]] &&   bindkeyboth   "${key[PageDown]}"   history-beginning-search-backward
 #[[ -n "${key[Shift-Tab]}" ]] &&   bindkeyboth   "${key[Shift-Tab]}"  reverse-menu-complete
 
 # Finally, make sure the terminal is in application mode, when zle is
