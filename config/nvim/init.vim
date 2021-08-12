@@ -229,13 +229,14 @@ function XdgOpen(normal = 1)
             let l:arg = expand(expand("<cfile>"))
         endif
         if l:arg !=# ""
-            if filereadable(l:arg)
+            if filereadable(l:arg) || isdirectory(l:arg)
                 let l:arg = shellescape(l:arg, 1)
             else
                 echohl ErrorMsg
                 redraw
                 echomsg '"'..l:arg..'" is not a valid url or file!'
                 echohl None
+                return
             endif
         else
             if ! a:normal
