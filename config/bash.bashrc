@@ -43,19 +43,14 @@ else
     PROMPT_COMMAND='history -a'
 fi
 
-# title, st newterm and termite tabbing
+# title, st newterm
 case "$TERM" in
     st*)
         PROMPT_COMMAND="$PROMPT_COMMAND"'
 printf "\e]7;%s\e\\" "$PWD"
 printf "\e]0;%s@%s:%s\e\\" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
         ;;
-    *termite*)
-        PROMPT_COMMAND="$PROMPT_COMMAND"'
-printf "\e]0;%s@%s:%s\e\\" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
-        source /etc/profile.d/vte.sh
-        ;;
-    alacritty*)
+    alacritty*|*xterm*)
         PROMPT_COMMAND="$PROMPT_COMMAND"'
 printf "\e]0;%s@%s:%s\e\\" "$USER" "${HOSTNAME%%.*}" "${PWD/#"$HOME"/\~}"'
         ;;
