@@ -50,6 +50,12 @@ fi
 # vi keybindings
 bindkey -v
 
+# simultaneously bind key for both viins and vicmd modes
+function bindkeyboth {
+    bindkey -v -- "$1" "$2" #viins
+    bindkey -a -- "$1" "$2" #vicmd
+}
+
 # fix backspace and change cursor shape according to active mode
 function zle-line-init zle-keymap-select {
     case "$KEYMAP" in
@@ -97,10 +103,8 @@ function reset-screen {
 }
 zle -N cleaner-clear-screen
 zle -N reset-screen
-bindkey -v '\C-l' cleaner-clear-screen
-bindkey -a '\C-l' cleaner-clear-screen
-bindkey -v '\el' reset-screen
-bindkey -a '\el' reset-screen
+bindkeyboth '\C-l' cleaner-clear-screen
+bindkeyboth '\el' reset-screen
 
 bindkey -v '\C-s' transpose-chars
 
@@ -109,6 +113,51 @@ bindkey -a 'K' history-search-backward
 
 bindkey -v '\C-n' down-history
 bindkey -v '\C-p' up-history
+
+# special keys (https://wiki.archlinux.org/title/zsh)
+
+# create a zkbd compatible hash;
+# to add other keys to this hash, see: man 5 terminfo
+typeset -g -A key
+
+ key[Home]="${terminfo[khome]}"
+ key[End]="${terminfo[kend]}"
+ key[Insert]="${terminfo[kich1]}"
+ key[Backspace]="${terminfo[kbs]}"
+ key[Delete]="${terminfo[kdch1]}"
+ key[Up]="${terminfo[kcuu1]}"
+ key[Down]="${terminfo[kcud1]}"
+ key[Left]="${terminfo[kcub1]}"
+ key[Right]="${terminfo[kcuf1]}"
+ key[PageUp]="${terminfo[kpp]}"
+ key[PageDown]="${terminfo[knp]}"
+#key[Shift-Tab]="${terminfo[kcbt]}"
+
+# setup key accordingly
+ [[ -n "${key[Home]}"      ]] &&   bindkeyboth   "${key[Home]}"       beginning-of-line
+ [[ -n "${key[End]}"       ]] &&   bindkeyboth   "${key[End]}"        end-of-line
+ [[ -n "${key[Insert]}"    ]] && { bindkey -v -- "${key[Insert]}"     overwrite-mode
+                                   bindkey -a -- "${key[Insert]}"     vi-insert ;}
+ [[ -n "${key[Backspace]}" ]] && { bindkey -v -- "${key[Backspace]}"  viins-backward-delete-char
+                                   bindkey -a -- "${key[Backspace]}"  backward-char ;}
+ [[ -n "${key[Delete]}"    ]] &&   bindkeyboth   "${key[Delete]}"     delete-char
+ [[ -n "${key[Up]}"        ]] &&   bindkeyboth   "${key[Up]}"         up-line-or-history
+ [[ -n "${key[Down]}"      ]] &&   bindkeyboth   "${key[Down]}"       down-line-or-history
+ [[ -n "${key[Left]}"      ]] &&   bindkeyboth   "${key[Left]}"       backward-char
+ [[ -n "${key[Right]}"     ]] &&   bindkeyboth   "${key[Right]}"      forward-char
+ [[ -n "${key[PageUp]}"    ]] &&   bindkeyboth   "${key[PageUp]}"     history-search-backward
+ [[ -n "${key[PageDown]}"  ]] &&   bindkeyboth   "${key[PageDown]}"   history-search-forward
+#[[ -n "${key[Shift-Tab]}" ]] &&   bindkeyboth   "${key[Shift-Tab]}"  reverse-menu-complete
+
+# Finally, make sure the terminal is in application mode, when zle is
+# active. Only then are the values from $terminfo valid.
+if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
+    autoload -Uz add-zle-hook-widget
+    function zle_application_mode_start { echoti smkx }
+    function zle_application_mode_stop { echoti rmkx }
+    add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
+    add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
+fi
 
 function exec-ranger-0 {
     echo -ne "$defcursor"
