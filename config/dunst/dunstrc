@@ -516,6 +516,9 @@
 [sleep-dine]
     stack_tag = "sleepdine"
     history_ignore = yes
+[st-plumber]
+    summary = "st-pluber"
+    history_ignore = yes
 [sxiv]
     summary = "Sxiv"
     history_ignore = yes
