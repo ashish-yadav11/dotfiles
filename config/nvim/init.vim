@@ -43,9 +43,6 @@ inoremap                        <S-Tab>                 <C-v><Tab>
 filetype plugin on
 syntax on
 
-autocmd FileType c,cpp setlocal cindent shiftwidth=8
-autocmd FileType go setlocal noexpandtab smarttab shiftwidth=0 tabstop=8
-
 set expandtab smarttab shiftwidth=4 tabstop=8
 set nojoinspaces
 set mouse=a
@@ -53,6 +50,10 @@ set number relativenumber
 set splitbelow splitright
 set termguicolors
 set title titlelen=0
+
+autocmd FileType go setlocal noexpandtab shiftwidth=0
+autocmd BufNewFile,BufRead *.[ch] setlocal cindent shiftwidth=8
+autocmd BufNewFile,BufRead */st/*.[ch] setlocal noexpandtab shiftwidth=0
 
 let g:netrw_browsex_viewer = 'setsid -f xdg-open'
 let g:netrw_nogx = 1
