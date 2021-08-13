@@ -25,7 +25,7 @@ function sc-vicmd-vi-yank-whole-line() {
 zle -N sc-vicmd-vi-yank-whole-line
 
 function sc-vicmd-vi-put() {
-    local clip mode rbuffer_until_newline lbuffer_untile_newline
+    local mode clip rbuffer_until_newline lbuffer_until_newline
     mode=$1
     clip=$(sc-clipget; echo -n x); clip=${clip%x}
     rbuffer_until_newline=${RBUFFER%%$'\n'*}
@@ -40,12 +40,12 @@ function sc-vicmd-vi-put() {
             CURSOR=$(( $#lbuffer_until_newline + 1 ))
         fi
     fi
-    if [[ "$mode" == after && "$#rbuffer_untile_newline" != 0 ]] ; then
+    if [[ "$mode" == after && "$#rbuffer_until_newline" != 0 ]] ; then
         BUFFER=${BUFFER:0:$(( CURSOR + 1 ))}${clip}${BUFFER:$(( CURSOR + 1 ))}
         CURSOR=$(( $#LBUFFER + $#clip ))
     else
-        BUFFER=${BUFFER:0:${CURSOR}}${clip}${BUFFER:${CURSOR}}
-        CURSOR=$(( $#LBUFFER + $#CLIPBOARD - 1 ))
+        BUFFER=${BUFFER:0:$(( CURSOR ))}${clip}${BUFFER:$(( CURSOR ))}
+        CURSOR=$(( $#LBUFFER + $#clip - 1 ))
     fi
 }
 
@@ -137,14 +137,15 @@ zle -N sc-visual-vi-delete
 
 function () {
     local i bound_keys parts key cmd keymap
-    for keymap in vicmd visual emacs; do
+    for keymap in vicmd visual emacs ; do
         bound_keys=( ${(f)"$(bindkey -M "$keymap")"} )
         for (( i = 1; i < ${#bound_keys[@]}; i++ )) ; do
             parts=( "${(z)bound_keys[i]}" )
             key=${parts[1]}
             cmd=${parts[2]}
-            if (( ${+functions["sc-$keymap-$cmd"]} )) ; then
-                eval 'bindkey -M "$keymap" -- "$key" sc-'"$keymap-$cmd"
+            if (( ${+functions[sc-$keymap-$cmd]} )) ; then
+                # bindkey -M above prints quoted outputs
+                eval "bindkey -M $keymap $key sc-$keymap-$cmd"
             fi
         done
     done
