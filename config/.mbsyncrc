@@ -15,8 +15,8 @@ Flatten .
 
 Channel iiser
 Expunge Both
-Master :iiser-remote:
-Slave :iiser-local:
+Far :iiser-remote:
+Near :iiser-local:
 Patterns * ![Gmail]* "[Gmail]/Drafts" "[Gmail]/Sent Mail" "[Gmail]/Spam" "[Gmail]/Trash"
 Create Both
 SyncState *
