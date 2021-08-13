@@ -4,7 +4,6 @@ if [[ "$TERM" == linux ]] ; then
     source ~/.zshcrc
 else
     source ~/.zshtrc
-    source ~/.zshsrc
 fi
 
 
@@ -380,3 +379,6 @@ source /usr/share/fzf/key-bindings.zsh
 
 # syntax highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# systemc clipboard
+[[ "$TERM" != linux ]] && source ~/.zshsrc
