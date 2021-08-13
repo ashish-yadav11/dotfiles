@@ -1,3 +1,5 @@
+### LINUX CONSOLE SPECIFIC
+
 ## PARAMETERS (man zshparam)
 
 PS1='%F{red}[%B%F{yellow}%n%F{green}@%F{blue}%M%F{cyan} %1~%b%F{red}]%f$ '

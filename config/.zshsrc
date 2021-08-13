@@ -1,0 +1,151 @@
+### SYSTEM CLIPBOARD (https://github.com/kutsan/zsh-system-clipboard.git)
+
+function sc-clipset() {
+    xsel -ib
+}
+
+function sc-clipget() {
+    xsel -ob 2>/dev/null
+}
+
+function sc-vicmd-vi-yank() {
+    zle vi-yank
+    if [[ "$KEYS" == y && "$KEYMAP" == viopp ]] ; then
+        printf '%s\n' "$CUTBUFFER" | sc-clipset
+    else
+        printf '%s' "$CUTBUFFER" | sc-clipset
+    fi
+}
+zle -N sc-vicmd-vi-yank
+
+function sc-vicmd-vi-yank-whole-line() {
+    zle vi-yank-whole-line
+    printf '%s\n' "$CUTBUFFER" | sc-clipset
+}
+zle -N sc-vicmd-vi-yank-whole-line
+
+function sc-vicmd-vi-put() {
+    local clip mode rbuffer_until_newline lbuffer_untile_newline
+    mode=$1
+    clip=$(sc-clipget; echo -n x); clip=${clip%x}
+    rbuffer_until_newline=${RBUFFER%%$'\n'*}
+    if [[ "${clip[$#clip]}" == $'\n' ]] ; then
+        if [[ "$rbuffer_until_newline" == "$RBUFFER" && "$mode" == after ]] ; then
+            clip=$'\n'${clip%%$'\n'}
+        fi
+        if [[ "$mode" == after ]] ; then
+            CURSOR=$(( CURSOR + $#rbuffer_until_newline ))
+        else
+            lbuffer_until_newline=${LBUFFER%$'\n'*}
+            CURSOR=$(( $#lbuffer_until_newline + 1 ))
+        fi
+    fi
+    if [[ "$mode" == after && "$#rbuffer_untile_newline" != 0 ]] ; then
+        BUFFER=${BUFFER:0:$(( CURSOR + 1 ))}${clip}${BUFFER:$(( CURSOR + 1 ))}
+        CURSOR=$(( $#LBUFFER + $#clip ))
+    else
+        BUFFER=${BUFFER:0:${CURSOR}}${clip}${BUFFER:${CURSOR}}
+        CURSOR=$(( $#LBUFFER + $#CLIPBOARD - 1 ))
+    fi
+}
+
+function sc-vicmd-vi-put-after() {
+    sc-vicmd-vi-put after
+}
+zle -N sc-vicmd-vi-put-after
+
+function sc-vicmd-vi-put-before() {
+    sc-vicmd-vi-put before
+}
+zle -N sc-vicmd-vi-put-before
+
+function sc-vicmd-vi-delete() {
+    local region_was_active
+    region_was_active=$REGION_ACTIVE
+    zle vi-delete
+    if [[ "$KEYS" == d && "$region_was_active" == 0 ]] ; then
+        printf '%s\n' "$CUTBUFFER" | sc-clipset
+    else
+        printf '%s' "$CUTBUFFER" | sc-clipset
+    fi
+}
+zle -N sc-vicmd-vi-delete
+
+function sc-vicmd-vi-delete-char() {
+    zle vi-delete-char
+    printf '%s' "$CUTBUFFER" | sc-clipset
+}
+zle -N sc-vicmd-vi-delete-char
+
+function sc-vicmd-vi-change-eol() {
+    zle vi-change-eol
+    printf '%s' "$CUTBUFFER" | sc-clipset
+}
+zle -N sc-vicmd-vi-change-eol
+
+function sc-vicmd-vi-kill-eol() {
+    zle vi-kill-eol
+    printf '%s' "$CUTBUFFER" | sc-clipset
+}
+zle -N sc-vicmd-vi-kill-eol
+
+function sc-vicmd-vi-change-whole-line() {
+    zle vi-change-whole-line
+    printf '%s\n' "$CUTBUFFER" | sc-clipset
+}
+zle -N sc-vicmd-vi-change-whole-line
+
+function sc-vicmd-vi-change() {
+    zle vi-change
+    printf '%s' "$CUTBUFFER" | sc-clipset
+}
+zle -N sc-vicmd-vi-change
+
+function sc-vicmd-vi-substitue() {
+    zle vi-substitue
+    printf '%s' "$CUTBUFFER" | sc-clipset
+}
+zle -N sc-vicmd-vi-substitue
+
+function sc-vicmd-vi-delete-char() {
+    zle vi-delete-char
+    printf '%s' "$CUTBUFFER" | sc-clipset
+}
+zle -N sc-vicmd-vi-delete-char
+
+function sc-vicmd-vi-backward-delete-char() {
+    zle vi-backward-delete-char
+    printf '%s' "$CUTBUFFER" | sc-clipset
+}
+zle -N sc-vicmd-vi-backward-delete-char
+
+function sc-visual-put-replace-selection(){
+    local put replaced
+    put=$(sc-clipget; echo -n x); put=${put%x}
+    sc-vicmd-vi-delete
+    replaced=$(sc-clipget; echo -n x); replaced=${replaced%x}
+    printf '%s' "$put" | sc-clipset
+    sc-vicmd-vi-put-before
+    printf '%s' "$replaced" | sc-clipset
+}
+zle -N sc-visual-put-replace-selection
+
+function sc-visual-vi-delete(){
+    sc-vicmd-vi-delete
+}
+zle -N sc-visual-vi-delete
+
+function () {
+    local i bound_keys parts key cmd keymap
+    for keymap in vicmd visual emacs; do
+        bound_keys=( ${(f)"$(bindkey -M "$keymap")"} )
+        for (( i = 1; i < ${#bound_keys[@]}; i++ )) ; do
+            parts=( "${(z)bound_keys[i]}" )
+            key=${parts[1]}
+            cmd=${parts[2]}
+            if (( ${+functions["sc-$keymap-$cmd"]} )) ; then
+                eval 'bindkey -M "$keymap" -- "$key" sc-'"$keymap-$cmd"
+            fi
+        done
+    done
+}

@@ -1,9 +1,10 @@
-## CONSOLE/TERMINAL SPECIFIC
+### GLOBAL
 
 if [[ "$TERM" == linux ]] ; then
     source ~/.zshcrc
 else
     source ~/.zshtrc
+    source ~/.zshsrc
 fi
 
 
@@ -364,9 +365,6 @@ function zcurl {
 function zpull {
     echo -e '\e[1;32mfzf-tab\e[0m'
     git -C ~/.local/share/zsh/plugins/fzf-tab pull
-
-    echo -e '\n\e[1;32mzsh-system-clipboard\e[0m'
-    git -C ~/.local/share/zsh/plugins/zsh-system-clipboard pull
 }
 
 
@@ -379,9 +377,6 @@ source ~/.local/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 
 # fzf key bindings
 source /usr/share/fzf/key-bindings.zsh
-
-# system clipboard
-source ~/.local/share/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh
 
 # syntax highlighting
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

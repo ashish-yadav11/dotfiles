@@ -1,3 +1,5 @@
+### GUI TERMINAL SPECIFIC
+
 ## PARAMETERS (man zshparam)
 
 PS1='%167F[%11F%n%10F@%12F%M%139F %1~%167F]%f$ '
