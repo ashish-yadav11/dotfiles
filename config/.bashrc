@@ -32,6 +32,7 @@ bind -m vi-insert -x '"\eb": __fzf_select_bookmark'
 
 # functions
 dm() {
+    local url
     case "$#" in
         0)
             url="$(xsel -ob)" || { echo "Nothing in clipboard!"; return 1 ;}
@@ -58,6 +59,7 @@ m() {
 }
 
 ms() {
+    local src dst
     src=/media/storage/Music/
     dst=( "$XDG_RUNTIME_DIR/mtp/RMX1831-9PLF7LKZKNFYLR5H-"*"/Internal shared storage/Music" )
     if [[ -d "${dst[0]}" ]] ; then
@@ -120,6 +122,7 @@ trash-list() {
 }
 
 zcurl() {
+    local url
     case "$#" in
         0) url="$(xsel -ob)" || { echo "Nothing in clipboard!"; return 1 ;} ;;
         1) url="$1" ;;

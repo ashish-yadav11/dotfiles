@@ -249,6 +249,7 @@ alias pz="INCOGNITO=1 zsh"
 
 
 function dm {
+    local url
     case "$#" in
         0)
             url="$(xsel -ob)" || { echo "Nothing in clipboard!"; return 1 ;}
@@ -279,6 +280,7 @@ function mkcd {
 }
 
 function ms {
+    local src dst
     src=/media/storage/Music/
     unsetopt NOMATCH
     dst=( "$XDG_RUNTIME_DIR/mtp/RMX1831-9PLF7LKZKNFYLR5H-"*"/Internal shared storage/Music" )
@@ -343,6 +345,7 @@ function trash-list {
 }
 
 function zcurl {
+    local url
     case "$#" in
         0) url="$(xsel -ob)" || { echo "Nothing in clipboard!"; return 1 ;} ;;
         1) url="$1" ;;
