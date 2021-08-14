@@ -308,7 +308,7 @@ pdftku() {
     base="$(basename "$1")"
     ext="${base##*.}"; base="${base%.*}"
     bak="${dir}/${base}_.${ext}"
-    mv -b "$1" "$bak"
+    /usr/bin/mv -b "$1" "$bak"
     pdftk "$bak" update_info "${2:-info}" output "$1"
 }
 
