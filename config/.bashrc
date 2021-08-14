@@ -75,6 +75,20 @@ neomutt() {
     pidof -sq /usr/bin/neomutt || rm -rf /tmp/neomutt/
 }
 
+pdftkd() {
+    pdftk "$1" dump_data output "${2:-info}"
+}
+
+pdftku() {
+    local dir base ext bak
+    dir="$(dirname "$1")"
+    base="$(basename "$1")"
+    ext="${base##*.}"; base="${base%.*}"
+    bak="${dir}/${base}_.${ext}"
+    mv -b "$1" "$bak"
+    pdftk "$bak" update_info "${2:-info}" output "$1"
+}
+
 s() {
     if [[ -x ./sync.sh ]] ; then
         ./sync.sh "$@"

@@ -248,7 +248,7 @@ alias pb='bash --rcfile <(echo '\''[[ -f ~/.bashrc ]] && source ~/.bashrc; unset
 alias pz="INCOGNITO=1 zsh"
 
 
-function dm {
+dm() {
     local url
     case "$#" in
         0)
@@ -267,7 +267,7 @@ function dm {
                --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
 }
 
-function m {
+m() {
     if [[ -x ./make.sh ]] ; then
         ./make.sh "$@"
     else
@@ -275,11 +275,11 @@ function m {
     fi
 }
 
-function mkcd {
+mkcd() {
     mkdir "$@" && cd "${@: -1}"
 }
 
-function ms {
+ms() {
     local src dst
     src=/media/storage/Music/
     unsetopt NOMATCH
@@ -293,12 +293,26 @@ function ms {
     fi
 }
 
-function neomutt {
+neomutt() {
     /usr/bin/neomutt "$@"
     pidof -sq /usr/bin/neomutt || rm -rf /tmp/neomutt/
 }
 
-function s {
+pdftkd() {
+    pdftk "$1" dump_data output "${2:-info}"
+}
+
+pdftku() {
+    local dir base ext bak
+    dir="$(dirname "$1")"
+    base="$(basename "$1")"
+    ext="${base##*.}"; base="${base%.*}"
+    bak="${dir}/${base}_.${ext}"
+    mv -b "$1" "$bak"
+    pdftk "$bak" update_info "${2:-info}" output "$1"
+}
+
+s() {
     if [[ -x ./sync.sh ]] ; then
         ./sync.sh "$@"
     else
@@ -306,7 +320,7 @@ function s {
     fi
 }
 
-function share {
+share() {
     local url
     if [[ ! -f "$1" ]] ; then
         printf "file %q doesn't exist!" "$1"
@@ -318,7 +332,7 @@ function share {
     fi
 }
 
-function spull {
+spull() {
     echo -e '\e[1;32msuckless sites\e[0m'
     git -C /media/storage/.temporary/suckless-sites pull
 
@@ -332,19 +346,19 @@ function spull {
     git -C /media/storage/.temporary/suckless-software/scroll pull
 }
 
-function startx {
+startx() {
     [[ -f "$XLOGFILE" ]] && { mv -f "$XLOGFILE" "$XLOGFILE.old" ;}
     /usr/bin/startx &>>"$XLOGFILE"
 }
 
-function trash-list {
+trash-list() {
     case "$1" in
         -n) /usr/bin/trash-list | sort -k3,3 ;;
          *) /usr/bin/trash-list | sort ;;
     esac
 }
 
-function zcurl {
+zcurl() {
     local url
     case "$#" in
         0) url="$(xsel -ob)" || { echo "Nothing in clipboard!"; return 1 ;} ;;
@@ -361,7 +375,7 @@ function zcurl {
     setsid -f sh -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null
 }
 
-function zpull {
+zpull() {
     echo -e '\e[1;32mfzf-tab\e[0m'
     git -C ~/.local/share/zsh/plugins/fzf-tab pull
 }
