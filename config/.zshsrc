@@ -119,7 +119,7 @@ function sc-vicmd-vi-backward-delete-char() {
 }
 zle -N sc-vicmd-vi-backward-delete-char
 
-function sc-visual-put-replace-selection(){
+function sc-visual-put-replace-selection() {
     local put replaced
     put=$(sc-clipget; echo -n x); put=${put%x}
     sc-vicmd-vi-delete
@@ -130,7 +130,7 @@ function sc-visual-put-replace-selection(){
 }
 zle -N sc-visual-put-replace-selection
 
-function sc-visual-vi-delete(){
+function sc-visual-vi-delete() {
     sc-vicmd-vi-delete
 }
 zle -N sc-visual-vi-delete
