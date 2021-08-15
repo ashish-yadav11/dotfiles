@@ -173,11 +173,12 @@ function exec-ranger-1 {
 }
 zle -N exec-ranger-0
 zle -N exec-ranger-1
-bindkey -v '\er' exec-ranger-0
-bindkey -v '\eR' exec-ranger-1
+bindkeyboth '\er' exec-ranger-0
+bindkeyboth '\eR' exec-ranger-1
 
 function fzf-select-bookmark {
     local selected lbuffer
+    echo -ne "$inscursor"
     lbuffer="$LBUFFER"
     LBUFFER=""
     zle -R
@@ -187,10 +188,11 @@ function fzf-select-bookmark {
     else
         LBUFFER="$lbuffer"
     fi
+    zle-line-init
     zle reset-prompt
 }
 zle -N fzf-select-bookmark
-bindkey -v '\eb' fzf-select-bookmark
+bindkeyboth '\eb' fzf-select-bookmark
 
 
 ## COMPLETION (man zshcompsys)
@@ -203,8 +205,7 @@ compinit -d ~/.cache/zcompdump
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey -v '\C-o' edit-command-line
-bindkey -a '\C-o' edit-command-line
+bindkeyboth '\C-o' edit-command-line
 
 unalias run-help
 autoload -Uz run-help
