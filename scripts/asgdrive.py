@@ -71,7 +71,7 @@ def add_shortcut_to_drive(service, folderid, filename, targetid):
     ).execute()
 
     print(
-        '\n\033[1;32mShortcut file\033[0m\n'
+        '\033[1;32mShortcut file\033[0m\n'
             f"name: {shortcut['name']}, id: {shortcut['id']}\n"
         '\033[1;32mTarget file\033[0m\n'
             f"name: {target['name']}, id: {target['id']}, "
@@ -79,28 +79,33 @@ def add_shortcut_to_drive(service, folderid, filename, targetid):
     )
 
 
+def die_usage(progname):
+    print(f"Usage: {sys.argv[0]} [-f folder-id] target-url|id [-n name]...")
+    sys.exit(1)
+
+
 if __name__ == '__main__':
-    argc = len(sys.argv)
+    progname = sys.argv[0]
+    argc = len(sys.argv) - 1; argf = 1
+    if argc < 1:
+        die_usage(progname)
 
-    if argc < 2:
-        print(
-            f"Usage: {sys.argv[0]} target-url|id [-f folder-id] [-n name]..."
-        )
-        sys.exit(1)
-    argc -= 1; argf = 1
-
-    service = init_service()
-
+    service = None
     folderid = 'root'
     while argc > 0:
-        target = sys.argv[argf]
-        argf += 1; argc -= 1
+        if argf != 1:
+            print()
 
         if argc > 0 and sys.argv[argf] == '-f':
             argf += 1; argc -= 1
             if argc > 0:
                 folderid = sys.argv[argf]
                 argf += 1; argc -= 1
+            elif argf == 2:
+                die_usage(progname)
+
+        target = sys.argv[argf]
+        argf += 1; argc -= 1
 
         filename = None
         if argc > 0 and sys.argv[argf] == '-n':
@@ -110,4 +115,6 @@ if __name__ == '__main__':
                 argf += 1; argc -= 1
 
         targetid = get_target_id(target)
+        if not service:
+            service = init_service()
         add_shortcut_to_drive(service, folderid, filename, targetid)
