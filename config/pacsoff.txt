@@ -96,6 +96,9 @@ pipewire-pulse
 playerctl
 polkit-kde-agent
 python-cairo
+python-google-api-python-client
+python-google-auth-httplib2
+python-google-auth-oauthlib
 python-matplotlib
 python-numpy
 python-pip
