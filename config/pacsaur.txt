@@ -11,7 +11,7 @@ go-mtpfs-git
 htop-vim-git
 i3lock-color
 kernel-modules-hook
-libxft-bgra
+libxft-bgra-git
 linux-wifi-hotspot
 mblaze-git
 mpv-mpris
