@@ -105,7 +105,7 @@ def add_shortcut_to_drive(service, folderid, filename, targetid):
 def die_usage():
     print(
         "Usage: add-drive-shortcut"
-        f" [-N] ([-f folder-id] target-url|target-id [-n name])..."
+        f" [-c] ([-f folder-id] target-url|target-id [-n name])..."
     )
     sys.exit(1)
 
@@ -113,9 +113,9 @@ def die_usage():
 if __name__ == '__main__':
     argc = len(sys.argv) - 1; argf = 1
 
-    noclobber = 0
-    if argc > 0 and sys.argv[1] == '-N':
-        noclobber = 1
+    clobber = 0
+    if argc > 0 and sys.argv[1] == '-c':
+        clobber = 1
         argc -= 1; argf += 1
 
     service = None
@@ -156,7 +156,7 @@ if __name__ == '__main__':
             oldfolderid = folderid
             foldershortcuts = get_shortcuts_in_folder(service, folderid)
 
-        if not noclobber or targetid not in foldershortcuts:
+        if clobber or targetid not in foldershortcuts:
             add_shortcut_to_drive(service, folderid, filename, targetid)
         else:
             flag = 0
