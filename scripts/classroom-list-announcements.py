@@ -112,11 +112,21 @@ def list_announcements(service, courseid, number):
         if not materials:
             continue
         print(
-            "\033[33m"
+            "\n\033[33m"
             "Attachments:"
             "\033[0m"
         )
         for m in materials:
+            link = m.get('link')
+            if link:
+                print(
+                    f"\n\033[35m"
+                    f"{link.get('title')}"
+                    f"\033[0m\n"
+                    f"{link.get('url')}"
+                )
+                continue
+
             drivefile = m.get('driveFile')
             if not drivefile:
                 continue
