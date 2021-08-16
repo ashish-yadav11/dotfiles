@@ -119,7 +119,7 @@ if __name__ == '__main__':
         argc -= 1; argf += 1
 
     service = None
-    folderfiles = []
+    foldershortcuts = []
     oldfolderid = ''
     folderid = 'root'
     flag = 0
