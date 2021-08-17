@@ -53,7 +53,7 @@ mdiff="$(
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/local" /home/ashish/.local |
-        grep -Ev '^Only in .*(local(:|/share(:|/applications: mimeinfo\.cache$)|/builds(: dwm$|.*\.pkg\.tar\.zst$)))' |
+        grep -Ev '^Only in .*(local(:|/share(:|/applications: mimeinfo\.cache$)|/builds(: (dwm|st)$|.*\.pkg\.tar\.zst$)))' |
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/scripts" /home/ashish/.scripts |
