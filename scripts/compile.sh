@@ -28,7 +28,7 @@ case "$fileext" in
         ;;
 esac
 
-case "$file" in
-    /*) "$file" ;;
-     *) "./$file" ;;
+case "$filename" in
+    /*) "$filename" ;;
+     *) "./$filename" ;;
 esac
