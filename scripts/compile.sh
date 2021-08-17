@@ -3,7 +3,6 @@ file="$1"
 [ -f "$file" ] || { echo "Error: \"$file\" is not a valid file!"; exit ;}
 filename="${file%.*}"
 fileext="${file##*.}"
-shift
 
 optimize=0
 error=1
@@ -11,7 +10,8 @@ run=0
 case "$2" in *o*) optimize=1 ;; esac
 case "$2" in *E*) error=0 ;; esac
 case "$2" in *r*) run=1 ;; esac
-[ "$#" -ge 2 ] && shift
+
+shift "$(( $# < 2 ? $# : 2 ))"
 
 case "$fileext" in
     c)
