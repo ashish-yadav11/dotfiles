@@ -18,13 +18,13 @@ case "$fileext" in
         [ "$error" = 1 ] && errarg="-Wall -Werror"
         [ "$optimize" = 1 ] && optarg="-O3"
         gcc -o "${filename}" $optarg $errarg "$@" "$file" || exit
-        [ "$run" = 1 ] && exit
+        [ "$run" = 1 ] || exit
         ;;
     f90)
         [ "$error" = 1 ] && errarg="-W4"
         [ "$optimize" = 1 ] && optarg="-fast"
         f90 -o "${filename}" $optarg $errarg "$@" "$file" || exit
-        [ "$run" = 1 ] && exit
+        [ "$run" = 1 ] || exit
         ;;
 esac
 
