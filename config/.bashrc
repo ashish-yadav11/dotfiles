@@ -8,6 +8,7 @@
 HISTIGNORE="$HISTIGNORE:l:m:n:s:s *:t"
 
 # aliases
+alias c=compile
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias dme="dm && exit"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
