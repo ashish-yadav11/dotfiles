@@ -3,30 +3,21 @@ file="$1"
 [ -f "$file" ] || { echo "Error: \"$file\" is not a valid file!"; exit ;}
 filename="${file%.*}"
 fileext="${file##*.}"
+case "$fileext" in
+      c) compiler=gcc ;;
+    f90) compiler=gfortran ;;
+      *) echo "Error: file extension \"$fileext\" is not supported!"; exit ;;
+esac
 
-optimize=0
-error=1
-run=0
-case "$2" in *o*) optimize=1 ;; esac
-case "$2" in *E*) error=0 ;; esac
+errarg="-Wall -Wextra"
+optarg=""
+case "$2" in *o*) optarg="-O3" ;; esac
+case "$2" in *E*) errarg="" ;; esac
 case "$2" in *r*) run=1 ;; esac
 
 shift "$(( $# < 2 ? $# : 2 ))"
-
-case "$fileext" in
-    c)
-        [ "$error" = 1 ] && errarg="-Wall -Werror"
-        [ "$optimize" = 1 ] && optarg="-O3"
-        gcc -o "${filename}" $optarg $errarg "$@" "$file" || exit
-        [ "$run" = 1 ] || exit
-        ;;
-    f90)
-        [ "$error" = 1 ] && errarg="-W4"
-        [ "$optimize" = 1 ] && optarg="-fast"
-        f90 -o "${filename}" $optarg $errarg "$@" "$file" || exit
-        [ "$run" = 1 ] || exit
-        ;;
-esac
+"$compiler" -o "$filename" $optarg $errarg "$@" "$file" || exit
+[ -n "$run" ] || exit
 
 case "$filename" in
     /*) "$filename" ;;
