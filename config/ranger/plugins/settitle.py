@@ -15,7 +15,7 @@ def hook_init(fm):
         print(f"\033]0;ranger:{sig.new.path}\033\\", end='', flush=True)
 
     def settitleea():
-        print(f"\033]0;ranger{fm.thisdir}\033\\", end='', flush=True)
+        print(f"\033]0;ranger:{fm.thisdir}\033\\", end='', flush=True)
 
     fm.signal_bind('cd', settitlecd)
     fm.signal_bind('runner.execute.after', settitleea)
