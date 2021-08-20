@@ -204,7 +204,7 @@ bind generic,attach,compose <Enter> noop
 
 macro generic,index,browser <Space> "<enter-command>set my_resolve=\$resolve resolve=yes<Enter><tag-entry><enter-command>set resolve=\$my_resolve; unset my_resolve<Enter>" "tag entry and move to the next one"
 
-macro generic,pager <F1> "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>less /usr/share/doc/neomutt/manual.txt<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "show NeoMutt documentation"
+macro generic,pager <F1> "<enter-command>set my_wait_key=\$wait_key wait_key=no<Enter><shell-escape>setsid -f brave /usr/share/doc/neomutt/manual.html >/dev/null 2>&1<Enter><enter-command>set wait_key=\$my_wait_key; unset my_wait_key<Enter>" "show NeoMutt documentation"
 
 
 #--------#
