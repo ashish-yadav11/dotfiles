@@ -12,7 +12,7 @@ export PATH=~"/.local/bin:$PATH"
 #export QT_QPA_PLATFORMTHEME=qt5ct
 #export RANGER_LOAD_DEFAULT_RC=FALSE
 export R_ENVIRON_USER=~/.Renviron
-#export TERMINAL=terminal
+#export TERMINAL=st
 #export VISUAL=nvim
 export XLOGFILE=~"/.local/share/xorg/startx.$XDG_VTNR.log"
 
