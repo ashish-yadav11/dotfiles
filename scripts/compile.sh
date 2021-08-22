@@ -4,9 +4,9 @@ file="$1"
 filename="${file%.*}"
 fileext="${file##*.}"
 case "$fileext" in
-      c) compiler=gcc ;;
-    f90) compiler=gfortran ;;
-      *) echo "Error: file extension \"$fileext\" is not supported!"; exit ;;
+    c) compiler=gcc ;;
+    f[0-9][0-9]) compiler=gfortran ;;
+    *) echo "Error: file extension \"$fileext\" is not supported!"; exit ;;
 esac
 
 errarg="-Wall -Wextra"
