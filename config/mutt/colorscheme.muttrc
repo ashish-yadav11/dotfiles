@@ -19,7 +19,7 @@ color attachment white default
 color bold black default
 color error red default
 color hdrdefault brightgreen default
-color indicator brightcolor236 white
+#color indicator brightcolor236 white
 color markers red white
 color message cyan default
 color normal default default
@@ -32,11 +32,19 @@ color quoted5 brightred default
 color search brightmagenta default
 color sidebar_divider brightblack black
 color sidebar_highlight red black
-color sidebar_indicator brightcolor236 white
+#color sidebar_indicator brightcolor236 white
 color signature brightgreen default
 color status brightyellow black
 color tilde black default
 color underline black default
+
+lua if os.getenv("TERM") == "linux" then \
+        mutt.command.color("indicator", "black", "white") \
+        mutt.command.color("sidebar_indicator", "black", "white") \
+    else \
+        mutt.command.color("indicator", "brightcolor236", "white") \
+        mutt.command.color("sidebar_indicator", "brightcolor236", "white") \
+    end
 
 mono bold bold
 mono error bold
