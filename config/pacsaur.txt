@@ -10,7 +10,6 @@ etcher-bin
 go-mtpfs-git
 htop-vim-git
 i3lock-color
-kernel-modules-hook
 libxft-bgra-git
 linux-wifi-hotspot
 mblaze-git

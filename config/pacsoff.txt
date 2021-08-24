@@ -58,6 +58,7 @@ isync
 java-commons-lang
 julia
 kcolorchooser
+kernel-modules-hook
 libreoffice-fresh
 libva-mesa-driver
 libva-vdpau-driver
