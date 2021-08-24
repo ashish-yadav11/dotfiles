@@ -93,6 +93,8 @@ pdftku() {
 s() {
     if [[ -x ./sync.sh ]] ; then
         ./sync.sh "$@"
+    elif [[ -x ../sync.sh ]] ; then
+        ../sync.sh "$@"
     else
         echo "No sync.sh in this directory!"
     fi
