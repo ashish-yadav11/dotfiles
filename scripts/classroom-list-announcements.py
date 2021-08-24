@@ -22,7 +22,7 @@ SCOPES = [
 TZLOCAL = dateutil.tz.tzlocal()
 
 
-def get_creds():
+def GetCredentials():
     creds = None
 
     if os.path.exists(f"{credsfolder}/cla-token.json"):
@@ -42,7 +42,7 @@ def get_creds():
     return creds
 
 
-def list_announcements(service, courseid, number):
+def ListAnnouncements(service, courseid, number):
     announcements = []
     page_token = None
 
@@ -142,7 +142,7 @@ def list_announcements(service, courseid, number):
             )
 
 
-def die_usage():
+def DieUsage():
     print(f"Usage: classroom-list-announcements course-id [number]")
     sys.exit(1)
 
@@ -151,17 +151,17 @@ if __name__ == '__main__':
     argc = len(sys.argv)
 
     if argc < 2 or argc > 3:
-        die_usage()
+        DieUsage()
 
     courseid = sys.argv[1]
     if not courseid.isdigit():
-        die_usage()
+        DieUsage()
 
     number = 0
     if argc != 2:
         number = sys.argv[2]
         if not number.isdigit():
-            die_usage()
+            DieUsage()
 
-    service = build('classroom', 'v1', credentials=get_creds())
-    list_announcements(service, courseid, number)
+    service = build('classroom', 'v1', credentials=GetCredentials())
+    ListAnnouncements(service, courseid, number)

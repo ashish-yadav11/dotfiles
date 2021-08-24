@@ -16,7 +16,7 @@ credsfolder = '/home/ashish/.config/google/classroom'
 SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly']
 
 
-def get_creds():
+def GetCredentials():
     creds = None
 
     if os.path.exists(f"{credsfolder}/clc-token.json"):
@@ -36,7 +36,7 @@ def get_creds():
     return creds
 
 
-def list_courses(service, number):
+def ListCourse(service, number):
     courses = []
     page_token = None
 
@@ -63,7 +63,7 @@ def list_courses(service, number):
         )
 
 
-def die_usage():
+def DieUsage():
     print(f"Usage: classroom-list-courses [number]")
     sys.exit(1)
 
@@ -72,13 +72,13 @@ if __name__ == '__main__':
     argc = len(sys.argv)
 
     if argc > 2:
-        die_usage()
+        DieUsage()
 
     number = 0
     if argc == 2:
         number = sys.argv[1]
         if not number.isdigit():
-            die_usage()
+            DieUsage()
 
-    service = build('classroom', 'v1', credentials=get_creds())
-    list_courses(service, number)
+    service = build('classroom', 'v1', credentials=GetCredentials())
+    ListCourse(service, number)

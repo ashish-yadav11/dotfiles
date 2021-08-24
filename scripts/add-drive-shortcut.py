@@ -13,7 +13,7 @@ credsfolder = '/home/ashish/.config/google/drive'
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 
-def get_creds():
+def GetCredentials():
     creds = None
 
     if os.path.exists(f"{credsfolder}/ads-token.json"):
@@ -33,7 +33,7 @@ def get_creds():
     return creds
 
 
-def get_target_id(target):
+def GetTargetId(target):
     idpatterns = [
         re.compile('/file/d/([0-9A-Za-z_-]{10,})(?:/|$)', re.IGNORECASE),
         re.compile('/folders/([0-9A-Za-z_-]{10,})(?:/|$)', re.IGNORECASE),
@@ -50,7 +50,7 @@ def get_target_id(target):
     sys.exit(1)
 
 
-def get_shortcuts_in_folder(service, folderid):
+def GetShortcutsInFolder(service, folderid):
     shortcuts = []
     page_token = None
     while True:
@@ -70,7 +70,7 @@ def get_shortcuts_in_folder(service, folderid):
     return shortcuts
 
 
-def add_shortcut_to_drive(service, folderid, filename, targetid):
+def AddShortcutToDrive(service, folderid, filename, targetid):
     metadata = {
         'mimeType': 'application/vnd.google-apps.shortcut',
         'parents': [folderid],
@@ -102,7 +102,7 @@ def add_shortcut_to_drive(service, folderid, filename, targetid):
     )
 
 
-def die_usage():
+def DieUsage():
     print(
         "Usage: add-drive-shortcut"
         f" [-c] ([-f folder-id] target-url|target-id [-n name])..."
@@ -147,19 +147,19 @@ if __name__ == '__main__':
                 filename = sys.argv[argf]
                 argc -= 1; argf += 1
 
-        targetid = get_target_id(target)
+        targetid = GetTargetId(target)
 
         if not service:
-            service = build('drive', 'v3', credentials=get_creds())
+            service = build('drive', 'v3', credentials=GetCredentials())
 
         if folderid != oldfolderid:
             oldfolderid = folderid
-            foldershortcuts = get_shortcuts_in_folder(service, folderid)
+            foldershortcuts = GetShortcutsInFolder(service, folderid)
 
         if clobber or targetid not in foldershortcuts:
-            add_shortcut_to_drive(service, folderid, filename, targetid)
+            AddShortcutToDrive(service, folderid, filename, targetid)
         else:
             flag = 0
 
     if not service:
-        die_usage()
+        DieUsage()

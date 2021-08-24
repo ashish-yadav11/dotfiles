@@ -17,7 +17,7 @@ credsfolder = '/home/ashish/.config/google/classroom'
 SCOPES = ['https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly']
 
 
-def get_creds():
+def GetCredentials():
     creds = None
 
     if os.path.exists(f"{credsfolder}/clm-token.json"):
@@ -37,7 +37,7 @@ def get_creds():
     return creds
 
 
-def list_coursework_materials(service, courseid, number):
+def ListCourseworkMaterials(service, courseid, number):
     materials = []
     page_token = None
 
@@ -89,7 +89,7 @@ def list_coursework_materials(service, courseid, number):
                 )
 
 
-def die_usage():
+def DieUsage():
     print(f"Usage: classroom-list-materials [-s] course-id [number]")
     sys.exit(1)
 
@@ -98,25 +98,25 @@ if __name__ == '__main__':
     argc = len(sys.argv) - 1; argf = 1
 
     if argc < 1:
-        die_usage()
+        DieUsage()
     
     if sys.argv[argf] == '-s':
         short = 1
         argc -= 1; argf += 1
 
     if argc < 1 or argc > 2:
-        die_usage()
+        DieUsage()
 
     courseid = sys.argv[argf]
     argc -= 1; argf += 1
     if not courseid.isdigit():
-        die_usage()
+        DieUsage()
 
     number = 0
     if argc > 0:
         number = sys.argv[argf]
         if not number.isdigit():
-            die_usage()
+            DieUsage()
 
-    service = build('classroom', 'v1', credentials=get_creds())
-    list_coursework_materials(service, courseid, number)
+    service = build('classroom', 'v1', credentials=GetCredentials())
+    ListCourseworkMaterials(service, courseid, number)
