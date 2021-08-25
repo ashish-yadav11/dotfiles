@@ -50,8 +50,8 @@ pidof -sq /usr/lib/polkit-kde-authentication-agent-1 ||
 pidof -sq /usr/bin/nm-applet ||
     nm-applet
 } &
+dsblocks &
 {
-dsblocks
 pidof -sqx /home/ashish/.scripts/pulse_daemon.sh ||
     /home/ashish/.scripts/pulse_daemon.sh
 } &
