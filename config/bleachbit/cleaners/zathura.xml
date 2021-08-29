@@ -2,6 +2,11 @@
 <cleaner id="zathura">
   <label>Zathura</label>
   <description>Document viewer</description>
+  <option id="bookmarks">
+    <label>Bookmarks</label>
+    <description>Delete bookmarks</description>
+    <action search="file" command="truncate" path="~/.local/share/zathura/bookmarks"/>
+  </option>
   <option id="document cache">
     <label>Document cache</label>
     <description>Delete document cache</description>
