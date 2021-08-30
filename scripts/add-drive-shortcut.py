@@ -7,6 +7,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from google.auth.exceptions import RefreshError
 
 
 credsfolder = '/home/ashish/.config/google/drive'
@@ -18,12 +19,16 @@ def GetCredentials():
 
     if os.path.exists(f"{credsfolder}/ads-token.json"):
         creds = Credentials.from_authorized_user_file(
-            f"{credsfolder}/ads-token.json", SCOPES)
+                f"{credsfolder}/ads-token.json", SCOPES)
 
     if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
+        flag = creds and creds.expired and creds.refresh_token
+        if flag:
+            try:
+                creds.refresh(Request())
+            except RefreshError:
+                flag = 0
+        if not flag:
             flow = InstalledAppFlow.from_client_secrets_file(
                 f"{credsfolder}/credentials.json", SCOPES)
             creds = flow.run_local_server(port=0)
