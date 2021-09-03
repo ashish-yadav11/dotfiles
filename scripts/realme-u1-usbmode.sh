@@ -1,6 +1,7 @@
 #!/bin/dash
 menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -no-custom"
 mount=/home/ashish/.scripts/realme-u1-mount.sh
+mtpclean=/home/ashish/.scripts/mtpclean.sh
 
 exec 9<>/tmp/realme-u1-usbmode.lock
 flock 9
@@ -18,7 +19,7 @@ midi="MIDI"
 
 case "$(adb shell getprop sys.usb.state)" in
     *rndis*) rndis="*$rndis"; items="$mtp\n$none\n$rndis\n$ptp\n$midi" ;;
-    *mtp*) mtp="*$mtp"; items="$rndis\n$none\n$mtp\n$ptp\n$midi" ;;
+    *mtp*) mtp="*$mtp"; items="$rndis\n$none\n$mtp\n$ptp\n$midi"; clean=1 ;;
     *ptp*) ptp="*$ptp"; items="$rndis\n$mtp\n$none\n$midi\n$ptp" ;;
     *midi*) midi="*$midi"; items="$rndis\n$mtp\n$none\n$ptp\n$midi" ;;
     *) none="*$none"; items="$rndis\n$mtp\n$ptp\n$midi\n$none" ;;
@@ -38,4 +39,5 @@ adb shell svc usb setFunctions "$function"
 while adb wait-for-usb-device ; do
     case "$(adb shell getprop sys.usb.state)" in *"$function"*) break ;; esac
 done
+[ -n "$clean" ] && setsid -f $mtpclean
 flock -u 9
