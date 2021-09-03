@@ -67,7 +67,7 @@ mount() {
             fi
         fi
     else
-        notify-send -u critical " MTP mounter" "Error mounting $name"
+        notify-send -u critical " MTP mounter" "Error mounting $name\nLog: $line"
         rmdir "$mtpoint"
         rm -f "$mtpoint.log"
     fi
