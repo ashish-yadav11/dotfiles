@@ -8,15 +8,19 @@ case "$1" in
         ;;
     r)
         mapfile -t files
-        mogrify -rotate 90 -- "${files[@]}"
+        mogrify -rotate +90 -- "${files[@]}"
         ;;
     R)
         mapfile -t files
         mogrify -rotate -90 -- "${files[@]}"
         ;;
-    f)
+    bar)
         mapfile -t files
         mogrify -flop -- "${files[@]}"
+        ;;
+    underscore)
+        mapfile -t files
+        mogrify -flip -- "${files[@]}"
         ;;
     w)
         IFS='' read -r file
