@@ -117,6 +117,7 @@ rofi
 scrot
 shellcheck
 signal-desktop
+simplescreenrecorder
 strace
 sxiv
 telegram-desktop
