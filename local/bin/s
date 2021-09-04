@@ -1,0 +1,12 @@
+#!/bin/dash
+dir="."
+while true ; do
+    sync="$dir/sync.sh"
+    if [ -x "$sync" ] ; then
+        "$sync" "$@"
+        return
+    fi
+    [ "$(realpath "$dir")" = / ] && break
+    dir="$dir/.."
+done
+echo "No sync.sh in this or any parent directory!"

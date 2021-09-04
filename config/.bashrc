@@ -90,16 +90,6 @@ pdftku() {
     pdftk "$bak" update_info "${2:-info}" output "$1"
 }
 
-s() {
-    if [[ -x ./sync.sh ]] ; then
-        ./sync.sh "$@"
-    elif [[ -x ../sync.sh ]] ; then
-        ../sync.sh "$@"
-    else
-        echo "No sync.sh in this directory!"
-    fi
-}
-
 share() {
     local url
     if [[ ! -f "$1" ]] ; then
