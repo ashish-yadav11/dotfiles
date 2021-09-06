@@ -36,6 +36,7 @@ set render-loading true
 set sandbox none
 set show-hidden true
 set statusbar-basename true
+set synctex true
 set window-title-basename true
 
 set default-bg                  "#282828"
