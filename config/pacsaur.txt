@@ -8,7 +8,7 @@ dict-wn
 dwm-cust
 etcher-bin
 go-mtpfs-git
-htop-vim-git
+htop-vim
 i3lock-color
 libxft-bgra-git
 linux-wifi-hotspot
