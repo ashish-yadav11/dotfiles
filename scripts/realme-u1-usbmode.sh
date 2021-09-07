@@ -35,9 +35,6 @@ esac
 : >/tmp/realme-u1-tether.lock
 [ "$function" = mtp ] && setsid -f timeout 5 $mount
 adb shell svc usb setFunctions "$function"
-
-while adb wait-for-usb-device ; do
-    case "$(adb shell getprop sys.usb.state)" in *"$function"*) break ;; esac
-done
+adb wait-for-usb-device
 [ -n "$clean" ] && setsid -f $mtpclean
 flock -u 9

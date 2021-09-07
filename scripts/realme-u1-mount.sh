@@ -34,7 +34,7 @@ case "$line" in
         notify-send -t 1500 " Realme U1" "Device mounted successfully"
         ;;
     *)
-        notify-send -u critical " Realme U1" "Error mounting device!\nLog: $line"
+        notify-send -u critical " Realme U1" "Error mounting device!"
         rmdir "$mtpoint"
         rm -f "$mtpoint.log"
         ;;
