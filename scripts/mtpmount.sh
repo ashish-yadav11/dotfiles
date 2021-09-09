@@ -49,8 +49,9 @@ mount() {
     mkdir -p "$mtpoint"
     setsid -f go-mtpfs -dev "$serial" "$mtpoint" &>"$mtpoint.log"
     sleep 0.1
-    while IFS='' read -r line <"$mtpoint.log" ; do
-        [[ -n "$line" ]] && break
+    timeout="$(( SECONDS + 2 ))"
+    while (( SECONDS < timeout )) ; do
+        IFS='' read -r line <"$mtpoint.log" && [[ -n "$line" ]] && break
         sleep 0.1
     done
     if [[ "$line" == *"FUSE mounted" ]] ; then
