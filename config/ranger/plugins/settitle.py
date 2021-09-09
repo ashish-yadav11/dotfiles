@@ -3,6 +3,8 @@
 import ranger.api
 
 import os
+import threading
+import time
 
 # Save the previously existing hook, because maybe another module already
 # extended that hook and we don't want to lose it:
@@ -14,8 +16,14 @@ def hook_init(fm):
     def settitlecd(sig):
         print(f"\033]0;ranger:{sig.new.path}\033\\", end='', flush=True)
 
-    def settitleea():
+    def settitleafter(sec):
+        time.sleep(sec)
         print(f"\033]0;ranger:{fm.thisdir}\033\\", end='', flush=True)
+
+    # workaround so that title is set after calling 'tput smcup'
+    def settitleea():
+        title_thread = threading.Thread(target=settitleafter, args=[0.1])
+        title_thread.start()
 
     fm.signal_bind('cd', settitlecd)
     fm.signal_bind('runner.execute.after', settitleea)
