@@ -32,9 +32,16 @@ def GetCredentials():
             except RefreshError:
                 flag = 0
         if not flag:
+            stdout_fileno = sys.stdout.fileno()
+            stderr_fileno = sys.stderr.fileno()
+            orig_stdout_fileno = os.dup(stdout_fileno)
+            os.dup2(stderr_fileno, stdout_fileno)
+
             flow = InstalledAppFlow.from_client_secrets_file(
                 f"{credsfolder}/credentials.json", SCOPES)
             creds = flow.run_local_server(port=0)
+
+            os.dup2(orig_stdout_fileno, stdout_fileno)
         with open(f"{credsfolder}/clc-token.json", 'w') as token:
             token.write(creds.to_json())
 
