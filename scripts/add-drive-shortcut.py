@@ -13,6 +13,8 @@ from google.auth.exceptions import RefreshError
 credsfolder = '/home/ashish/.config/google/drive'
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
+foldershortcuts = []
+
 
 def GetCredentials():
     creds = None
@@ -62,8 +64,8 @@ def GetTargetId(target):
     sys.exit(1)
 
 
-def GetShortcutsInFolder(service, folderid):
-    shortcuts = []
+def FillFolderShortcuts(service, folderid):
+    foldershortcuts = []
     page_token = None
     while True:
         response = service.files().list(
@@ -74,12 +76,10 @@ def GetShortcutsInFolder(service, folderid):
         ).execute()
         for shortcut in response.get('files', []):
             targetid = shortcut.get('shortcutDetails').get('targetId')
-            shortcuts.append(targetid)
+            foldershortcuts.append(targetid)
         page_token = response.get('nextPageToken', None)
         if not page_token:
             break
-
-    return shortcuts
 
 
 def AddShortcutToDrive(service, folderid, filename, targetid):
@@ -112,6 +112,7 @@ def AddShortcutToDrive(service, folderid, filename, targetid):
         f"name: {target.get('name')}, id: {target.get('id')}, "
         f"mimetype: {target.get('mimeType')}"
     )
+    foldershortcuts.append(target.get('id'))
 
 
 def DieUsage():
@@ -131,7 +132,6 @@ if __name__ == '__main__':
         argc -= 1; argf += 1
 
     service = None
-    foldershortcuts = []
     oldfolderid = ''
     folderid = 'root'
     flag = 0
@@ -166,7 +166,7 @@ if __name__ == '__main__':
 
         if folderid != oldfolderid:
             oldfolderid = folderid
-            foldershortcuts = GetShortcutsInFolder(service, folderid)
+            FillFolderShortcuts(service, folderid)
 
         if clobber or targetid not in foldershortcuts:
             AddShortcutToDrive(service, folderid, filename, targetid)
