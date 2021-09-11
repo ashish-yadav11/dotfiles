@@ -67,6 +67,7 @@ lostfiles
 lsof
 lxappearance
 lxqt-sudo
+maim
 man-db
 man-pages
 materia-gtk-theme
@@ -114,7 +115,6 @@ redshift
 reflector
 ripgrep
 rofi
-scrot
 shellcheck
 signal-desktop
 simplescreenrecorder
