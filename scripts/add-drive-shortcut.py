@@ -65,7 +65,7 @@ def GetTargetId(target):
 
 
 def FillFolderShortcuts(service, folderid):
-    foldershortcuts = []
+    foldershortcuts.clear()
     page_token = None
     while True:
         response = service.files().list(
