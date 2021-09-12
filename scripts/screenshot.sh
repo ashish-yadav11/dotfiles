@@ -21,23 +21,41 @@ case "$selection" in
         *) exit ;;
 esac
 
-tmpfile="$(mktemp /tmp/screenshot-XXXXXX)"
-maim -q -f png -m 10 $cursor $options "$tmpfile" || { rm -f "$tmpfile"; exit ;}
+cleanexit() {
+    rm -f "$tmpfile"
+    exit
+}
 
-cb="Clipboard"
-dl="Default location"
-location="$(echo "$dl\n$cb" | $menu -p "Where to save the image?")"
-[ -z "$location" ] && { rm -f "$tmpfile"; exit ;}
-case "$location" in
-    "$dl") location="$HOME/Pictures/screenshots/$(date +%Y-%m-%d-%H%M%S).png" ;;
-    "$cb") clipboard=1 ;;
-    [!/]*) location="$HOME/$location" ;;
-esac
-if [ -n "$clipboard" ] ; then
-    xclip -selection clipboard -t image/png -i "$tmpfile"
-else
-    dir="${location%/*}"
-    if [ -d "$dir" ] ; then
+tmpfile="$(mktemp /tmp/screenshot-XXXXXX)"
+maim -q -f png -m 10 $cursor $options "$tmpfile" || cleanexit
+
+savescreenshot() {
+    cb="Clipboard"
+    dl="Default location"
+    location="$(echo "$dl\n$cb" | $menu -p "Where to save the image?")"
+    [ -z "$location" ] && cleanexit
+    case "$location" in
+        "$dl") location="$HOME/Pictures/screenshots/$(date +%Y-%m-%d-%H%M%S).png" ;;
+        "$cb") clipboard=1 ;;
+        [!/]*) location="$HOME/$location" ;;
+    esac
+    if [ -n "$clipboard" ] ; then
+        xclip -selection clipboard -t image/png -i "$tmpfile"
+    else
+        dir="${location%/*}"
+        if ! [ -d "$dir" ] ; then
+            cr="Create the directory"
+            cn="Choose new location"
+            ab="Abort screenshot"
+            case "$dir" in "$HOME"*) tdir="~${dir#"$HOME"}" ;; esac
+            choice="$(echo "$cr\n$cn\n$ab" |
+                $menu -no-custom -p "Directory $tdir doesn't exist!")" || cleanexit
+            case "$choice" in
+                "$cr") mkdir -p "$dir" ;;
+                "$cn") savescreenshot; return ;;
+                "$ab") cleanexit ;;
+            esac
+        fi
         ext="${location##*.}"
         if [ -z "$ext" ] || [ "$ext" = png ] ; then
             rmnot=1
@@ -45,10 +63,9 @@ else
         else
             convert "$tmpfile" "$location"
         fi
-    else
-        case "$dir" in "$HOME"*) dir="~${dir#"$HOME"}" ;; esac
-        notify-send -u critical Maim "$dir is not a directory"
     fi
-fi
+}
+
+savescreenshot
 notify-send -t 1000 Maim "Screenshot captured"
 [ -z "$rmnot" ] && rm -f "$tmpfile"
