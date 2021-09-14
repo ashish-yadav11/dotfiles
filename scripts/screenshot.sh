@@ -1,14 +1,14 @@
 #!/bin/dash
 menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy"
 
-rt="Root"
-fw="Focused window"
 sl="Selection"
-selection="$(echo "$rt\n$fw\n$sl" | $menu -no-custom -p Maim)" || exit
+fw="Focused window"
+rt="Root"
+selection="$(echo "$sl\n$fw\n$rt" | $menu -no-custom -p Maim)" || exit
 case "$selection" in
-    "$rt") options="-i root" ;;
-    "$fw") options="-i $(xdotool getactivewindow)" ;;
     "$sl") options="-s -b 1 -p -1" ;;
+    "$fw") options="-i $(xdotool getactivewindow)" ;;
+    "$rt") options="-i root" ;;
         *) exit ;;
 esac
 
