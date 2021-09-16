@@ -17,7 +17,10 @@ print = functools.partial(print, flush=True)
 credsfolder = '/home/ashish/.config/google/classroom'
 SCOPES = [
     'https://www.googleapis.com/auth/classroom.announcements.readonly',
-    'https://www.googleapis.com/auth/classroom.rosters.readonly'
+    'https://www.googleapis.com/auth/classroom.courses.readonly',
+    'https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly',
+    'https://www.googleapis.com/auth/classroom.rosters.readonly',
+    'https://www.googleapis.com/auth/drive',
 ]
 
 TZLOCAL = dateutil.tz.tzlocal()
@@ -26,9 +29,9 @@ TZLOCAL = dateutil.tz.tzlocal()
 def GetCredentials():
     creds = None
 
-    if os.path.exists(f"{credsfolder}/cla-token.json"):
+    if os.path.exists(f"{credsfolder}/token.json"):
         creds = Credentials.from_authorized_user_file(
-                f"{credsfolder}/cla-token.json", SCOPES)
+                f"{credsfolder}/token.json", SCOPES)
 
     if not creds or not creds.valid:
         flag = creds and creds.expired and creds.refresh_token
@@ -48,7 +51,7 @@ def GetCredentials():
             creds = flow.run_local_server(port=0)
 
             os.dup2(orig_stdout_fileno, stdout_fileno)
-        with open(f"{credsfolder}/cla-token.json", 'w') as token:
+        with open(f"{credsfolder}/token.json", 'w') as token:
             token.write(creds.to_json())
 
     return creds

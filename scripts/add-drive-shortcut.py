@@ -10,8 +10,14 @@ from google.oauth2.credentials import Credentials
 from google.auth.exceptions import RefreshError
 
 
-credsfolder = '/home/ashish/.config/google/drive'
-SCOPES = ['https://www.googleapis.com/auth/drive']
+credsfolder = '/home/ashish/.config/google/classroom'
+SCOPES = [
+    'https://www.googleapis.com/auth/classroom.announcements.readonly',
+    'https://www.googleapis.com/auth/classroom.courses.readonly',
+    'https://www.googleapis.com/auth/classroom.courseworkmaterials.readonly',
+    'https://www.googleapis.com/auth/classroom.rosters.readonly',
+    'https://www.googleapis.com/auth/drive',
+]
 
 foldershortcuts = []
 
@@ -19,9 +25,9 @@ foldershortcuts = []
 def GetCredentials():
     creds = None
 
-    if os.path.exists(f"{credsfolder}/ads-token.json"):
+    if os.path.exists(f"{credsfolder}/token.json"):
         creds = Credentials.from_authorized_user_file(
-                f"{credsfolder}/ads-token.json", SCOPES)
+                f"{credsfolder}/token.json", SCOPES)
 
     if not creds or not creds.valid:
         flag = creds and creds.expired and creds.refresh_token
@@ -41,7 +47,7 @@ def GetCredentials():
             creds = flow.run_local_server(port=0)
 
             os.dup2(orig_stdout_fileno, stdout_fileno)
-        with open(f"{credsfolder}/ads-token.json", 'w') as token:
+        with open(f"{credsfolder}/token.json", 'w') as token:
             token.write(creds.to_json())
 
     return creds
