@@ -11,11 +11,3 @@ defcursor='\e[?0c'
 cmdcursor='\e[?112c'
 inscursor='\e[?2c'
 repcursor='\e[?4c'
-
-
-## MISCELLANEOUS (man zshmisc)
-
-# restore default cursor before running external commands and before exit
-function preexec zshexit {
-    echo -ne "$defcursor"
-}

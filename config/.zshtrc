@@ -26,11 +26,6 @@ case "$TERM" in
         ;;
 esac
 
-# restore block cursor before running external commands
-function preexec {
-    echo -ne "$defcursor"
-}
-
 
 ## CUSTOM
 

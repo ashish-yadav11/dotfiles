@@ -35,6 +35,14 @@ SAVEHIST=20000
 zle_highlight=(region:bg=#504945 special:none suffix:bold isearch:underline paste:none)
 
 
+## MISCELLANEOUS (man zshmisc)
+
+# restore default cursor before running external commands and before exit
+function preexec zshexit {
+    echo -ne "$defcursor"
+}
+
+
 ## INCOGNITO MODE
 
 if [[ -n "$INCOGNITO" ]] ; then
