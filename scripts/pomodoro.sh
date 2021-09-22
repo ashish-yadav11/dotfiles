@@ -1,5 +1,6 @@
 #!/bin/dash
 dateformat="%H:%M"
+interval=1500
 notify="dunstify -h string:x-canonical-private-synchronous:pomodoro"
 
 nidfile="$XDG_RUNTIME_DIR/pomodoro.nid"
@@ -25,11 +26,9 @@ if [ -n "$1" ] ; then
                 $notify -u critical -t 2000 pomodoro "Interval should be an integer!"
                 exit
             fi
-            timeperiod="$(( $1 * 60 ))"
+            interval="$(( $1 * 60 ))"
             ;;
     esac
-else
-    timeperiod=1500
 fi
 
 exec 9<>"$pidfile"
@@ -53,12 +52,12 @@ simplenotify() {
 }
 
 simplenotify 1000 "🍅🍅🍅🍅"
-sleep "$timeperiod"
+sleep "$interval"
 blocknotify "☑️🍅🍅🍅"
-sleep "$timeperiod"
+sleep "$interval"
 blocknotify "☑️☑️🍅🍅"
-sleep "$timeperiod"
+sleep "$interval"
 blocknotify "☑️☑️☑️🍅"
-sleep "$timeperiod"
+sleep "$interval"
 simplenotify 0 "☑️☑️☑️☑️"
 rm -f "$nidfile" "$pidfile"

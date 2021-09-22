@@ -323,12 +323,14 @@ pdftku() {
 }
 
 share() {
-    local url
-    if [[ ! -f "$1" ]] ; then
-        printf "file %q doesn't exist!" "$1"
+    local file url
+    file="$1"
+    if [[ ! -f "$file" ]] ; then
+        printf "file %q doesn't exist!" "$file"
         return 1
     fi
-    if url="$(curl -F"file=@$1" "https://0x0.st")" ; then
+    file="\"$(echo "$file" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g')\""
+    if url="$(curl -F"file=@$file" "https://0x0.st")" ; then
         echo -n "$url" | xsel -ib
         echo "$url"
     fi
