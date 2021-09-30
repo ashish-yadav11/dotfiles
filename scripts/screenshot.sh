@@ -32,11 +32,11 @@ maim -q -f png -m 10 $cursor $options "$tmpfile" || cleanexit
 savescreenshot() {
     cb="Clipboard"
     dl="Default location"
-    location="$(echo "$dl\n$cb" | $menu -p "Where to save the image?")"
+    location="$(echo "$cb\n$dl" | $menu -p "Where to save the image?")"
     [ -z "$location" ] && cleanexit
     case "$location" in
-        "$dl") location="$HOME/Pictures/screenshots/$(date +%Y-%m-%d-%H%M%S).png" ;;
         "$cb") clipboard=1 ;;
+        "$dl") location="$HOME/Pictures/screenshots/$(date +%Y-%m-%d-%H%M%S).png" ;;
         [!/]*) location="$HOME/$location" ;;
     esac
     if [ -n "$clipboard" ] ; then
