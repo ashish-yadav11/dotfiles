@@ -12,13 +12,19 @@ case "$selection" in
         *) exit ;;
 esac
 
-cn="Without cursor"
-cy="With cursor"
-selection="$(echo "$cn\n$cy" | $menu -no-custom -p Maim)" || exit
-case "$selection" in
-    "$cn") cursor="-u" ;;
-    "$cy") cursor="" ;;
-        *) exit ;;
+case "$1" in
+    0) cursor="-u" ;;
+    1) cursor="" ;;
+    *)
+        cn="Without cursor"
+        cy="With cursor"
+        selection="$(echo "$cn\n$cy" | $menu -no-custom -p Maim)" || exit
+        case "$selection" in
+            "$cn") cursor="-u" ;;
+            "$cy") cursor="" ;;
+                *) exit ;;
+        esac
+        ;;
 esac
 
 cleanexit() {
@@ -26,17 +32,22 @@ cleanexit() {
     exit
 }
 
-tmpfile="$(mktemp /tmp/screenshot-XXXXXX)"
-maim -q -f png -m 10 $cursor $options "$tmpfile" || cleanexit
+takescreenshot() {
+    tmpfile="$(mktemp /tmp/screenshot-XXXXXX)"
+    maim -q -f png -m 10 $cursor $options "$tmpfile" || cleanexit
+}
+takescreenshot
 
 savescreenshot() {
-    cb="Clipboard"
-    dl="Default location"
-    location="$(echo "$cb\n$dl" | $menu -p "Where to save the image?")"
+    cb="Copy image to clipboard"
+    dl="Save image in Default location"
+    rt="Retake"
+    location="$(echo "$cb\n$dl\n$rt" | $menu -p "Where to save the image?")"
     [ -z "$location" ] && cleanexit
     case "$location" in
         "$cb") clipboard=1 ;;
         "$dl") location="$HOME/Pictures/screenshots/$(date +%Y-%m-%d-%H%M%S).png" ;;
+        "$rt") rm -f "$tmpfile"; takescreenshot; savescreenshot; return ;;
         [!/]*) location="$HOME/$location" ;;
     esac
     if [ -n "$clipboard" ] ; then
@@ -65,7 +76,6 @@ savescreenshot() {
         fi
     fi
 }
-
 savescreenshot
 notify-send -t 1000 Maim "Screenshot captured"
 [ -z "$rmnot" ] && rm -f "$tmpfile"
