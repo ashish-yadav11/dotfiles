@@ -39,8 +39,8 @@ takescreenshot() {
 takescreenshot
 
 savescreenshot() {
-    cb="Copy image to clipboard"
-    dl="Save image in Default location"
+    cb="Clipboard"
+    dl="Default location"
     rt="Retake"
     location="$(echo "$cb\n$dl\n$rt" | $menu -p "Where to save the image?")"
     [ -z "$location" ] && cleanexit
