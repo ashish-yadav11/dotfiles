@@ -78,6 +78,8 @@ def ListCourseworkMaterials(service, courseid, number):
 
     flag = 0
     for mi in materials:
+        if not mi.get('materials'):
+            continue
         if not short:
             if flag:
                 print()
