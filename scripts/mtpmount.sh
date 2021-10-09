@@ -1,5 +1,9 @@
 #!/bin/bash
-menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -multi-select -no-custom"
+menu() {
+    rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
+                     listview {lines: 1; columns: 9;}' \
+         -dmenu -i -matching fuzzy -multi-select -no-custom "$@"
+}
 
 # plugged-in mtp devices
 mapfile -t devices < <(
@@ -88,14 +92,14 @@ unmount() {
 }
 
 askmount() {
-    printf "%s\n" "${devices0[@]##*|}" | $menu -format i -p Mount: |
+    printf "%s\n" "${devices0[@]##*|}" | menu -format i -p Mount: |
         while IFS='' read -r i ; do
             mount "$i"
         done
 }
 
 askunmount() {
-    printf "%s\n" "${devices1[@]##*|}" | $menu -format i -p Unmount: |
+    printf "%s\n" "${devices1[@]##*|}" | menu -format i -p Unmount: |
         while IFS='' read -r i ; do
             unmount "$i"
         done
@@ -105,7 +109,7 @@ asktype() {
     M="$(printf "%s\n" "${devices0[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')"
     U="$(printf "%s\n" "${devices1[@]##*|}" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')"
 
-    echo -e "Mount: ${M%?}\nUnmount: ${U%?}" | $menu -p "What to do?" |
+    echo -e "Mount: ${M%?}\nUnmount: ${U%?}" | menu -p "What to do?" |
         while IFS='' read -r chosen ; do
             case "$chosen" in
                 M*)

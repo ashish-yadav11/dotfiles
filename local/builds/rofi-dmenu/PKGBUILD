@@ -13,6 +13,6 @@ conflicts=(dmenu)
 
 package() {
     mkdir -p "$pkgdir/usr/bin"
-    echo -e "#!/bin/sh\n$(which rofi) -dmenu -location 1 -width 100 -lines 1 -columns 9 "'"$@"' >"$pkgdir/usr/bin/dmenu"
+    echo -e "#!/bin/sh\n/usr/bin/rofi -dmenu -theme-str 'window {anchor: north; location: north; width: 100%;} listview {lines: 1; columns: 9;}' "'"$@"' >"$pkgdir/usr/bin/dmenu"
     chmod 755 "$pkgdir/usr/bin/dmenu"
 }

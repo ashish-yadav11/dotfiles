@@ -1,7 +1,12 @@
 #!/bin/dash
-menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -no-custom"
 mount=/home/ashish/.scripts/realme-u1-mount.sh
 mtpclean=/home/ashish/.scripts/mtpclean.sh
+
+menu() {
+    rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
+                     listview {lines: 1; columns: 9;}' \
+         -dmenu -i -matching fuzzy -no-custom "$@"
+}
 
 exec 9<>/tmp/realme-u1-usbmode.lock
 flock 9
@@ -24,7 +29,7 @@ case "$(adb shell getprop sys.usb.state)" in
     *midi*) midi="*$midi"; items="$rndis\n$mtp\n$none\n$ptp\n$midi" ;;
     *) none="*$none"; items="$rndis\n$mtp\n$ptp\n$midi\n$none" ;;
 esac
-case "$(echo "$items" | $menu -p Select)" in
+case "$(echo "$items" | menu -p Select)" in
     "$mtp") function=mtp ;;
     "$rndis") function=rndis ;;
     "$none") function=none ;;

@@ -1,5 +1,9 @@
 #!/bin/dash
-menu="rofi -dmenu -location 1 -width 100 -lines 1 -columns 9 -i -matching fuzzy -multi-select -no-custom"
+menu() {
+    rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
+                     listview {lines: 1; columns: 9;}' \
+         -dmenu -i -matching fuzzy -multi-select -no-custom "$@"
+}
 
 # external drives not mounted in the filesystem
 drives0="$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3=="" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')"
@@ -24,14 +28,14 @@ unmount() {
 }
 
 askmount() {
-    echo "$drives0" | $menu -p Mount: |
+    echo "$drives0" | menu -p Mount: |
         while IFS='' read -r chosen ; do
             mount "${chosen%% *}"
         done
 }
 
 askunmount() {
-    echo "$drives1" | $menu -p Unmount: |
+    echo "$drives1" | menu -p Unmount: |
         while IFS='' read -r chosen ; do
             unmount "${chosen%% *}"
         done
@@ -41,7 +45,7 @@ asktype() {
     M="$(echo "$drives0" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')"
     U="$(echo "$drives1" | awk -v ORS='' '{print (NR==1) ? $0 : ", "$0}; END {print (NR==1) ? "s" : "m"}')"
 
-    echo "Mount: ${M%?}\nUnmount: ${U%?}" | $menu -p "What to do?" |
+    echo "Mount: ${M%?}\nUnmount: ${U%?}" | menu -p "What to do?" |
         while IFS='' read -r chosen ; do
             case "$chosen" in
                 M*)
