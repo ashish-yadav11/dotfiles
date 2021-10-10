@@ -487,6 +487,9 @@
 [inhibitsuspend]
     stack_tag = "inhibitsuspend"
     history_ignore = yes
+[keynav]
+    stack_tag = "keynav"
+    history_ignore = yes
 [maim]
     summary = "Maim"
     history_ignore = yes

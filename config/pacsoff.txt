@@ -59,6 +59,7 @@ java-commons-lang
 julia
 kcolorchooser
 kernel-modules-hook
+keynav
 libreoffice-fresh
 libva-mesa-driver
 libva-vdpau-driver
