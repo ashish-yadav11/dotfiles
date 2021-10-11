@@ -56,7 +56,6 @@ inotify-tools
 ispell
 isync
 java-commons-lang
-julia
 kcolorchooser
 kernel-modules-hook
 keynav
