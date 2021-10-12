@@ -5,9 +5,15 @@ menu() {
          -dmenu -i -matching fuzzy -no-custom "$@"
 }
 
-case "$(echo "Yes\nNo" | menu -p "Launch $1?")" in
-    Yes)
-        shift
-        exec "$@"
-        ;;
+name="$1"
+shift
+
+# if minimized to systray don't ask
+case "$name" in
+    Signal) pidof -sq signal-desktop && exec "$@" ;;
+    Telegram) pidof -sq telegram-desktop && exec "$@" ;;
+esac
+
+case "$(echo "Yes\nNo" | menu -p "Launch $name?")" in
+    Yes) exec "$@" ;;
 esac
