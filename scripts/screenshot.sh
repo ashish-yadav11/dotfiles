@@ -35,9 +35,9 @@ cleanexit() {
     rm -f "$tmpfile"
     exit
 }
+tmpfile="$(mktemp /tmp/screenshot-XXXXXX)"
 
 takescreenshot() {
-    tmpfile="$(mktemp /tmp/screenshot-XXXXXX)"
     maim -q -f png -m 10 $cursor $options "$tmpfile" || cleanexit
 }
 takescreenshot
@@ -51,7 +51,7 @@ savescreenshot() {
     case "$location" in
         "$cb") clipboard=1 ;;
         "$dl") location="$HOME/Pictures/screenshots/$(date +%Y-%m-%d-%H%M%S).png" ;;
-        "$rt") rm -f "$tmpfile"; takescreenshot; savescreenshot; return ;;
+        "$rt") takescreenshot; savescreenshot; return ;;
         [!/]*) location="$HOME/$location" ;;
     esac
     if [ -n "$clipboard" ] ; then
