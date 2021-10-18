@@ -58,7 +58,6 @@ isync
 java-commons-lang
 kcolorchooser
 kernel-modules-hook
-keynav
 libreoffice-fresh
 libva-mesa-driver
 libva-vdpau-driver
