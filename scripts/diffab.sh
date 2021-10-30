@@ -44,7 +44,7 @@ mdiff="$(
     [[ -n "$sdiff" ]] &&
         printf "diff $dotfiles/config/crontab crontab\n%s\n" "$sdiff"
 
-    $mdiff_cmd -I "^history\|^lastVisited\|^':" "$dotfiles/config" /home/ashish/.config |
+    $mdiff_cmd -I "^history\|^lastVisited\|^x-scheme-handler/tg=\|^':" "$dotfiles/config" /home/ashish/.config |
         grep -Ev '^Only in .*(config:|\.config(:|/mpv/watch_later: |/nvim: \.netrwhist$|/ranger(: bookmarks$|/.*: __)))' |
             sed -e "s/^$mdiff_str -I '\\^history\\\\|\\^lastVisited\\\\|\\^'\\\\'':'/diff/"
 
@@ -53,7 +53,7 @@ mdiff="$(
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/local" /home/ashish/.local |
-        grep -Ev '^Only in .*(local(:|/share(:|/applications: mimeinfo\.cache$)|/builds(: (dwm|st)$|/keynav: keynav$|.*\.pkg\.tar\.zst$)))' |
+        grep -Ev '^Only in .*(local(:|/share(:|/applications: (userapp-Telegram Desktop.*\.desktop|mimeinfo\.cache$))|/builds(: (dwm|st)$|/keynav: keynav$|.*\.pkg\.tar\.zst$)))' |
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/scripts" /home/ashish/.scripts |
