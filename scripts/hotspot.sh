@@ -20,13 +20,13 @@ case "$1" in
     terminate)
         create_ap --stop "$wifi_interface"
         ;;
-    fix-unmanaged)
-        [ -z "$(create_ap --list-running)" ] && create_ap --fix-unmanaged
-        ;;
     list-running)
         create_ap --list-running
         ;;
+    fix-unmanaged)
+        [ -z "$(create_ap --list-running)" ] && create_ap --fix-unmanaged
+        ;;
     *)
-        echo "Usage: $0 initiate|terminate|fix-unmanaged"
+        echo "Usage: $0 initiate|terminate|list-running|fix-unmanaged"
         ;;
 esac
