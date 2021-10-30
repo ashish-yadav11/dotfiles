@@ -23,6 +23,9 @@ case "$1" in
     fix-unmanaged)
         [ -z "$(create_ap --list-running)" ] && create_ap --fix-unmanaged
         ;;
+    list-running)
+        create_ap --list-running
+        ;;
     *)
         echo "Usage: $0 initiate|terminate|fix-unmanaged"
         ;;
