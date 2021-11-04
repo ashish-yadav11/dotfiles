@@ -151,8 +151,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-#   format = "<span font='13.5' foreground='#9fc8b9'>%s</span>\n%b"
-    format = "<span font='13.5'>%s</span>"
+    format = "<span font='13.5' foreground='#9fc8b9'>%s</span>\n%b"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -427,12 +426,9 @@
 #    appname = "some_volume_notifiers"
 #    set_stack_tag = "volume"
 
-#[notification without body]
-#    body = ""
-#    format = "<span font='13.5'>%s</span>"
-[notification with body]
-    body = "?*"
-    format = "<span font='13.5' foreground='#9fc8b9'>%s</span>\n%b"
+[notification without body]
+    body = ""
+    format = "<span font='13.5'>%s</span>"
 
 [batmon]
     stack_tag = "batmon"
