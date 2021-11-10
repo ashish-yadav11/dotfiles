@@ -29,9 +29,9 @@ nnoremap        <silent>        <Leader>p               :lcd %:p:h<CR>
 nnoremap        <silent>        <Leader>t               :call SpawnTerm("tc")<CR>
 nnoremap        <silent>        <Leader>T               :call SpawnTerm("td")<CR>
 nnoremap        <silent>        <Leader><C-t>           :call SpawnTerm("td")<CR>
-nnoremap        <silent>        <Leader>r               :call SpawnTerm("rc")<CR>
-nnoremap        <silent>        <Leader>R               :call SpawnTerm("rd")<CR>
-nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rp")<CR>
+nnoremap        <silent>        <Leader>r               :call SpawnTerm("rp")<CR>
+nnoremap        <silent>        <Leader>R               :call SpawnTerm("rc")<CR>
+nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rd")<CR>
 " undotree toggle
 nnoremap        <silent>        <Leader>u               :UndotreeToggle<CR>
 " vimtex
