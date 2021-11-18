@@ -31,4 +31,3 @@ timeshift
 ventoy-bin
 woeusb-ng
 yay
-youtube-dlp-bin

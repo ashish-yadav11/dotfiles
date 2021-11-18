@@ -169,6 +169,7 @@ xsel
 xwallpaper
 yad
 youtube-dl
+yt-dlp
 zathura
 zathura-cb
 zathura-djvu
