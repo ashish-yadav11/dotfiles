@@ -1,5 +1,6 @@
 #!/bin/dash
-iiserlogin=/home/ashish/.scripts/iiserlogin.sh
-
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
-[ "$1" = eno1 ] && [ "$2" = up ] && su ashish -s /usr/bin/dash $iiserlogin
+[ "$1" = eno1 ] || exit
+case "$2" in
+    up) systemctl restart iiserlogin.service ;;
+    down) systemctl stop iiserlogin.service ;;
+esac
