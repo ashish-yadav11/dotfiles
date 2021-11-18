@@ -451,6 +451,9 @@
 [hotspot]
     summary = "Hotspot"
     history_ignore = yes
+[iiserlogin]
+    stack_tag = "iiserlogin"
+    history_ignore = yes
 [inhibitsuspend]
     stack_tag = "inhibitsuspend"
     history_ignore = yes
