@@ -5,8 +5,8 @@
 
 # mm      hh      DD      MM      W       command
 
-  50      00      *       *       *       /home/ashish/.scripts/cron/sleep.sh
+  20      01      *       *       *       /home/ashish/.scripts/cron/sleepdine.sh sleep
   00      06      *       *       *       redshift -x
-# 50      20      *       *       *       /home/ashish/.scripts/cron/dine.sh
+  50      20      *       *       *       /home/ashish/.scripts/cron/sleepdine.sh dine
   00      22      *       *       *       redshift -PO 4500
   00      22      *       *       6       /home/ashish/.scripts/cron/maintenance.sh
