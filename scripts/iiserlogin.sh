@@ -10,12 +10,12 @@ sendliverequest() {
 }
 
 notconnected() {
-    $notify -t 2000 "Not connected to IISER network"
+    $notify -h int:transient:1 -t 2000 "Not connected to IISER network"
     exit
 }
 
 loginsuccess() {
-    $notify -t 2000 "Successfully logged into IISER captive portal"
+    $notify -h int:transient:1 -t 2000 "Successfully logged into IISER captive portal"
 }
 
 loginfailed() {
