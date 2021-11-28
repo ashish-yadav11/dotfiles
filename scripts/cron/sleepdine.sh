@@ -2,7 +2,7 @@
 notify="dunstify -h string:x-canonical-private-synchronous:sleepdine"
 pidfile=/run/user/1000/sleep-dine.pid
 
-if [ -z "$2" ] ; then
+if [ -n "$2" ] ; then
     time="$(date +%H%M)"
     if [ "$time" -gt "$(( $2 + 2 ))" || "$time" -lt "$(( $2 - 2 ))"  ] ; then
         exit
