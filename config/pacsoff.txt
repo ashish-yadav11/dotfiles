@@ -28,7 +28,6 @@ dictd
 dunst
 elinks
 entr
-espeak
 fd
 fdupes
 feh

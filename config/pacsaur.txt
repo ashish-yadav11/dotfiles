@@ -6,6 +6,7 @@ dict-gcide
 dict-wikt-en-all
 dict-wn
 dwm-cust
+espeak
 etcher-bin
 go-mtpfs-git
 htop-vim
