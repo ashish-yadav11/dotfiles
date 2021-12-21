@@ -57,6 +57,7 @@ set title titlelen=0
 autocmd FileType go setlocal noexpandtab shiftwidth=0
 autocmd BufNewFile,BufRead *.[ch] setlocal cindent shiftwidth=8
 autocmd BufNewFile,BufRead */st/*.[ch] setlocal noexpandtab shiftwidth=0
+autocmd BufNewFile,BufRead neomutt-* setfiletype mail
 
 let g:netrw_browsex_viewer = 'setsid -f xdg-open'
 let g:netrw_nogx = 1

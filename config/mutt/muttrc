@@ -92,6 +92,9 @@ set sleep_time = 0
 set sort = reverse-threads
 set sort_aux = last-date-received
 
+# send format=flowed messages
+set text_flowed = yes
+
 set tmpdir = /tmp/neomutt
 
 # enable terminal title
