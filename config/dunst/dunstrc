@@ -474,8 +474,11 @@
     summary = " MTP mounter"
     body = "No MTP device to mount or unmount"
     history_ignore = yes
-[pomodoro]
-    stack_tag = "pomodoro"
+[pomodorop]
+    stack_tag = "pomodorop"
+    history_ignore = yes
+[pomodoros]
+    stack_tag = "pomodoros"
     history_ignore = yes
 [realme-u1]
     summary = " Realme U1"
