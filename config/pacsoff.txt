@@ -54,7 +54,6 @@ inkscape
 inotify-tools
 ispell
 isync
-java-commons-lang
 kcolorchooser
 kernel-modules-hook
 libreoffice-fresh
@@ -149,6 +148,8 @@ valgrind
 wmname
 xcape
 xclip
+xdg-desktop-portal
+xdg-desktop-portal-gtk
 xdg-user-dirs
 xdg-utils
 xdotool
