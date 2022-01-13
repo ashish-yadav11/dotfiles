@@ -54,6 +54,7 @@ inkscape
 inotify-tools
 ispell
 isync
+java-commons-lang
 kcolorchooser
 kernel-modules-hook
 libreoffice-fresh
