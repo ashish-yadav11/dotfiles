@@ -5,6 +5,7 @@ User ashishkumar.yadav@students.iiserpune.ac.in
 AuthMechs XOAUTH2
 PassCmd "/home/ashish/.scripts/oauth2tool.sh ashishkumar.yadav@students.iiserpune.ac.in"
 SSLType IMAPS
+SSLVersions TLSv1.2
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 MaildirStore iiser-local
