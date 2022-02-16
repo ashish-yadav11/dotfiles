@@ -31,3 +31,5 @@ timeshift
 ventoy-bin
 woeusb-ng
 yay
+yewtube-git
+youtube-search-python

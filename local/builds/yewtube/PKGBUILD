@@ -1,0 +1,40 @@
+# Maintainer: Ashish Kumar Yadav <ashishkumar.yadav@students.iiserpune.ac.in>
+
+pkgname=yewtube-git
+_pkgname=yewtube
+pkgver=2.6.4.r0.g664ccd3
+pkgrel=1
+pkgdesc="Terminal based YouTube player and downloader"
+url='https://github.com/iamtalhaasghar/yewtube'
+arch=('any')
+license=('GPL3')
+depends=(
+    'python'
+    'python-setuptools'
+    'python-pafy'
+    'yt-dlp'
+    'youtube-search-python'
+    'python-pyperclip'
+)
+makedepends=('git')
+optdepends=(
+    'mpv: Alternative to mplayer and vlc for playback'
+    'mplayer: Alternative to mpv and vlc for playback'
+    'vlc: Alternative to mpv and mplayer for playback'
+    'ffmpeg: for transcoding downloaded content'
+)
+provides=('yewtube')
+conflicts=('yewtube' 'mps-youtube')
+install=yewtube-git.install
+source=("git+${url}.git")
+md5sums=('SKIP')
+
+pkgver() {
+    cd "${_pkgname}"
+    git describe --tags --long | sed -r 's/^v//;s/([^-]*-g)/r\1/;s/-/./g'
+}
+
+package() {
+    cd "${_pkgname}"
+    python setup.py install --root="${pkgdir}" --optimize=1
+}

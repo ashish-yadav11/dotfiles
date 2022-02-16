@@ -1,3 +1,1 @@
-QScrollBar{
-  width: 15px;
-}
+../../qt6ct/qss/scrollbar-simple-custom.qss

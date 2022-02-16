@@ -1,0 +1,25 @@
+QScrollBar{
+  background: palette(alternate-base);
+  width: 12px;
+  height: 12px;
+}
+QScrollBar:horizontal, QScrollBar:vertical{
+  margin: 0px 0px 0px 0px;
+}
+QScrollBar::handle{
+  background: palette(base);
+  border: 1px solid transparent;
+  border-radius: 1px;
+}
+QScrollBar::handle, QScrollBar::add-line, QScrollBar::sub-line{
+  background: palette(button);
+}
+QScrollBar::handle:hover, QScrollBar::add-line:hover, QScrollBar::sub-line:hover{
+  background: palette(highlight);
+}
+QScrollBar::add-line, QScrollBar::sub-line{
+  subcontrol-origin: none;
+}
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal, QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical{
+  height: 0px;
+}
