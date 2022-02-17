@@ -13,8 +13,6 @@ bc
 bcprov
 biber
 bleachbit
-breeze
-breeze-gtk
 calc
 calcurse
 chromium
