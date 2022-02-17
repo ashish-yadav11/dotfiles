@@ -110,7 +110,7 @@ def ListCourseworkMaterials(service, courseid, number):
 
 
 def DieUsage():
-    print(f"Usage: classroom-list-materials [-s] course-id [number]")
+    print("Usage: classroom-list-materials [-s] course-id [number]")
     sys.exit(1)
 
 

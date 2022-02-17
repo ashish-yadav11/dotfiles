@@ -124,7 +124,7 @@ def AddShortcutToDrive(service, folderid, filename, targetid):
 def DieUsage():
     print(
         "Usage: add-drive-shortcut"
-        f" [-c] ([-f folder-id] target-url|target-id [-n name])..."
+        " [-c] ([-f folder-id] target-url|target-id [-n name])..."
     )
     sys.exit(1)
 

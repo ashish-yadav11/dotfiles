@@ -81,7 +81,7 @@ def ListCourse(service, number):
 
 
 def DieUsage():
-    print(f"Usage: classroom-list-courses [number]")
+    print("Usage: classroom-list-courses [number]")
     sys.exit(1)
 
 

@@ -158,7 +158,7 @@ def ListAnnouncements(service, courseid, number):
 
 
 def DieUsage():
-    print(f"Usage: classroom-list-announcements course-id [number]")
+    print("Usage: classroom-list-announcements course-id [number]")
     sys.exit(1)
 
 
