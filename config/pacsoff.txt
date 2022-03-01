@@ -63,7 +63,7 @@ libva-vdpau-driver
 libvdpau-va-gl
 lostfiles
 lsof
-lxappearance-gtk3
+lxappearance
 lxqt-sudo
 maim
 man-db
