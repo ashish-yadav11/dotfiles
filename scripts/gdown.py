@@ -32,4 +32,6 @@ if __name__ == '__main__':
         dieusage()
     sourceid = getid(sys.argv[1])
     target = sys.argv[2] if argc > 2 else './'
-    subprocess.run(['rclone', 'backend', 'copyid', remote, sourceid, target])
+    subprocess.run(
+        ['rclone', '--progress', 'backend', 'copyid', remote, sourceid, target]
+    )
