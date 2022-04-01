@@ -15,7 +15,6 @@ keynav-cust
 libxft-bgra-git
 linux-wifi-hotspot
 mblaze-git
-mpv-mpris
 nawkbinawk
 neovim-plug
 neovim-remote

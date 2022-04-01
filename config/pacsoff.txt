@@ -72,6 +72,7 @@ materia-gtk-theme
 mediainfo
 mesa-vdpau
 mpv
+mpv-mpris
 msmtp
 nawk
 neomutt
