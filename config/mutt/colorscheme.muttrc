@@ -46,19 +46,11 @@ lua if os.getenv("TERM") == "linux" then \
         mutt.command.color("sidebar_indicator", "brightcolor236", "white") \
     end
 
-mono bold bold
-mono error bold
-mono indicator reverse
-mono quoted bold
-mono underline underline
-
 # header
 color header blue default ".*"
 color header brightmagenta default "^From"
 color header brightcyan default "^Subject"
 color header brightwhite default "^(Cc|Bcc)"
-
-mono header bold "^(From|Subject|Date|To|Cc|Bcc):"
 
 # code
 color body green default '`[^`]*`'
@@ -82,9 +74,6 @@ color body cyan default "Good signature"
 color body brightblack default "^gpg: Good signature .*"
 color body brightyellow default "^gpg: "
 color body brightyellow red "^gpg: BAD signature from .*"
-
-mono body bold "^gpg: Good signature .*"
-mono body bold "^gpg: BAD signature from .*"
 
 # email address
 color body brightred default "((@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]),)*@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]):)?[0-9a-z_.+%$-]+@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\])"
