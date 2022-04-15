@@ -8,6 +8,7 @@ dict-wn
 dwm-cust
 espeak
 etcher-bin
+gnome-icon-theme
 go-mtpfs-git
 htop-vim
 i3lock-color
