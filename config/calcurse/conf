@@ -30,3 +30,4 @@ general.systemevents=yes
 notification.command=o=$(calcurse -n); o=${o#*\[}; h=${o%%:*}; o=${o#*:}; m=${o%%\]*}; t=$(( h * 60 + m )); notify-send -t "$(( t * 60000 ))" Calcurse "Appointment in $t minute(s)\n${o#*\] }"
 notification.notifyall=unflagged-only
 notification.warning=300
+format.appointmenttime=%H:%M
