@@ -44,7 +44,7 @@ mdiff="$(
     [[ -n "$sdiff" ]] &&
         printf "diff $dotfiles/config/crontab crontab\n%s\n" "$sdiff"
 
-    $mdiff_cmd -I "^history\|^lastVisited\|^x-scheme-handler/tg=\|^':" "$dotfiles/config" /home/ashish/.config |
+    $mdiff_cmd -I "^history\|^lastVisited\|^x-scheme-handler/tg=\|^':\|^\(Builtin\|Quick\)AnnotationTools=" "$dotfiles/config" /home/ashish/.config |
         grep -Ev '^Only in .*(config:|\.config(:|/mpv/watch_later: |/nvim: \.netrwhist$|/ranger(: bookmarks$|/.*: __)))' |
             sed -e "s/^$mdiff_str -I '\\^history\\\\|[^ ]*:'/diff/"
 
