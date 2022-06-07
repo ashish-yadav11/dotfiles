@@ -55,6 +55,7 @@ set termguicolors
 set title titlelen=0
 
 autocmd FileType go setlocal noexpandtab shiftwidth=0
+autocmd FileType tex setlocal indentexpr="" textwidth=80
 autocmd BufNewFile,BufRead *.[ch] setlocal cindent shiftwidth=8
 autocmd BufNewFile,BufRead */st/*.[ch] setlocal noexpandtab shiftwidth=0
 autocmd BufNewFile,BufRead neomutt-*-\w\+,neomutt[[:alnum:]_-]\\\{6\} setfiletype mail
