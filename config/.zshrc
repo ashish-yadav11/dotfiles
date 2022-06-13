@@ -248,9 +248,9 @@ alias mse="ms && exit"
 alias zcurle="zcurl && exit"
 
 # files
-alias l="nvim ~/Documents/.lag"
 alias n="nvim ~/Documents/.notes"
 alias t="nvim ~/Documents/.todo"
+alias u="nvim ~/Documents/.urls"
 
 # history
 alias h='nvim -c "normal G" ~/.zsh_history'

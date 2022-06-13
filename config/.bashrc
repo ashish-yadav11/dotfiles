@@ -16,9 +16,9 @@ alias kynm=/home/ashish/.scripts/xevcn.sh
 alias mse="ms && exit"
 alias zcurle="zcurl && exit"
 
-alias l="nvim ~/Documents/.lag"
 alias n="nvim ~/Documents/.notes"
 alias t="nvim ~/Documents/.todo"
+alias u="nvim ~/Documents/.urls"
 
 __fzf_select_bookmark() {
     local selected
