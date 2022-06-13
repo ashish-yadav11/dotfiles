@@ -5,7 +5,7 @@
 # return if not running interactively
 [[ "$-" != *i* ]] && return
 
-HISTIGNORE="$HISTIGNORE:l:m:n:s:s *:t"
+HISTIGNORE="$HISTIGNORE:m:n:s:s *:t:u"
 
 # aliases
 alias c=compile

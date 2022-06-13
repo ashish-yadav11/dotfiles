@@ -25,7 +25,7 @@ setopt SH_WORD_SPLIT
 
 ## PARAMETERS (man zshparam)
 
-HISTORY_IGNORE='(h|l|m|n|pb|pz|s|s *|t)'
+HISTORY_IGNORE='(h|m|n|pb|pz|s|s *|t|u)'
 HISTSIZE=20000
 KEYTIMEOUT=1
 LC_ALL=C
