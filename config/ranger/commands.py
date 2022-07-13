@@ -60,7 +60,7 @@ class fzf_search(Command):
         command = f"fd -HiIL {fd_args} | cut -c3- | LC_ALL=C sort -f | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
-        selection = stdout.decode('utf-8').rstrip('\n')
+        selection = stdout.decode('utf-8').rstrip('/\n')
         self.fm.select_file(os.path.join(self.fm.thisdir.path, selection))
 
 class fzf_cd(Command):
