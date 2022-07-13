@@ -60,7 +60,7 @@ class fzf_search(Command):
         if self.fm.settings.show_hidden:
             fd_args = '--hidden ' + fd_args
 
-        command = f"fd -iIL {fd_args} | cut -c3- | LC_ALL=C sort -f | fzf"
+        command = f"fd -iIL {fd_args} | cut -c3- | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
         selection = stdout.decode('utf-8').rstrip('/\n')
@@ -85,7 +85,7 @@ class fzf_cd(Command):
         if self.fm.settings.show_hidden:
             fd_args = '--hidden ' + fd_args
 
-        command = f"fd -iIL -td {fd_args} | cut -c3- | LC_ALL=C sort -f | fzf"
+        command = f"fd -iIL -td {fd_args} | cut -c3- | fzf"
         fzf = self.fm.execute_command(command, stdout=PIPE)
         stdout, stderr = fzf.communicate()
         selection = stdout.decode('utf-8').rstrip('\n')
