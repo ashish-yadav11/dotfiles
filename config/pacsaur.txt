@@ -27,6 +27,7 @@ riseup-vpn
 rofi-dmenu-cust
 siji-git
 st-cust
+textidote-bin
 timeshift
 ventoy-bin
 woeusb-ng
