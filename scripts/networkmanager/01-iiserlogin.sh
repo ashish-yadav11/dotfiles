@@ -7,8 +7,12 @@ possibly_connected_to_iiser() {
         { [ "$interface" = wlp5s0 ] && [ "$CONNECTION_ID" = Students ] ;}
 }
 
-if [ "$status" = down ] ; then
-    possibly_connected_to_iiser && systemctl stop iiserlogin.service
-elif [ "$status" = up ] && [ "$DHCP4_DOMAIN_NAME" = "iiserpune.ac.in" ] ; then
-    possibly_connected_to_iiser && systemctl restart iiserlogin.service
-fi
+case "$status" in
+    down)
+        possibly_connected_to_iiser && systemctl stop iiserlogin.service
+        ;;
+    dhcp4-change|up)
+        [ "$DHCP4_DOMAIN_NAME" = "iiserpune.ac.in" ] &&
+            possibly_connected_to_iiser && systemctl restart iiserlogin.service
+        ;;
+esac
