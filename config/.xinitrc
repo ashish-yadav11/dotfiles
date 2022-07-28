@@ -50,6 +50,10 @@ pidof -sq /usr/lib/polkit-kde-authentication-agent-1 ||
 pidof -sq /usr/bin/nm-applet ||
     nm-applet
 } &
+{
+pidof -sq /usr/bin/dunst ||
+    dunst
+} &
 dsblocks &
 {
 pidof -sqx /home/ashish/.scripts/pulse_daemon.sh ||
