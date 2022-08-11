@@ -101,6 +101,7 @@ python-google-auth-oauthlib
 python-matplotlib
 python-numpy
 python-pip
+python-pipx
 python-pyqt5
 python-scipy
 qbittorrent

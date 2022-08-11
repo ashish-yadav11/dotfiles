@@ -33,5 +33,4 @@ ventoy-bin
 woeusb-ng
 xcursor-breeze
 yay
-yewtube-git
 youtube-search-python
