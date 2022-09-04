@@ -5,7 +5,7 @@ case "$1" in
     initiate)
         fallback_interface=eno1
 
-        nmcli device disconnect "$wifi_interface"
+        nmcli device disconnect "$wifi_interface" 2>/dev/null
         active_interface="$(nmcli -t -f DEVICE connection show --active)"
         newline='
 '
