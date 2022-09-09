@@ -23,7 +23,7 @@ netlogo
 networkmanager-dispatcher-chrony
 pam-gnupg
 pass-git-helper
-riseup-vpn
+riseup-vpn-git
 rofi-dmenu-cust
 siji-git
 st-cust
