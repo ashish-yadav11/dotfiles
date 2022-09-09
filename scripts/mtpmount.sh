@@ -51,7 +51,7 @@ mount() {
     serial="${device#* (}"; serial="${serial%)}"
     mtpoint="$XDG_RUNTIME_DIR/mtp/${device%%|*}"
     mkdir -p "$mtpoint"
-    setsid -f go-mtpfs -dev "$serial" "$mtpoint" &>"$mtpoint.log"
+    setsid -f go-mtpfs -usb-timeout 10000 -dev "$serial" "$mtpoint" &>"$mtpoint.log"
     sleep 0.1
     timeout="$(( SECONDS + 2 ))"
     while (( SECONDS < timeout )) ; do
