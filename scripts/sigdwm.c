@@ -11,6 +11,8 @@ gcc -o sigdwm -O3 -Wall -Wextra sigdwm.c -lX11
 #define FSIGID                          "z:"
 #define FSIGIDLEN                       (sizeof FSIGID - 1)
 
+/* See restorestatus() in dwm.c */
+
 int
 main(int argc, char *argv[])
 {
@@ -26,7 +28,7 @@ main(int argc, char *argv[])
                 fputs("Error: could not open display.\n", stderr);
                 return 1;
         }
-        if (XFetchName(dpy, DefaultRootWindow(dpy), &curname) && curname[0]) {
+        if (XFetchName(dpy, DefaultRootWindow(dpy), &curname) && curname) {
                 if (strncmp(curname, FSIGID, FSIGIDLEN) == 0) {
                         char *stext;
 
