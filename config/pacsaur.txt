@@ -26,6 +26,7 @@ riseup-vpn-git
 rofi-dmenu-cust
 ruby-fusuma
 ruby-fusuma-plugin-sendkey
+ruby-fusuma-plugin-appmatcher
 siji-git
 st-cust
 textidote-bin
