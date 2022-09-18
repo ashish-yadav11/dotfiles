@@ -11,10 +11,10 @@ swipe:
 pinch:
   2:
     in:
-      sendkey: 'LEFTCTRL+MINUS'
+      sendkey: 'LEFTSHIFT+LEFTCTRL+EQUAL'
       threshold: 0.1
     out:
-      sendkey: 'LEFTSHIFT+LEFTCTRL+EQUAL'
+      sendkey: 'LEFTCTRL+MINUS'
       threshold: 0.1
 
 threshold:
