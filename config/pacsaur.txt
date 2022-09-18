@@ -13,7 +13,6 @@ go-mtpfs-git
 htop-vim
 i3lock-color
 keynav-cust
-libxft-bgra-git
 linux-wifi-hotspot
 mblaze-git
 nawkbinawk

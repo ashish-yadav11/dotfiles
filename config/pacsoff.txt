@@ -58,6 +58,7 @@ libreoffice-fresh
 libva-mesa-driver
 libva-vdpau-driver
 libvdpau-va-gl
+libxft
 lostfiles
 lsof
 lxappearance-gtk3
