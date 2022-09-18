@@ -1,0 +1,26 @@
+swipe:
+  3:
+    left:
+      command: 'sigdwm "sfvw i -1"'
+    right:
+      command: 'sigdwm "sfvw i +1"'
+    up:
+      command: 'sigdwm "fclg i 0"'
+    down:
+      command: 'sigdwm "view ui 0"'
+pinch:
+  2:
+    in:
+      sendkey: 'LEFTCTRL+MINUS'
+      threshold: 0.1
+    out:
+      sendkey: 'LEFTSHIFT+LEFTCTRL+EQUAL'
+      threshold: 0.1
+
+threshold:
+  swipe: 0.5
+  pinch: 0.1
+
+interval:
+  swipe: 0.5
+  pinch: 0.5
