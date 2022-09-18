@@ -63,6 +63,7 @@ clipdaemon &
 playerctld daemon &
 unclutter &
 adb start-server &
+fusuma &
 
 #exec valgrind --leak-check=full dwm
 exec dwm
