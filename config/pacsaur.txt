@@ -24,8 +24,6 @@ pam-gnupg
 pass-git-helper
 riseup-vpn-git
 rofi-dmenu-cust
-ruby-fusuma
-ruby-fusuma-plugin-sendkey
 siji-git
 st-cust
 textidote-bin
