@@ -25,7 +25,6 @@ pass-git-helper
 riseup-vpn-git
 rofi-dmenu-cust
 ruby-fusuma
-ruby-fusuma-plugin-appmatcher
 ruby-fusuma-plugin-sendkey
 siji-git
 st-cust
