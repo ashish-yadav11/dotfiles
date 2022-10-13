@@ -49,6 +49,7 @@ syntax on
 set expandtab smarttab shiftwidth=4 tabstop=8
 set nojoinspaces
 set mouse=a
+set mousemodel=extend
 set number relativenumber
 set splitbelow splitright
 set termguicolors
