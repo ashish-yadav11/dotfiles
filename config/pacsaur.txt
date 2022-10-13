@@ -19,7 +19,6 @@ mblaze-git
 nawkbinawk
 neovim-plug
 neovim-remote
-netlogo
 networkmanager-dispatcher-chrony
 pam-gnupg
 pass-git-helper
