@@ -1,6 +1,6 @@
 #!/bin/dash
+file="$(mktemp -u -p "$HOME" "windows-$(date +%m%d)XXX.txt")"
 while true ; do
     sleep 60
-    file="$(mktemp -u -p "$HOME" "windows-$(date +%m%d)XXX.txt")"
     xwininfo -tree -root | grep -F ': ("org.pwmt.zathura" "Zathura") ' >"$file"
 done
