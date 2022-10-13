@@ -474,6 +474,9 @@
 [maim]
     summary = "Maim"
     history_ignore = yes
+[mailsync]
+    stack_tag = "mailsync"
+    history_ignore = yes
 [maintenance]
     stack_tag = "maintenance"
     history_ignore = yes
