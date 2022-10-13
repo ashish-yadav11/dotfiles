@@ -1,6 +1,1 @@
-#!/bin/dash
-file="$(mktemp -p "$HOME" "windows-$(date +%m%d)XXX.txt")"
-while true ; do
-    sleep 60
-    xwininfo -tree -root | grep -F ': ("org.pwmt.zathura" "Zathura") ' >"$file"
-done
+../../.scripts/windaemon.sh
