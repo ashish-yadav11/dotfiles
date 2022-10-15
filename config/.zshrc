@@ -243,6 +243,7 @@ alias c=compile
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias dme="dm && exit"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
+alias hlp="exec hotloop"
 alias kynm=/home/ashish/.scripts/xevcn.sh
 alias mse="ms && exit"
 alias zcurle="zcurl && exit"
