@@ -33,3 +33,4 @@ woeusb-ng
 xcursor-breeze
 yay
 youtube-search-python
+ytfzf
