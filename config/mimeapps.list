@@ -1,5 +1,6 @@
 [Default Applications]
 application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
+application/postscript=org.pwmt.zathura-ps.desktop
 application/x-shellscript=nvim.desktop
 application/xml=nvim.desktop
 image/jpeg=sxiv.desktop
@@ -15,7 +16,9 @@ video/mp4=mpv.desktop
 x-scheme-handler/etcher=balena-etcher-electron.desktop
 x-scheme-handler/http=brave-browser.desktop
 x-scheme-handler/https=brave-browser.desktop
-x-scheme-handler/tg=telegramdesktop.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-SNMI90.desktop
 
 [Added Associations]
+application/postscript=org.pwmt.zathura-ps.desktop;
 application/xml=nvim.desktop;nvim-qt.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-SNMI90.desktop;
