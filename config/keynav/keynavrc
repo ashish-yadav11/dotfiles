@@ -5,7 +5,7 @@ Escape end
 ctrl+bracketleft end
 q record ~/.keynav_macros
 shift+2 playback
-u history-back
+ctrl+u history-back
 h cut-left
 j cut-down
 k cut-up
@@ -14,6 +14,14 @@ shift+h move-left
 shift+j move-down
 shift+k move-up
 shift+l move-right
+t cut-left,cut-up
+y cut-right,cut-up
+b cut-left,cut-down
+n cut-right,cut-down
+shift+t move-left,move-up
+shift+y move-right,move-up
+shift+b move-left,move-down
+shift+n move-right,move-down
 space warp,click 1,end
 Return warp,click 1,end
 shift+space warp,click 3,end
@@ -29,14 +37,7 @@ e end
 3 warp,click 3
 4 warp,click 4
 5 warp,click 5
-comma warp,click 4
-ctrl+u warp, click 4
-ctrl+d warp, click 5
-t cut-left,cut-up
-y cut-right,cut-up
-b cut-left,cut-down
-n cut-right,cut-down
-shift+t move-left,move-up
-shift+y move-right,move-up
-shift+b move-left,move-down
-shift+n move-right,move-down
+semicolon warp, click 4
+comma warp, click 5
+u warp, click 4
+d warp, click 5
