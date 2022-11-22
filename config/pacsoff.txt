@@ -114,6 +114,7 @@ redshift
 reflector
 ripgrep
 rofi
+scrcpy
 shellcheck
 signal-desktop
 simplescreenrecorder
