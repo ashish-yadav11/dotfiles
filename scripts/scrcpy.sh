@@ -1,17 +1,19 @@
-#!/bin/dash
+#!/bin/bash
 ip=192.168.12.10
 
-warn() {
+warnnotif() {
     notify-send -t 2000 " ScrCpy" "Device not connected"
 }
-checkoutput() {
-    grep -Fqm1 'WARN: Device disconnected' || warn
+grepwarn() {
+    grep -Fqm1 'WARN: Device disconnected'
 }
 
 if ping -c1 -W1 "$ip" >/dev/null ; then
-    scrcpy --tcpip="$ip" --max-size=1920 --shortcut-mod=lctrl 2>&1 | checkoutput
-elif [ "$(adb devices | wc -l)" -ge 3 ] ; then
-    scrcpy -d --max-size=1920 --shortcut-mod=lctrl 2>&1 | checkoutput
+    scrcpy --tcpip="$ip" --max-size=1920 --shortcut-mod=lctrl |& grepwarn
+    [[ "${PIPESTATUS[0]}" == 0 || "${PIPESTATUS[1]}" == 0 ]] || warnnotif
+elif [[ "$(adb devices | wc -l)" -ge 3 ]] ; then
+    scrcpy -d --max-size=1920 --shortcut-mod=lctrl |& grepwarn
+    [[ "${PIPESTATUS[0]}" == 0 || "${PIPESTATUS[1]}" == 0 ]] || warnnotif
 else
-    warn
+    warnnotif
 fi
