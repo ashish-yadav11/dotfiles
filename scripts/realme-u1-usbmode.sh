@@ -17,12 +17,15 @@ ptp="Picture Transfer"
 rndis="USB Tethering"
 midi="MIDI"
 
+mrorder="$mtp\n$rndis"
+#mrorder="$rndis\n$mtp"
+
 case "$(adb -d shell getprop sys.usb.state)" in
     *mtp*) mtp="*$mtp"; items="$rndis\n$none\n$mtp\n$ptp\n$midi"; clean=1 ;;
-    *ptp*) ptp="*$ptp"; items="$rndis\n$mtp\n$none\n$midi\n$ptp" ;;
+    *ptp*) ptp="*$ptp"; items="$mrorder\n$none\n$midi\n$ptp" ;;
     *rndis*) rndis="*$rndis"; items="$mtp\n$none\n$rndis\n$ptp\n$midi" ;;
-    *midi*) midi="*$midi"; items="$rndis\n$mtp\n$none\n$ptp\n$midi" ;;
-    *) none="*$none"; items="$rndis\n$mtp\n$ptp\n$midi\n$none" ;;
+    *midi*) midi="*$midi"; items="$mrorder\n$none\n$ptp\n$midi" ;;
+    *) none="*$none"; items="$mrorder\n$ptp\n$midi\n$none" ;;
 esac
 case "$(echo "$items" | $menu -p Select)" in
     "$none") function=none ;;
