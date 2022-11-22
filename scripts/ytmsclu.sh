@@ -47,7 +47,7 @@ else
     case "$(xwininfo -children -root)" in
         *': ("crx_cinhimbnkkaeohfgghhklpknlkffjgod" '*)
             sigdwm "scrs i 2"
-            sleep 0.1
+            sleep 0.2
             ;;
         *)
             exit
