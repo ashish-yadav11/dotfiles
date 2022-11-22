@@ -6,7 +6,7 @@ mtpclean=/home/ashish/.scripts/mtpclean.sh
 exec 9<>/tmp/realme-u1-usbmode.lock
 flock 9
 
-if ! lsusb | grep -qm1 'ID 22d9:' || [ "$(adb get-state)" != device ] ; then
+if ! lsusb | grep -qm1 'ID 22d9:' || [ "$(adb -d get-state)" != device ] ; then
     notify-send -t 2000 " Realme U1" "Device not connected"
     exit
 fi
@@ -17,7 +17,7 @@ ptp="Picture Transfer"
 rndis="USB Tethering"
 midi="MIDI"
 
-case "$(adb shell getprop sys.usb.state)" in
+case "$(adb -d shell getprop sys.usb.state)" in
     *mtp*) mtp="*$mtp"; items="$rndis\n$none\n$mtp\n$ptp\n$midi"; clean=1 ;;
     *ptp*) ptp="*$ptp"; items="$rndis\n$mtp\n$none\n$midi\n$ptp" ;;
     *rndis*) rndis="*$rndis"; items="$mtp\n$none\n$rndis\n$ptp\n$midi" ;;
@@ -37,7 +37,7 @@ esac
 : >/tmp/realme-u1.lock
 
 [ "$function" = mtp ] && setsid -f timeout 5 $mount
-adb shell svc usb setFunctions "$function"
-adb wait-for-usb-device
+adb -d shell svc usb setFunctions "$function"
+adb -d wait-for-usb-device
 [ -n "$clean" ] && setsid -f $mtpclean
 flock -u 9
