@@ -10,8 +10,6 @@ gcc -o pixelcolor -O3 -Wall -Wextra pixelcolor.c -lX11
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
-#define USAGE                           "Usage: pixelcolor [x] [y] [w] [h]\n"
-
 int quiet = 0;
 Display *dpy;
 
@@ -58,7 +56,7 @@ printcolors(int x, int y, int w, int h)
 
         XDestroyImage(image);
 }
- 
+
 int
 main(int argc, char *argv[])
 {
@@ -72,7 +70,7 @@ main(int argc, char *argv[])
         }
         for (int i = 0; i < pargc; i++)
                 if (!parseint(pargv[i], &v[i])) {
-                        fprintf(stderr, "Usage: %s [x] [y] [w] [h]\n", argv[0]);
+                        fprintf(stderr, "Usage: %s [-q] [x] [y] [w] [h]\n", argv[0]);
                         return 1;
                 }
         if (!(dpy = XOpenDisplay(NULL))) {
