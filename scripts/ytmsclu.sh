@@ -65,7 +65,7 @@ geometry="$(xdotool getactivewindow getwindowgeometry)"
 geometry="${geometry#*Position: }"
 position="${geometry% (screen: *}"
 size="${geometry#*Geometry: }"
-# coordinates of right upper corner of the YouTube Music window
+# coordinates of left upper corner of the YouTube Music window
 x="${position%,*}"
 y="${position#*,}"
 # size of the YouTube Music window
@@ -100,37 +100,79 @@ if [ "$(( x0 < 0 || x0 > 1365 || (x0 + s) > 1365 || y < 0 || y > 767 ))" = 1 ] ;
     exit
 fi
 if [ "$1" = 1 ] ; then
-    pixelcolor "$x0" "$y0" "$s" | awk -F[,:] '
-        $3 ~ /#[7-9].[7-9].[7-9].$/ {
-            x[++i % 6] = $1
-            if (s != 5) {
-                if (x[(i - 1) % 6] == $1 - 1 &&
-                    x[(i - 5) % 6] == $1 - 7) {
+    pixelcolor -q "$x0" "$y0" "$s" | awk '
+        {
+            if ($0 ~ /^#[2-3].[2-3].[2-3].$/) {
+                if (p == 1 && b == 7) {
                     e = 1
                     exit
                 }
-            } else {
-                s++
+                b++
+                next
+            } else if ($0 ~ /^#[7-9].[7-9].[7-9].$/) {
+                if (w == 0 && b > 7) {
+                    b = 0
+                    w = 1
+                    next
+                }
+                if (w == 1 && b == 3) {
+                    b = 0
+                    p = 1
+                    next
+                }
             }
+        }
+        {
+                b = 0
+                w = 0
+                p = 0
         }
         END {
             exit !e
         }
     ' && press_keys plus
-    press_keys y y
+#   press_keys y y
+    xdotool mousemove "$((x + w - 130))" "$((y + 15))" click 1 sleep 0.1 \
+            mousemove "$((x + w - 130))" "$((y + 80))" click 1 \
+            mousemove 10000 10000
+
 else
-    pixelcolor "$x0" "$y0" "$s" | awk -F[,:] '
-        $3 ~ /#[d-f].[d-f].[d-f].$/ {
-            x[++i % 17] = $1
-            if (s != 16) {
-                if (x[(i - 12) % 17] == $1 - 12 &&
-                    x[(i - 16) % 17] == $1 - 18) {
+    pixelcolor -q "$x0" "$y0" "$s" | awk '
+        {
+            if ($0 ~ /^#[2-3].[2-3].[2-3].$/) {
+                if (p == 3 && b == 7) {
                     e = 1
                     exit
                 }
-            } else {
-                s++
+                if (b == 0) {
+                    if (p == 1 && w == 3) {
+                        w = 0
+                        p = 2
+                    } else if (p == 2 && w > 7) {
+                        w = 0
+                        p = 3
+                    }
+                }
+                b++
+                next
+            } else if ($0 ~ /^#[c-f].[c-f].[c-f].$/) {
+                if (w == 0 && p == 0 && b > 7) {
+                    b = 0
+                    p = 1
+                    w++
+                    next
+                }
+                if (p > 0) {
+                    b = 0
+                    w++
+                    next
+                }
             }
+        }
+        {
+                b = 0
+                w = 0
+                p = 0
         }
         END {
             exit !e
