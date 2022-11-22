@@ -500,6 +500,9 @@
 [scrach]
     stack_tag = "scratch"
     history_ignore = yes
+[scrcpy]
+    summary = " ScrCpy"
+    history_ignore = yes
 [signal]
     appname = "Signal"
     history_ignore = yes
