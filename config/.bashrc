@@ -142,7 +142,7 @@ zcurl() {
     curl -sfLIo /dev/null "$url" || { echo "Invalid URL or network error!"; return 1 ;}
     if ! [[ "$url" == http*.pdf || "$url" == http*/pdf/* ]] ; then
         read -r -p "Are you sure you want to zcurl $url [y/N]: " confirm
-        [[ "$confirm" != y && "$confirm" != Y ]] && return 0
+        [[ "$confirm" != y && "$confirm" != Y ]] && return 2
     fi
     filepath="/var/tmp/${url##*/}"
     curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return 1 ;}
