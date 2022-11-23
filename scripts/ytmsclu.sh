@@ -13,9 +13,11 @@ exec 9<>"$lockfile"
 flock 9
 
 hide() {
-    if [ -s "$lockfile" ] && flock -u 9 && flock -n 9 ; then
-        : >"$lockfile"
-        sigdwm "scrh i 2"
+    if [ -s "$lockfile" ] ; then
+        if flock -u 9 && flock -n 9 ; then
+            : >"$lockfile"
+            sigdwm "scrh i 2"
+        fi
     elif [ -z "$ytaf" ] ; then
         if flock -u 9 && flock -n 9 ; then
             sigdwm "scrh i 2"
@@ -23,7 +25,8 @@ hide() {
             echo 1 >"$lockfile"
         fi
     fi
-    flock -u 9 # forked processes inherit file descriptor and thus lock (think xsel -ib)
+    # just to be safe (forked processes inherit file descriptor and thus lock)
+    flock -u 9
 }
 
 press_keys() {
