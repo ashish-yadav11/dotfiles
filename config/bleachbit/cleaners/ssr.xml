@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cleaner id="ssr">
+  <label>SimpleScreenRecorder</label>
+  <description>Screen recorder</description>
+  <option id="logs">
+    <label>Logs</label>
+    <description>Clean logs</description>
+    <action search="walk.files" command="delete" path="~/.ssr/logs/"/>
+  </option>
+</cleaner>
