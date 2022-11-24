@@ -10,9 +10,7 @@ getdsknum() {
         dsknum=00
     fi
 }
-
-while true ; do
-    sleep 300
+savewintitles() {
     : >"$file"
     xwininfo -tree -root | grep '^     0' |
         awk -F': \\(' '{print $1}' | grep -v -F '(has no name)' |
@@ -43,4 +41,19 @@ while true ; do
                 echo "$desktop $wintitle" >>"$file"
             done
     sort -o "$file" "$file"
-done
+}
+
+case "$1" in
+    -h)
+        echo "savewintitles [-h|d]"
+        ;;
+    -d)
+        while true ; do
+            savewintitles
+            sleep 300
+        done
+        ;;
+    *)
+        savewintitles
+        ;;
+esac
