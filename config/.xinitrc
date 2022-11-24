@@ -64,7 +64,7 @@ playerctld daemon &
 unclutter &
 adb start-server &
 gebaard &
-windaemon &
+savewintitles -d &
 
 #exec valgrind --leak-check=full dwm
 exec dwm
