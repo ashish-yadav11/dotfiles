@@ -9,10 +9,10 @@ grepwarn() {
 }
 
 if ping -c1 -W1 "$ip" >/dev/null ; then
-    scrcpy --tcpip="$ip" --max-size=1920 --shortcut-mod=lctrl |& grepwarn
+    scrcpy --tcpip="$ip" --max-size=1920 --shortcut-mod=lctrl "$@" |& grepwarn
     [[ "${PIPESTATUS[0]}" == 0 || "${PIPESTATUS[1]}" == 0 ]] || warnnotif
 elif [[ "$(adb devices | wc -l)" -ge 3 ]] ; then
-    scrcpy -d --max-size=1920 --shortcut-mod=lctrl |& grepwarn
+    scrcpy -d --max-size=1920 --shortcut-mod=lctrl "$@" |& grepwarn
     [[ "${PIPESTATUS[0]}" == 0 || "${PIPESTATUS[1]}" == 0 ]] || warnnotif
 else
     warnnotif
