@@ -16,6 +16,18 @@ nnoremap        <silent>        <C-j>                   <C-w>j
 nnoremap        <silent>        <C-k>                   <C-w>k
 nnoremap        <silent>        <C-l>                   <C-w>l
 nnoremap        <silent>        <C-h>                   <C-w>h
+" switching between tabs
+noremap         <silent>        <leader>1               1gt
+noremap         <silent>        <leader>2               2gt
+noremap         <silent>        <leader>3               3gt
+noremap         <silent>        <leader>4               4gt
+noremap         <silent>        <leader>5               5gt
+noremap         <silent>        <leader>6               :tablast<CR>4gT
+noremap         <silent>        <leader>7               :tablast<CR>3gT
+noremap         <silent>        <leader>8               :tablast<CR>2gT
+noremap         <silent>        <leader>9               :tablast<CR>1gT
+noremap         <silent>        <leader>0               :tablast<CR>
+
 " yank path and directory of the current file
 nnoremap        <silent>        yp                      :let @+=expand("%:p")<CR>
 nnoremap        <silent>        yd                      :let @+=expand("%:p:h")<CR>
