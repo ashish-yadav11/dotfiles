@@ -24,7 +24,7 @@ loginfailed() {
 }
 
 output="$(sendloginrequest)" || notconnected
-if echo "$output" | grep -qvF "Login failed" ; then
+if echo "$output" | grep -qvFm1 "Login failed" ; then
     loginsuccess
 else
     loginfailed
@@ -32,9 +32,9 @@ fi
 
 while true ; do
     output="$(sendliverequest)" || break
-    echo "$output" | grep -qF "<ack><![CDATA[live_off]]></ack>" && break
-    echo "$output" | grep -qF "<ack><![CDATA[ack]]></ack>" && continue
+    echo "$output" | grep -qFm1 "<ack><![CDATA[live_off]]></ack>" && break
+    echo "$output" | grep -qFm1 "<ack><![CDATA[ack]]></ack>" && continue
     output="$(sendloginrequest)" || break
-    echo "$output" | grep -qvF "Login failed" || loginfailed
+    echo "$output" | grep -qvFm1 "Login failed" || loginfailed
     sleep 180
 done
