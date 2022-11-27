@@ -2,13 +2,16 @@
 interface="$1"
 status="$2"
 
-if [ "$status" = down ] ; then
-    possibly_connected_to_iiser && systemctl stop iiserlogin.service
-elif [ "$interface" = eno1 ] ; then
-    if [ "$status" = up ] || [ "$status" = "dhcp4-change" ] ; then
-        systemctl restart iiserlogin.service
-    fi
-elif [ "$status" = up ] && [ "$interface" = wlp5s0 ] &&
-     [ "$CONNECTION_ID" = Students ] ; then
-    systemctl restart iiserlogin.service
-fi
+[ "$status" != up ] && exit
+case "$interface" in
+    eno1)
+        nmcli -t device show eno1 |
+         grep -qFm1 "IP4.DOMAIN[1]:iiserpune.ac.in" &&
+            systemctl restart iiserlogin.service
+        ;;
+    wlp5s0)
+        [ "$CONNECTION_ID" = Students ] && nmcli -t device show wlp5s0 |
+         grep -qFm1 "IP4.DOMAIN[1]:iiserpune.ac.in" &&
+            systemctl restart iiserlogin.service
+        ;;
+esac
