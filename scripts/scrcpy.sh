@@ -5,7 +5,7 @@ warnnotif() {
     notify-send -t 2000 " ScrCpy" "Device not connected"
 }
 grepwarn() {
-    grep -Fqm1 'WARN: Device disconnected'
+    grep -qFm1 'WARN: Device disconnected'
 }
 
 if ping -c1 -W1 "$ip" >/dev/null ; then
