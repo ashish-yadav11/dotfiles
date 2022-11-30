@@ -10,6 +10,9 @@ transparent="#00000000"
 wrong="#ff4040ff"
 
 i3lock \
+--pass-media-keys \
+--pass-screen-keys \
+--pass-power-keys \
 --bshl-color="$backspace" \
 --clock \
 --color="$blank" \
