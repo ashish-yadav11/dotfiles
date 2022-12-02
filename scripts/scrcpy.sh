@@ -10,8 +10,11 @@ grepwarn() {
 
 if ping -c1 -W1 "$ip" >/dev/null ; then
     scrcpy --tcpip="$ip" --max-size=1920 --shortcut-mod=lctrl,rctrl "$@"
-    [ "$?" = 1 ] && warnnotif
-elif [ "$(adb devices | wc -l)" -ge 3 ] ; then
+    if [ "$?" = 1 ] ; then
+        scrcpy --tcpip --max-size=1920 --shortcut-mod=lctrl,rctrl "$@"
+        [ "$?" = 1 ] && warnnotif
+    fi
+elif [ "$(adb devices | wc -l)" -gt 2 ] ; then
     scrcpy -d --max-size=1920 --shortcut-mod=lctrl,rctrl "$@"
     [ "$?" = 1 ] && warnnotif
 else
