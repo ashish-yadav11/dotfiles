@@ -262,20 +262,21 @@ alias pz="INCOGNITO=1 zsh"
 dm() {
     local url
     case "$#" in
-        0)
-            url="$(xsel -ob)" || { echo "Nothing in clipboard!"; return 1 ;}
-            url="${url%%&*}"
-            echo -n "$url" | xsel -ib
-            ;;
-        1)
-            url="$1"
-            ;;
-        *)
-            echo "Usage: dm [url]"
-            ;;
+        0) url="$(xsel -ob)" ;;
+        1) url="$1" ;;
+        *) echo "Usage: dm [url]"; return 2 ;;
     esac
-    youtube-dl --extract-audio --audio-format best --audio-quality 0 \
-               --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
+    if ! echo "$url" | grep -qm1 \
+            "^https://\(music\|www\)\.youtube\.com/watch?v=...........\($\|&\)" ; then
+        echo "Invalid url: \`$url'!"
+        return 1
+    fi
+    if [[ "$#" == 0 ]] ; then
+        url="${url%%&*}"
+        echo -n "$url" | xsel -ib
+    fi
+    yt-dlp --extract-audio --audio-format best --audio-quality 0 \
+           --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
 }
 
 m() {
