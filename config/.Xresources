@@ -7,6 +7,9 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter:  lcddefault
 Xft.rgba: rgb
 
+! Cursor
+Xcursor.theme: Breeze_Snow
+
 ! Sxiv
 Sxiv.background: #1d2021
 Sxiv.foreground: #bdae93
