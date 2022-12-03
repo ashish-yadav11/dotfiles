@@ -103,41 +103,44 @@ if [ "$(( x0 < 0 || x0 > 1365 || (x0 + s) > 1365 || y < 0 || y > 767 ))" = 1 ] ;
     exit
 fi
 if [ "$1" = 1 ] ; then
-    pixelcolor -q "$x0" "$y0" "$s" | awk '
-        {
-            if ($0 ~ /^#[2-3].[2-3].[2-3].$/) {
-                if (p == 1 && b == 7) {
-                    e = 1
-                    exit
-                }
-                b++
-                next
-            } else if ($0 ~ /^#[7-9].[7-9].[7-9].$/) {
-                if (w == 0 && b > 7) {
-                    b = 0
-                    w = 1
+    if pixelcolor -q "$x0" "$y0" "$s" | awk '
+            {
+                if ($0 ~ /^#[2-3].[2-3].[2-3].$/) {
+                    if (p == 1 && b == 7) {
+                        e = 1
+                        exit
+                    }
+                    b++
                     next
-                }
-                if (w == 1 && b == 3) {
-                    b = 0
-                    p = 1
-                    next
+                } else if ($0 ~ /^#[7-9].[7-9].[7-9].$/) {
+                    if (w == 0 && b > 7) {
+                        b = 0
+                        w = 1
+                        next
+                    }
+                    if (w == 1 && b == 3) {
+                        b = 0
+                        p = 1
+                        next
+                    }
                 }
             }
-        }
-        {
-                b = 0
-                w = 0
-                p = 0
-        }
-        END {
-            exit !e
-        }
-    ' && press_keys plus
-#   press_keys y y
-    xdotool mousemove "$((x + w - 130))" "$((y + 15))" click 1 sleep 0.1 \
-            mousemove "$((x + w - 130))" "$((y + 80))" click 1 \
-            mousemove 10000 10000
+            {
+                    b = 0
+                    w = 0
+                    p = 0
+            }
+            END {
+                exit !e
+            }' ; then
+        press_keys plus
+#       press_keys y y
+        xdotool mousemove "$((x + w - 130))" "$((y + 15))" click 1 sleep 0.1 \
+                mousemove "$((x + w - 130))" "$((y + 80))" click 1 \
+                mousemove 10000 10000
+    else
+        notify-send -t 1500 ytmsclu "Song already liked!"
+    fi
 
 else
     pixelcolor -q "$x0" "$y0" "$s" | awk '
