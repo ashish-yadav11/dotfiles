@@ -525,5 +525,8 @@
     summary = " USB mounter"
     body = "No USB drive to mount or unmount"
     history_ignore = yes
+[ytmsclu]
+    summary = "ytmsclu"
+    history_ignore = yes
 
 # vim: ft=cfg
