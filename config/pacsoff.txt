@@ -29,6 +29,7 @@ fd
 fdupes
 feh
 ffmpeg
+figlet
 file-roller
 fzf
 gcc-fortran
