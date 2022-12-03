@@ -32,4 +32,3 @@ ventoy-bin
 woeusb-ng
 xcursor-breeze
 yay
-youtube-search-python
