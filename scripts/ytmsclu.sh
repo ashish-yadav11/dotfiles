@@ -6,6 +6,7 @@ lockfile="$XDG_RUNTIME_DIR/ytm.hide"
 ntwarnsize="The size of the YouTube Music window is less than that required by the script."
 ntwarnpos="The position of the YouTube Music window is problematic. Some essential window parts are offscreen."
 ntwarnuncertain="Something is wrong!"
+ntalreadyliked="Song already liked!"
 
 [ "$1" != 1 ] && [ "$1" != 0 ] && { echo "Usage: $0 1|0"; exit ;}
 
@@ -139,7 +140,7 @@ if [ "$1" = 1 ] ; then
                 mousemove "$((x + w - 130))" "$((y + 80))" click 1 \
                 mousemove 10000 10000
     else
-        notify-send -t 1500 ytmsclu "Song already liked!"
+        notify-send -t 1500 ytmsclu "$ntalreadyliked"
     fi
 
 else
