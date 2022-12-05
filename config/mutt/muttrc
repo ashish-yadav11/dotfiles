@@ -86,6 +86,9 @@ set resolve = no
 
 unset signature
 
+# see https://neomutt.org/guide/advancedusage.html#patterns
+set simple_search = "~f %s | ~C %s | ~s %s"
+
 # pause 0 seconds for informational messages
 set sleep_time = 0
 
