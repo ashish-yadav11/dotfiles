@@ -95,6 +95,8 @@ set sleep_time = 0
 set sort = reverse-threads
 set sort_aux = last-date-received
 
+set strict_threads = yes
+
 # send format=flowed messages
 set text_flowed = yes
 
