@@ -1,2 +1,6 @@
-#!/bin/dash
-zathura "$(realpath "$1")"
+#!/bin/bash
+args=()
+for arg in "$@" ; do
+    args+=( "$(realpath "$arg")" )
+done
+zathura -- "${args[@]}"
