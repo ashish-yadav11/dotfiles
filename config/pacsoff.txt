@@ -51,6 +51,7 @@ inotify-tools
 ispell
 isync
 java-commons-lang
+jupyter-nbconvert
 kcolorchooser
 kernel-modules-hook
 kvantum
@@ -84,6 +85,8 @@ noto-fonts-emoji
 okular
 openresolv
 pacman-contrib
+pandoc
+pandoc-crossref
 papirus-icon-theme
 pass
 pavucontrol-qt
