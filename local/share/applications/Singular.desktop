@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=Singular
+Comment=run Singular 4.3.1 in a terminal
+Comment[de]=Singular 4.3.1 in einem Terminal starten
+Comment[es]=
+Comment[fr]=démarrer Singular 4.3.1 dans un terminal
+Comment[ru]=
+Type=Application
+Exec=Singular
+Terminal=true
+Categories=Math;Science;Education;
+Icon=/usr/share/icons/Singular.png
+NoDisplay=true
