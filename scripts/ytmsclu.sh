@@ -136,8 +136,9 @@ if [ "$1" = 1 ] ; then
             }' ; then
         press_keys plus
 #       press_keys y y
-        xdotool mousemove "$((x + w - 130))" "$((y + 15))" click 1 sleep 0.1 \
-                mousemove "$((x + w - 130))" "$((y + 80))" click 1 \
+        xdotool mousemove "$((x + w - 30))" "$((y + 15))" click 1 sleep 0.1 \
+                mousemove "$((x + w - 30))" "$((y + 80))" click 1 \
+                mousemove "$((x + w - 30))" "$((y + 80))" click 1 \
                 mousemove 10000 10000
     else
         notify-send -t 1500 ytmsclu "$ntalreadyliked"
