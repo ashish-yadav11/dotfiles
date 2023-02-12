@@ -85,7 +85,7 @@ noto-fonts-emoji
 okular
 openresolv
 pacman-contrib
-pandoc
+pandoc-cli
 pandoc-crossref
 papirus-icon-theme
 pass
