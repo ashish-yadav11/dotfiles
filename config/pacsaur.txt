@@ -25,6 +25,7 @@ pass-git-helper
 riseup-vpn-git
 rofi-dmenu-cust
 siji-git
+snixembed-git
 st-cust
 textidote-bin
 timeshift
