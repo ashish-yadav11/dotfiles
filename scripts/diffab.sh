@@ -65,8 +65,8 @@ print_mdiff
 echo -e '\e[1;32mpackage list\e[0m'
 mdiff="$(
     sdiff="$(
-        $sdiff_cmd "$dotfiles/config/pacsoff.txt" <(pacman -Qqen | grep -Fxvf <(pacman -Qqg base-devel) |
-            grep -Ev '^(base|efibootmgr|grub|linux|linux-firmware|linux-lts)$')
+        $sdiff_cmd "$dotfiles/config/pacsoff.txt" <(pacman -Qqen |
+            grep -Ev '^(base|base-devel|efibootmgr|grub|linux|linux-firmware|linux-lts)$')
     )"
     [[ -n "$sdiff" ]] &&
         printf "diff $dotfiles/config/pacsoff.txt pacsoff\n%s\n" "$sdiff"
