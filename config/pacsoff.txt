@@ -42,6 +42,7 @@ gnuplot
 go
 go-tools
 gparted
+grub-customizer
 gthumb
 gtk-engine-murrine
 guvcview
