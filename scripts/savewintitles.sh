@@ -1,5 +1,5 @@
 #!/bin/dash
-file="$(mktemp -p "$HOME" "windows-$(date +%m%d)XXX.txt")"
+file="$(mktemp -p "$HOME" "windows-$(date +%m%d%H%M%S)$DISPLAY-XXX.txt")"
 
 getdsknum() {
     if [ "$1" -le 9 ] ; then
