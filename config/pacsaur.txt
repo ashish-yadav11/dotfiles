@@ -28,7 +28,6 @@ siji-git
 snixembed-git
 st-cust
 textidote-bin
-timeshift
 ventoy-bin
 woeusb-ng
 xcursor-breeze
