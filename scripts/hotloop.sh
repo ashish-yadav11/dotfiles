@@ -8,7 +8,7 @@ coldef='\033[0m'
 
 empty_prompt() {
     clear
-    printf "${colnrm}Press enter to continue:${coldef} "
+    printf "${colnrm}Press [enter] to continue:${coldef} "
 }
 
 case "$(tr '\0' '%' <"/proc/$PPID/cmdline")" in
