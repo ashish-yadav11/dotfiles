@@ -16,6 +16,7 @@ savewintitles() {
         awk -F': \\(' '{print $1}' | grep -v -F '(has no name)' |
             while read -r winid wintitle ; do
                 desktop="$(xprop -id "$winid" _NET_WM_DESKTOP)"
+                [ -z "$desktop" ] && continue
                 [ "$desktop" = "_NET_WM_DESKTOP:  not found." ] && continue
                 desktop="${desktop#"_NET_WM_DESKTOP(CARDINAL) = "}"
                 if [ "$desktop" -eq 0 ] ; then
