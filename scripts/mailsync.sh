@@ -1,5 +1,6 @@
 #!/bin/dash
 mbsync_channel=iiser
+timeout=300
 trash_folder="/home/ashish/.local/share/mail/iiser/[Gmail].Trash"
 
 lockfile1="$XDG_RUNTIME_DIR/mailsync.1.lock"
@@ -15,7 +16,8 @@ if ! flock -n 8 ; then
     flock -n 9 || exit
     flock 8
 fi
-mbsync "$mbsync_channel"
+# Workaround for freezing issue of mbsync.
+timeout "$timeout" mbsync "$mbsync_channel"
 sigval="$?"
 find "$trash_folder"/* -type f | mflag -S
 notmuch new
