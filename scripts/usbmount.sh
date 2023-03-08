@@ -6,10 +6,10 @@ menu() {
 }
 
 # external drives not mounted in the filesystem
-drives0="$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3=="" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')"
+drives0="$(lsblk -nrpo "name,type,uuid,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $4=="" && $3!="018a948a-679d-44ad-8b03-cfe509fd2f0e" && $3!="E802A7A802A77A68" {if ($5!="") {printf "%s (%s - %s)\n",$1,$5,$6} else {printf "%s (%s)\n",$1,$6}}')"
 
 # external drives mounted in the filesystem
-drives1="$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3!="" && $3!="/" && $3!="/efi" && $3!="[SWAP]" && $3!="/media/backup" && $3!="/media/storage" && $3!="/run/timeshift/backup" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')"
+drives1="$(lsblk -nrpo "name,type,mountpoint,label,size" | awk -F'[ ]' '$2=="part" && $3!="" && $3!="/" && $3!="/efi" && $3!="[SWAP]" && $3!="/media/storage" && $3!="/run/timeshift/backup" {if ($4!="") {printf "%s (%s - %s)\n",$1,$4,$5} else {printf "%s (%s)\n",$1,$5}}')"
 
 mount() {
     if output="$(udisksctl mount --no-user-interaction -b "$1")" ; then
