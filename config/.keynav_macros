@@ -1,4 +1,5 @@
 33 sh "eval $(xdotool getmouselocation --shell); xdotool key --delay=150 ctrl+p sleep 2.5 key --delay=150 ctrl+m sleep 0.5 mousemove 769 454 mousedown 1 mousemove 683 454 mousemove 597 454 mousemove 597 540 mousemove 683 540 mousemove 769 540 mouseup 1 mousemove $X $Y", end
 36 cut-down, cut-down, cut-right, cut-down, cut-left, cut-left, cut-right, cut-up, cut-right, cut-left, cut-left, cut-left, warp, click 1, end
-54 sh "eval $(xdotool getmouselocation --shell); xdotool keydown ctrl key --delay=200 n n keyup ctrl sleep 1.5 mousemove 580 300 click 1 sleep 0.1 key --delay=150 ctrl+shift+n mousemove $X $Y", end
+#54 sh "eval $(xdotool getmouselocation --shell); xdotool keydown ctrl key --delay=200 n n keyup ctrl sleep 1.5 mousemove 580 300 click 1 sleep 0.1 key --delay=150 ctrl+shift+n mousemove $X $Y", end
+54 sh "eval $(xdotool getmouselocation --shell); xdotool key --delay=150 ctrl+n sleep 1.5 mousemove 580 220 click 1 sleep 0.1 key --delay=150 ctrl+shift+n mousemove $X $Y", end
 58 sh "eval $(xdotool getmouselocation --shell); xdotool key --delay=150 ctrl+m sleep 0.5 mousemove 769 454 mousedown 1 mousemove 683 454 mousemove 597 454 mousemove 597 540 mousemove 683 540 mousemove 769 540 mouseup 1 mousemove $X $Y", end
