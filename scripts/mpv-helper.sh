@@ -6,14 +6,18 @@ archive_dir="$music_dir/archive"
 path="$(realpath -s "$2")"
 
 case "$path" in
-    "$music_dir/"*) ;;
-    *) exit ;;
+    "$music_dir/"*)
+        id="${2##*(}"; id="${id%)*}"
+        echo -n "https://music.youtube.com/watch?v=$id" | xsel -ib
+        [ "$1" = yank ] && exit
+        ;;
+    *)
+        [ "$1" != yank ] && exit
+        id="${2##*[}"; id="${id%]*}"
+        echo -n "https://www.youtube.com/watch?v=$id" | xsel -ib
+        exit
+        ;;
 esac
-
-id="${2##*(}"; id="${id%)*}"
-echo -n "https://music.youtube.com/watch?v=$id" | xsel -ib
-
-[ "$1" = yank ] && exit
 
 case "$(echo "Archive\nDelete" | $menu -p "$3")" in
     Archive)
