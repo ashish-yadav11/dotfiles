@@ -372,6 +372,7 @@ zcurl() {
         *) echo "Usage: zcurl [url]" ;;
     esac
     echo "$url"
+    echo "$url" >>~/.zcurl_history
     curl -sfLIo /dev/null "$url" || { echo "Invalid URL or network error!"; return 1 ;}
     if ! [[ "$url" == http*.pdf || "$url" == http*/pdf/* ]] ; then
         read -r "?Are you sure you want to zcurl $url [y/N]: " confirm
