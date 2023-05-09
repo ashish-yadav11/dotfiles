@@ -398,6 +398,7 @@ source ~/.local/share/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 
 # fzf key bindings
 source /usr/share/fzf/key-bindings.zsh
+bindkey -a '\C-u' redo
 
 # system clipboard
 [[ "$TERM" != linux ]] && source ~/.zshsrc
