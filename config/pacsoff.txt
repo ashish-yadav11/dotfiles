@@ -92,6 +92,7 @@ pandoc-crossref
 papirus-icon-theme
 pass
 pavucontrol-qt
+pdfgrep
 pdftk
 perl-file-mimeinfo
 perl-regexp-common
