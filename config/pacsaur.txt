@@ -30,6 +30,6 @@ snixembed-git
 st-cust
 textidote-bin
 ventoy-bin
-woeusb-ng
+woeusb
 xcursor-breeze
 yay
