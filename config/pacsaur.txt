@@ -26,7 +26,7 @@ riseup-vpn-git
 rofi-dmenu-cust
 siji-git
 simplescreenrecorder
-snixembed-git
+snixembed
 st-cust
 textidote-bin
 ventoy-bin
