@@ -26,6 +26,7 @@ def hook_init(fm):
         title_thread.start()
 
     fm.signal_bind('cd', settitlecd)
+    fm.signal_bind('execute.after', settitleea)
     fm.signal_bind('runner.execute.after', settitleea)
 
 # Finally, "monkey patch" the existing hook_init function with our replacement:
