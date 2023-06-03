@@ -5,7 +5,7 @@ volume="$(
             f=1
             v = $3 <= $10 ? $5 : $12
             sub(/%/, "", v)
-            v = int(v / 5) * 5
+            v = int(v / 5 + 1/2) * 5
             exit
         }
         END {
