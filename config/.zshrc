@@ -379,7 +379,7 @@ zcurl() {
     fi
     filepath="/var/tmp/${url##*/}"
     curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return 1 ;}
-    echo "$url" >>~/.zcurl_history
+    echo "$(date '+%y%m%d-%H%M%S') $url" >>~/.zcurl_history
     setsid -f sh -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null
 }
 
