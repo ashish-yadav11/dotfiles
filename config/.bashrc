@@ -140,7 +140,6 @@ zcurl() {
         *) echo "Usage: zcurl [url]" ;;
     esac
     echo "$url"
-    echo "$url" >>~/.zcurl_history
     curl -sfLIo /dev/null "$url" || { echo "Invalid URL or network error!"; return 1 ;}
     if ! [[ "$url" == http*.pdf || "$url" == http*/pdf/* ]] ; then
         read -r -p "Are you sure you want to zcurl $url [y/N]: " confirm
@@ -148,5 +147,6 @@ zcurl() {
     fi
     filepath="/var/tmp/${url##*/}"
     curl -Lo "$filepath" "$url" || { rm -f "$filepath"; echo "Network error!"; return 1 ;}
+    echo "$url" >>~/.zcurl_history
     setsid -f sh -c 'zathura "$0"; rm -f "$0"' "$filepath" 2>/dev/null
 }
