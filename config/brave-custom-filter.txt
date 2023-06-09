@@ -1,0 +1,5 @@
+physics.stackexchange.com##.d-block.p0.m0
+physics.stackexchange.com###newsletter-ad > .s-sidebarwidget--header
+physics.stackexchange.com##.s-sidebarwidget--content.d-block
+physics.stackexchange.com###hot-network-questions
+
