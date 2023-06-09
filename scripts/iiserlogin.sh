@@ -1,12 +1,15 @@
 #!/bin/dash
 notify="notify-send -h string:x-canonical-private-synchronous:iiserlogin"
 
+username="ashishkumar.yadav"
+password="$(pass captive-portal/ashishkumar.yadav)"
+
 sendloginrequest() {
-    curl -m 3 -s -X POST -d "mode=191&username=ashishkumar.yadav&password=$(pass captive-portal/ashishkumar.yadav)&a=$(date +%s)000&producttype=1" http://192.168.1.3:8090/login.xml
+    curl -m 3 -s -X POST -d "mode=191&username=$username&password=$password&a=$(date +%s)000&producttype=1" http://192.168.1.3:8090/login.xml
 }
 
 sendliverequest() {
-    curl -m 3 -s "http://192.168.1.3:8090/live?mode=192&username=ashishkumar.yadav&a=$(date +%s)000&producttype=1"
+    curl -m 3 -s "http://192.168.1.3:8090/live?mode=192&username=$username&a=$(date +%s)000&producttype=1"
 }
 
 notconnected() {
