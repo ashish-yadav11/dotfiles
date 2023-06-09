@@ -3,3 +3,7 @@ physics.stackexchange.com###newsletter-ad > .s-sidebarwidget--header
 physics.stackexchange.com##.s-sidebarwidget--content.d-block
 physics.stackexchange.com###hot-network-questions
 
+math.stackexchange.com##.d-block.p0.m0
+math.stackexchange.com###newsletter-ad > .s-sidebarwidget--header
+math.stackexchange.com##.s-sidebarwidget--content.d-block
+math.stackexchange.com###hot-network-questions
