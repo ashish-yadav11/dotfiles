@@ -1,6 +1,6 @@
 [ca/desrt/dconf-editor]
 restore-view=false
-saved-pathbar-path='/org/'
+saved-pathbar-path='/org/gnome/file-roller/dialogs/add/selected-files'
 saved-view='/'
 show-warning=false
 sort-case-sensitive=true
@@ -50,6 +50,7 @@ sort-type='ascending'
 
 [org/gnome/file-roller/ui]
 sidebar-width=200
+view-sidebar=false
 window-height=666
 window-width=1358
 
@@ -156,7 +157,7 @@ sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(0, 22)
+window-position=(233, 104)
 window-size=(900, 560)
 
 [org/yorba/shotwell/crop-settings]
