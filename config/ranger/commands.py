@@ -50,8 +50,10 @@ class fzf_search(Command):
         if self.arg(1):
             if self.arg(1) == '--':
                 fd_args = f"-- {shell_escape(self.rest(2))}"
+            elif self.arg(1)[:3] == '-Nd' and self.arg(1)[3:].isdigit():
+                fd_args = f"--no-follow -d{self.arg(1)[3:]} -- {shell_escape(self.rest(2))}"
             elif self.arg(1)[:2] == '-d' and self.arg(1)[2:].isdigit():
-                fd_args = f"{shell_escape(self.arg(1))} -- {shell_escape(self.rest(2))}"
+                fd_args = f"-d{self.arg(1)[2:]} -- {shell_escape(self.rest(2))}"
             else:
                 fd_args = f"-- {shell_escape(self.rest(1))}"
         else:
