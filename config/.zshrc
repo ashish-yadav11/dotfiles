@@ -280,11 +280,19 @@ dm() {
 }
 
 m() {
+    local curdir
     if [[ -x ./make.sh ]] ; then
         ./make.sh "$@"
-    else
-        echo "No make.sh in this directory!"
+        return
     fi
+    if [[ -x ../make.sh ]] ; then
+        curdir="$PWD"
+        cd ..
+        ./make.sh "$@"
+        cd "$curdir"
+        return
+    fi
+    echo "No make.sh in this or the parent directory!"
 }
 
 mkcd() {
