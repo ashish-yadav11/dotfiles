@@ -7,14 +7,21 @@ path="$(realpath -s "$2")"
 
 case "$path" in
     "$music_dir/"*)
-        id="${2##*(}"; id="${id%)*}"
-        echo -n "https://music.youtube.com/watch?v=$id" | xsel -ib
+        idp="${2##*(}"
+        if [ "$idp" != "$2" ] ; then
+            id="${idp%)*}"
+            [ "$id" != "$idp" ] &&
+                echo -n "https://music.youtube.com/watch?v=$id" | xsel -ib
+        fi
         [ "$1" = yank ] && exit
         ;;
     *)
         [ "$1" != yank ] && exit
-        id="${2##*[}"; id="${id%]*}"
-        echo -n "https://www.youtube.com/watch?v=$id" | xsel -ib
+        if [ "$idp" != "$2" ] ; then
+            id="${idp%)*}"
+            [ "$id" != "$idp" ] &&
+                echo -n "https://www.youtube.com/watch?v=$id" | xsel -ib
+        fi
         exit
         ;;
 esac
