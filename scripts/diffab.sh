@@ -43,6 +43,11 @@ mdiff="$(
     )"
     [[ -n "$sdiff" ]] &&
         printf "diff $dotfiles/config/crontab crontab\n%s\n" "$sdiff"
+    sdiff="$(
+        $sdiff_cmd "$dotfiles/config/dconf-user" <(dconf dump /)
+    )"
+    [[ -n "$sdiff" ]] &&
+        printf "diff $dotfiles/config/dconf-user dconf-user\n%s\n" "$sdiff"
 
     $mdiff_cmd -I "^history\|^lastVisited\|^x-scheme-handler/tg=\|^':\|^\(Builtin\|Quick\)AnnotationTools=" "$dotfiles/config" /home/ashish/.config |
         grep -Ev '^Only in .*(config:|\.config(:|/mpv/watch_later: |/nvim: \.netrwhist$|/pipewire: media-session.d$|/ranger(: bookmarks$|/.*: __)))' |
