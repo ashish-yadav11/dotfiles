@@ -17,16 +17,16 @@ nnoremap        <silent>        <C-k>                   <C-w>k
 nnoremap        <silent>        <C-l>                   <C-w>l
 nnoremap        <silent>        <C-h>                   <C-w>h
 " switching between tabs
-noremap         <silent>        <leader>1               1gt
-noremap         <silent>        <leader>2               2gt
-noremap         <silent>        <leader>3               3gt
-noremap         <silent>        <leader>4               4gt
-noremap         <silent>        <leader>5               5gt
-noremap         <silent>        <leader>6               :tablast<CR>4gT
-noremap         <silent>        <leader>7               :tablast<CR>3gT
-noremap         <silent>        <leader>8               :tablast<CR>2gT
-noremap         <silent>        <leader>9               :tablast<CR>1gT
-noremap         <silent>        <leader>0               :tablast<CR>
+noremap         <silent>        <Leader>1               1gt
+noremap         <silent>        <Leader>2               2gt
+noremap         <silent>        <Leader>3               3gt
+noremap         <silent>        <Leader>4               4gt
+noremap         <silent>        <Leader>5               5gt
+noremap         <silent>        <Leader>6               :tablast<CR>4gT
+noremap         <silent>        <Leader>7               :tablast<CR>3gT
+noremap         <silent>        <Leader>8               :tablast<CR>2gT
+noremap         <silent>        <Leader>9               :tablast<CR>1gT
+noremap         <silent>        <Leader>0               :tablast<CR>
 
 " yank path and directory of the current file
 nnoremap        <silent>        yp                      :let @+=expand("%:p")<CR>
@@ -44,6 +44,8 @@ nnoremap        <silent>        <Leader><C-t>           :call SpawnTerm("td")<CR
 nnoremap        <silent>        <Leader>r               :call SpawnTerm("rp")<CR>
 nnoremap        <silent>        <Leader>R               :call SpawnTerm("rc")<CR>
 nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rd")<CR>
+" doubts
+nnoremap                        <Leader>w               :w <C-r>=strftime("%m%d")<CR> .txt<Left><Left><Left><Left>
 " undotree toggle
 nnoremap        <silent>        <Leader>u               :UndotreeToggle<CR>
 " vimtex
