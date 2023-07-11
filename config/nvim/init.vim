@@ -34,7 +34,11 @@ nnoremap        <silent>        yd                      :let @+=expand("%:p:h")<
 " undo search highlighting
 nnoremap        <silent>        <Leader><Esc>           :nohlsearch<CR>
 " switch buffers
-nnoremap                        <Leader>b               :buffers<CR>:buffer<Space>
+nnoremap        <silent>        <Leader>b               :Buffers<CR>
+nnoremap                        <Leader>B               :buffers<CR>:buffer<Space>
+" edit files
+nnoremap        <silent>        <Leader>f               :Files<CR>
+nnoremap                        <Leader>F               :Files<Space>
 " cd to the directory of the current file
 nnoremap        <silent>        <Leader>p               :lcd %:p:h<CR>
 " spawn terminal and ranger 'around' the current file

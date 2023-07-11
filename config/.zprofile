@@ -2,9 +2,9 @@
 
 export BROWSER=brave
 #export EDITOR=nvim
-#export FZF_ALT_C_COMMAND="fd -HIL -td -d4 | LC_ALL=C sort -f"
-#export FZF_CTRL_T_COMMAND="fd -HIL -tf -d4 | LC_ALL=C sort -f"
-#export FZF_DEFAULT_COMMAND="fd -HIL -tf -d4 | LC_ALL=C sort -f"
+#export FZF_ALT_C_COMMAND="fd -HIL -td -d5"
+#export FZF_CTRL_T_COMMAND="fd -HI -tf -d5"
+#export FZF_DEFAULT_COMMAND="fd -HI -tf -d5"
 #export FZF_DEFAULT_OPTS="--cycle --layout=reverse --no-unicode --bind='tab:down,btab:up,ctrl-d:delete-char,ctrl-g:first,ctrl-q:clear-selection,ctrl-v:select-all,ctrl-c:deselect-all,alt-enter:toggle,ctrl-o:toggle,ctrl-s:toggle,ctrl-t:toggle-all,ctrl-space:toggle-sort,ctrl-y:execute-silent(echo -n {} | xsel -ib)'"
 export GOPATH=~/.local/lib/go
 #export PAGER="less -R"
