@@ -50,6 +50,7 @@ nnoremap        <silent>        <Leader>R               :call SpawnTerm("rc")<CR
 nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rd")<CR>
 " doubts
 nnoremap                        <Leader>w               :w <C-r>=strftime("%m%d")<CR> .txt<Left><Left><Left><Left>
+nnoremap                        <Leader>e               :call RenameFile()<CR>
 " undotree toggle
 nnoremap        <silent>        <Leader>u               :UndotreeToggle<CR>
 " vimtex
@@ -278,4 +279,14 @@ function XdgOpen(normal = 1)
     silent execute '!' l:env 'setsid -f xdg-open' l:arg '>>"${XLOGFILE:-/dev/null}" 2>&1'
 
     let &shell = l:shell
+endfunction
+
+function RenameFile()
+    let l:oldname = expand("%")
+    let l:newname = input("New file name: ", l:oldname.."\<Left>\<Left>\<Left>\<Left>", "file")
+    if l:newname != '' && l:newname != l:oldname
+        exec ':saveas '..l:newname
+        exec ':silent !rm '..l:oldname
+        redraw!
+    endif
 endfunction
