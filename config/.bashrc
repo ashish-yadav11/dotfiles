@@ -5,7 +5,7 @@
 # return if not running interactively
 [[ "$-" != *i* ]] && return
 
-HISTIGNORE="$HISTIGNORE:m:n:s:s *:t:u"
+HISTIGNORE="$HISTIGNORE:h:m:n:s:s *:t:u"
 
 # aliases
 alias c=compile
@@ -33,6 +33,11 @@ __fzf_select_bookmark() {
 bind -m vi-insert -x '"\eb": __fzf_select_bookmark'
 
 # functions
+d() {
+    cd ~/Documents/.doubts
+    nvim
+}
+
 dm() {
     local url
     case "$#" in

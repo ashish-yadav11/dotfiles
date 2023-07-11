@@ -25,7 +25,7 @@ setopt SH_WORD_SPLIT
 
 ## PARAMETERS (man zshparam)
 
-HISTORY_IGNORE='(h|m|n|pb|pz|s|s *|t|u)'
+HISTORY_IGNORE='(d|h|m|n|pb|pz|s|s *|t|u)'
 HISTSIZE=20000
 KEYTIMEOUT=1
 LC_ALL=C
@@ -258,6 +258,11 @@ alias h='nvim -c "normal G" ~/.zsh_history'
 alias pb='bash --rcfile <(echo '\''[[ -f ~/.bashrc ]] && source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]I\[\e[0m\]$PS1"'\'')'
 alias pz="INCOGNITO=1 zsh"
 
+
+d() {
+    cd ~/Documents/.doubts
+    nvim
+}
 
 dm() {
     local url
