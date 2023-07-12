@@ -29,6 +29,7 @@ noremap         <silent>        <Leader>9               :tablast<CR>1gT
 noremap         <silent>        <Leader>0               :tablast<CR>
 
 " yank path and directory of the current file
+nnoremap        <silent>        yn                      :let @+=expand("%")<CR>
 nnoremap        <silent>        yp                      :let @+=expand("%:p")<CR>
 nnoremap        <silent>        yd                      :let @+=expand("%:p:h")<CR>
 " undo search highlighting
