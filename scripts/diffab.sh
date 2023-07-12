@@ -44,7 +44,7 @@ mdiff="$(
     [[ -n "$sdiff" ]] &&
         printf "diff $dotfiles/config/crontab crontab\n%s\n" "$sdiff"
     sdiff="$(
-        $sdiff_cmd "$dotfiles/config/dconf-user" <(dconf dump /)
+        $sdiff_cmd -I "^window-position=(" "$dotfiles/config/dconf-user" <(dconf dump /)
     )"
     [[ -n "$sdiff" ]] &&
         printf "diff $dotfiles/config/dconf-user dconf-user\n%s\n" "$sdiff"
