@@ -44,7 +44,7 @@ dlk() {
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
-        *) echo "Usage: dlk [url]"; echo '\a'; return 2 ;;
+        *) echo "Usage: dlk [url]"; echo -n '\a'; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
             "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
@@ -53,7 +53,7 @@ dlk() {
     fi
     ytm-like "$url"
     exitcode="$?"
-    [ exitcode != 0 ] && echo '\a'
+    [ exitcode != 0 ] && echo -n '\a'
     return exitcode
 }
 
@@ -62,7 +62,7 @@ ulk() {
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
-        *) echo "Usage: ulk [url]"; echo '\a'; return 2 ;;
+        *) echo "Usage: ulk [url]"; echo -n '\a'; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
             "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
@@ -71,7 +71,7 @@ ulk() {
     fi
     ytm-unlike "$url"
     exitcode="$?"
-    [ exitcode != 0 ] && echo '\a'
+    [ exitcode != 0 ] && echo -n '\a'
     return exitcode
 }
 
