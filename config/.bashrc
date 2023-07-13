@@ -47,12 +47,10 @@ dlk() {
         *) echo "Usage: dlk [url]"; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
-            "^https://\(music\|www\)\.youtube\.com/watch?v=...........\($\|&\)" ; then
+            "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
         echo "Invalid url: \`$url'!"
         return 1
     fi
-    url="${url%%&*}"
-    echo -n "$url" | xsel -ib
     ytm-like "$url"
     exitcode="$?"
     [ exitcode != 0 ] && echo '\a'
@@ -67,11 +65,10 @@ ulk() {
         *) echo "Usage: ulk [url]"; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
-            "^https://\(music\|www\)\.youtube\.com/watch?v=...........\($\|&\)" ; then
+            "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
         echo "Invalid url: \`$url'!"
         return 1
     fi
-    url="${url%%&*}"
     ytm-unlike "$url"
     exitcode="$?"
     [ exitcode != 0 ] && echo '\a'
