@@ -13,8 +13,8 @@ alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias hlp="exec hotloop"
 alias kynm=/home/ashish/.scripts/xevcn.sh
-alias dolke="dolk && exit"
-alias unlke="unlk && exit"
+alias dlke="dlk && exit"
+alias ulke="ulk && exit"
 alias mse="ms && exit"
 alias zcurle="zcurl && exit"
 
@@ -39,12 +39,12 @@ d() {
     nvim
 }
 
-dolk() {
+dlk() {
     local url
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
-        *) echo "Usage: dolk [url]"; return 2 ;;
+        *) echo "Usage: dlk [url]"; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
             "^https://\(music\|www\)\.youtube\.com/watch?v=...........\($\|&\)" ; then
@@ -59,12 +59,12 @@ dolk() {
     return exitcode
 }
 
-unlk() {
+ulk() {
     local url
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
-        *) echo "Usage: unlk [url]"; return 2 ;;
+        *) echo "Usage: ulk [url]"; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
             "^https://\(music\|www\)\.youtube\.com/watch?v=...........\($\|&\)" ; then
