@@ -241,10 +241,11 @@ alias vim=nvim
 # scripts and commands
 alias c=compile
 alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
-alias dme="dm && exit"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias hlp="exec hotloop"
 alias kynm=/home/ashish/.scripts/xevcn.sh
+alias dolke="dolk && exit"
+alias unlke="unlk && exit"
 alias mse="ms && exit"
 alias zcurle="zcurl && exit"
 
@@ -264,24 +265,43 @@ d() {
     nvim
 }
 
-dm() {
+dolk() {
     local url
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
-        *) echo "Usage: dm [url]"; return 2 ;;
+        *) echo "Usage: dolk [url]"; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
             "^https://\(music\|www\)\.youtube\.com/watch?v=...........\($\|&\)" ; then
         echo "Invalid url: \`$url'!"
         return 1
     fi
-    if [[ "$#" == 0 ]] ; then
-        url="${url%%&*}"
-        echo -n "$url" | xsel -ib
+    url="${url%%&*}"
+    echo -n "$url" | xsel -ib
+    ytm-like "$url"
+    exitcode="$?"
+    [ exitcode != 0 ] && echo '\a'
+    return exitcode
+}
+
+unlk() {
+    local url
+    case "$#" in
+        0) url="$(xsel -ob)" ;;
+        1) url="$1" ;;
+        *) echo "Usage: unlk [url]"; return 2 ;;
+    esac
+    if ! echo "$url" | grep -qm1 \
+            "^https://\(music\|www\)\.youtube\.com/watch?v=...........\($\|&\)" ; then
+        echo "Invalid url: \`$url'!"
+        return 1
     fi
-    yt-dlp --extract-audio --audio-format best --audio-quality 0 \
-           --output "/media/storage/Music/%(title)s (%(id)s).%(ext)s" "$url"
+    url="${url%%&*}"
+    ytm-unlike "$url"
+    exitcode="$?"
+    [ exitcode != 0 ] && echo '\a'
+    return exitcode
 }
 
 m() {
