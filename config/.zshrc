@@ -266,7 +266,7 @@ d() {
 }
 
 dlk() {
-    local url
+    local url exitcode
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
@@ -279,12 +279,12 @@ dlk() {
     fi
     ytm-like "$url"
     exitcode="$?"
-    [ exitcode != 0 ] && echo -n '\a'
+    [ "$exitcode" != 0 ] && echo -n '\a'
     return exitcode
 }
 
 ulk() {
-    local url
+    local url exitcode
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
@@ -297,7 +297,7 @@ ulk() {
     fi
     ytm-unlike "$url"
     exitcode="$?"
-    [ exitcode != 0 ] && echo -n '\a'
+    [ "$exitcode" != 0 ] && echo -n '\a'
     return exitcode
 }
 
