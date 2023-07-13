@@ -84,7 +84,7 @@ title="$($videotitle "$vid")"
 
 winid="$(xdotool search --classname scratch-st | head -n1)"
 if [ -z "$winid" ] ; then
-    notify-send -t 2000 ytmsclu "Scratch terminal not open!"
+    notify-send -t 1500 ytmsclu "Scratch terminal not open!"
     exit
 fi
 case "$(echo "Like\nUnlike" | menu -p "$title")" in
