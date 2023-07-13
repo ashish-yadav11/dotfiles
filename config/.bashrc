@@ -165,6 +165,11 @@ trash-list() {
     esac
 }
 
+ytaudio() {
+    yt-dlp --extract-audio --audio-format best --audio-quality 0 \
+           --output "%(title)s (%(id)s).%(ext)s" "$@"
+}
+
 zcurl() {
     local url
     case "$#" in
