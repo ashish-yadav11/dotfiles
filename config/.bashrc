@@ -44,11 +44,11 @@ dlk() {
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
-        *) echo "Usage: dlk [url]"; return 2 ;;
+        *) echo "Usage: dlk [url]"; echo '\a'; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
             "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
-        echo "Invalid url: \`$url'!"
+        echo "Invalid url: \`$url'!\a"
         return 1
     fi
     ytm-like "$url"
@@ -62,11 +62,11 @@ ulk() {
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
-        *) echo "Usage: ulk [url]"; return 2 ;;
+        *) echo "Usage: ulk [url]"; echo '\a'; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
             "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
-        echo "Invalid url: \`$url'!"
+        echo "Invalid url: \`$url'!\a"
         return 1
     fi
     ytm-unlike "$url"
