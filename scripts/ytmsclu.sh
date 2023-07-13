@@ -78,7 +78,7 @@ fi
 hide
 
 url="${url%%&*}"
-#echo -n "$url" | xsel -ib
+echo -n "$url" | xsel -ib
 vid="${url##*"/watch?v="}"
 title="$($videotitle "$vid")"
 
