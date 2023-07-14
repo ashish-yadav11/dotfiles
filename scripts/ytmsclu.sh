@@ -1,7 +1,7 @@
 #!/bin/dash
 lockfile="$XDG_RUNTIME_DIR/ytm.hide"
-ytmisliked_script="/home/ashish/.local/bin/ytm-isLiked"
-ytmtitle_script="/home/ashish/.local/bin/ytm-title"
+ytb_isliked="/home/ashish/.local/bin/ytb-isLiked"
+ytb_title="/home/ashish/.local/bin/ytb-title"
 
 exec 9<>"$lockfile"
 flock 9
@@ -81,7 +81,7 @@ hide
 
 url="${url%%&*}"
 echo -n "$url" | xsel -ib
-if ! title="$($ytmtitle_script "$url")" ; then
+if ! title="$($ytb_title "$url")" ; then
     notify-send -u critical -t 0 ytmsclu "Something went wrong with title script!"
     exit
 fi
@@ -91,7 +91,7 @@ if [ -z "$winid" ] ; then
     notify-send -t 1500 ytmsclu "Scratch terminal not open!"
     exit
 fi
-$ytmisliked_script "$url"
+$ytb_isliked "$url"
 case "$?" in
     0)
         echo "Unlike" | menu -p "$title" &&
