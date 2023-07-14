@@ -96,6 +96,8 @@ if [ -z "$title" ] ; then
         notify-send -u critical -t 0 ytmsclu "Something went wrong with title script!"
         exit
     fi
+else
+    title="$title [${url##*"/watch?v="}]"
 fi
 
 winid="$(xdotool search --classname scratch-st | head -n1)"
