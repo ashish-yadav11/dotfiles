@@ -1,6 +1,7 @@
 #!/bin/dash
 lockfile="$XDG_RUNTIME_DIR/ytm.hide"
-videotitle=/home/ashish/.scripts/videotitle.py
+ytmisliked="/home/ashish/.local/bin/ytm-isLiked"
+videotitle="/home/ashish/.scripts/videotitle.py"
 
 [ "$1" != 1 ] && [ "$1" != 0 ] && { echo "Usage: $0 1|0"; exit ;}
 
@@ -87,7 +88,14 @@ if [ -z "$winid" ] ; then
     notify-send -t 1500 ytmsclu "Scratch terminal not open!"
     exit
 fi
-case "$(echo "Like\nUnlike" | menu -p "$title")" in
+if $ytmisliked "$url" ; then
+    options="Unlike\nLike"
+    prompt="$title  (Liked)"
+else
+    options="Like\nUnlike"
+    prompt="$title  (Not Liked)"
+fi
+case "$(echo "$options" | menu -p "$prompt")" in
     Like)
         xdotool key --window "$winid" d l k Enter
         ;;
