@@ -40,15 +40,21 @@ else
             sleep 0.1
             ;;
         *)
+            notify-send -t 1000 ytmsclu "YouTube Music not open!"
             exit
             ;;
     esac
 fi
 
 # exit if the focused window doesn't have YouTube Music at the end of its title
-case "$(xdotool getactivewindow getwindowname)" in
-    *"YouTube Music") ;;
-    *) exit ;;
+wintitle="$(xdotool getactivewindow getwindowname)"
+case "$wintitle" in
+    *"YouTube Music")
+        ;;
+    *)
+        notify-send -t 1000 ytmsclu "Something wrong with window title!"
+        exit
+        ;;
 esac
 
 geometry="$(xdotool getactivewindow getwindowgeometry)"
@@ -81,9 +87,15 @@ hide
 
 url="${url%%&*}"
 echo -n "$url" | xsel -ib
-if ! title="$($ytb_title "$url")" ; then
-    notify-send -u critical -t 0 ytmsclu "Something went wrong with title script!"
-    exit
+
+title="${wintitle%"YouTube Music"}"
+title="${title%" - "}"
+title="${title#"YouTube Music - "}"
+if [ -z "$title" ] ; then
+    if ! title="$($ytb_title "$url")" ; then
+        notify-send -u critical -t 0 ytmsclu "Something went wrong with title script!"
+        exit
+    fi
 fi
 
 winid="$(xdotool search --classname scratch-st | head -n1)"
