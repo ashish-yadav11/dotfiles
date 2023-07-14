@@ -89,17 +89,9 @@ if [ -z "$winid" ] ; then
     exit
 fi
 if $ytmisliked "$url" ; then
-    options="Unlike\nLike"
-    prompt="$title  (Liked)"
-else
-    options="Like\nUnlike"
-    prompt="$title  (Not Liked)"
-fi
-case "$(echo "$options" | menu -p "$prompt")" in
-    Like)
-        xdotool key --window "$winid" d l k Enter
-        ;;
-    Unlike)
+    [ "$(echo "Unlike" | menu -p "$title  (Liked)")" = Unlike ] &&
         xdotool key --window "$winid" u l k Enter
-        ;;
-esac
+else
+    [ "$(echo "Like" | menu -p "$title  (Not Liked)")" = Like ] &&
+        xdotool key --window "$winid" d l k Enter
+fi
