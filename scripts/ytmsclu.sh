@@ -1,9 +1,7 @@
 #!/bin/dash
 lockfile="$XDG_RUNTIME_DIR/ytm.hide"
-ytmisliked="/home/ashish/.local/bin/ytm-isLiked"
-videotitle="/home/ashish/.scripts/videotitle.py"
-
-[ "$1" != 1 ] && [ "$1" != 0 ] && { echo "Usage: $0 1|0"; exit ;}
+ytmisliked_script="/home/ashish/.local/bin/ytm-isLiked"
+ytmtitle_script="/home/ashish/.local/bin/ytm-title"
 
 exec 9<>"$lockfile"
 flock 9
@@ -69,25 +67,37 @@ url="$(xsel -ob)"
 if ! echo "$url" | grep -qm1 \
         "^https://\(music\|www\)\.youtube\.com/watch?v=...........\($\|&\)" ; then
     notify-send -u critical -t 0 ytmsclu "Something is wrong!\n'$url'"
+    hide
+    exit
 fi
 hide
 
 url="${url%%&*}"
 echo -n "$url" | xsel -ib
-vid="${url##*"/watch?v="}"
-title="$($videotitle "$vid")"
+if ! title="$($ytmtitle_script "$url")" ; then
+    notify-send -u critical -t 0 ytmsclu "Something went wrong with title script!"
+    exit
+fi
 
 winid="$(xdotool search --classname scratch-st | head -n1)"
 if [ -z "$winid" ] ; then
     notify-send -t 1500 ytmsclu "Scratch terminal not open!"
     exit
 fi
-if $ytmisliked "$url" ; then
-    yad --image youtube-music --title ytmsclu \
-        --button=Unlike:0 --button=Cancel:1 --text "$title" &&
-            xdotool key --window "$winid" u l k Enter
-else
-    yad --image youtube-music --title ytmsclu \
-        --button=Like:0 --button=Cancel:1 --text "$title" &&
-            xdotool key --window "$winid" d l k Enter
-fi
+$ytmisliked_script "$url"
+case "$?" in
+    0)
+        yad --image youtube-music --title ytmsclu \
+            --button=Unlike:0 --button=Cancel:1 --text "$title" &&
+                xdotool key --window "$winid" u l k Enter
+        ;;
+    1)
+        yad --image youtube-music --title ytmsclu \
+            --button=Like:0 --button=Cancel:1 --text "$title" &&
+                xdotool key --window "$winid" d l k Enter
+        ;;
+    *)
+        notify-send -u critical -t 0 ytmsclu "Something went wrong with isliked script!"
+        exit
+        ;;
+esac
