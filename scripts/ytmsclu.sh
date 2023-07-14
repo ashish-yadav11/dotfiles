@@ -6,6 +6,13 @@ ytmtitle_script="/home/ashish/.local/bin/ytm-title"
 exec 9<>"$lockfile"
 flock 9
 
+menu() {
+    rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
+                     listview {lines: 1; columns: 9;}
+                     entry {enabled: false;}' \
+         -dmenu -i -matching fuzzy -no-custom "$@"
+}
+
 hide() {
     if [ -s "$lockfile" ] ; then
         if flock -u 9 && flock -n 9 ; then
@@ -87,13 +94,11 @@ fi
 $ytmisliked_script "$url"
 case "$?" in
     0)
-        yad --image youtube-music --title ytmsclu \
-            --button=Unlike:0 --button=Cancel:1 --text "$title" &&
+        echo "Unlike" | menu -p "$title" &&
                 xdotool key --window "$winid" u l k Enter
         ;;
     1)
-        yad --image youtube-music --title ytmsclu \
-            --button=Like:0 --button=Cancel:1 --text "$title" &&
+        echo "Like" | menu -p "$title" &&
                 xdotool key --window "$winid" d l k Enter
         ;;
     *)
