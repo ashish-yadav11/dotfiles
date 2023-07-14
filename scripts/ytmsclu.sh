@@ -8,12 +8,6 @@ videotitle="/home/ashish/.scripts/videotitle.py"
 exec 9<>"$lockfile"
 flock 9
 
-menu() {
-    rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
-                     listview {lines: 1; columns: 9;}' \
-         -dmenu -i -matching fuzzy -no-custom "$@"
-}
-
 hide() {
     if [ -s "$lockfile" ] ; then
         if flock -u 9 && flock -n 9 ; then
@@ -89,9 +83,11 @@ if [ -z "$winid" ] ; then
     exit
 fi
 if $ytmisliked "$url" ; then
-    [ "$(echo "Unlike" | menu -p "$title  (Liked)")" = Unlike ] &&
-        xdotool key --window "$winid" u l k Enter
+    yad --image youtube-music --title ytmsclu \
+        --button=Unlike:0 --button=Cancel:1 --text "$title" &&
+            xdotool key --window "$winid" u l k Enter
 else
-    [ "$(echo "Like" | menu -p "$title  (Not Liked)")" = Like ] &&
-        xdotool key --window "$winid" d l k Enter
+    yad --image youtube-music --title ytmsclu \
+        --button=Like:0 --button=Cancel:1 --text "$title" &&
+            xdotool key --window "$winid" d l k Enter
 fi
