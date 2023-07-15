@@ -27,14 +27,15 @@ menu() {
 if ! urltitle="$( \
     sqlite3 "file:$historyfile?mode=ro&nolock=1" \
         "SELECT url,title FROM urls ORDER BY last_visit_time DESC LIMIT 30" |
-            grep -m1 "^https://\(music\|www\)\.youtube\.com")" ; then
+            grep -m1 "^https://music\.youtube\.com")" ; then
     notify-send -u critical -t 2000 ytmsclu "No valid YouTube Music urls found in recent history!"
     unlockexit
 fi
 url="${urltitle%%|*}"
 if ! echo "$url" | grep -qm1 \
-        "^https://\(music\|www\)\.youtube\.com/watch?v=...........\($\|&\)" ; then
+        "^https://music\.youtube\.com/watch?v=...........\($\|&\)" ; then
     notify-send -u critical -t 0 ytmsclu "Something is wrong!\n'$url'"
+    unlockexit
 fi
 title="${urltitle#*|}"
 
