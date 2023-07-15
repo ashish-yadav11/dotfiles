@@ -1,10 +1,19 @@
 #!/bin/dash
-lockfile="$XDG_RUNTIME_DIR/ytm.hide"
+lockfile="$XDG_RUNTIME_DIR/ytmsclu.lock"
+historyfile="/home/ashish/.config/BraveSoftware/Brave-Browser/Default/History"
 ytb_isliked="/home/ashish/.local/bin/ytb-isLiked"
 ytb_title="/home/ashish/.local/bin/ytb-title"
 
+notify-send -t 500 ytmsclu "ytmsclu launched!"
+
 exec 9<>"$lockfile"
 flock 9
+
+unlockexit() {
+    # xsel forks and takes the lock with it (see `man flock`)
+    flock -u 9
+    exit
+}
 
 menu() {
     rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
@@ -13,97 +22,37 @@ menu() {
          -dmenu -i -matching fuzzy -no-custom "$@"
 }
 
-hide() {
-    if [ -s "$lockfile" ] ; then
-        if flock -u 9 && flock -n 9 ; then
-            : >"$lockfile"
-            sigdwm "scrh i 2"
-        fi
-    elif [ -z "$ytaf" ] ; then
-        if flock -u 9 && flock -n 9 ; then
-            sigdwm "scrh i 2"
-        else
-            echo 1 >"$lockfile"
-        fi
-    fi
-    # just to be safe (forked processes inherit file descriptor and thus lock)
-    flock -u 9
-}
-
-if [ "$(focusedwinclass -i)" = crx_cinhimbnkkaeohfgghhklpknlkffjgod ] ; then
-    # YouTube Music window already focused
-    ytaf=1
-else
-    case "$(xwininfo -children -root)" in
-        *': ("crx_cinhimbnkkaeohfgghhklpknlkffjgod" '*)
-            sigdwm "scrs i 2"
-            sleep 0.1
-            ;;
-        *)
-            notify-send -t 1000 ytmsclu "YouTube Music not open!"
-            exit
-            ;;
-    esac
+if ! urltitle="$( \
+    sqlite3 "file:$historyfile?mode=ro&nolock=1" \
+        "SELECT url,title FROM urls ORDER BY last_visit_time DESC LIMIT 30" |
+            grep -m1 "^https://\(music\|www\)\.youtube\.com")" ; then
+    notify-send -u critical -t 2000 ytmsclu "No valid YouTube Music urls found in recent history!"
+    unlockexit
 fi
-
-# exit if the focused window doesn't have YouTube Music at the end of its title
-wintitle="$(xdotool getactivewindow getwindowname)"
-case "$wintitle" in
-    *"YouTube Music")
-        ;;
-    *)
-        notify-send -t 1000 ytmsclu "Something wrong with window title!"
-        exit
-        ;;
-esac
-
-geometry="$(xdotool getactivewindow getwindowgeometry)"
-geometry="${geometry#*Position: }"
-position="${geometry% (screen: *}"
-size="${geometry#*Geometry: }"
-# coordinates of left upper corner of the YouTube Music window
-x="${position%,*}"
-y="${position#*,}"
-# size of the YouTube Music window
-w="${size%x*}"
-#h="${size#*x}"
-
-#eval $(xdotool getmouselocation --shell)
-xdotool mousemove "$((x + w - 30))" "$((y + 15))" click 1 sleep 0.1 \
-        mousemove "$((x + w - 30))" "$((y + 80))" click 1 \
-        mousemove "$((x + w - 30))" "$((y + 80))" click 1 \
-        mousemove 10000 10000
-#       mousemove "$X" "$Y"
-sleep 0.01
-
-url="$(xsel -ob)"
+url="${urltitle%%|*}"
 if ! echo "$url" | grep -qm1 \
         "^https://\(music\|www\)\.youtube\.com/watch?v=...........\($\|&\)" ; then
     notify-send -u critical -t 0 ytmsclu "Something is wrong!\n'$url'"
-    hide
-    exit
 fi
-hide
+title="${urltitle#*|}"
 
 url="${url%%&*}"
 echo -n "$url" | xsel -ib
 
-title="${wintitle%"YouTube Music"}"
+title="${titlee%"YouTube Music"}"
 title="${title%" - "}"
-title="${title#"YouTube Music - "}"
 if [ -z "$title" ] ; then
     if ! title="$($ytb_title "$url")" ; then
         notify-send -u critical -t 0 ytmsclu "Something went wrong with title script!"
-        exit
+        unlockexit
     fi
-else
-    title="$title [${url##*"/watch?v="}]"
 fi
+title="$title [${url##*"/watch?v="}]"
 
 winid="$(xdotool search --classname scratch-st | head -n1)"
 if [ -z "$winid" ] ; then
     notify-send -t 1500 ytmsclu "Scratch terminal not open!"
-    exit
+    unlockexit
 fi
 $ytb_isliked "$url"
 case "$?" in
@@ -117,6 +66,7 @@ case "$?" in
         ;;
     *)
         notify-send -u critical -t 0 ytmsclu "Something went wrong with isliked script!"
-        exit
+        unlockexit
         ;;
 esac
+unlockexit
