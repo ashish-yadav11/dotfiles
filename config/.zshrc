@@ -283,6 +283,14 @@ dlk() {
     return exitcode
 }
 
+dlkl() {
+    local lockfile="$XDG_RUNTIME_DIR/zsh_lk.lock"
+    exec 9<>"$lockfile"
+    flock -n 9 || return 2
+    dlk
+    flock -u 9
+}
+
 ulk() {
     local url exitcode
     case "$#" in
@@ -299,6 +307,14 @@ ulk() {
     exitcode="$?"
     [ "$exitcode" != 0 ] && echo -n '\a'
     return exitcode
+}
+
+ulkl() {
+    local lockfile="$XDG_RUNTIME_DIR/zsh_lk.lock"
+    exec 9<>"$lockfile"
+    flock -n 9 || return 2
+    ulk
+    flock -u 9
 }
 
 m() {
