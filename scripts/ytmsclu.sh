@@ -45,7 +45,7 @@ title="${titlee%"YouTube Music"}"
 title="${title%" - "}"
 if [ -z "$title" ] ; then
     if ! title="$($ytb_title "$url")" ; then
-        notify-send -u critical -t 0 ytmsclu "Something went wrong with title script!"
+        notify-send -u critical -t 0 ytmsclu "Something went wrong with the 'title' script!"
         unlockexit
     fi
 fi
@@ -75,7 +75,7 @@ case "$?" in
         xdotool key --window "$winid" d l k l Enter
         ;;
     *)
-        notify-send -u critical -t 0 ytmsclu "Something went wrong with isliked script!"
+        notify-send -u critical -t 0 ytmsclu "Something went wrong with the 'isliked' script!"
         unlockexit
         ;;
 esac
