@@ -124,6 +124,7 @@ rofi
 scrcpy
 shellcheck
 signal-desktop
+sqlite
 strace
 sxiv
 telegram-desktop
