@@ -113,6 +113,7 @@ python-pip
 python-pipx
 python-pyqt5
 python-scipy
+python-ytmusicapi
 qbittorrent
 qt5ct
 qt6ct
