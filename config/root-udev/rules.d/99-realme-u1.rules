@@ -1,0 +1,21 @@
+# 2769 - Charging Only
+# 2765 - MTP
+# 2772 - PTP
+# 2766 - RNDIS
+# 2048 - MIDI
+
+ SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22d9", MODE="0660", GROUP="adbusers"
+
+
+# to automatically turn on media transfer on plugging in the device
+
+#SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22d9", ATTR{idProduct}=="2769|2772|2766|2048", TAG+="systemd", ENV{SYSTEMD_WANTS}+="realme-u1@mtp.service"
+#SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22d9", ATTR{idProduct}=="2765", RUN+="/usr/bin/rm -f /tmp/realme-u1.lock"
+
+# to automatically turn on usb tethering on plugging in the device
+
+#SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22d9", ATTR{idProduct}=="2769|2765|2772|2048", TAG+="systemd", ENV{SYSTEMD_WANTS}+="realme-u1@rndis.service"
+#SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22d9", ATTR{idProduct}=="2766", RUN+="/usr/bin/rm -f /tmp/realme-u1.lock"
+
+# to remove the stale lock file in case none of the above functionalities is enabled
+ SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22d9", RUN+="/usr/bin/rm -f /tmp/realme-u1.lock"

@@ -1,0 +1,15 @@
+[Unit]
+Description=Lock Screen
+Before=sleep.target
+Wants=post-lock.service
+PropagatesReloadTo=post-lock.service
+ 
+[Service]
+Type=forking
+User=ashish
+Environment=DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+ExecStartPre=dunstctl set-paused true
+ExecStart=/home/ashish/.scripts/systemd/lock.sh
+ 
+[Install]
+WantedBy=sleep.target

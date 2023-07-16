@@ -33,12 +33,6 @@ print_mdiff
 echo -e '\e[1;32mdotfiles\e[0m'
 mdiff="$(
     sdiff="$(
-        $sdiff_cmd "$dotfiles/config/bash.bashrc" /etc/bash.bashrc
-    )"
-    [[ -n "$sdiff" ]] &&
-        printf "diff $dotfiles/config/bash.bashrc /etc/bash.bashrc\n%s\n" "$sdiff"
-
-    sdiff="$(
         $sdiff_cmd "$dotfiles/config/crontab" <(crontab -l)
     )"
     [[ -n "$sdiff" ]] &&
@@ -48,6 +42,21 @@ mdiff="$(
     )"
     [[ -n "$sdiff" ]] &&
         printf "diff $dotfiles/config/dconf-user dconf-user\n%s\n" "$sdiff"
+
+    prefix="$dotfiles/config/root-"
+    for f in "$prefix"* ; do
+        name="${f#"$prefix"}"
+        if [ -d "$f" ] ; then
+            $mdiff_cmd "$f" "/etc/$name" |
+                grep -Ev '^Only in /etc/.*'
+        elif [ -f "$f" ] ; then
+            sdiff="$(
+                $sdiff_cmd "$f" "/etc/$name"
+            )"
+            [[ -n "$sdiff" ]] &&
+                printf "diff $f /etc/$name\n%s\n" "$sdiff"
+        fi
+    done
 
     $mdiff_cmd -I "^history\|^lastVisited\|^x-scheme-handler/tg=\|^':\|^\(Builtin\|Quick\)AnnotationTools=" "$dotfiles/config" /home/ashish/.config |
         grep -Ev '^Only in .*(config:|\.config(:|/mpv/watch_later: |/nvim: \.netrwhist$|/pipewire: media-session.d$|/ranger(: bookmarks$|/.*: __)))' |

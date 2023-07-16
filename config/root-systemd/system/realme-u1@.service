@@ -1,0 +1,7 @@
+[Unit]
+Description=Auto USB Mode Selection for Realme U1
+ 
+[Service]
+User=ashish
+ExecStart=/home/ashish/.scripts/systemd/realme-u1.sh %I
+RuntimeMaxSec=10

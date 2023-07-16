@@ -1,0 +1,10 @@
+[Unit]
+Description=Lock Screen Hook
+After=lock.service
+RefuseManualStart=true
+RefuseManualStop=true
+
+[Service]
+User=ashish
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+ExecStart=dash -c 'pwait ^i3lock$; dunstctl set-paused false'

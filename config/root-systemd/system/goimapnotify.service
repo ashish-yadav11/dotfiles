@@ -1,0 +1,8 @@
+[Unit]
+Description=Custom goimapnotify Service
+
+[Service]
+Type=simple
+ExecStart=goimapnotify -conf /home/ashish/.config/imapnotify/iiser.conf
+Restart=always
+RestartSec=60
