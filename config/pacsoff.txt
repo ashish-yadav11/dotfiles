@@ -107,12 +107,16 @@ python-cairo
 python-google-api-python-client
 python-google-auth-httplib2
 python-google-auth-oauthlib
+python-keras
 python-matplotlib
 python-numpy
+python-pandas
 python-pip
 python-pipx
 python-pyqt5
+python-scikit-learn
 python-scipy
+python-tensorflow
 python-ytmusicapi
 qbittorrent
 qt5ct
