@@ -15,10 +15,11 @@ case "$1" in
         export DISPLAY=:0
         export XAUTHORITY=/home/ashish/.Xauthority
 
-        sigdsblocks 1
-        sigdsblocks 2
-        sigdsblocks 5
-        sigdsblocks 6
+        sigdsblocks 1 # calendar
+        sigdsblocks 2 # volume
+        sigdsblocks 5 # battery
+        sigdsblocks 6 # cpu
+        sigdsblocks 7 # ram
 
         time="$(date +%H%M)"
         if [ "$time" -ge 2200 ] || [ "$time" -lt 0600 ] ; then
