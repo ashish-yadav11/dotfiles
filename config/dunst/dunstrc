@@ -453,9 +453,6 @@
 [dictionary]
     summary = "Dictionary"
     history_ignore = yes
-[exercise]
-    summary = "Reminder for exercise"
-    history_ignore = yes
 [espeak]
     summary = "Espeak"
     history_ignore = yes
