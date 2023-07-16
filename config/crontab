@@ -7,6 +7,6 @@
 
   20    01      *       *       *       /home/ashish/.scripts/cron/sleepdine.sh sleep 0120
   00    06      *       *       *       redshift -x
-  50    20      *       *       *       /home/ashish/.scripts/cron/sleepdine.sh dine 2050
+# 50    20      *       *       *       /home/ashish/.scripts/cron/sleepdine.sh dine 2050
   00    22      *       *       *       redshift -PO 4500
   00    22      *       *       6       /home/ashish/.scripts/cron/maintenance.sh
