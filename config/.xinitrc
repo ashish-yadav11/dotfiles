@@ -63,7 +63,7 @@ clipdaemon &
 playerctld daemon &
 unclutter &
 adb start-server &
-gebaard &
+#gebaard &
 savewintitles -d &
 
 #exec valgrind --leak-check=full dwm
