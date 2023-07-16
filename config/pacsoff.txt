@@ -43,6 +43,7 @@ git
 gnuplot
 go
 go-tools
+goimapnotify
 gparted
 grub-customizer
 gthumb
