@@ -6,6 +6,27 @@ from ranger.api.commands import Command
 
 import os
 
+class fkcd(Command):
+    """
+    :fkcd <dirname>
+
+    Creates a directory with the name <dirname> and selects it.
+    """
+
+    def execute(self):
+        arg = self.rest(1)
+        for c in arg:
+            if c == '/':
+                self.fm.notify("Invalid argument!")
+                return
+        dirname = os.path.join(self.fm.thisdir.path, arg)
+        if not os.path.lexists(dirname):
+            os.mkdir(dirname)
+            self.fm.thisdir.load_content(schedule=False)
+            self.fm.select_file(dirname)
+        else:
+            self.fm.notify("file/directory exists!", bad=True)
+
 class mkcd(Command):
     """
     :mkcd <dirname>
