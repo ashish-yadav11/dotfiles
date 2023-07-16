@@ -121,6 +121,8 @@ redshift
 reflector
 ripgrep
 rofi
+sagemath
+sagemath-doc
 scrcpy
 shellcheck
 signal-desktop
