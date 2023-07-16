@@ -1,7 +1,7 @@
 # vim:ft=sh
 
-yt-dlp -f "bestvideo[height<=?720]+bestaudio/best[height<=?720]/best"  #yt-dlp;ytdl;youtube-dl;720p
-yt-dlp -f "bestvideo[ext=mp4][height<=?720]+bestaudio[ext=m4a]/best[ext=mp4][height<=?720]/bestvideo[height<=?720]+bestaudio/bestvideo[height<=?720]/best[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"  #yt-dlp;ytdl;youtube-dl;720p;mp4
+ yt-dlp -f "bestvideo[height<=?720]+bestaudio/best[height<=?720]/best"  #yt-dlp;ytdl;youtube-dl;720p
+ yt-dlp -f "bestvideo[ext=mp4][height<=?720]+bestaudio[ext=m4a]/best[ext=mp4][height<=?720]/bestvideo[height<=?720]+bestaudio/bestvideo[height<=?720]/best[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best"  #yt-dlp;ytdl;youtube-dl;720p;mp4
 
 curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python #speedtest
 
@@ -14,4 +14,4 @@ curl ifconfig.co/city #city
 
 sudo tar -zcvf /home/ashish/Documents/arbackup.tar.gz /etc /root /media/storage/.backup #backup
 
-read -r PID </run/user/1000/sleep-dine.pid && kill "$PID" $(pgrep -P "$PID") #kill;hibernation;dine;sleep
+read -r PID </run/user/1000/sleep-dine.pid && kill "$PID" $(pgrep -P "$PID") #kill;dine;sleep
