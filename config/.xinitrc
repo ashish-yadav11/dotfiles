@@ -65,6 +65,7 @@ unclutter &
 adb start-server &
 #gebaard &
 savewintitles -d &
+/home/ashish/.scripts/ytmsclu-daemon.sh &
 
 #exec valgrind --leak-check=full dwm
 exec dwm
