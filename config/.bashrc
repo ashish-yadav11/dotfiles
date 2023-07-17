@@ -16,7 +16,7 @@ alias kynm=/home/ashish/.scripts/xevcn.sh
 alias dlke="dlk && exit"
 alias ulke="ulk && exit"
 alias mse="ms && exit"
-alias ytmlog="less +G ~/.cache/ytmsclu-daemon.log"
+alias ytmlog='nvim -c "normal G" ~/.cache/ytmsclu-daemon.log'
 alias zcurle="zcurl && exit"
 
 alias n="nvim ~/Documents/.notes"
