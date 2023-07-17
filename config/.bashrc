@@ -13,11 +13,11 @@ alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
 alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
 alias hlp="exec hotloop"
 alias kynm=/home/ashish/.scripts/xevcn.sh
-alias dlke="dlk && exit"
-alias ulke="ulk && exit"
-alias mse="ms && exit"
+alias dlke="dlk && exit; echo -n '\a'"
+alias ulke="ulk && exit; echo -n '\a'"
+alias mse="ms && exit; echo -n '\a'"
 alias ytmlog='nvim -c "normal G" ~/.cache/ytmsclu-daemon.log'
-alias zcurle="zcurl && exit"
+alias zcurle="zcurl && exit; echo -n '\a'"
 
 alias n="nvim ~/Documents/.notes"
 alias t="nvim ~/Documents/.todo"
@@ -40,43 +40,38 @@ d() {
     nvim
 }
 
+
 dlk() {
-    local url exitcode
+    local url
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
-        *) echo "Usage: dlk [url]"; echo -n '\a'; return 2 ;;
+        *) echo "Usage: dlk [url]"; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
             "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
-        echo "Invalid url: \`$url'!\a"
+        echo "Invalid url: \`$url'!"
         return 1
     fi
     echo "$url"
     ytm-like "$url"
-    exitcode="$?"
-    [ "$exitcode" != 0 ] && echo -n '\a'
-    return exitcode
 }
 
 ulk() {
-    local url exitcode
+    local url
     [ "$1" = "-r" ] && { rem="$1"; shift ;}
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
-        *) echo "Usage: ulk [url]"; echo -n '\a'; return 2 ;;
+        *) echo "Usage: ulk [url]"; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
             "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
-        echo "Invalid url: \`$url'!\a"
+        echo "Invalid url: \`$url'!"
         return 1
     fi
     echo "$url"
     ytm-unlike $rem "$url"
-    exitcode="$?"
-    [ "$exitcode" != 0 ] && echo -n '\a'
-    return exitcode
 }
 
 m() {
