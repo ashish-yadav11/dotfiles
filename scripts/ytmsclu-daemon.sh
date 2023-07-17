@@ -13,7 +13,7 @@ tail -f "$fifofile" |
         echo "$(date +%Y%m%d-%H%M%S) $url $action" >>"$logfile"
         if ! echo "$url" | grep -qm1 \
                 "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
-            $notifyerror "url: $url | action: $action\nError: invalid url!"
+            $notifyerror "action: $action\nurl: $url\nError: invalid url!"
             echo "Error: invalid url!\n\n" >>"$logfile"
             continue
         fi
@@ -23,12 +23,12 @@ tail -f "$fifofile" |
             remove) ytm-unlike -r "$url" >>"$logfile" 2>&1 ;;
             delete) ytm-removeUnliked "$url" >>"$logfile" 2>&1 ;;
             *)
-                $notifyerror "url: $url | action: $action\nError: invalid action!"
+                $notifyerror "action: $action\nurl: $url\nError: invalid action!"
                 echo "Error: invalid action!\n\n" >>"$logfile"
                 continue
                 ;;
         esac
         [ "$?" != 0 ] &&
-            $notifyerror "url: $url | action: $action\nError: something went wrong!"
+            $notifyerror "action: $action\nurl: $url\nError: something went wrong!"
         echo "\n" >>"$logfile"
     done
