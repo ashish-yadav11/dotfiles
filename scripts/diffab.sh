@@ -59,7 +59,7 @@ mdiff="$(
     done
 
     $mdiff_cmd -I "^history\|^lastVisited\|^x-scheme-handler/tg=\|^':\|^\(Builtin\|Quick\)AnnotationTools=" "$dotfiles/config" /home/ashish/.config |
-        grep -Ev '^Only in .*(config:|\.config(:|/mpv/watch_later: |/nvim: \.netrwhist$|/pipewire: media-session.d$|/ranger(: bookmarks$|/.*: __)))' |
+        grep -Ev '^Only in .*(config:|\.config(:|/mpv(: watch_later$|/watch_later: )|/nvim: \.netrwhist$|/pipewire: media-session.d$|/ranger(: bookmarks$|/.*: __)))' |
             sed -e "s/^$mdiff_str -I '\\^history\\\\|[^ ]*' /diff /"
 
     $mdiff_cmd "$dotfiles/config" /home/ashish |
