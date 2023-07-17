@@ -19,37 +19,19 @@ tail -f "$fifofile" |
             continue
         fi
         case "$action" in
-            like)
-                ytm-like "$url" >>"$logfile" 2>&1
-                exitcode="$?"
-                ;;
-            unlike)
-                ytm-unlike "$url" >>"$logfile" 2>&1
-                exitcode="$?"
-                ;;
-            remove)
-                ytm-unlike -r "$url" >>"$logfile" 2>&1
-                exitcode="$?"
-                ;;
-            delete)
-                ytm-removeUnliked "$url" >>"$logfile" 2>&1
-                exitcode="$?"
-                ;;
-            history)
-                output="$(ytm-addHistory "$url" 2>&1)"
-                exitcode="$?"
-                if [ "$exitcode" != 0 ] ; then
-                    echo "$(date +%Y%m%d-%H%M%S) $url $action" >>"$logfile"
-                    printf "%s" "$output" >>"$logfile"
-                fi
-                ;;
+            like) ytm-like "$url" >>"$logfile" 2>&1 ;;
+            unlike) ytm-unlike "$url" >>"$logfile" 2>&1 ;;
+            remove) ytm-unlike -r "$url" >>"$logfile" 2>&1 ;;
+            delete) ytm-removeUnliked "$url" >>"$logfile" 2>&1 ;;
+            history) ytm-addHistory "$url" >/dev/null 2>&1 ;;
             *)
                 $notifyerror "action: $action\nurl: $url\nError: invalid action!"
                 echo "Error: invalid action!\n\n" >>"$logfile"
                 continue
                 ;;
         esac
-        [ "$exitcode" != 0 ] &&
+        [ "$action" = history ] && continue
+        [ "$?" != 0 ] &&
             $notifyerror "action: $action\nurl: $url\nError: something went wrong!"
         echo "\n" >>"$logfile"
     done
