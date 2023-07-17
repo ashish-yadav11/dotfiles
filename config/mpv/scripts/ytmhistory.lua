@@ -1,6 +1,6 @@
 local musicdir = "/media/storage/Music"
 
-local function fileloaded(event)
+local function fileloaded()
     overthreshold = false
     fname = mp.get_property("filename", "")
 end
@@ -16,7 +16,7 @@ local function percentpos(_, perc)
             os.execute("/home/ashish/.scripts/ytmsclu-history.sh '" .. fname:gsub("'", "'\\''") .. "'")
         end
     else
-        if perc and perc == 0 then
+        if perc and perc < 1 then
             overthreshold = false
         end
     end
