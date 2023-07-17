@@ -1,7 +1,6 @@
 #!/bin/dash
 menu="dmenu -i -matching fuzzy -no-custom"
 music_dir=/media/storage/Music
-archive_dir="$music_dir/archive"
 
 path="$(realpath -s "$2")"
 
@@ -26,7 +25,13 @@ case "$path" in
         ;;
 esac
 
-case "$(echo "Archive\nDelete" | $menu -p "$3")" in
+winid="$(xdotool search --classname scratch-st | head -n1)"
+if [ -z "$winid" ] ; then
+    notify-send -t 1500 ytmsclu "Scratch terminal not open!"
+    exit
+fi
+filename="${path##*/}"
+case "$(echo "Archive\nDelete\nLike" | $menu -p "$filename")" in
     Archive)
         base="${path#"$music_dir/"}"
         case "$base" in
@@ -35,9 +40,12 @@ case "$(echo "Archive\nDelete" | $menu -p "$3")" in
                 exit
                 ;;
         esac
-        mv -f "$path" "$archive_dir/$base"
+        xdotool key --window "$winid" u l k l Enter
         ;;
     Delete)
-        rm -f "$path"
+        xdotool key --window "$winid" u l k l space minus r Enter
+        ;;
+    Like)
+        xdotool key --window "$winid" d l k l Enter
         ;;
 esac

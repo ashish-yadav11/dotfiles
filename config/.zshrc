@@ -277,6 +277,7 @@ dlk() {
         echo "Invalid url: \`$url'!\a"
         return 1
     fi
+    echo "$url"
     ytm-like "$url"
     exitcode="$?"
     [ "$exitcode" != 0 ] && echo -n '\a'
@@ -304,6 +305,7 @@ ulk() {
         echo "Invalid url: \`$url'!\a"
         return 1
     fi
+    echo "$url"
     ytm-unlike $rem "$url"
     exitcode="$?"
     [ "$exitcode" != 0 ] && echo -n '\a'
