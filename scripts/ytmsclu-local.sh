@@ -32,7 +32,7 @@ case "$path" in
         esac
         ;;
     *)
-        [ "$1" != yank ] && $notifyerror "Error: not in music directory"
+        [ "$1" != yank ] && { $notifyerror "Error: not in music directory"; exit ;}
         idp="${filename##*[}"
         id="${idp%]*}"
         if [ "$idp" != "$filename" ] && [ "$id" != "$idp" ] ; then
