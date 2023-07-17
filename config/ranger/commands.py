@@ -61,6 +61,23 @@ class mkcd(Command):
     def tab(self, tabnum):
         return self._tab_directory_content()
 
+class fktouch(Command):
+    """
+    :fktouch <fname>
+
+    Creates a fname with the name <fname> and selects it.
+    """
+
+    def execute(self):
+        arg = self.rest(1)
+        fname = os.path.join(self.fm.thisdir.path, arg)
+        if not os.path.lexists(fname):
+            open(fname, 'a').close()
+            self.fm.thisdir.load_content(schedule=False)
+            self.fm.select_file(fname)
+        else:
+            self.fm.notify("file/directory exists!", bad=True)
+
 
 class fzf_search(Command):
 
