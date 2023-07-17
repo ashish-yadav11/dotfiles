@@ -21,6 +21,7 @@ tail -f "$fifofile" |
             like) ytm-like "$url" >>"$logfile" 2>&1 ;;
             unlike) ytm-unlike "$url" >>"$logfile" 2>&1 ;;
             remove) ytm-unlike -r "$url" >>"$logfile" 2>&1 ;;
+            delete) ytm-removeUnliked "$url" >>"$logfile" 2>&1 ;;
             *)
                 $notifyerror "url: $url | action: $action\nError: invalid action!"
                 echo "Error: invalid action!\n\n" >>"$logfile"

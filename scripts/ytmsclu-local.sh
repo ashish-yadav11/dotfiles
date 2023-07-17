@@ -22,13 +22,14 @@ case "$path" in
         [ "$1" = yank ] && exit
         title="${filename%" ($id)*"} [$id]"
         case "$path" in
-            "$musicdir/archive/"*) menuarg="Like\nUnlike\nRemove" ;;
+            "$musicdir/archive/"*) menuarg="Like\nDelete\nUnlike" ;;
                                 *) menuarg="Unlike\nRemove\nLike" ;;
         esac
         case "$(echo "$menuarg" | $menu -p "$title")" in
             Unlike) $ytmsclu_addjob "$url" "unlike" ;;
             Remove) $ytmsclu_addjob "$url" "remove" ;;
             Like) $ytmsclu_addjob "$url" "like" ;;
+            Delete) $ytmsclu_addjob "$url" "delete" ;;
         esac
         ;;
     *)
