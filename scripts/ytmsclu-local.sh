@@ -16,7 +16,7 @@ case "$path" in
             url="https://music.youtube.com/watch?v=$id"
             echo -n "$url" | xsel -ib
         else
-            $notifyerror "Error: something is wrong!\n'$path'"
+            $notifyerror "Error: file name not in expected format!\n'$filename'"
             exit
         fi
         [ "$1" = yank ] && exit
@@ -32,13 +32,14 @@ case "$path" in
         esac
         ;;
     *)
+        [ "$1" != yank ] && $notifyerror "Error: not in music directory"
         idp="${filename##*[}"
         id="${idp%]*}"
         if [ "$idp" != "$filename" ] && [ "$id" != "$idp" ] ; then
             url="https://www.youtube.com/watch?v=$id"
             echo -n "$url" | xsel -ib
         else
-            $notifyerror "Error: something is wrong!\n'$path'"
+            $notifyerror "Error: file name not in expected format!\n'$filename'"
             exit
         fi
         ;;

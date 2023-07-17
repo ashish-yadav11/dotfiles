@@ -5,27 +5,27 @@ ytb_isliked="/home/ashish/.local/bin/ytb-isLiked"
 ytb_title="/home/ashish/.local/bin/ytb-title"
 ytmsclu_addjob="/home/ashish/.scripts/ytmsclu-addjob.sh"
 
-notifyerror() {
-    dunstify -C "$nid"
-    dunstify -u critical -t 0 ytmsclu "$1"
-}
-
 nid=$(dunstify -p -t 500 ytmsclu "ytmsclu launched!")
 
 exec 9<>"$lockfile"
 flock 9
-
-unlockexit() {
-    # xsel forks and takes the lock with it (see `man flock`)
-    flock -u 9
-    exit
-}
 
 menu() {
     rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
                      listview {lines: 1; columns: 9;}
                      entry {enabled: false;}' \
          -dmenu -i -matching fuzzy -no-custom "$@"
+}
+
+notifyerror() {
+    dunstify -C "$nid"
+    dunstify -u critical -t 0 ytmsclu "$1"
+}
+
+unlockexit() {
+    # xsel forks and takes the lock with it (see `man flock`)
+    flock -u 9
+    exit
 }
 
 if ! urltitle="$( \
