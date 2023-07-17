@@ -1,18 +1,33 @@
 local musicdir = "/media/storage/Music"
 
-function fileloaded(event)
+local function fileloaded(event)
+    overthreshold = false
     fname = mp.get_property("filename", "")
 end
-function endfile(event)
-    if event["reason"] == "eof" then
-        os.execute("/home/ashish/.scripts/ytmsclu-history.sh '" .. fname:gsub("'", "'\\''") .. "'")
+--[[
+local function eofreached(eof)
+    os.execute("/home/ashish/.scripts/ytmsclu-history.sh '" .. fname:gsub("'", "'\\''") .. "'")
+end
+--]]
+local function percentpos(_, perc)
+    if not overthreshold then
+        if perc and perc > 95 then
+            overthreshold = true
+            os.execute("/home/ashish/.scripts/ytmsclu-history.sh '" .. fname:gsub("'", "'\\''") .. "'")
+        end
+    else
+        if perc and perc == 0 then
+            overthreshold = false
+        end
     end
 end
 
 local path = mp.get_property("path", "")
 local wdir = mp.get_property("working-directory", "")
-local fullpath = wdir .. path
-if fullpath:sub(1, #musicdir) then
+if (wdir .. path):sub(1, #musicdir) == musicdir then
     mp.register_event("file-loaded", fileloaded)
+--[[
     mp.register_event("end-file", endfile)
+--]]
+    mp.observe_property("percent-pos", "number", percentpos)
 end
