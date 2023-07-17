@@ -2,6 +2,7 @@
 lockfile="$XDG_RUNTIME_DIR/ytmsclu-daemon.lock"
 fifofile="$XDG_RUNTIME_DIR/ytmsclu-daemon.fifo"
 logfile="/home/ashish/.cache/ytmsclu-daemon.log"
+notifyerror="notify-send -u critical -t 0 ytmsclu-daemon"
 
 exec 9<>"$lockfile"
 flock -n 9 || { echo 'Error: another instance already active!'; exit 2 ;}
@@ -12,7 +13,7 @@ tail -f "$fifofile" |
         echo "$(date +%Y%m%d-%H%M%S) | $url $action" >>"$logfile"
         if ! echo "$url" | grep -qm1 \
                 "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
-            notify-send -u critical -t 0 ytmsclu "url: $url | action: $action\nInvalid url!"
+            $notifyerror "url: $url | action: $action\nError: invalid url!"
             echo "Error: invalid url!\n\n" >>"$logfile"
             continue
         fi
@@ -21,12 +22,12 @@ tail -f "$fifofile" |
             unlike) ytm-unlike "$url" >>"$logfile" 2>&1 ;;
             remove) ytm-unlike -r "$url" >>"$logfile" 2>&1 ;;
             *)
-                notify-send -u critical -t 0 ytmsclu "url: $url | action: $action\nInvalid action!"
+                $notifyerror "url: $url | action: $action\nError: invalid action!"
                 echo "Error: invalid action!\n\n" >>"$logfile"
                 continue
                 ;;
         esac
         [ "$?" != 0 ] &&
-            notify-send -u critical -t 0 ytmsclu "url: $url | action: $action\nSomething went wrong!"
+            $notifyerror "url: $url | action: $action\nError: something went wrong!"
         echo "\n" >>"$logfile"
     done

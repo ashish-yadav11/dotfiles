@@ -2,6 +2,7 @@
 musicdir=/media/storage/Music
 menu="dmenu -i -matching fuzzy -no-custom"
 ytmsclu_addjob="/home/ashish/.scripts/ytmsclu-addjob.sh"
+notifyerror="notify-send -u critical -t 0 ytmsclu-local"
 
 
 path="$(realpath -s "$2")"
@@ -15,7 +16,7 @@ case "$path" in
             url="https://music.youtube.com/watch?v=$id"
             echo -n "$url" | xsel -ib
         else
-            notify-send -u critical -t 0 ytmsclu "Seomthing is wrong!\n'$path'"
+            $notifyerror "Error: something is wrong!\n'$path'"
             exit
         fi
         [ "$1" = yank ] && exit
@@ -37,7 +38,7 @@ case "$path" in
             url="https://www.youtube.com/watch?v=$id"
             echo -n "$url" | xsel -ib
         else
-            notify-send -u critical -t 0 ytmsclu "Seomthing is wrong!\n'$path'"
+            $notifyerror "Error: something is wrong!\n'$path'"
             exit
         fi
         ;;
