@@ -247,6 +247,7 @@ alias kynm=/home/ashish/.scripts/xevcn.sh
 alias dlke="dlk && exit"
 alias ulke="ulk && exit"
 alias mse="ms && exit"
+alias ytmlog="less +G ~/.cache/ytmsclu-daemon.log"
 alias zcurle="zcurl && exit"
 
 # files
@@ -284,14 +285,6 @@ dlk() {
     return exitcode
 }
 
-dlkl() {
-    local lockfile="$XDG_RUNTIME_DIR/zsh_lk.lock"
-    exec 9<>"$lockfile"
-    flock -n 9 || return 2
-    dlk "$@"
-    flock -u 9
-}
-
 ulk() {
     local url exitcode
     [ "$1" = "-r" ] && { rem="$1"; shift ;}
@@ -310,14 +303,6 @@ ulk() {
     exitcode="$?"
     [ "$exitcode" != 0 ] && echo -n '\a'
     return exitcode
-}
-
-ulkl() {
-    local lockfile="$XDG_RUNTIME_DIR/zsh_lk.lock"
-    exec 9<>"$lockfile"
-    flock -n 9 || return 2
-    ulk "$@"
-    flock -u 9
 }
 
 m() {
