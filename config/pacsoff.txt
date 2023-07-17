@@ -113,6 +113,7 @@ python-numpy
 python-pandas
 python-pip
 python-pipx
+python-pylint
 python-pyqt5
 python-scikit-learn
 python-scipy
