@@ -4,8 +4,7 @@ menu="dmenu -i -matching fuzzy -no-custom"
 ytmsclu_addjob="/home/ashish/.scripts/ytmsclu-addjob.sh"
 notifyerror="notify-send -u critical -t 0 ytmsclu-local"
 
-
-path="$(realpath -s "$2")"
+path="$2"
 filename="${path##*/}"
 
 case "$path" in
