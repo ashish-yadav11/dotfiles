@@ -1,6 +1,6 @@
 #!/bin/dash
-notifyerror="notify-send -u critical -t 0 ytmsclu-history"
 ytmsclu_addjob="/home/ashish/.scripts/ytmsclu-addjob.sh"
+notifyerror="notify-send -u critical -t 0 ytmsclu-history"
 
 filename="$1"
 idp="${filename##*(}"
