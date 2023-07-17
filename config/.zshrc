@@ -287,7 +287,7 @@ dlkl() {
     local lockfile="$XDG_RUNTIME_DIR/zsh_lk.lock"
     exec 9<>"$lockfile"
     flock -n 9 || return 2
-    dlk
+    dlk "$@"
     flock -u 9
 }
 
@@ -314,7 +314,7 @@ ulkl() {
     local lockfile="$XDG_RUNTIME_DIR/zsh_lk.lock"
     exec 9<>"$lockfile"
     flock -n 9 || return 2
-    ulk
+    ulk "$@"
     flock -u 9
 }
 
