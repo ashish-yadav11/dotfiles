@@ -59,6 +59,7 @@ dlk() {
 
 ulk() {
     local url exitcode
+    [ "$1" = "-r" ] && { rem="$1"; shift ;}
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
@@ -69,7 +70,7 @@ ulk() {
         echo "Invalid url: \`$url'!\a"
         return 1
     fi
-    ytm-unlike "$url"
+    ytm-unlike $rem "$url"
     exitcode="$?"
     [ "$exitcode" != 0 ] && echo -n '\a'
     return exitcode
