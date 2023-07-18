@@ -326,7 +326,7 @@ ms() {
     dst=( "$XDG_RUNTIME_DIR/mtp/RMX1831-9PLF7LKZKNFYLR5H-"*"/Internal shared storage/Music" )
     setopt NOMATCH
     if [[ -d "$dst[1]" ]] ; then
-        rsync -avu --delete --exclude=archive/ "$src" "$dst[1]"
+        rsync -avu --delete  -f"- */" -f"+ *" "$src" "$dst[1]"
     else
         echo "Destination device not mounted!"
         return 1
