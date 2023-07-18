@@ -7,3 +7,16 @@ math.stackexchange.com##.d-block.p0.m0
 math.stackexchange.com###newsletter-ad > .s-sidebarwidget--header
 math.stackexchange.com##.s-sidebarwidget--content.d-block
 math.stackexchange.com###hot-network-questions
+
+accounts.youtube.com###secondary-inner
+www.youtube.com###secondary-inner
+accounts.youtube.com###sections
+www.youtube.com###sections
+accounts.youtube.com###guide-inner-content
+www.youtube.com###guide-inner-content
+accounts.youtube.com##div#contents:nth-of-type(6)
+www.youtube.com##div#contents:nth-of-type(6)
+accounts.youtube.com###chips
+www.youtube.com###chips
+accounts.youtube.com##.ytp-endscreen-content
+www.youtube.com##.ytp-endscreen-content
