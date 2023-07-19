@@ -52,23 +52,29 @@ __lk_helper() {
         *) echo "Invalid usage!"; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
-            "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
+            "^https://\(music\|www\)\.youtube\.com/watch?v=...........\(&\|$\)" ; then
         echo "Invalid url: \`$url'!"
         return 1
     fi
+    url="${url%%&*}"
+    echo -n "$url" | xsel -ib
     echo "$url"
 }
 
 dlk() {
-    __lk_helper "$@" || return
-    ~/.script/ytmsclu-addjob.sh "$url" like
+    local output
+    output="$(__lk_helper "$@")" || { printf "%s" "$output"; return ;}
+    echo "$output"
+    ~/.script/ytmsclu-addjob.sh "$output" like
 }
 
 ulk() {
-    local arg="unlike"
+    local arg output
+    arg="unlike"
     [ "$1" = "-r" ] && { arg="remove"; shift ;}
-    __lk_helper "$@" || return
-    ~/.script/ytmsclu-addjob.sh "$arg"
+    output="$(__lk_helper "$@")" || { printf "%s" "$output"; return ;}
+    echo "$output"
+    ~/.script/ytmsclu-addjob.sh "$output" "$arg"
 }
 
 m() {
