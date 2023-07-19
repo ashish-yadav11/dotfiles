@@ -3,6 +3,10 @@ musicdir=/media/storage/Music
 
 path="$1"
 filename="${path##*/}"
+case "$path" in
+    /*) ;;
+    *) path="$PWD/$path" ;;
+esac
 
 case "$path" in
     "$musicdir/"*)

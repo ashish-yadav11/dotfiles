@@ -6,6 +6,10 @@ notifyerror="notify-send -u critical -t 0 ytmsclu-local"
 
 path="$1"
 filename="${path##*/}"
+case "$path" in
+    /*) ;;
+    *) path="$PWD/$path" ;;
+esac
 
 case "$path" in
     "$musicdir/"*)
