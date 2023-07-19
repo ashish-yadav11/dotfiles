@@ -5,7 +5,7 @@
 # return if not running interactively
 [[ "$-" != *i* ]] && return
 
-HISTIGNORE="$HISTIGNORE:h:m:n:s:s *:t:u"
+HISTIGNORE="$HISTIGNORE:d:h:m:n:p:s:s *:t:u:y"
 
 # aliases
 alias c=compile
@@ -22,6 +22,10 @@ alias zcurle="zcurl && exit; echo -n '\a'"
 alias n="nvim ~/Documents/.notes"
 alias t="nvim ~/Documents/.todo"
 alias u="nvim ~/Documents/.urls"
+
+alias h='nvim -c "normal G" ~/.bash_history'
+alias p='nvim -c "normal G" ~/.python_history'
+alias y='nvim -c "normal G" ~/.cache/ytmsclu-daemon.log'
 
 __fzf_select_bookmark() {
     local selected

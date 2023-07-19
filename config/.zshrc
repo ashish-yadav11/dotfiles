@@ -25,7 +25,7 @@ setopt SH_WORD_SPLIT
 
 ## PARAMETERS (man zshparam)
 
-HISTORY_IGNORE='(d|h|m|n|pb|pz|s|s *|t|u)'
+HISTORY_IGNORE='(d|h|m|n|p|pb|pz|s|s *|t|u|y)'
 HISTSIZE=20000
 KEYTIMEOUT=1
 LC_ALL=C
@@ -247,7 +247,6 @@ alias kynm=/home/ashish/.scripts/xevcn.sh
 alias dlke="dlk && exit; echo -n '\a'"
 alias ulke="ulk && exit; echo -n '\a'"
 alias mse="ms && exit; echo -n '\a'"
-alias ytmlog='nvim -c "normal G" ~/.cache/ytmsclu-daemon.log'
 alias zcurle="zcurl && exit; echo -n '\a'"
 
 # files
@@ -257,6 +256,8 @@ alias u="nvim ~/Documents/.urls"
 
 # history
 alias h='nvim -c "normal G" ~/.zsh_history'
+alias p='nvim -c "normal G" ~/.python_history'
+alias y='nvim -c "normal G" ~/.cache/ytmsclu-daemon.log'
 alias pb='bash --rcfile <(echo '\''[[ -f ~/.bashrc ]] && source ~/.bashrc; unset HISTFILE; PS1="\[\e[0;34m\]I\[\e[0m\]$PS1"'\'')'
 alias pz="INCOGNITO=1 zsh"
 
