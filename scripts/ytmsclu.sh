@@ -3,9 +3,10 @@ lockfile="$XDG_RUNTIME_DIR/ytmsclu.lock"
 historyfile="/home/ashish/.config/BraveSoftware/Brave-Browser/Default/History"
 ytb_isliked="/home/ashish/.local/bin/ytb-isLiked"
 ytb_title="/home/ashish/.local/bin/ytb-title"
+ytm_lastplayed="/home/ashish/.local/bin/ytm-lastPlayed"
 ytmsclu_addjob="/home/ashish/.scripts/ytmsclu-addjob.sh"
 
-nid=$(dunstify -p -t 500 ytmsclu "ytmsclu launched!")
+nid=$(dunstify -p -t 500 ytmsclu "ytmsclu launched")
 
 exec 9<>"$lockfile"
 flock 9
@@ -17,9 +18,12 @@ menu() {
          -dmenu -i -matching fuzzy -no-custom "$@"
 }
 
-notifyerror() {
+notify() {
     dunstify -C "$nid"
-    dunstify -u critical -t 0 ytmsclu "$1"
+    dunstify "$@"
+}
+notifyerror() {
+    notify -u critical -t 0 ytmsclu "$1"
 }
 
 unlockexit() {
@@ -38,22 +42,28 @@ fi
 url="${urltitle%%|*}"
 if ! echo "$url" | grep -qm1 \
         "^https://music\.youtube\.com/watch?v=...........\($\|&\)" ; then
-    notifyerror "Error: something is wrong!\n'$url'"
-    unlockexit
-fi
-title="${urltitle#*|}"
-
-url="${url%%&*}"
-echo -n "$url" | xsel -ib
-
-title="${title%"YouTube Music"}"
-title="${title%" - "}"
-if [ -z "$title" ] ; then
-    if ! title="$($ytb_title "$url")" ; then
-        notifyerror "Error: something went wrong with the 'title' script!"
+    nid="$(notify -p -t 1000 ytmsclu "Falling back to the 'lastplayed' script")"
+    if ! urltitle="$($ytm_lastplayed)" ; then
+        notifyerror "Error: something went wrong with the 'lastplayed' script!"
         unlockexit
     fi
+    url="${urltitle%%|*}"
+    echo -n "$url" | xsel -ib
+    title="${urltitle#*|}"
+else
+    url="${url%%&*}"
+    echo -n "$url" | xsel -ib
+    title="${urltitle#*|}"
+    title="${title%"YouTube Music"}"
+    title="${title%" - "}"
+    if [ -z "$title" ] ; then
+        if ! title="$($ytb_title "$url")" ; then
+            notifyerror "Error: something went wrong with the 'title' script!"
+            unlockexit
+        fi
+    fi
 fi
+
 title="$title [${url##*"/watch?v="}]"
 
 $ytb_isliked "$url"
