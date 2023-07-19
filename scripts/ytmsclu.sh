@@ -63,8 +63,15 @@ else
         fi
     fi
 fi
-
-title="$title [${url##*"/watch?v="}]"
+ytmtitle="$(xdotool search --classname crx_cinhimbnkkaeohfgghhklpknlkffjgod getwindowname)"
+ytmtitle="${ytmtitle%"YouTube Music"}"
+ytmtitle="${ytmtitle%" - "}"
+ytmtitle="${ytmtitle#"YouTube Music - "}"
+if [ -n "$ytmtitle" ] && [ "$ytmtitle" != "$title" ] ; then
+    title="$title [${url##*"/watch?v="}] (YTM window doesn't match!)"
+else
+    title="$title [${url##*"/watch?v="}]"
+fi
 
 $ytb_isliked "$url"
 case "$?" in
