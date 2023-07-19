@@ -32,9 +32,9 @@ tail -f "$fifofile" |
         fi
         case "$action" in
             like) ytm-like "$url" >>"$logfile" 2>&1; syncfailwarn "$?" ;;
-            unlike) ytm-unlike "$url" >>"$logfile" 2>&1; syncfailwarn "$?" ;;
-            remove) ytm-unlike -r "$url" >>"$logfile" 2>&1; syncfailwarn "$?" ;;
-            delete) ytm-removeUnliked "$url" >>"$logfile" 2>&1 || failwarn "$?" ;;
+            unlike) ytm-unlike "$url" >>"$logfile" 2>&1 || failwarn ;;
+            remove) ytm-unlike -r "$url" >>"$logfile" 2>&1 || failwarn ;;
+            delete) ytm-removeUnliked "$url" >>"$logfile" 2>&1 || failwarn ;;
             history) ytm-addHistory "$url" >/dev/null 2>&1; continue ;;
             *)
                 $notifyerror "action: $action\nurl: $url\nError: invalid action!"
