@@ -90,18 +90,6 @@ m() {
     echo "No make.sh in this or the parent directory!"
 }
 
-ms() {
-    local src dst
-    src=/media/storage/Music/
-    dst=( "$XDG_RUNTIME_DIR/mtp/RMX1831-9PLF7LKZKNFYLR5H-"*"/Internal shared storage/Music" )
-    if [[ -d "${dst[0]}" ]] ; then
-        rsync -avu --delete  -f"- */" -f"+ *" "$src" "$dst[1]"
-    else
-        echo "Destination device not mounted!"
-        return 1
-    fi
-}
-
 neomutt() {
     /usr/bin/neomutt "$@"
     pidof -sq /usr/bin/neomutt || rm -rf /tmp/neomutt/
