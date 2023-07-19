@@ -2,10 +2,22 @@
 lockfile="$XDG_RUNTIME_DIR/ytmsclu-daemon.lock"
 fifofile="$XDG_RUNTIME_DIR/ytmsclu-daemon.fifo"
 logfile="/home/ashish/.cache/ytmsclu-daemon.log"
+musicsync="/home/ashish/.scripts/realme-u1-musicsync.sh"
 notifyerror="notify-send -u critical -t 0 ytmsclu-daemon"
 
 exec 9<>"$lockfile"
 flock -n 9 || { echo 'Error: another instance already active!'; exit 2 ;}
+
+failwarn() {
+    $notifyerror "action: $action\nurl: $url\nError: something went wrong!"
+}
+syncfailwarn() {
+    if [ "$1" = 0 ] ; then
+        $musicsync >>"$logfile" 2>&1
+    else
+        failwarn
+    fi
+}
 
 [ -p "$fifofile" ] || { rm -f "$fifofile"; mkfifo "$fifofile" ;}
 tail -f "$fifofile" |
@@ -19,10 +31,10 @@ tail -f "$fifofile" |
             continue
         fi
         case "$action" in
-            like) ytm-like "$url" >>"$logfile" 2>&1 ;;
-            unlike) ytm-unlike "$url" >>"$logfile" 2>&1 ;;
-            remove) ytm-unlike -r "$url" >>"$logfile" 2>&1 ;;
-            delete) ytm-removeUnliked "$url" >>"$logfile" 2>&1 ;;
+            like) ytm-like "$url" >>"$logfile" 2>&1; syncfailwarn "$?" ;;
+            unlike) ytm-unlike "$url" >>"$logfile" 2>&1; syncfailwarn "$?" ;;
+            remove) ytm-unlike -r "$url" >>"$logfile" 2>&1; syncfailwarn "$?" ;;
+            delete) ytm-removeUnliked "$url" >>"$logfile" 2>&1 || failwarn "$?" ;;
             history) ytm-addHistory "$url" >/dev/null 2>&1; continue ;;
             *)
                 $notifyerror "action: $action\nurl: $url\nError: invalid action!"
@@ -30,7 +42,5 @@ tail -f "$fifofile" |
                 continue
                 ;;
         esac
-        [ "$?" != 0 ] &&
-            $notifyerror "action: $action\nurl: $url\nError: something went wrong!"
         echo "\n" >>"$logfile"
     done
