@@ -9,10 +9,10 @@ HISTIGNORE="$HISTIGNORE:d:h:m:n:p:s:s *:t:u:y"
 
 # aliases
 alias c=compile
-alias diffab="/home/ashish/.scripts/diffab.sh | less -R"
-alias fu="sudo /home/ashish/.scripts/hotspot.sh fix-unmanaged"
+alias diffab="~/.scripts/diffab.sh | less -R"
+alias fu="sudo ~/.scripts/hotspot.sh fix-unmanaged"
 alias hlp="exec hotloop"
-alias kynm=/home/ashish/.scripts/xevcn.sh
+alias kynm="~/.scripts/xevcn.sh"
 alias dlke="dlk && exit; echo -n '\a'"
 alias ulke="ulk && exit; echo -n '\a'"
 alias mse="ms && exit; echo -n '\a'"
@@ -65,7 +65,7 @@ dlk() {
     local output
     output="$(__lk_helper "$@")" || { printf "%s" "$output"; return ;}
     echo "$output"
-    ~/.script/ytmsclu-addjob.sh "$output" like
+    ~/.scripts/ytmsclu-addjob.sh "$output" like
 }
 
 ulk() {
@@ -74,7 +74,7 @@ ulk() {
     [ "$1" = "-r" ] && { arg="remove"; shift ;}
     output="$(__lk_helper "$@")" || { printf "%s" "$output"; return ;}
     echo "$output"
-    ~/.script/ytmsclu-addjob.sh "$output" "$arg"
+    ~/.scripts/ytmsclu-addjob.sh "$output" "$arg"
 }
 
 m() {
