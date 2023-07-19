@@ -44,13 +44,12 @@ d() {
     nvim
 }
 
-
-dlk() {
+__lk_helper() {
     local url
     case "$#" in
         0) url="$(xsel -ob)" ;;
         1) url="$1" ;;
-        *) echo "Usage: dlk [url]"; return 2 ;;
+        *) echo "Invalid usage!"; return 2 ;;
     esac
     if ! echo "$url" | grep -qm1 \
             "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
@@ -58,24 +57,18 @@ dlk() {
         return 1
     fi
     echo "$url"
-    ytm-like "$url"
+}
+
+dlk() {
+    __lk_helper "$@" || return
+    ~/.script/ytmsclu-addjob.sh "$url" like
 }
 
 ulk() {
-    local url
-    [ "$1" = "-r" ] && { rem="$1"; shift ;}
-    case "$#" in
-        0) url="$(xsel -ob)" ;;
-        1) url="$1" ;;
-        *) echo "Usage: ulk [url]"; return 2 ;;
-    esac
-    if ! echo "$url" | grep -qm1 \
-            "^https://\(music\|www\)\.youtube\.com/watch?v=...........$" ; then
-        echo "Invalid url: \`$url'!"
-        return 1
-    fi
-    echo "$url"
-    ytm-unlike $rem "$url"
+    local arg="unlike"
+    [ "$1" = "-r" ] && { arg="remove"; shift ;}
+    __lk_helper "$@" || return
+    ~/.script/ytmsclu-addjob.sh "$arg"
 }
 
 m() {
