@@ -133,6 +133,7 @@ sagemath-doc
 scrcpy
 shellcheck
 signal-desktop
+socat
 sqlite
 strace
 sxiv
