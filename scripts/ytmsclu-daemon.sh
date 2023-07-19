@@ -23,14 +23,13 @@ tail -f "$fifofile" |
             unlike) ytm-unlike "$url" >>"$logfile" 2>&1 ;;
             remove) ytm-unlike -r "$url" >>"$logfile" 2>&1 ;;
             delete) ytm-removeUnliked "$url" >>"$logfile" 2>&1 ;;
-            history) ytm-addHistory "$url" >/dev/null 2>&1 ;;
+            history) ytm-addHistory "$url" >/dev/null 2>&1; continue ;;
             *)
                 $notifyerror "action: $action\nurl: $url\nError: invalid action!"
                 echo "Error: invalid action!\n\n" >>"$logfile"
                 continue
                 ;;
         esac
-        [ "$action" = history ] && continue
         [ "$?" != 0 ] &&
             $notifyerror "action: $action\nurl: $url\nError: something went wrong!"
         echo "\n" >>"$logfile"
