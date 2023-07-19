@@ -68,7 +68,7 @@ ytmtitle="${ytmtitle%"YouTube Music"}"
 ytmtitle="${ytmtitle%" - "}"
 ytmtitle="${ytmtitle#"YouTube Music - "}"
 if [ -n "$ytmtitle" ] && [ "$ytmtitle" != "$title" ] ; then
-    title="$title [${url##*"/watch?v="}] (YTM window doesn't match!)"
+    title="$title [${url##*"/watch?v="}] (YTM window title doesn't match!)"
 else
     title="$title [${url##*"/watch?v="}]"
 fi
