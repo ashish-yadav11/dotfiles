@@ -10,6 +10,7 @@ math.stackexchange.com###hot-network-questions
 
 accounts.youtube.com###chips
 accounts.youtube.com###guide-inner-content
+accounts.youtube.com###secondary-inner
 accounts.youtube.com###sections
 accounts.youtube.com##.ytp-endscreen-content
 accounts.youtube.com##div#contents:nth-of-type(6)
@@ -19,6 +20,7 @@ accounts.youtube.com##ytd-reel-shelf-renderer.style-scope.ytd-item-section-rende
 accounts.youtube.com##ytd-reel-shelf-renderer.style-scope.ytd-item-section-renderer:nth-of-type(3)
 www.youtube.com###chips
 www.youtube.com###guide-inner-content
+www.youtube.com###secondary-inner
 www.youtube.com###sections
 www.youtube.com##.ytp-endscreen-content
 www.youtube.com##div#contents:nth-of-type(6)
