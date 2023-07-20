@@ -1,11 +1,7 @@
-m.youtube.com##.chip-bar-contents
+m.youtube.com##.tab-content[tab-identifier="FEwhat_to_watch"][tab-title="Home"]
 m.youtube.com##.pivot-bar-item-tab.pivot-shorts
-m.youtube.com##.reel-shelf-header
-m.youtube.com##.reel-shelf-items
-m.youtube.com##.rich-grid-renderer-contents
-m.youtube.com##button.icon-button:nth-of-type(5)
+m.youtube.com##ytm-item-section-renderer.scwnr-content.single-column-watch-next-modern-panels
 m.youtube.com##ytm-comments-entry-point-header-renderer
-m.youtube.com##ytm-item-section-renderer.scwnr-content.single-column-watch-next-modern-panels:nth-of-type(1)
-m.youtube.com##ytm-item-section-renderer.scwnr-content.single-column-watch-next-modern-panels:nth-of-type(2)
-m.youtube.com##ytm-item-section-renderer.scwnr-content.single-column-watch-next-modern-panels:nth-of-type(3)
-m.youtube.com##ytm-item-section-renderer.scwnr-content.single-column-watch-next-modern-panels:nth-of-type(4)
+m.youtube.com##button.icon-button:nth-of-type(1)
+m.youtube.com##button.icon-button:nth-of-type(5)
+m.youtube.com##ytm-reel-shelf-renderer
