@@ -119,6 +119,10 @@ disable-disconnected-notifications=true
 disable-vpn-notifications=true
 suppress-wireless-networks-available=true
 
+[org/gnome/nm-applet/eap/3e036004-19a3-49e0-91e5-fcf6a1b8dc0d]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
 [org/gnome/nm-applet/eap/672f35a2-3831-4cf3-b2ab-bd791bdbcd86]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
@@ -157,7 +161,7 @@ sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(233, 104)
+window-position=(0, 22)
 window-size=(900, 560)
 
 [org/yorba/shotwell/crop-settings]
