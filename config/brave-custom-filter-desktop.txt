@@ -12,6 +12,6 @@ www.youtube.com###guide-inner-content
 www.youtube.com###endpoint[title="Shorts"]
 www.youtube.com##ytd-browse[page-subtype="home"]
 www.youtube.com##ytd-watch-next-secondary-results-renderer.ytd-watch-flexy.style-scope
-www.youtube.com###sections
+!www.youtube.com###sections
 www.youtube.com##.ytp-endscreen-content
 www.youtube.com##ytd-reel-shelf-renderer
