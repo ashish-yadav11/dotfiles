@@ -1,2 +1,2 @@
 #!/bin/dash
-kill -STOP $(pidof "/usr/lib/brave-bin/brave" "/usr/lib/brave-bin/brave (deleted)")
+kill -STOP $(pidof "/opt/brave-bin/brave" "/opt/brave-bin/brave (deleted)")
