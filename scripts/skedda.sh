@@ -105,6 +105,12 @@ loop() {
             curd="$(date '+%Y-%m-%d')"
         fi
         ntnd="$(date -d '+2 day' '+%Y-%m-%d')"
+        if [[ -n "$prvcurd" && "$curd" != "$prvcurd" ]] ; then
+            prvbookings="$(jq ".bookings[1:] | map(select(.start >= \"${curd}T00:00:00\"))" "$logfile")"
+            prvgsbook="$(printf "%s" "$prvbookings" | grep -B13 "$gsid")"
+            prvsrbook="$(printf "%s" "$prvbookings" | grep -B13 "$srid")"
+        fi
+        prvcurd="$curd"
         output="$(scurlb -H "X-Skedda-Requestverificationtoken: $vftkn" "https://sportsiiserp.skedda.com/bookingslists?end=${ntnd}T23%3A59%3A59.999&start=${curd}T00%3A00%3A00")" || { curlwait; continue ;}
         printf "%s" "$output" | jq >"$logfile"
 
