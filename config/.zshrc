@@ -25,7 +25,7 @@ setopt SH_WORD_SPLIT
 
 ## PARAMETERS (man zshparam)
 
-HISTORY_IGNORE='(d|h|m|n|p|pb|pz|s|s *|t|u|y)'
+HISTORY_IGNORE='(d|h|l|m|n|p|pb|pz|s|s *|t|u|y)'
 HISTSIZE=20000
 KEYTIMEOUT=1
 LC_ALL=C
@@ -264,6 +264,11 @@ alias pz="INCOGNITO=1 zsh"
 
 d() {
     cd ~/Documents/.doubts
+    nvim
+}
+
+l() {
+    cd ~/Documents/.logs
     nvim
 }
 
