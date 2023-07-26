@@ -123,9 +123,9 @@ loop() {
         curgsbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$gsid")"
         cursrbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$srid")"
         [[ -n "$prvgsbook" && "$curgsbook" != "$prvgsbook" ]] && telegram 'Sugar!'
-        [[ -n "$prvsrbook" && "$cursrbook" != "$prvsrbook" ]] && telegram 'Raspberry!'
-        prvgsbook="$curgsbook"
-        prvsrbook="$cursrbook"
+        [[ -n "$prvsrbook" && "$cursrbook" != "$prvsrbook" ]] && telegram 'Cherry!'
+        prvgsbook="${curgsbook:-none}"
+        prvsrbook="${cursrbook:-none}"
         interrupted=n
         waitsleep "$nidlesec" && { clear; interrupted=y ;}
     done
