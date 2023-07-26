@@ -15,7 +15,7 @@ slotdict = {
     668840: "3:1", 668841: "3:2", 668842: "3:3", 668843: "3:4",
     668844: "4:1", 668845: "4:2", 668851: "4:3", 668852: "4:4"
 }
-slotcols = { "1": "red", "2": "blue", "3": "green", "4": "yellow" }
+slotcols = { "1": "yellow", "2": "red", "3": "blue", "4": "green" }
 
 myname = "Ashish Kumar Yadav"
 myid = 1685628
