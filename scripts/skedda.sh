@@ -71,7 +71,7 @@ list() {
     vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || curlfailed
     vftkn="${vftkn#*value=\"}"
     vftkn="${vftkn%\"*}"
-    if [[ "$(date '+%H')" -ge 21 ]] ; then
+    if [[ 10#"$(date '+%H')" -ge 10#21 ]] ; then
         curd="$(date -d '+1 day' '+%Y-%m-%d')"
     else
         curd="$(date '+%Y-%m-%d')"
@@ -99,7 +99,7 @@ loop() {
         vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || { curlwait; continue ;}
         vftkn="${vftkn#*value=\"}"
         vftkn="${vftkn%\"*}"
-        if [[ "$(date '+%H')" -ge 22 ]] ; then
+        if [[ 10#"$(date '+%H')" -ge 10#22 ]] ; then
             curd="$(date -d '+1 day' '+%Y-%m-%d')"
         else
             curd="$(date '+%Y-%m-%d')"
