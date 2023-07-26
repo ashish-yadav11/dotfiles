@@ -127,6 +127,10 @@ ignore-phase2-ca-cert=false
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
 
+[org/gnome/nm-applet/eap/76ea00e6-65ff-4832-a1a8-8022898e8912]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
 [org/gnome/nm-applet/eap/783b582b-8200-4f3a-a8c6-f80e0e6f721f]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false
