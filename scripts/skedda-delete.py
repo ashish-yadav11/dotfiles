@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import json
 from termcolor import colored
+from subprocess import check_output
 import sys
 
 if len(sys.argv) != 3:

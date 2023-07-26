@@ -47,5 +47,5 @@ with open(loginfile, 'r') as f:
 data["booking"]["spaces"][0] = slotdict[slot]
 data["booking"]["start"] = timestart
 data["booking"]["end"] = timeend
-data["booking"]["customFields"][0]["value"] = mobnum
+data["booking"]["customFields"][0]["value"] = int(mobnum)
 print(json.dumps(data, indent=4))
