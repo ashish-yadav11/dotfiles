@@ -49,6 +49,7 @@ grub-customizer
 gthumb
 gtk-engine-murrine
 guvcview
+haveged
 imagemagick
 inkscape
 inotify-tools
