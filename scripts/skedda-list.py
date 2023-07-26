@@ -27,7 +27,7 @@ starthr = 19
 with open(logfile, 'r') as f:
     log = json.load(f)
 
-usernames = [f'{x["firstName"]} {x["lastName"]}' for x in log["venueusers"]]
+usernames = [f'{x["firstName"].strip()} {x["lastName"].strip()}' for x in log["venueusers"]]
 usernames.append(myname)
 userids = [x["id"] for x in log["venueusers"]]
 userids.append(myid)
