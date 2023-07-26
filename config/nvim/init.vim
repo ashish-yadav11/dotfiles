@@ -27,6 +27,10 @@ noremap         <silent>        <Leader>7               :tablast<CR>3gT
 noremap         <silent>        <Leader>8               :tablast<CR>2gT
 noremap         <silent>        <Leader>9               :tablast<CR>1gT
 noremap         <silent>        <Leader>0               :tablast<CR>
+noremap         <silent>        <Leader>j               gt
+noremap         <silent>        <Leader>k               gT
+noremap         <silent>        <Leader>J               :tabmove +1<CR>
+noremap         <silent>        <Leader>K               :tabmove -1<CR>
 
 " yank path and directory of the current file
 nnoremap        <silent>        yn                      :let @+=expand("%")<CR>
@@ -50,7 +54,7 @@ nnoremap        <silent>        <Leader>r               :call SpawnTerm("rp")<CR
 nnoremap        <silent>        <Leader>R               :call SpawnTerm("rc")<CR>
 nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rd")<CR>
 " doubts
-nnoremap                        <Leader>w               :w <C-r>=strftime("%m%d")<CR> .txt<Left><Left><Left><Left>
+nnoremap                        <Leader>w               :w <C-r>=strftime("%m%d")<CR>.txt<Left><Left><Left><Left>
 nnoremap                        <Leader>e               :call RenameFile()<CR>
 " undotree toggle
 nnoremap        <silent>        <Leader>u               :UndotreeToggle<CR>
@@ -75,6 +79,7 @@ set splitbelow splitright
 set termguicolors
 set title titlelen=0
 
+autocmd TabLeave * let g:lasttab = tabpagenr()
 autocmd FileType go setlocal noexpandtab shiftwidth=0
 autocmd FileType tex setlocal textwidth=80 indentexpr=""
 autocmd BufNewFile,BufRead *.[ch] setlocal cindent shiftwidth=8
