@@ -94,6 +94,8 @@ loop() {
     gsid="$(pass skedda/gs.id)"
     srid="$(pass skedda/sr.id)"
     interrupted=n
+    prvgsbook=0
+    prvsrbook=0
     while true ; do
         cookieexpired && login
         vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || { curlwait; continue ;}
@@ -122,10 +124,10 @@ loop() {
         fi
         curgsbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$gsid")"
         cursrbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$srid")"
-        [[ -n "$prvgsbook" && "$curgsbook" != "$prvgsbook" ]] && telegram 'Sugar!'
-        [[ -n "$prvsrbook" && "$cursrbook" != "$prvsrbook" ]] && telegram 'Cherry!'
-        prvgsbook="${curgsbook:-none}"
-        prvsrbook="${cursrbook:-none}"
+        [[ "$prvgsbook" != 0 && "$curgsbook" != "$prvgsbook" ]] && telegram 'Sugar!'
+        [[ "$prvsrbook" != 0 && "$cursrbook" != "$prvsrbook" ]] && telegram 'Cherry!'
+        prvgsbook="${curgsbook}"
+        prvsrbook="${cursrbook}"
         interrupted=n
         waitsleep "$nidlesec" && { clear; interrupted=y ;}
     done
