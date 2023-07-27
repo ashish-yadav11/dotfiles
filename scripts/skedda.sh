@@ -121,7 +121,7 @@ loop() {
         curparsed="$($skedda_list "$logfile" "$histfile")"
         if [[ "$curparsed" != "$prvparsed" || "$interrupted" == y ]] ; then
             [[ "$interrupted" != y ]] && clear
-            if [[ "${curparsed//\*/}" != "${prvparsed//\*/}" ]] ; then
+            if [[ "${curparsed//\*$'\n'/}" != "${prvparsed//\*$'\n'/}" ]] ; then
                 printf "%s\n\a" "$curparsed"
             else
                 printf "%s\n" "$curparsed"
