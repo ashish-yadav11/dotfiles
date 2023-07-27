@@ -121,7 +121,11 @@ loop() {
         curparsed="$($skedda_list "$logfile" "$histfile")"
         if [[ "$curparsed" != "$prvparsed" || "$interrupted" == y ]] ; then
             [[ "$interrupted" != y ]] && clear
-            printf "%s\n\a" "$curparsed"
+            if [[ "${curparsed//\*/}" != "${prvparsed//\*/}" ]] ; then
+                printf "%s\n\a" "$curparsed"
+            else
+                printf "%s\n" "$curparsed"
+            fi
             prvparsed="$curparsed"
         fi
         curgsbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$gsid")"
