@@ -114,13 +114,21 @@ zle -N reset-screen
 bindkeyboth '\C-l' cleaner-clear-screen
 bindkeyboth '\el' reset-screen
 
-bindkey -v '\C-s' transpose-chars
-
 bindkey -a 'J' history-search-forward
 bindkey -a 'K' history-search-backward
 
 bindkey -v '\C-n' down-history
 bindkey -v '\C-p' up-history
+
+# emacs keys in vi insert mode
+bindkey -v '\C-a' beginning-of-line
+bindkey -v '\C-e' end-of-line
+bindkey -v '\C-b' backward-char
+bindkey -v '\C-f' forward-char
+bindkey -v '\C-k' kill-line
+bindkey -v '\C-u' kill-whole-line
+bindkey -v '\C-s' transpose-chars
+bindkey -v '\C-d' delete-char-or-list
 
 # special keys (https://wiki.archlinux.org/title/zsh)
 
@@ -161,7 +169,7 @@ zle -N down-line-or-beginning-search
  [[ -n "${key[PageDown]}"  ]] &&   bindkeyboth   "${key[PageDown]}"   history-beginning-search-backward
 #[[ -n "${key[Shift-Tab]}" ]] &&   bindkeyboth   "${key[Shift-Tab]}"  reverse-menu-complete
 
-# Finally, make sure the terminal is in application mode, when zle is
+# finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
     autoload -Uz add-zle-hook-widget
