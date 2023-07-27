@@ -108,6 +108,7 @@ loop() {
         fi
         ntnd="$(date -d '+2 day' '+%Y-%m-%d')"
         if [[ -n "$prvcurd" && "$curd" != "$prvcurd" ]] ; then
+            prvparsed="$($skedda_list <(jq "{\"bookings\" : (.bookings[0:1] + (.bookings | map(select(.start >= \"${curd}T00:00:00\")))), \"venueusers\" : .venueusers}" "$logfile"))"
             prvbookings="$(jq ".bookings[1:] | map(select(.start >= \"${curd}T00:00:00\"))" "$logfile")"
             prvgsbook="$(printf "%s" "$prvbookings" | grep -B13 "$gsid")"
             prvsrbook="$(printf "%s" "$prvbookings" | grep -B13 "$srid")"
