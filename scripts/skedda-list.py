@@ -4,10 +4,15 @@ from termcolor import colored
 from subprocess import check_output
 import sys
 
-if len(sys.argv) != 2:
+histfile=""
+if len(sys.argv) == 2:
+    logfile = sys.argv[1]
+elif len(sys.argv) == 3:
+    logfile = sys.argv[1]
+    histfile = sys.argv[2]
+else:
     print("Incorrect usage!")
     sys.exit(2)
-logfile = sys.argv[1]
 
 slotdict = {
     541213: "1:1", 541214: "1:2", 834239: "1:3", 834240: "1:4",
@@ -32,6 +37,11 @@ usernames.append(myname)
 userids = [x["id"] for x in log["venueusers"]]
 userids.append(myid)
 
+pbookings_s = []
+if histfile:
+    with open(histfile, 'r') as f:
+        pbookings_s = json.load(f)
+
 bookings_s = []
 bookings = []
 for x in log["bookings"][1:]:
@@ -44,7 +54,8 @@ for x in log["bookings"][1:]:
     userid = x["venueuser"]
     idx = userids.index(userid)
     username = usernames[idx]
-    bookings_s.append(f'{time} {slot} {username}')
+    booking_s = f'{time} {slot} {username}'
+    bookings_s.append(booking_s)
     spc = '\t'
     colslot = colored(slot, slotcols[slot[0]], attrs=["bold"], force_color=True)
     if username == myname:
@@ -55,8 +66,15 @@ for x in log["bookings"][1:]:
         colname = colored(username, "yellow", force_color=True)
     else:
         colname = username
-    bookings.append(f'{spc*(hr-starthr)}{time} {colslot} {colname}')
+    if pbookings_s and booking_s not in pbookings_s:
+        bookings.append(f'{spc*(hr-starthr)}{time} {colslot} {colname}*')
+    else:
+        bookings.append(f'{spc*(hr-starthr)}{time} {colslot} {colname}')
 
 bookings = [x for _, x in sorted(zip(bookings_s, bookings))]
 for booking in bookings:
     print(booking)
+
+if histfile:
+    with open(histfile, 'w') as f:
+        json.dump(bookings_s, f)

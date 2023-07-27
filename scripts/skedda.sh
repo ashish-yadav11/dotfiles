@@ -4,6 +4,7 @@ skedda_book="/home/ashish/.scripts/skedda-book.py"
 skedda_delete="/home/ashish/.scripts/skedda-delete.py"
 
 logfile="/tmp/skedda-log.json"
+histfile="/tmp/skedda-hist.json"
 idfile="/tmp/skedda-id.tmp"
 loginfile="/home/ashish/.config/skedda/login.json"
 cookiefile="/home/ashish/.cache/skedda.cookies"
@@ -108,7 +109,7 @@ loop() {
         fi
         ntnd="$(date -d '+2 day' '+%Y-%m-%d')"
         if [[ -n "$prvcurd" && "$curd" != "$prvcurd" ]] ; then
-            prvparsed="$($skedda_list <(jq "{\"bookings\" : (.bookings[:1] + (.bookings[1:] | map(select(.start >= \"${curd}T00:00:00\")))), \"venueusers\" : .venueusers}" "$logfile"))"
+            prvparsed="$($skedda_list <(jq "{\"bookings\" : (.bookings[:1] + (.bookings[1:] | map(select(.start >= \"${curd}T00:00:00\")))), \"venueusers\" : .venueusers}" "$logfile") "$histfile")"
             prvbookings="$(jq ".bookings[1:] | map(select(.start >= \"${curd}T00:00:00\"))" "$logfile")"
             prvgsbook="$(printf "%s" "$prvbookings" | grep -B13 "$gsid")"
             prvsrbook="$(printf "%s" "$prvbookings" | grep -B13 "$srid")"
@@ -117,7 +118,7 @@ loop() {
         output="$(scurlb -H "X-Skedda-Requestverificationtoken: $vftkn" "https://sportsiiserp.skedda.com/bookingslists?end=${ntnd}T23%3A59%3A59.999&start=${curd}T00%3A00%3A00")" || { curlwait; continue ;}
         printf "%s" "$output" | jq >"$logfile"
 
-        curparsed="$($skedda_list "$logfile")"
+        curparsed="$($skedda_list "$logfile" "$histfile")"
         if [[ "$curparsed" != "$prvparsed" || "$interrupted" == y ]] ; then
             [[ "$interrupted" != y ]] && clear
             printf "%s\n\a" "$curparsed"
