@@ -1,7 +1,7 @@
 {
 	"name": "Vimium C",
-	"@time": "7/28/2023, 11:47:39 PM",
-	"time": 1690568259045,
+	"@time": "7/29/2023, 1:25:06 AM",
+	"time": 1690574106819,
 	"environment": {
 		"extension": "1.99.994",
 		"platform": "linux",
@@ -78,11 +78,13 @@
 		"map zk zoomOut",
 		""
 	],
+	"keyupTime": 100,
 	"linkHintCharacters": "sadfjkl;ewcmpgh",
 	"newTabUrl": "file:///home/ashish/.config/browser-new-tab/new-tab.html",
 	"nextPatterns": "next,more,forward,newer,>,›,→,»,≫,>>",
 	"notifyUpdate": false,
 	"previousPatterns": "prev,previous,back,older,<,‹,←,«,≪,<<",
+	"scrollStepSize": 70,
 	"searchEngines": [
 		"!br: https://search.brave.com/search?q=%s Brave Search",
 		"!ddg: https://www.duckduckgo.com/?q=%s DuckDuckGo",
