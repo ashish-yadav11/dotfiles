@@ -128,7 +128,7 @@ loop() {
         printf "%s" "$output" | jq >"$logfile"
 
         curparsed="$($skedda_list "$logfile" "$histfile")"
-        curparsed_c="${curparsed//\*$'\n'/}"
+        curparsed_c="${curparsed//\*$'\n'/$'\n'}"
         if [[ "$curparsed_c" != "$prvparsed_c" ]] ; then
             clear; printf "%s\n\a" "$curparsed"
             prvparsed_c="$curparsed_c"
