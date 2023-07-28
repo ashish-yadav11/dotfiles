@@ -35,12 +35,11 @@ awk '
     }
 
     function printtitle(clevel) {
-        spc = sprintf("%*s", clevel, "")
-        printf "%s(\"%s", spc, $1
+        printf "%*s(\"%s", clevel, "", $1
         for (f=2; f<NF; f++) {
             printf " %s", $f
         }
-        printf "\"\n %s\"#%s\"", spc, $NF
+        printf "\"\n %*s\"#%s\"", clevel, "", $NF
 
     }
     function closebracket(clevel, plevel) {
