@@ -129,6 +129,7 @@ loop() {
 
         curparsed="$($skedda_list "$logfile" "$histfile")"
         curparsed_c="${curparsed//\*$'\n'/$'\n'}"
+        curparsed_c="${curparsed_c%\*}"
         if [[ "$curparsed_c" != "$prvparsed_c" ]] ; then
             clear; printf "%s\n\a" "$curparsed"
             prvparsed_c="$curparsed_c"
