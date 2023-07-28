@@ -73,6 +73,7 @@ list() {
         login
         vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || curlfailed
     fi
+
     vftkn="${vftkn#*value=\"}"
     vftkn="${vftkn%\"*}"
     if (( 10#$(date '+%H') >= 21 )) ; then
@@ -82,6 +83,7 @@ list() {
     fi
     ntnd="$(date -d '+2 day' '+%Y-%m-%d')"
     { scurlb -H "X-Skedda-Requestverificationtoken: $vftkn" "https://sportsiiserp.skedda.com/bookingslists?end=${ntnd}T23%3A59%3A59.999&start=${curd}T00%3A00%3A00" | jq >"$logfile" ;} || curlfailed
+
     if [[ "$1" == "delete" ]] ; then
         $skedda_delete "$logfile" "$idfile" || exit
         read -r id <"$idfile"
@@ -106,6 +108,7 @@ loop() {
             login
             vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || { curlwait; continue ;}
         fi
+
         vftkn="${vftkn#*value=\"}"
         vftkn="${vftkn%\"*}"
         if (( 10#$(date '+%H') >= 22 )) ; then
@@ -132,12 +135,14 @@ loop() {
         elif [[ "$interrupted" == y ]] ; then
             clear; printf "%s\n" "$curparsed"
         fi
+
         curgsbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$gsid")"
         cursrbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$srid")"
         [[ "$prvgsbook" != 0 && "$curgsbook" != "$prvgsbook" ]] && telegram 'Sugar!'
         [[ "$prvsrbook" != 0 && "$cursrbook" != "$prvsrbook" ]] && telegram 'Cherry!'
         prvgsbook="${curgsbook}"
         prvsrbook="${cursrbook}"
+
         waitsleep "$nidlesec"
     done
 }
@@ -155,6 +160,7 @@ book() {
         login
         vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || curlfailed
     fi
+
     vftkn="${vftkn#*value=\"}"
     vftkn="${vftkn%\"*}"
     echo "Booking the given slot..."
@@ -169,5 +175,6 @@ case "$1" in
     delete) list delete && list ;;
     delete-quiet) list delete quiet ;;
     loop) loop ;;
+    login) login ;;
     *) echo "Incorrect usage!"; exit 2 ;;
 esac
