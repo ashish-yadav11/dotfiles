@@ -69,7 +69,11 @@ login() {
 
 list() {
     cookieexpired && login
-    vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || curlfailed
+    output="$(scurlb 'https://sportsiiserp.skedda.com/booking')" || curlfailed
+    if ! vftkn="$(printf "%s" "$output" | grep RequestVerificationToken)" ; then
+        login
+        vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || curlfailed
+    fi
     vftkn="${vftkn#*value=\"}"
     vftkn="${vftkn%\"*}"
     if [[ 10#"$(date '+%H')" -ge 10#21 ]] ; then
@@ -99,7 +103,11 @@ loop() {
     prvsrbook=0
     while true ; do
         cookieexpired && login
-        vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || { curlwait; continue ;}
+        output="$(scurlb 'https://sportsiiserp.skedda.com/booking')" || { curlwait; continue ;}
+        if ! vftkn="$(printf "%s" "$output" | grep RequestVerificationToken)" ; then
+            login
+            vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || { curlwait; continue ;}
+        fi
         vftkn="${vftkn#*value=\"}"
         vftkn="${vftkn%\"*}"
         if [[ 10#"$(date '+%H')" -ge 10#22 ]] ; then
@@ -147,7 +155,11 @@ book() {
     jsondata="$($skedda_book "$1" "$2")"
 
     cookieexpired && login
-    vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || curlfailed
+    output="$(scurlb 'https://sportsiiserp.skedda.com/booking')" || curlfailed
+    if ! vftkn="$(printf "%s" "$output" | grep RequestVerificationToken)" ; then
+        login
+        vftkn="$(scurlb 'https://sportsiiserp.skedda.com/booking' | grep RequestVerificationToken)" || curlfailed
+    fi
     vftkn="${vftkn#*value=\"}"
     vftkn="${vftkn%\"*}"
     echo "Booking the given slot..."
