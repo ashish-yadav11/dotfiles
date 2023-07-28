@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 case "$2" in
     up|down)
         sigdsblocks 3

@@ -1,4 +1,4 @@
-#!/bin/dash
+#!/bin/sh
 interface="$1"
 status="$2"
 
