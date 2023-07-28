@@ -31,12 +31,11 @@ curlfailed() {
 curlwait() {
     echo "Warning: curl failed!"
     waitsleep "$eidlesec"
-    clear
-    interrupted=y
 }
 
 waitsleep() {
-    read -r -t "$1" d
+    interrupted=n
+    read -r -t "$1" d && interrupted=y
 }
 
 cookieexpired() {
@@ -98,7 +97,6 @@ list() {
 loop() {
     gsid="$(pass skedda/gs.id)"
     srid="$(pass skedda/sr.id)"
-    interrupted=n
     prvgsbook=0
     prvsrbook=0
     while true ; do
@@ -117,7 +115,7 @@ loop() {
         fi
         ntnd="$(date -d '+2 day' '+%Y-%m-%d')"
         if [[ -n "$prvcurd" && "$curd" != "$prvcurd" ]] ; then
-            prvparsed="$($skedda_list <(jq "{\"bookings\" : (.bookings[:1] + (.bookings[1:] | map(select(.start >= \"${curd}T00:00:00\")))), \"venueusers\" : .venueusers}" "$logfile") "$histfile")"
+            prvparsed_c="$($skedda_list <(jq "{\"bookings\" : (.bookings[:1] + (.bookings[1:] | map(select(.start >= \"${curd}T00:00:00\")))), \"venueusers\" : .venueusers}" "$logfile"))"
             prvbookings="$(jq ".bookings[1:] | map(select(.start >= \"${curd}T00:00:00\"))" "$logfile")"
             prvgsbook="$(printf "%s" "$prvbookings" | grep -B13 "$gsid")"
             prvsrbook="$(printf "%s" "$prvbookings" | grep -B13 "$srid")"
@@ -127,14 +125,12 @@ loop() {
         printf "%s" "$output" | jq >"$logfile"
 
         curparsed="$($skedda_list "$logfile" "$histfile")"
-        if [[ "$curparsed" != "$prvparsed" || "$interrupted" == y ]] ; then
-            [[ "$interrupted" != y ]] && clear
-            if [[ "${curparsed//\*$'\n'/}" != "${prvparsed//\*$'\n'/}" ]] ; then
-                printf "%s\n\a" "$curparsed"
-            else
-                printf "%s\n" "$curparsed"
-            fi
-            prvparsed="$curparsed"
+        curparsed_c="${curparsed//\*$'\n'/}"
+        if [[ "$curparsed_c" != "$prvparsed_c" ]] ; then
+            clear; printf "%s\n\a" "$curparsed"
+            prvparsed_c="$curparsed_c"
+        elif [[ "$interrupted" == y ]] ; then
+            clear; printf "%s\n" "$curparsed"
         fi
         curgsbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$gsid")"
         cursrbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$srid")"
@@ -142,8 +138,7 @@ loop() {
         [[ "$prvsrbook" != 0 && "$cursrbook" != "$prvsrbook" ]] && telegram 'Cherry!'
         prvgsbook="${curgsbook}"
         prvsrbook="${cursrbook}"
-        interrupted=n
-        waitsleep "$nidlesec" && { clear; interrupted=y ;}
+        waitsleep "$nidlesec"
     done
 }
 
