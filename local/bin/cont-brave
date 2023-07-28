@@ -1,2 +1,2 @@
-#!/bin/dash
+#!/bin/sh
 kill -CONT $(pidof "/opt/brave-bin/brave" "/opt/brave-bin/brave (deleted)")
