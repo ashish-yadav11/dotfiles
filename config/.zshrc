@@ -352,6 +352,21 @@ pdftku() {
     pdftk "$bak" update_info "${2:-info}" output "$1"
 }
 
+djvud() {
+    djvused "$1" -e "print-outline" >"${2:-bmarks}"
+}
+
+djvuu() {
+    local dir base ext bak
+    dir="$(dirname "$1")"
+    base="$(basename "$1")"
+    ext="${base##*.}"; base="${base%.*}"
+    bak="${dir}/${base}_.${ext}"
+    /usr/bin/cp "$1" "$bak"
+    djvused "$1" -e "set-outline ${2:-bmarks}; save"
+
+}
+
 share() {
     local file url
     file="$1"
