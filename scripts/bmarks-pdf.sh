@@ -5,6 +5,7 @@ awk '
     /^            /     { template(4); next }
     /^        /         { template(3); next }
     /^    /             { template(2); next }
+                        { template(1); next }
 
     function template(level) {
         printf "BookmarkBegin\nBookmarkTitle: %s", $1
