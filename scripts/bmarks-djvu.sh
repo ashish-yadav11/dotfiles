@@ -6,28 +6,13 @@ awk '
         print "(bookmarks"
         plevel = -1
     }
-    /^            / {
-        closebracket(4, plevel)
-        printtitle(4)
-        plevel = 4
-        next
-    }
-    /^        / {
-        closebracket(3, plevel)
-        printtitle(3)
-        plevel = 3
-        next
-    }
-    /^    / {
-        closebracket(2, plevel)
-        printtitle(2)
-        plevel = 2
-        next
-    }
     {
-        closebracket(1, plevel)
-        printtitle(1)
-        plevel = 1
+        spc = $0
+        sub(/[^ ].*/, "", spc)
+        clevel = length(spc) / 4 + 1
+        closebracket(clevel, plevel)
+        printtitle(clevel)
+        plevel = clevel
         next
     }
     END {
