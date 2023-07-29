@@ -11,6 +11,7 @@ xnoremap        <silent>        <C-w>gf                 :<C-u>call EditVisualFil
 " fix broken netrw gx (https://github.com/vim/vim/issues?=1/4738)
 nnoremap        <silent>        gx                      :call XdgOpen(1)<CR>
 xnoremap        <silent>        gx                      :<C-u>call XdgOpen(0)<CR>
+nnoremap        <silent>        yx                      :call UrlCopy()<CR>
 " switching between splits
 nnoremap        <silent>        <C-j>                   <C-w>j
 nnoremap        <silent>        <C-k>                   <C-w>k
@@ -261,7 +262,7 @@ function XdgOpen(normal = 1)
         let l:arg = shellescape(l:url, 1)
     else
         if a:normal
-            let l:arg = expand(expand("<cfile>"))
+            let l:arg = expand(expand("<cfile>")) " 2 expands not a typo
         endif
         if l:arg !=# ""
             if filereadable(l:arg) || isdirectory(l:arg)
@@ -285,6 +286,24 @@ function XdgOpen(normal = 1)
     silent execute '!' l:env 'setsid -f xdg-open' l:arg '>>"${XLOGFILE:-/dev/null}" 2>&1'
 
     let &shell = l:shell
+endfunction
+
+function UrlCopy()
+    " https://github.com/itchyny/vim-highlighturl/blob/master/autoload/highlighturl.vim#L18
+    let l:urlrgx = '\v\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%('
+                 \.'[&:#*@~%_\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\-=?!+/0-9a-z]+|:\d+|'
+                 \.',%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|'
+                 \.'\([&:#*@~%_\-=?!+;/.0-9a-z]*\)|\[[&:#*@~%_\-=?!+;/.0-9a-z]*\]|'
+                 \.'\{%([&:#*@~%_\-=?!+;/.0-9a-z]*|\{[&:#*@~%_\-=?!+;/.0-9a-z]*\})\})+'
+
+
+    let l:arg = expand("<cWORD>")
+    let l:url = matchstr(l:arg, l:urlrgx)
+    if l:url !=# ""
+        let @+=l:url
+    else
+        let @+=l:arg
+    endif
 endfunction
 
 function RenameFile()
