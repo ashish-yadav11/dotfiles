@@ -13,8 +13,6 @@ setopt AUTO_CD
 setopt GLOB_DOTS
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_REDUCE_BLANKS
 setopt HIST_VERIFY
 setopt INC_APPEND_HISTORY
 setopt CORRECT
@@ -40,6 +38,14 @@ zle_highlight=(region:bg=#504945 special:none suffix:bold isearch:underline past
 # restore default cursor before running external commands and before exit
 function preexec zshexit {
     echo -ne "$defcursor"
+}
+
+# don't add commands starting with space to the history file,
+# but keep them in internal history
+function zshaddhistory {
+    case "$1" in " "*) return 2 ;;
+        *) return 0 ;;
+    esac
 }
 
 
@@ -132,8 +138,8 @@ bindkey -v '\C-d' delete-char-or-list
 
 # special keys (https://wiki.archlinux.org/title/zsh)
 
-# create a zkbd compatible hash;
-# to add other keys to this hash, see: man 5 terminfo
+# create a zkbd compatible hash
+# (to add other keys to this hash, see: man 5 terminfo)
 typeset -g -A key
 
  key[Home]="${terminfo[khome]}"
@@ -169,8 +175,8 @@ zle -N down-line-or-beginning-search
  [[ -n "${key[PageDown]}"  ]] &&   bindkeyboth   "${key[PageDown]}"   history-beginning-search-backward
 #[[ -n "${key[Shift-Tab]}" ]] &&   bindkeyboth   "${key[Shift-Tab]}"  reverse-menu-complete
 
-# finally, make sure the terminal is in application mode, when zle is
-# active. Only then are the values from $terminfo valid.
+# finally, make sure the terminal is in application mode, when zle is active;
+# only then are the values from $terminfo valid
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
     autoload -Uz add-zle-hook-widget
     function zle_application_mode_start { echoti smkx }
