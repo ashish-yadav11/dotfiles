@@ -43,12 +43,12 @@ for x in log["bookings"][1:]:
     hr = int(time_r[11:13])
     if hr < starthr:
         continue
-    time = f'{time_r[8:10]} {time_r[11:16]}'
     userid = x["venueuser"]
     idx = userids.index(userid)
     username = usernames[idx]
-    bookings_s.append(f'{time} {slot} {username}')
+    bookings_s.append(f'{time_r} {slot} {username}')
     spc = '\t'
+    time = f'{time_r[8:10]} {time_r[11:16]}'
     colslot = colored(slot, slotcols[slot[0]], attrs=["bold"], force_color=True)
     if username == myname:
         colname = colored(username, "cyan", force_color=True)
