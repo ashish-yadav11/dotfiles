@@ -101,6 +101,7 @@ loop() {
     srid="$(pass skedda/sr.id)"
     prvgsbook=0
     prvsrbook=0
+    rm -rf "$histfile" # reset history on start
     while true ; do
         cookieexpired && login
         output="$(scurlb 'https://sportsiiserp.skedda.com/booking')" || { curlwait; continue ;}
