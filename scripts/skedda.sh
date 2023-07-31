@@ -101,7 +101,7 @@ loop() {
     srid="$(pass skedda/sr.id)"
     prvgsbook=0
     prvsrbook=0
-    rm -rf "$histfile" # reset history on start
+    rm -f "$histfile" # reset history on start
     while true ; do
         cookieexpired && login
         output="$(scurlb 'https://sportsiiserp.skedda.com/booking')" || { curlwait; continue ;}
@@ -132,10 +132,12 @@ loop() {
         curparsed_c="${curparsed//\*$'\n'/$'\n'}"
         curparsed_c="${curparsed_c%\*}"
         if [[ "$curparsed_c" != "$prvparsed_c" ]] ; then
-            clear; printf "%s\n\a" "$curparsed"
+            case "$1" in clean) printf "\ec" ;; *) clear ;; esac
+            printf "%s\n\a" "$curparsed"
             prvparsed_c="$curparsed_c"
         elif [[ "$interrupted" == y ]] ; then
-            clear; printf "%s\n" "$curparsed"
+            case "$1" in clean) printf "\ec" ;; *) clear ;; esac
+            printf "%s\n" "$curparsed"
         fi
 
         curgsbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$gsid")"
@@ -176,7 +178,7 @@ case "$1" in
     book-quiet) shift; book "$@" ;;
     delete) list delete && list ;;
     delete-quiet) list delete quiet ;;
-    loop) loop ;;
+    loop) shift; loop "$@" ;;
     login) login ;;
     *) echo "Incorrect usage!"; exit 2 ;;
 esac

@@ -2,6 +2,7 @@
 import json
 from termcolor import colored
 from subprocess import check_output
+import os.path
 import sys
 
 histfile=""
@@ -38,7 +39,7 @@ userids = [x["id"] for x in log["venueusers"]]
 userids.append(myid)
 
 pbookings_s = []
-if histfile:
+if histfile and os.path.isfile(histfile):
     with open(histfile, 'r') as f:
         pbookings_s = json.load(f)
 
