@@ -6,7 +6,7 @@ status="$2"
 case "$interface" in
     eno1)
         nmcli -t device show eno1 |
-         grep -qFm1 "IP4.DOMAIN[1]:iiserpune.ac.in" &&
+         grep -qFm1 "GENERAL.CONNECTION:IISER Wired Connection" &&
             systemctl restart iiserlogin.service
         ;;
     wlp5s0)
