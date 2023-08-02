@@ -21,7 +21,6 @@ clang
 cronie
 dash
 dconf-editor
-dhclient
 dictd
 dunst
 earlyoom
