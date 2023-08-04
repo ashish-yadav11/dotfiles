@@ -258,10 +258,19 @@ alias diffab="~/.scripts/diffab.sh | less -R"
 alias fu="sudo ~/.scripts/hotspot.sh fix-unmanaged"
 alias hlp="exec hotloop"
 alias kynm="~/.scripts/xevcn.sh"
-alias dlke="dlk && exit; echo -n '\a'"
-alias ulke="ulk && exit; echo -n '\a'"
 alias mse="ms && exit; echo -n '\a'"
-alias zcurle="zcurl && exit; echo -n '\a'"
+dlke() {
+    ulk "$@" && exit
+    echo -n '\a'
+}
+ulke() {
+    ulk "$@" && exit
+    echo -n '\a'
+}
+zcurle() {
+    zcurl "$@" && exit
+    echo -n '\a'
+}
 
 # files
 alias n="nvim ~/Documents/.notes"
