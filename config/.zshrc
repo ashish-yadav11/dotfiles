@@ -260,7 +260,7 @@ alias hlp="exec hotloop"
 alias kynm="~/.scripts/xevcn.sh"
 alias mse="ms && exit; echo -n '\a'"
 dlke() {
-    ulk "$@" && exit
+    dlk "$@" && exit
     echo -n '\a'
 }
 ulke() {
