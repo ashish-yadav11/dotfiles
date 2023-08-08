@@ -22,7 +22,7 @@ case "$path" in
             $notifyerror "Error: file name not in expected format!\n'$filename'"
             exit
         fi
-        title="${filename%" ($id)*"} [$id]"
+        title="${filename%" ($id)"*} [$id]"
         case "$path" in
             "$musicdir/archive/"*) menuarg="Like\nDelete\nUnlike" ;;
                                 *) menuarg="Unlike\nRemove\nLike" ;;
