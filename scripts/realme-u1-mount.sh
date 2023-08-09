@@ -23,7 +23,7 @@ rm -f /tmp/realme-u1-mount.fifo
 serial="${device#*|}"
 mtpoint="$XDG_RUNTIME_DIR/mtp/${device%|*}"
 mkdir -p "$mtpoint"
-setsid -f go-mtpfs -dev "$serial" "$mtpoint" >"$mtpoint.log" 2>&1
+setsid -f go-mtpfs -usb-timeout 10000 -dev "$serial" "$mtpoint" >"$mtpoint.log" 2>&1
 sleep 0.1
 timeout="$(( SECONDS + 2 ))"
 while (( SECONDS < timeout )) ; do
