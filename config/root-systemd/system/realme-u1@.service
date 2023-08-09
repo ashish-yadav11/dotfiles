@@ -3,5 +3,7 @@ Description=Auto USB Mode Selection for Realme U1
  
 [Service]
 User=ashish
+Environment=DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus XDG_RUNTIME_DIR=/run/user/1000
 ExecStart=/home/ashish/.scripts/systemd/realme-u1.sh %I
+KillMode=process
 RuntimeMaxSec=10
