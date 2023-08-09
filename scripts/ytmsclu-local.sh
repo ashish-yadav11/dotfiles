@@ -28,10 +28,10 @@ case "$path" in
                                 *) menuarg="Unlike\nRemove\nLike" ;;
         esac
         case "$(echo "$menuarg" | $menu -p "$title")" in
-            Unlike) $ytmsclu_addjob "$url" "unlike" ;;
-            Remove) $ytmsclu_addjob "$url" "remove" ;;
-            Like) $ytmsclu_addjob "$url" "like" ;;
-            Delete) $ytmsclu_addjob "$url" "delete" ;;
+            Unlike) $ytmsclu_addjob "$url" "unlike" "$title" ;;
+            Remove) $ytmsclu_addjob "$url" "remove" "$title" ;;
+            Like) $ytmsclu_addjob "$url" "like" "$title" ;;
+            Delete) $ytmsclu_addjob "$url" "delete" "$title" ;;
         esac
         ;;
     *)

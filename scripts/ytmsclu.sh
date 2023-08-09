@@ -83,8 +83,8 @@ case "$?" in
         ;;
 esac
 case "$(echo "$menuarg" | menu -p "$title")" in
-    Like) $ytmsclu_addjob "$url" "like" ;;
-    Unlike) $ytmsclu_addjob "$url" "unlike" ;;
-    Remove) $ytmsclu_addjob "$url" "remove" ;;
+    Like) $ytmsclu_addjob "$url" "like" "$title";;
+    Unlike) $ytmsclu_addjob "$url" "unlike" "$title" ;;
+    Remove) $ytmsclu_addjob "$url" "remove" "$title" ;;
 esac
 unlockexit

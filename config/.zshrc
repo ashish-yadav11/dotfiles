@@ -316,10 +316,11 @@ dlk() {
     local output ans
     output="$(__lk_helper "$@")" || { printf "%s" "$output"; return ;}
     echo "$output"
-    ytb-title "$output"
+    title="$(ytb-title "$output")"
+    echo "$title"
     read -r 'ans?Continue? [Y/n]: '
     [[ "$ans" == n || "$ans" == N ]] && return
-    ~/.scripts/ytmsclu-addjob.sh "$output" like
+    ~/.scripts/ytmsclu-addjob.sh "$output" like "$title"
 }
 
 ulk() {
@@ -328,10 +329,11 @@ ulk() {
     [ "$1" = "-r" ] && { arg="remove"; shift ;}
     output="$(__lk_helper "$@")" || { printf "%s" "$output"; return ;}
     echo "$output"
-    ytb-title "$output"
+    title="$(ytb-title "$output")"
+    echo "$title"
     read -r 'ans?Continue? [Y/n]: '
     [[ "$ans" == n || "$ans" == N ]] && return
-    ~/.scripts/ytmsclu-addjob.sh "$output" "$arg"
+    ~/.scripts/ytmsclu-addjob.sh "$output" "$arg" "$title"
 }
 
 m() {

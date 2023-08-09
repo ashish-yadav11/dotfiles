@@ -4,12 +4,15 @@ fifofile="$XDG_RUNTIME_DIR/ytmsclu-daemon.fifo"
 logfile="/home/ashish/.cache/ytmsclu-daemon.log"
 musicsync="/home/ashish/.scripts/realme-u1-musicsync.sh"
 notifyerror="notify-send -u critical -t 0 ytmsclu-daemon"
+notifydone="notify-send -t 2000 ytmsclu-daemon"
 
 exec 9<>"$lockfile"
 flock -n 9 || { echo 'Error: another instance already active!'; exit 2 ;}
 
 failwarn() {
-    $notifyerror "action: $action\nurl: $url\nError: something went wrong!"
+    echo -n "$url" | xsel -ib
+    $notifyerror "action: $action\ntitle: $title\nError: something went wrong!"
+    failed=1
 }
 syncfailwarn() {
     if [ "$1" = 0 ] ; then
@@ -21,7 +24,8 @@ syncfailwarn() {
 
 [ -p "$fifofile" ] || { rm -f "$fifofile"; mkfifo "$fifofile" ;}
 tail -f "$fifofile" |
-    while read -r url action; do
+    while read -r url action title; do
+        failed=0
         [ "$action" != history ] &&
             echo "$(date +%Y%m%d-%H%M%S) $url $action" >>"$logfile"
         if ! echo "$url" | grep -qm1 \
@@ -42,5 +46,6 @@ tail -f "$fifofile" |
                 continue
                 ;;
         esac
+        [ "$failed" = 0 ] && $notifydone "action: $action\ntitle: $title\nTask done!"
         echo "\n" >>"$logfile"
     done
