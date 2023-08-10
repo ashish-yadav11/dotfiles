@@ -14,7 +14,8 @@ mountwatch() {
             case "$line" in
                 *"fatal error LIBUSB_ERROR_NO_DEVICE; closing connection.")
                     # will eventually lead to the death of go-mtpfs, and thus tail
-                    $mtpclean
+                    fusermount -u "$mtpoint"
+                    rm -f "$logfile"
                     ;;
             esac
         done
@@ -22,6 +23,5 @@ mountwatch() {
 
 while true ; do
     mountwatch
-    # if mtpclean killed go-mtpfs, logfile shouldn't exist
     [ -f "$logfile" ] && { $mtpclean; exit ;}
 done
