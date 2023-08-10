@@ -2,25 +2,20 @@
 mtpclean=/home/ashish/.scripts/mtpclean.sh
 envfile=/tmp/realme-u1-mount.env
 
-[ -f "$envfile" ] || exit
+[[ -f "$envfile" ]] || exit
 
 setsid -f $mtpclean
 
-device="$(
-    awk -F= '
-        $1=="DEVNAME" {d=substr($2,14,3) substr($2,18); next}
-        $1=="ID_MODEL" {m=$2; gsub(/[ _]/,"-",m); next}
-        $1=="ID_SERIAL_SHORT" {s=$2; next}
-        END {print m"-"s"-"d"|"s}
-    ' <"$envfile"
-)"
+{ read -r mdl; read -r srl; read -r dev ;} <"$envfile"
 rm -f "$envfile"
-[ -n "$device" ] || exit
+mdl="${mdl//[ _]/-}"
+dev="${dev#/dev/bus/usb/}"
+dev="${dev/\//}"
+[[ -n "$mdl" && -n "$srl" && -n "$dev" ]] || exit
 
-serial="${device#*|}"
-mtpoint="$XDG_RUNTIME_DIR/mtp/${device%|*}"
+mtpoint="$XDG_RUNTIME_DIR/mtp/$mdl-$srl-$dev"
 mkdir -p "$mtpoint"
-setsid -f go-mtpfs -usb-timeout 10000 -dev "$serial" "$mtpoint" &>"$mtpoint.log"
+setsid -f go-mtpfs -usb-timeout 10000 -dev "$srl" "$mtpoint" &>"$mtpoint.log"
 sleep 0.1
 timeout="$(( SECONDS + 2 ))"
 while (( SECONDS < timeout )) ; do
