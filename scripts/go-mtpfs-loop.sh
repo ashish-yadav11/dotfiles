@@ -6,6 +6,7 @@ mtpoint="$2"
 logfile="$3"
 
 mountwatch() {
+    mkdir -p "$mtpoint"
     touch "$logfile"
     go-mtpfs -usb-timeout 15000 -dev "$serial" "$mtpoint" >"$logfile" 2>&1 &
     tail -f "$logfile" --pid="$!" |

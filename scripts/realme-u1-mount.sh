@@ -23,7 +23,6 @@ rm -f /tmp/realme-u1-mount.fifo
 
 serial="${device#*|}"
 mtpoint="$XDG_RUNTIME_DIR/mtp/${device%|*}"
-mkdir -p "$mtpoint"
 setsid -f $gomtpfsloop "$serial" "$mtpoint" "$mtpoint.log"
 sleep 0.1
 timeout="$(( SECONDS + 2 ))"

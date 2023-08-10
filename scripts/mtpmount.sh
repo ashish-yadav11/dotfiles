@@ -52,7 +52,6 @@ mount() {
     name="${device##*|}"; name="${name% (*}"
     serial="${device#* (}"; serial="${serial%)}"
     mtpoint="$XDG_RUNTIME_DIR/mtp/${device%%|*}"
-    mkdir -p "$mtpoint"
     setsid -f $gomtpfsloop "$serial" "$mtpoint" "$mtpoint.log"
     sleep 0.1
     timeout="$(( SECONDS + 2 ))"
