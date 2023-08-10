@@ -12,14 +12,15 @@ mountwatch() {
         while read -r line ; do
             case "$line" in
                 *"fatal error LIBUSB_ERROR_NO_DEVICE; closing connection.")
-                    return 0
+                    # will eventually lead to the death of go-mtpfs, and thus tail
+                    $mtpclean
                     ;;
             esac
         done
-    return 1
 }
 
 while true ; do
-    mountwatch || exit
-    $mtpclean
+    mountwatch
+    # if mtpclean killed go-mtpfs, logfile shouldn't exist
+    [ -f "$logfile" ] && { $mtpclean; exit ;}
 done
