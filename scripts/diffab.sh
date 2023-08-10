@@ -47,7 +47,7 @@ mdiff="$(
     for f in "$prefix"* ; do
         name="${f#"$prefix"}"
         if [ -d "$f" ] ; then
-            $mdiff_cmd "$f" "/etc/$name" |
+            $mdiff_cmd "$f" "/etc/$name" 2>/dev/null |
                 grep -Ev '^Only in /etc/.*'
         elif [ -f "$f" ] ; then
             sdiff="$(
