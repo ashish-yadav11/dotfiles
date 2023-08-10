@@ -1,6 +1,5 @@
 #!/bin/bash
 mtpclean=/home/ashish/.scripts/mtpclean.sh
-gomtpfsloop=/home/ashish/.scripts/go-mtpfs-loop.sh
 
 setsid -f $mtpclean
 
@@ -23,7 +22,8 @@ rm -f /tmp/realme-u1-mount.fifo
 
 serial="${device#*|}"
 mtpoint="$XDG_RUNTIME_DIR/mtp/${device%|*}"
-setsid -f $gomtpfsloop "$serial" "$mtpoint" "$mtpoint.log"
+mkdir -p "$mtpoint"
+setsid -f go-mtpfs -usb-timeout 10000 -dev "$serial" "$mtpoint" &>"$mtpoint.log"
 sleep 0.1
 timeout="$(( SECONDS + 2 ))"
 while (( SECONDS < timeout )) ; do

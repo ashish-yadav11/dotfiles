@@ -1,6 +1,4 @@
 #!/bin/bash
-gomtpfsloop=/home/ashish/.scripts/go-mtpfs-loop.sh
-
 menu() {
     rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
                      listview {lines: 1; columns: 9;}' \
@@ -52,7 +50,8 @@ mount() {
     name="${device##*|}"; name="${name% (*}"
     serial="${device#* (}"; serial="${serial%)}"
     mtpoint="$XDG_RUNTIME_DIR/mtp/${device%%|*}"
-    setsid -f $gomtpfsloop "$serial" "$mtpoint" "$mtpoint.log"
+    mkdir -p "$mtpoint"
+    setsid -f go-mtpfs -usb-timeout 10000 -dev "$serial" "$mtpoint" &>"$mtpoint.log"
     sleep 0.1
     timeout="$(( SECONDS + 2 ))"
     while (( SECONDS < timeout )) ; do
