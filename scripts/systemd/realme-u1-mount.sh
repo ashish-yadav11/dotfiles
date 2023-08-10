@@ -2,7 +2,8 @@
 mtpclean=/home/ashish/.scripts/mtpclean.sh
 envfile=/tmp/realme-u1-mount.env
 
-[[ -f "$envfile" ]] || exit
+[[ -f "$envfile" ]] ||
+    { echo "Error: envfile doesn't exist!"; exit ;}
 
 setsid -f $mtpclean
 
@@ -11,7 +12,8 @@ rm -f "$envfile"
 mdl="${mdl//[ _]/-}"
 dev="${dev#/dev/bus/usb/}"
 dev="${dev/\//}"
-[[ -n "$mdl" && -n "$srl" && -n "$dev" ]] || exit
+[[ -n "$mdl" && -n "$srl" && -n "$dev" ]] ||
+    { echo "Error: something wrong with envfile format!"; exit ;}
 
 mtpoint="$XDG_RUNTIME_DIR/mtp/$mdl-$srl-$dev"
 mkdir -p "$mtpoint"
