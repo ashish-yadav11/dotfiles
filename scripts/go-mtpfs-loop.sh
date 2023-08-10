@@ -22,6 +22,7 @@ mountwatch() {
     return 1
 }
 
+# leads read to return when go-mtpfs terminates
 trap : USR1
 
 while true ; do
