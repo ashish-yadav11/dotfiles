@@ -1,6 +1,5 @@
 #!/bin/dash
 menu="dmenu -i -matching fuzzy -no-custom"
-mount=/home/ashish/.scripts/realme-u1-mount.sh
 mtpclean=/home/ashish/.scripts/mtpclean.sh
 
 exec 9<>/tmp/realme-u1-usbmode.lock
@@ -39,7 +38,6 @@ esac
 # to prevent udev rule from reverting the choosen usb mode
 : >/tmp/realme-u1.lock
 
-[ "$function" = mtp ] && setsid -f timeout 5 $mount
 adb -d shell svc usb setFunctions "$function"
 adb -d wait-for-usb-device
 [ -n "$clean" ] && setsid -f $mtpclean

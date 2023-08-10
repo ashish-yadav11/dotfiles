@@ -1,24 +1,21 @@
 #!/bin/bash
 mtpclean=/home/ashish/.scripts/mtpclean.sh
+envfile=/tmp/realme-u1-mount.env
+
+[ -f "$envfile" ] || exit
 
 setsid -f $mtpclean
 
-mkfifo /tmp/realme-u1-mount.fifo
-udevadm monitor -up -s usb >/tmp/realme-u1-mount.fifo &
-PID="$!"
 device="$(
     awk -F= '
-        $1=="ACTION" && $2=="bind" {f=1; next}
-        !f {next};
         $1=="DEVNAME" {d=substr($2,14,3) substr($2,18); next}
         $1=="ID_MODEL" {m=$2; gsub(/[ _]/,"-",m); next}
-        $1=="ID_SERIAL_SHORT" {b=m"-"$2"-"d"|"$2; next}
-        $1=="ID_MTP_DEVICE" && $2=="1" {print b; exit}
-        $0=="" {f=0; b=""; next};
-    ' </tmp/realme-u1-mount.fifo
+        $1=="ID_SERIAL_SHORT" {s=$2; next}
+        END {print m"-"s"-"d"|"s}
+    ' <"$envfile"
 )"
-kill "$PID"
-rm -f /tmp/realme-u1-mount.fifo
+rm -f "$envfile"
+[ -n "$device" ] || exit
 
 serial="${device#*|}"
 mtpoint="$XDG_RUNTIME_DIR/mtp/${device%|*}"
