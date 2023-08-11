@@ -28,9 +28,10 @@ case "$line" in
     *"FUSE mounted")
         notify-send -t 1500 " Realme U1" "Device mounted successfully"
         ;;
+    *"detect failed: no MTP devices found")
+        rm -rf "$mtpoint" "$mtpoint.log"
+        ;;
     *)
-        notify-send -u critical " Realme U1" "Error mounting device!"
-        rmdir "$mtpoint"
-        rm -f "$mtpoint.log"
+        notify-send -u critical -t 0 " Realme U1" "Error mounting device!"
         ;;
 esac

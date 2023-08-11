@@ -39,10 +39,7 @@ while IFS='' read -r mtpoint ; do
         fi
     done
     # cleanup orphaned mount points
-    if fusermount -u "$mtpoint" ; then
-        rmdir "$mtpoint"
-        rm -f "$mtpoint.log"
-    fi
+    fusermount -u "$mtpoint" && rm -rf "$mtpoint" "$mtpoint.log"
 done < <(awk '$1=="rawBridge" && $2~/^\/run\/user\/[0-9]*\/mtp\// {print $2}' /etc/mtab)
 
 mount() {
@@ -66,15 +63,10 @@ mount() {
             notify-send -t 2000 " MTP mounter" "$name mounted successfully"
         else
             notify-send -u critical -t 10000 " MTP mounter" "Error mounting $name\nMake sure the device is unlocked and file transfer (MTP) option is selected for the USB connection"
-            if fusermount -u "$mtpoint" ; then
-                rmdir "$mtpoint"
-                rm -f "$mtpoint.log"
-            fi
+            fusermount -u "$mtpoint" && rm -rf "$mtpoint" "$mtpoint.log"
         fi
     else
-        notify-send -u critical " MTP mounter" "Error mounting $name"
-        rmdir "$mtpoint"
-        rm -f "$mtpoint.log"
+        notify-send -u critical -t 0 " MTP mounter" "Error mounting $name"
     fi
 }
 
@@ -84,10 +76,9 @@ unmount() {
     mtpoint="${mtpoints[$1]}"
     if fusermount -u "$mtpoint" 2>/dev/null ; then
         notify-send -t 2000 " MTP mounter" "$name unmounted successfully"
-        rmdir "$mtpoint"
-        rm -f "$mtpoint.log"
+        rm -rf "$mtpoint" "$mtpoint.log"
     else
-        notify-send -u critical " MTP mounter" "Error unmounting $name\nResource might be busy"
+        notify-send -u critical -t 4000 " MTP mounter" "Error unmounting $name\nResource might be busy"
     fi
 }
 
