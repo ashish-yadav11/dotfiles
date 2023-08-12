@@ -321,7 +321,7 @@ endfunction
 function DeleteEmptyBuffers()
     let [i, n; empty] = [1, bufnr("$")]
     while i <= n
-        if bufexists(i) && bufname(i) == "" && bufwinnr(i) != -1
+        if bufexists(i) && bufname(i) == "" && bufwinnr(i) == -1
             call add(empty, i)
         endif
         let i += 1
