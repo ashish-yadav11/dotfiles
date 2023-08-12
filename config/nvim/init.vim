@@ -54,9 +54,10 @@ nnoremap        <silent>        <Leader><C-t>           :call SpawnTerm("td")<CR
 nnoremap        <silent>        <Leader>r               :call SpawnTerm("rp")<CR>
 nnoremap        <silent>        <Leader>R               :call SpawnTerm("rc")<CR>
 nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rd")<CR>
-" doubts
+" doubts/logs
 nnoremap                        <Leader>w               :w <C-r>=strftime("%m%d")<CR>.txt<Left><Left><Left><Left>
 nnoremap                        <Leader>e               :call RenameFile()<CR>
+nnoremap                        <Leader>n               :enew<Bar>bdelete #<CR>
 " undotree toggle
 nnoremap        <silent>        <Leader>u               :UndotreeToggle<CR>
 " vimtex
