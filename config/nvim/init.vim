@@ -322,7 +322,7 @@ endfunction
 function DeleteBuffers(allhidden = 0)
     let [i, n; empty] = [1, bufnr("$")]
     while i <= n
-        if bufexists(i) && bufwinnr(i) == -1 && (a:allhidden == 1 || bufname(i) == "")
+        if bufexists(i) && getbufinfo(i)[0].hidden && (a:allhidden == 1 || bufname(i) == "")
             call add(empty, i)
         endif
         let i += 1
