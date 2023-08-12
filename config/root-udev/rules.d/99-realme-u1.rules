@@ -21,7 +21,7 @@
 
 # to automatically mount on plugging in the device in mtp mode
 
- SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22d9", ATTR{idProduct}=="2765", RUN+="/usr/bin/dash -c 'printenv ID_MODEL ID_SERIAL_SHORT DEVNAME >/tmp/realme-u1-mount.env; chown ashish:ashish /tmp/realme-u1-mount.env; systemctl restart realme-u1-mount.service'"
+ SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22d9", ATTR{idProduct}=="2765", RUN+="/usr/bin/dash -c '[ -f /tmp/realme-automount.disable ] && exit 0; printenv ID_MODEL ID_SERIAL_SHORT DEVNAME >/tmp/realme-u1-mount.env; chown ashish:ashish /tmp/realme-u1-mount.env; systemctl restart realme-u1-mount.service'"
 
 
 # to remove the stale lock file in case none of the above functionalities is enabled

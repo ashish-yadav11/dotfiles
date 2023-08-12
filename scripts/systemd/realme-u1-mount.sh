@@ -1,4 +1,6 @@
 #!/bin/bash
+notify="notify-send -h int:transient:1"
+
 mtpclean=/home/ashish/.scripts/mtpclean.sh
 envfile=/tmp/realme-u1-mount.env
 
@@ -21,17 +23,19 @@ setsid -f go-mtpfs -usb-timeout 10000 -dev "$srl" "$mtpoint" &>"$mtpoint.log"
 sleep 0.1
 timeout="$(( SECONDS + 2 ))"
 while (( SECONDS < timeout )) ; do
-    IFS='' read -r line <"$mtpoint.log" && [[ -n "$line" ]] && break
+    IFS='' read -r line <"$mtpoint.log"
+    [[ -z "$line" ]] && continue
+    case "$line" in *"attempting reset") continue ;; *) break ;; esac
     sleep 0.1
 done
 case "$line" in
     *"FUSE mounted")
-        notify-send -t 1500 " Realme U1" "Device mounted successfully"
+        $notify -t 1000 " Realme U1" "Device mounted successfully"
         ;;
     *"detect failed: no MTP devices found")
         rm -rf "$mtpoint" "$mtpoint.log"
         ;;
     *)
-        notify-send -u critical -t 0 " Realme U1" "Error mounting device!"
+        $notify -u critical -t 0 " Realme U1" "Error mounting device!"
         ;;
 esac
