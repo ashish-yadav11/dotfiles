@@ -58,6 +58,7 @@ nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rd")<CR
 nnoremap                        <Leader>w               :w <C-r>=strftime("%m%d")<CR>.txt<Left><Left><Left><Left>
 nnoremap                        <Leader>e               :call RenameFile()<CR>
 nnoremap                        <Leader>n               :enew<Bar>bdelete #<CR>
+nnoremap                        <Leader>d               :call DeleteEmptyBuffers()<CR>
 " undotree toggle
 nnoremap        <silent>        <Leader>u               :UndotreeToggle<CR>
 " vimtex
@@ -311,8 +312,21 @@ function RenameFile()
     let l:oldname = expand("%")
     let l:newname = input("New file name: ", l:oldname.."\<Left>\<Left>\<Left>\<Left>", "file")
     if l:newname != '' && l:newname != l:oldname
-        exec ':saveas '..l:newname
-        exec ':silent !rm '..l:oldname
+        execute 'saveas ' l:newname
+        execute 'silent !rm ' l:oldname
         redraw!
+    endif
+endfunction
+
+function DeleteEmptyBuffers()
+    let [i, n; empty] = [1, bufnr("$")]
+    while i <= n
+        if bufexists(i) && bufname(i) == "" && bufwinnr(i) != -1
+            call add(empty, i)
+        endif
+        let i += 1
+    endwhile
+    if len(empty) > 0
+        execute 'bdelete' join(empty)
     endif
 endfunction
