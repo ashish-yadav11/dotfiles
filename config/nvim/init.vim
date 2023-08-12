@@ -58,7 +58,8 @@ nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rd")<CR
 nnoremap                        <Leader>w               :w <C-r>=strftime("%m%d")<CR>.txt<Left><Left><Left><Left>
 nnoremap                        <Leader>e               :call RenameFile()<CR>
 nnoremap        <silent>        <Leader>n               :enew<Bar>bdelete #<CR>
-nnoremap        <silent>        <Leader>d               :call DeleteEmptyBuffers()<CR>
+nnoremap        <silent>        <Leader>d               :call DeleteBuffers(0)<CR>
+nnoremap        <silent>        <Leader>D               :call DeleteBuffers(1)<CR>
 " undotree toggle
 nnoremap        <silent>        <Leader>u               :UndotreeToggle<CR>
 " vimtex
@@ -318,10 +319,10 @@ function RenameFile()
     endif
 endfunction
 
-function DeleteEmptyBuffers()
+function DeleteBuffers(allhidden = 0)
     let [i, n; empty] = [1, bufnr("$")]
     while i <= n
-        if bufexists(i) && bufname(i) == "" && bufwinnr(i) == -1
+        if bufexists(i) && bufwinnr(i) == -1 && (a:allhidden == 1 || bufname(i) == "")
             call add(empty, i)
         endif
         let i += 1
