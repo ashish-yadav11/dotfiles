@@ -320,21 +320,22 @@ dlk() {
     title="$(ytb-title "$output")"
     echo "$title"
     read -r 'ans?Continue? [Y/n]: '
-    [[ "$ans" == n || "$ans" == N ]] && return
+    [[ "$ans" == n || "$ans" == N ]] && return 2
     ~/.scripts/ytmsclu-addjob.sh "$output" like "$title"
 }
 
 ulk() {
-    local arg output rtrn ans
-    arg="unlike"
-    [ "$1" = "-r" ] && { arg="remove"; shift ;}
+    local output rtrn ans arg
     output="$(__lk_helper "$@")" ||
         { rtrn="$?"; printf "%s" "$output"; return "$rtrn" ;}
     echo "$output"
     title="$(ytb-title "$output")"
     echo "$title"
+    arg="unlike"
+    read -r 'ans?[U]nlike/[R]emove? [U/r]: '
+    [[ "$ans" == r || "$ans" == R ]] && arg="remove"
     read -r 'ans?Continue? [Y/n]: '
-    [[ "$ans" == n || "$ans" == N ]] && return
+    [[ "$ans" == n || "$ans" == N ]] && return 2
     ~/.scripts/ytmsclu-addjob.sh "$output" "$arg" "$title"
 }
 
