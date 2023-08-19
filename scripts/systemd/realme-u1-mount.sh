@@ -36,6 +36,6 @@ case "$line" in
         rm -rf "$mtpoint" "$mtpoint.log"
         ;;
     *)
-        $notify -u critical -t 0 " Realme U1" "Error mounting device!"
+        $notify -u critical -t 0 " Realme U1" "Error mounting device!\nline: $line"
         ;;
 esac
