@@ -313,8 +313,9 @@ __lk_helper() {
 }
 
 dlk() {
-    local output ans
-    output="$(__lk_helper "$@")" || { printf "%s" "$output"; return ;}
+    local output rtrn ans
+    output="$(__lk_helper "$@")" ||
+        { rtrn="$?"; printf "%s" "$output"; return "$rtrn" ;}
     echo "$output"
     title="$(ytb-title "$output")"
     echo "$title"
@@ -324,10 +325,11 @@ dlk() {
 }
 
 ulk() {
-    local arg output ans
+    local arg output rtrn ans
     arg="unlike"
     [ "$1" = "-r" ] && { arg="remove"; shift ;}
-    output="$(__lk_helper "$@")" || { printf "%s" "$output"; return ;}
+    output="$(__lk_helper "$@")" ||
+        { rtrn="$?"; printf "%s" "$output"; return "$rtrn" ;}
     echo "$output"
     title="$(ytb-title "$output")"
     echo "$title"
