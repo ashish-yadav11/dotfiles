@@ -28,6 +28,7 @@ siji-git
 simplescreenrecorder
 snixembed
 st-cust
+subedit
 textidote-bin
 ventoy-bin
 woeusb
