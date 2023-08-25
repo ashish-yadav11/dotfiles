@@ -28,6 +28,7 @@ while (( SECONDS < timeout )) ; do
     case "$line" in *"attempting reset") continue ;; *) break ;; esac
     sleep 0.1
 done
+[[ -z "$line" ]] && exit
 case "$line" in
     *"FUSE mounted")
         $notify -t 1000 " Realme U1" "Device mounted successfully"
