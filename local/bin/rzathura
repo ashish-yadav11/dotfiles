@@ -1,6 +1,22 @@
 #!/bin/bash
-args=()
-for arg in "$@" ; do
-    args+=( "$(realpath "$arg")" )
+case "$1" in
+    --) shift ;;
+    -f) force=1; shift ;;
+    *) ;;
+esac
+rargs=()
+for oarg in "$@" ; do
+    if [[ -n "$force" ]] ; then
+        rargs+=( "$(realpath "$arg")" )
+    else
+        rarg="$(realpath "$arg")"
+        oname="${oarg##*/}"
+        rname="${rarg##*/}"
+        if [[ "$rname" == "$oname" ]] ; then
+            rargs+=( "$rarg" )
+        else
+            rargs+=( "$oarg" )
+        fi
+    fi
 done
-zathura -- "${args[@]}"
+zathura -- "${rargs[@]}"
