@@ -44,6 +44,8 @@ for x in log["bookings"][1:]:
     if hr < starthr:
         continue
     userid = x["venueuser"]
+    if not userid:
+        continue
     idx = userids.index(userid)
     username = usernames[idx]
     bookings_s.append(f'{time_r} {slot} {username}')
