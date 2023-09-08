@@ -195,7 +195,6 @@ xournalpp
 xsel
 xwallpaper
 yad
-youtube-dl
 yt-dlp
 ytfzf
 zathura

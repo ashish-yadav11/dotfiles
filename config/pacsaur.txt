@@ -22,7 +22,7 @@ neovim-remote
 networkmanager-dispatcher-chrony
 pam-gnupg
 pass-git-helper
-riseup-vpn-git
+riseup-vpn
 rofi-dmenu-cust
 siji-git
 simplescreenrecorder
