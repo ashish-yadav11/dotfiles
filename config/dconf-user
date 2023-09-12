@@ -56,6 +56,8 @@ window-width=1358
 
 [org/gnome/gthumb/browser]
 browser-sidebar-width=285
+folder-tree-sort-inverse=false
+folder-tree-sort-type='name'
 fullscreen-sidebar='hidden'
 fullscreen-thumbnails-visible=false
 maximized=false
@@ -64,8 +66,8 @@ sidebar-sections=['GthFileProperties:expanded', 'GthFileComment:expanded', 'GthF
 sidebar-visible=true
 sort-inverse=false
 sort-type='file::mtime'
-startup-current-file='file:///home/ashish/IMG_0947.jpg'
-startup-location='file:///home/ashish'
+startup-current-file='file:///media/storage/Pictures/Documents/IMG20230910060457%20(E+-i%CF%B5)%5E-1.jpg'
+startup-location='file:///media/storage/Pictures/Documents'
 statusbar-visible=true
 thumbnail-list-visible=true
 viewer-sidebar='tools'
