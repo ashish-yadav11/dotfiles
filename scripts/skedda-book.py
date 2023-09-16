@@ -14,7 +14,7 @@ if len(sys.argv) != 3:
     usageexit()
 slot = sys.argv[1]
 if len(slot) != 3 or slot[0] not in "1234" or slot[1] != ':' or slot[2] not in "1234":
-    usagexit()
+    usageexit()
 time = sys.argv[2]
 if len(time) != 2 or time[1] not in "789":
     usageexit()
