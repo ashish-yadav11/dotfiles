@@ -20,20 +20,21 @@ dev="${dev/\//}"
 mtpoint="$XDG_RUNTIME_DIR/mtp/$mdl-$srl-$dev"
 mkdir -p "$mtpoint"
 setsid -f go-mtpfs -usb-timeout 10000 -dev "$srl" "$mtpoint" &>"$mtpoint.log"
-sleep 0.1
 timeout="$(( SECONDS + 2 ))"
-while (( SECONDS < timeout )) ; do
-    IFS='' read -r line <"$mtpoint.log"
-    [[ -z "$line" ]] && continue
-    case "$line" in *"attempting reset") continue ;; *) break ;; esac
-    sleep 0.1
-done
+{
+    while (( SECONDS < timeout )) ; do
+        sleep 0.1
+        IFS='' read -r line
+        [[ -z "$line" ]] && continue
+        case "$line" in *"attempting reset") continue ;; *) break ;; esac
+    done
+} <"$mtpoint.log"
 [[ -z "$line" ]] && exit
 case "$line" in
     *"FUSE mounted")
         $notify -t 1000 " Realme U1" "Device mounted successfully"
         ;;
-    *"no MTP devices found"|*"LIBUSB_ERROR_NO_DEVICE"|*"closing connection.")
+    *"no MTP devices found"|*LIBUSB_ERROR_NO_DEVICE|*"LIBUSB_ERROR_PIPE; closing connection.")
         rm -rf "$mtpoint" "$mtpoint.log"
         ;;
     *)
