@@ -33,7 +33,7 @@ case "$line" in
     *"FUSE mounted")
         $notify -t 1000 " Realme U1" "Device mounted successfully"
         ;;
-    *"no MTP devices found"|*"LIBUSB_ERROR_NO_DEVICE")
+    *"no MTP devices found"|*"LIBUSB_ERROR_NO_DEVICE"|*"closing connection.")
         rm -rf "$mtpoint" "$mtpoint.log"
         ;;
     *)
