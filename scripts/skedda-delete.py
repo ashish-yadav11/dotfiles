@@ -20,7 +20,7 @@ slotcols = { "1": "yellow", "2": "red", "3": "blue", "4": "green" }
 
 myname = "Ashish Kumar Yadav"
 myid = 1685628
-gsnm = check_output(["pass", "skedda/gs.nm"]).decode("utf-8").strip()
+#gsnm = check_output(["pass", "skedda/gs.nm"]).decode("utf-8").strip()
 srnm = check_output(["pass", "skedda/sr.nm"]).decode("utf-8").strip()
 
 starthr = 19
@@ -57,9 +57,9 @@ for x in log["bookings"][1:]:
         bookings.append(f'{spc*(hr-starthr)}{time} {colslot} {colname} [{i}]')
         i += 1
         mybookings.append(x["id"])
-    elif username == gsnm:
-        colname = colored(username, "blue", force_color=True)
-        bookings.append(f'{spc*(hr-starthr)}{time} {colslot} {colname}')
+#   elif username == gsnm:
+#       colname = colored(username, "blue", force_color=True)
+#       bookings.append(f'{spc*(hr-starthr)}{time} {colslot} {colname}')
     elif username == srnm:
         colname = colored(username, "yellow", force_color=True)
         bookings.append(f'{spc*(hr-starthr)}{time} {colslot} {colname}')

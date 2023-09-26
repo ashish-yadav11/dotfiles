@@ -97,9 +97,9 @@ list() {
 }
 
 loop() {
-    gsid="$(pass skedda/gs.id)"
+#   gsid="$(pass skedda/gs.id)"
     srid="$(pass skedda/sr.id)"
-    prvgsbook=0
+#   prvgsbook=0
     prvsrbook=0
     rm -f "$histfile" # reset history on start
     while true ; do
@@ -121,7 +121,7 @@ loop() {
         if [[ -n "$prvcurd" && "$curd" != "$prvcurd" ]] ; then
             prvparsed_c="$($skedda_list <(jq "{\"bookings\" : (.bookings[:1] + (.bookings[1:] | map(select(.start >= \"${curd}T00:00:00\")))), \"venueusers\" : .venueusers}" "$logfile"))"
             prvbookings="$(jq ".bookings[1:] | map(select(.start >= \"${curd}T00:00:00\"))" "$logfile")"
-            prvgsbook="$(printf "%s" "$prvbookings" | grep -B13 "$gsid")"
+#           prvgsbook="$(printf "%s" "$prvbookings" | grep -B13 "$gsid")"
             prvsrbook="$(printf "%s" "$prvbookings" | grep -B13 "$srid")"
         fi
         prvcurd="$curd"
@@ -133,18 +133,19 @@ loop() {
         curparsed_c="${curparsed_c%\*}"
         if [[ "$curparsed_c" != "$prvparsed_c" ]] ; then
             case "$1" in clean) printf "\ec" ;; *) clear ;; esac
-            printf "%s\n\a" "$curparsed"
+            printf "%s\n" "$curparsed"
+            case "$*" in *silent) : ;; *) printf '\a' ;; esac
             prvparsed_c="$curparsed_c"
         elif [[ "$interrupted" == y ]] ; then
             case "$1" in clean) printf "\ec" ;; *) clear ;; esac
             printf "%s\n" "$curparsed"
         fi
 
-        curgsbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$gsid")"
+#       curgsbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$gsid")"
         cursrbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$srid")"
-        [[ "$prvgsbook" != 0 && "$curgsbook" != "$prvgsbook" ]] && telegram 'Sugar!'
+#       [[ "$prvgsbook" != 0 && "$curgsbook" != "$prvgsbook" ]] && telegram 'Sugar!'
         [[ "$prvsrbook" != 0 && "$cursrbook" != "$prvsrbook" ]] && telegram 'Cherry!'
-        prvgsbook="${curgsbook}"
+#       prvgsbook="${curgsbook}"
         prvsrbook="${cursrbook}"
 
         waitsleep "$nidlesec"
