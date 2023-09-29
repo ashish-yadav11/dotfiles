@@ -1,6 +1,6 @@
 #!/bin/bash
 src=/media/storage/Music/
-dst=( "$XDG_RUNTIME_DIR/mtp/RMX1831-9PLF7LKZKNFYLR5H-"*"/Internal shared storage/Music" )
+dst=( "$XDG_RUNTIME_DIR/mtp/realme-U1-9PLF7LKZKNFYLR5H-"*"/Internal shared storage/Music" )
 testfile="${dst[0]}/0"
 if touch "$testfile" 2>/dev/null ; then
     rm -f "$testfile"
