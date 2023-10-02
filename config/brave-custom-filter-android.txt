@@ -1,6 +1,7 @@
 m.youtube.com##.tab-content[tab-identifier="FEwhat_to_watch"][tab-title="Home"]
 m.youtube.com##.pivot-bar-item-tab.pivot-shorts
 m.youtube.com##ytm-item-section-renderer.scwnr-content.single-column-watch-next-modern-panels[section-identifier="related-items"]
+m.youtube.com##.fullscreen-recommendations-wrapper
 m.youtube.com##.fullscreen-watch-next-entrypoint-wrapper
 !m.youtube.com##ytm-comments-entry-point-header-renderer
 m.youtube.com##button.icon-button[aria-label="Previous video"]
