@@ -15,3 +15,5 @@ if sudo $reflector ; then
 else
     $notify -u critical Reflector "Some error occured in updating the mirrorlist"
 fi
+flock -u 9
+rm -f "$lockfile"
