@@ -1,12 +1,13 @@
 #!/bin/dash
+lockfile=/tmp/android-usbmode.lock
 menu="dmenu -i -matching fuzzy -no-custom"
 mtpclean=/home/ashish/.scripts/mtpclean.sh
 
-exec 9<>/tmp/realme-u1-usbmode.lock
+exec 9<>"$lockfile"
 flock 9
 
-if ! lsusb | grep -qm1 'ID 22d9:' || [ "$(adb -d get-state)" != device ] ; then
-    notify-send -t 2000 " Realme U1" "Device not connected"
+if [ "$(adb -d get-state)" != device ] ; then
+    notify-send -t 2000 " Android" "No devices connected!"
     exit
 fi
 
@@ -36,9 +37,10 @@ case "$(echo "$items" | $menu -p Select)" in
 esac
 
 # to prevent udev rule from reverting the choosen usb mode
-: >/tmp/realme-u1.lock
+: >/tmp/android-udev.lock
 
 adb -d shell svc usb setFunctions "$function"
 adb -d wait-for-usb-device
 [ -n "$clean" ] && setsid -f $mtpclean
 flock -u 9
+rm -f "$lockfile"

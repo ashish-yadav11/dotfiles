@@ -121,6 +121,10 @@ disable-disconnected-notifications=true
 disable-vpn-notifications=true
 suppress-wireless-networks-available=true
 
+[org/gnome/nm-applet/eap/4d2a352e-bbd7-4056-a778-1ab18e879bac]
+ignore-ca-cert=false
+ignore-phase2-ca-cert=false
+
 [org/gnome/nm-applet/eap/d71761bd-3c09-4eff-9b76-b3f3a6c7aa63]
 ignore-ca-cert=false
 ignore-phase2-ca-cert=false

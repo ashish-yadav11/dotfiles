@@ -441,6 +441,9 @@
     body = ""
     format = "<span font='13.5'>%s</span>"
 
+[android]
+    summary = " Android"
+    history_ignore = yes
 [batmon]
     stack_tag = "batmon"
     history_ignore = yes
@@ -486,9 +489,6 @@
     history_ignore = yes
 [pomodoros]
     stack_tag = "pomodoros"
-    history_ignore = yes
-[realme-u1]
-    summary = " Realme U1"
     history_ignore = yes
 [scrach]
     stack_tag = "scratch"

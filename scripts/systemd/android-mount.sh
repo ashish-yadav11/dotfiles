@@ -2,7 +2,7 @@
 notify="notify-send -h int:transient:1"
 
 mtpclean=/home/ashish/.scripts/mtpclean.sh
-envfile=/tmp/realme-u1-mount.env
+envfile=/tmp/android-mount.env
 
 [[ -f "$envfile" ]] ||
     { echo "Error: envfile doesn't exist!"; exit ;}
@@ -32,12 +32,12 @@ timeout="$(( SECONDS + 2 ))"
 [[ -z "$line" ]] && exit
 case "$line" in
     *"FUSE mounted")
-        $notify -t 1000 " Realme U1" "Device mounted successfully"
+        $notify -t 1000 " Android" "Device mounted successfully"
         ;;
     *"no MTP devices found"|*LIBUSB_ERROR_NO_DEVICE|*"LIBUSB_ERROR_PIPE; closing connection.")
         rm -rf "$mtpoint" "$mtpoint.log"
         ;;
     *)
-        $notify -u critical -t 0 " Realme U1" "Error mounting device!\nline: $line"
+        $notify -u critical -t 0 " Android" "Error mounting device!\nline: $line"
         ;;
 esac
