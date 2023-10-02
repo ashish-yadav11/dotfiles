@@ -48,8 +48,8 @@ done < <(awk '$1=="rawBridge" && $2~/^\/run\/user\/[0-9]*\/mtp\// {print $2}' /e
 mount() {
     device="${devices0[$1]}"
     name="${device##*|}"; name="${name% (*}"
-    serial="${device#* (}"; serial="${serial%)}"
-    mtpoint="$XDG_RUNTIME_DIR/mtp/${device%%|*}"
+    serial="${device##* (}"; serial="${serial%)}"
+    mtpoint="$XDG_RUNTIME_DIR/mtp/${device%|*}"
     mkdir -p "$mtpoint"
     setsid -f go-mtpfs -usb-timeout 10000 -dev "$serial" "$mtpoint" &>"$mtpoint.log"
     sleep 0.1

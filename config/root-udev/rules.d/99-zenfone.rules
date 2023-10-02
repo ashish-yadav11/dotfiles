@@ -21,7 +21,7 @@
 
 # to automatically mount on plugging in the device in mtp mode
 
- SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4ee2", RUN+="/usr/bin/dash -c '[ -f /tmp/zenfone-automount.disable ] && exit 0; printenv ID_MODEL ID_SERIAL_SHORT DEVNAME >/tmp/android-mount.env; chown ashish:ashish /tmp/android-mount.env; systemctl restart android-mount.service'"
+ SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="18d1", ATTR{idProduct}=="4ee2", RUN+="/usr/bin/dash -c '[ -f /tmp/android-automount.disable ] && exit 0; printenv ID_VENDOR ID_MODEL ID_SERIAL_SHORT DEVNAME >/tmp/android-mount.env; chown ashish:ashish /tmp/android-mount.env; systemctl restart android-mount.service'"
 
 
 # to remove the stale lock file in case none of the above functionalities is enabled

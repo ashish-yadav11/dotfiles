@@ -3,12 +3,15 @@ lockfile=/tmp/android-usbmode.lock
 menu="dmenu -i -matching fuzzy -no-custom"
 mtpclean=/home/ashish/.scripts/mtpclean.sh
 
+trap 'flock -u 9; rm -f "$lockfile"' HUP INT TERM
+cleanexit() { flock -u 9; rm -f "$lockfile"; exit ;}
+
 exec 9<>"$lockfile"
 flock 9
 
 if [ "$(adb -d get-state)" != device ] ; then
     notify-send -t 2000 " Android" "No devices connected!"
-    exit
+    cleanexit
 fi
 
 none="Charging only"
@@ -33,7 +36,7 @@ case "$(echo "$items" | $menu -p Select)" in
     "$ptp") function=ptp ;;
     "$rndis") function=rndis ;;
     "$midi") function=midi ;;
-    *) exit ;;
+    *) cleanexit ;;
 esac
 
 # to prevent udev rule from reverting the choosen usb mode
@@ -42,5 +45,4 @@ esac
 adb -d shell svc usb setFunctions "$function"
 adb -d wait-for-usb-device
 [ -n "$clean" ] && setsid -f $mtpclean
-flock -u 9
-rm -f "$lockfile"
+cleanexit

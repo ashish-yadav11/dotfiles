@@ -9,17 +9,26 @@ envfile=/tmp/android-mount.env
 
 setsid -f $mtpclean
 
-{ read -r mdl; read -r srl; read -r dev ;} <"$envfile"
+device="$(awk '
+    NR==1 {v=toupper(substr($0,1,1)) tolower(substr($0,2)); V=toupper(v); next}
+    NR==2 {M=toupper($0); next}
+    NR==3 {S=$0; next}
+    NR==4 {D=substr($0,14,3) substr($0,18); next}
+    END {i=index(M,V);
+        if (i==1) {M=substr(M,length(V)+2); sub(/[ _].*/,"",M); m=v"-"M}
+        else if (i==0) {sub(/[ _].*/,"",M); m=v"-"M}
+        else {m=M};
+        print m"-"S"-"D"|"S; f=0}
+    ' "$envfile"
+)"
 rm -f "$envfile"
-mdl="${mdl//[ _]/-}"
-dev="${dev#/dev/bus/usb/}"
-dev="${dev/\//}"
-[[ -n "$mdl" && -n "$srl" && -n "$dev" ]] ||
-    { echo "Error: something wrong with envfile format!"; exit ;}
+[[ -n "$device" ]] || { echo "Error: something wrong with envfile format!"; exit ;}
 
-mtpoint="$XDG_RUNTIME_DIR/mtp/$mdl-$srl-$dev"
+serial=
+
+mtpoint="$XDG_RUNTIME_DIR/mtp/${device%|*}"
 mkdir -p "$mtpoint"
-setsid -f go-mtpfs -usb-timeout 10000 -dev "$srl" "$mtpoint" &>"$mtpoint.log"
+setsid -f go-mtpfs -usb-timeout 10000 -dev "${device##*|}" "$mtpoint" &>"$mtpoint.log"
 timeout="$(( SECONDS + 2 ))"
 {
     while (( SECONDS < timeout )) ; do

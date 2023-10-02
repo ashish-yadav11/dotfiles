@@ -11,7 +11,7 @@ mapfile -t devices < <(
             if (i==1) {M=substr(M,length(V)+2); sub(/[ _].*/,"",M); m=v"-"M}
             else if (i==0) {sub(/[ _].*/,"",M); m=v"-"M}
             else {m=M};
-            print m"-"S"-"D"; f=0; next}
+            print m"-"S"-"D; f=0; next}
     '
 )
 awk '$1=="rawBridge" && $2~/^\/run\/user\/[0-9]*\/mtp\// {print $2}' /etc/mtab |
