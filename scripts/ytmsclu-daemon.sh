@@ -2,7 +2,7 @@
 lockfile="$XDG_RUNTIME_DIR/ytmsclu-daemon.lock"
 fifofile="$XDG_RUNTIME_DIR/ytmsclu-daemon.fifo"
 logfile="/home/ashish/.cache/ytmsclu-daemon.log"
-musicsync="/home/ashish/.scripts/realme-u1-musicsync.sh"
+musicsync="/home/ashish/.scripts/musicsync.sh"
 notifyerror="notify-send -u critical -t 0 ytmsclu-daemon"
 notifydone="notify-send -t 2000 ytmsclu-daemon"
 
