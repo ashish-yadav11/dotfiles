@@ -8,6 +8,9 @@ math.stackexchange.com###newsletter-ad > .s-sidebarwidget--header
 math.stackexchange.com##.s-sidebarwidget--content.d-block
 math.stackexchange.com###hot-network-questions
 
+stackoverflow.com##.d-block.p0.m0
+stackoverflow.com###hot-network-questions
+
 www.youtube.com###guide-inner-content
 www.youtube.com###endpoint[title="Shorts"]
 www.youtube.com##ytd-browse[page-subtype="home"]
