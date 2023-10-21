@@ -7,9 +7,9 @@ esac
 rargs=()
 for oarg in "$@" ; do
     if [[ -n "$force" ]] ; then
-        rargs+=( "$(realpath "$arg")" )
+        rargs+=( "$(realpath "$oarg")" )
     else
-        rarg="$(realpath "$arg")"
+        rarg="$(realpath "$oarg")"
         oname="${oarg##*/}"
         rname="${rarg##*/}"
         if [[ "$rname" == "$oname" ]] ; then
