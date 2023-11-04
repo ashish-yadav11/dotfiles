@@ -27,7 +27,7 @@ local wdir = mp.get_property("working-directory", "")
 if (wdir .. path):sub(1, #musicdir) == musicdir then
     mp.register_event("file-loaded", fileloaded)
 --[[
-    mp.register_event("end-file", endfile)
+    mp.register_event("end-file", eofreached)
 --]]
     mp.observe_property("percent-pos", "number", percentpos)
 end
