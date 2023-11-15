@@ -2,7 +2,7 @@
 ytmsclu_addjob="/home/ashish/.scripts/ytmsclu-addjob.sh"
 notifyerror="notify-send -u critical -t 0 ytmsclu-history"
 
-filename="$1"
+filename="${1##*/}"
 idp="${filename##*(}"
 id="${idp%)*}"
 if [ "$idp" != "$filename" ] && [ "$id" != "$idp" ] ; then

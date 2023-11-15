@@ -480,6 +480,9 @@
 [maintenance]
     stack_tag = "maintenance"
     history_ignore = yes
+[mpv]
+    summary = "mpv"
+    history_ignore = yes
 [mtpmount]
     summary = " MTP mounter"
     body = "No MTP device to mount or unmount"
