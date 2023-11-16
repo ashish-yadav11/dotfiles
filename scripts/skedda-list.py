@@ -16,10 +16,10 @@ else:
     sys.exit(2)
 
 slotdict = {
-    "541213": "1:1", "541214": "1:2", "834239": "1:3", "834240": "1:4",
-    "541215": "2:1", "541216": "2:2", "541217": "2:3", "579927": "2:4",
-    "668840": "3:1", "668841": "3:2", "668842": "3:3", "668843": "3:4",
-    "668844": "4:1", "668845": "4:2", "668851": "4:3", "668852": "4:4"
+    541213: "1:1", 541214: "1:2", 834239: "1:3", 834240: "1:4",
+    541215: "2:1", 541216: "2:2", 541217: "2:3", 579927: "2:4",
+    668840: "3:1", 668841: "3:2", 668842: "3:3", 668843: "3:4",
+    668844: "4:1", 668845: "4:2", 668851: "4:3", 668852: "4:4"
 }
 slotcols = { "1": "yellow", "2": "red", "3": "blue", "4": "green" }
 
@@ -35,7 +35,7 @@ with open(logfile, 'r') as f:
 
 usernames = [f'{x["firstName"].strip()} {x["lastName"].strip()}' for x in log["venueusers"]]
 usernames.append(myname)
-userids = [x["id"] for x in log["venueusers"]]
+userids = [int(x["id"]) for x in log["venueusers"]]
 userids.append(myid)
 
 pbookings_s = []
@@ -47,14 +47,15 @@ bookings_s = []
 bookings = []
 for x in log["bookings"][1:]:
     time_r = x["start"]
-    slot = slotdict[x["spaces"][0]]
+    slot = slotdict[int(x["spaces"][0])]
     hr = int(time_r[11:13])
     if hr < starthr:
         continue
-    userid = x["venueuser"]
-    if not userid:
+    if x["venueuser"]:
+        userid = int(x["venueuser"])
+    else:
         continue
-    idx = userids.index(userid)
+    idx = int(userids.index(userid))
     username = usernames[idx]
     booking_s = f'{time_r} {slot} {username}'
     bookings_s.append(booking_s)

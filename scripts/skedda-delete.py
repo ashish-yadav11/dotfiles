@@ -30,7 +30,7 @@ with open(logfile, 'r') as f:
 
 usernames = [f'{x["firstName"].strip()} {x["lastName"].strip()}' for x in log["venueusers"]]
 usernames.append(myname)
-userids = [x["id"] for x in log["venueusers"]]
+userids = [int(x["id"]) for x in log["venueusers"]]
 userids.append(myid)
 
 bookings_s = []
@@ -39,14 +39,15 @@ i = 0
 mybookings = []
 for x in log["bookings"][1:]:
     time_r = x["start"]
-    slot = slotdict[x["spaces"][0]]
+    slot = slotdict[int(x["spaces"][0])]
     hr = int(time_r[11:13])
     if hr < starthr:
         continue
-    userid = x["venueuser"]
-    if not userid:
+    if x["venueuser"]:
+        userid = int(x["venueuser"])
+    else:
         continue
-    idx = userids.index(userid)
+    idx = int(userids.index(userid))
     username = usernames[idx]
     bookings_s.append(f'{time_r} {slot} {username}')
     spc = '\t'
