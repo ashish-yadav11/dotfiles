@@ -23,11 +23,19 @@ noremap         <silent>        <Leader>2               2gt
 noremap         <silent>        <Leader>3               3gt
 noremap         <silent>        <Leader>4               4gt
 noremap         <silent>        <Leader>5               5gt
+noremap         <silent>        <Leader>aa              1gt
+noremap         <silent>        <Leader>as              2gt
+noremap         <silent>        <Leader>ad              3gt
+noremap         <silent>        <Leader>af              4gt
 noremap         <silent>        <Leader>6               :tablast<CR>4gT
 noremap         <silent>        <Leader>7               :tablast<CR>3gT
 noremap         <silent>        <Leader>8               :tablast<CR>2gT
 noremap         <silent>        <Leader>9               :tablast<CR>1gT
 noremap         <silent>        <Leader>0               :tablast<CR>
+noremap         <silent>        <Leader>aj              :tablast<CR>3gT
+noremap         <silent>        <Leader>ak              :tablast<CR>2gT
+noremap         <silent>        <Leader>al              :tablast<CR>1gT
+noremap         <silent>        <Leader>a;              :tablast<CR>
 noremap         <silent>        <Leader>j               gt
 noremap         <silent>        <Leader>k               gT
 noremap         <silent>        <Leader>J               :tabmove +1<CR>
