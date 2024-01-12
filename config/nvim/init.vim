@@ -75,6 +75,7 @@ filetype plugin on
 syntax on
 
 set expandtab smarttab shiftwidth=4 tabstop=8
+set ignorecase smartcase
 set nojoinspaces
 set mouse=a
 set mousemodel=extend
