@@ -76,6 +76,7 @@ man-pages
 materia-gtk-theme
 mediainfo
 mesa-vdpau
+mkvtoolnix-gui
 mpv
 mpv-mpris
 msmtp
