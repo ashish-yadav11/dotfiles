@@ -28,7 +28,7 @@ myid = 1685628
 #gsnm = check_output(["pass", "skedda/gs.nm"]).decode("utf-8").strip()
 srnm = check_output(["pass", "skedda/sr.nm"]).decode("utf-8").strip()
 
-starthr = 19
+starthr = 18
 
 with open(logfile, 'r') as f:
     log = json.load(f)
@@ -45,7 +45,7 @@ if histfile and os.path.isfile(histfile):
 
 bookings_s = []
 bookings = []
-for x in log["bookings"][1:]:
+for x in log["bookings"]:
     time_r = x["start"]
     slot = slotdict[int(x["spaces"][0])]
     hr = int(time_r[11:13])
