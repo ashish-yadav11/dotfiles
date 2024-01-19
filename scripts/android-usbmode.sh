@@ -31,7 +31,7 @@ case "$(adb -d shell getprop sys.usb.state)" in
     *) none="*$none"; items="$mrorder\n$ptp\n$midi\n$none" ;;
 esac
 case "$(echo "$items" | $menu -p Select)" in
-    "$none") function=none ;;
+    "$none") function=sec_charging ;;
     "$mtp") function=mtp ;;
     "$ptp") function=ptp ;;
     "$rndis") function=rndis ;;
