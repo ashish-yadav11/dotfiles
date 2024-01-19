@@ -1,7 +1,0 @@
-[Unit]
-Description=Android USB Mode Selection
-
-[Service]
-User=ashish
-ExecStart=/home/ashish/.scripts/systemd/android-usbmode.sh %I
-RuntimeMaxSec=10
