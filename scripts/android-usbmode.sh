@@ -39,9 +39,6 @@ case "$(echo "$items" | $menu -p Select)" in
     *) cleanexit ;;
 esac
 
-# to prevent udev rule from reverting the choosen usb mode
-: >/tmp/android-udev.lock
-
 adb -d shell svc usb setFunctions "$function"
 adb -d wait-for-usb-device
 [ -n "$clean" ] && setsid -f $mtpclean
