@@ -24,7 +24,7 @@ device="$(awk '
 rm -f "$envfile"
 [[ -n "$device" ]] || { echo "Error: something wrong with envfile format!"; exit ;}
 
-timeout 1 adb -d wait-for-usb-device
+timeout 2 adb -d wait-for-usb-device
 case "$(adb -d shell getprop sys.usb.state)" in
     *mtp*) : ;;
         *) echo "Error: device not attached in mtp mode!"; exit ;;
