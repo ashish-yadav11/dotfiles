@@ -1,12 +1,12 @@
 [ca/desrt/dconf-editor]
 restore-view=false
-saved-pathbar-path='/org/gnome/nm-applet/eap/'
-saved-view='/org/gnome/nm-applet/'
+saved-pathbar-path='/'
+saved-view='/'
 show-warning=false
 sort-case-sensitive=true
-window-height=666
+window-height=586
 window-is-maximized=false
-window-width=1358
+window-width=1118
 
 [org/gnome/Fractal]
 main-window-state-height=640
@@ -146,8 +146,8 @@ selected-color=(true, 1.0, 1.0, 1.0, 1.0)
 
 [org/gtk/settings/file-chooser]
 date-format='regular'
-location-mode='path-bar'
-show-hidden=false
+location-mode='filename-entry'
+show-hidden=true
 show-size-column=true
 show-type-column=true
 sidebar-width=179
@@ -156,7 +156,7 @@ sort-directories-first=true
 sort-order='ascending'
 type-format='category'
 window-position=(0, 22)
-window-size=(900, 560)
+window-size=(900, 689)
 
 [org/yorba/shotwell/crop-settings]
 last-crop-height=1
