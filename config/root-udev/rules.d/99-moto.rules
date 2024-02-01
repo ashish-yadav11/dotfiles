@@ -1,0 +1,13 @@
+# first two entries of PRODUCT in `udevadm monitor --property --subsystem-match=usb`
+#       22b8/2e81 - Charging Only
+#       22b8/2e76 - MTP
+#       22b8/2e84 - PTP
+#       22b8/2e25 - RNDIS
+#       18d1/4ee9 - MIDI
+
+# for adb to be accessible in all usb modes
+ SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22b8|18d1", MODE="0660", GROUP="adbusers"
+
+# to automatically mount on plugging in the device in mtp mode
+
+ SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22b8", ATTR{idProduct}=="2e76", RUN+="/usr/bin/dash -c '[ -f /tmp/android-automount.disable ] && exit 0; printenv ID_VENDOR ID_MODEL ID_SERIAL_SHORT DEVNAME >/tmp/android-mount.env; chown ashish:ashish /tmp/android-mount.env; systemctl restart android-mount.service'"

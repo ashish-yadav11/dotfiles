@@ -47,9 +47,6 @@ case "$line" in
     *"FUSE mounted")
         $notify -t 1000 " Android" "Device mounted successfully"
         ;;
-    *"no MTP devices found"|*"LIBUSB_ERROR_NO_DEVICE"|*"closing connection."|*"LIBUSB_ERROR_IO")
-        rm -rf "$mtpoint" "$mtpoint.log"
-        ;;
     *)
         $notify -u critical -t 0 " Android" "Error mounting device!\nline: $line"
         ;;
