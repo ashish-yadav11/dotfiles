@@ -10,15 +10,14 @@ envfile=/tmp/android-mount.env
 setsid -f $mtpclean
 
 device="$(awk '
-    NR==1 {v=toupper(substr($0,1,1)) tolower(substr($0,2)); V=toupper(v); next}
-    NR==2 {M=toupper($0); next}
-    NR==3 {S=$0; next}
-    NR==4 {D=substr($0,14,3) substr($0,18); next}
-    END {i=index(M,V);
-        if (i==1) {M=substr(M,length(V)+2); sub(/[ _].*/,"",M); m=v"-"M}
-        else if (i==0) {sub(/[ _].*/,"",M); m=v"-"M}
-        else {m=M};
-        print m"-"S"-"D"|"S; f=0}
+        NR==1 {d=substr($2,14,3) substr($2,18); next}
+        NR==2 {v=tolower($2); next}
+        NR==3 {vid=$2; next}
+        NR==4 {m=tolower($2); gsub(/[ _]/,"-",m); next}
+        NR==5 {mid=$2; next}
+        END {i=index(m,v); if (i==0) {n=v"-"m} else {n=m};
+            n=toupper(substr(n,1,1)) tolower(substr(n,2))
+            print n"-"d"|"vid":"mid; f=0; next}
     ' "$envfile"
 )"
 rm -f "$envfile"
@@ -32,22 +31,17 @@ esac
 
 mtpoint="$XDG_RUNTIME_DIR/mtp/${device%|*}"
 mkdir -p "$mtpoint"
-setsid -f go-mtpfs -usb-timeout 10000 -dev "${device##*|}" "$mtpoint" &>"$mtpoint.log"
-timeout="$(( SECONDS + 2 ))"
-{
-    while (( SECONDS < timeout )) ; do
-        sleep 0.1
-        IFS='' read -r line
-        [[ -z "$line" ]] && continue
-        case "$line" in *"attempting reset") continue ;; *) break ;; esac
-    done
-} <"$mtpoint.log"
-[[ -z "$line" ]] && exit
-case "$line" in
-    *"FUSE mounted")
+if aft-mtp-mount -D "${device##*|}" "$mtpoint" ; then
+    shopt -s nullglob dotglob
+    files=( "$mtpoint"/* )
+    shopt -u nullglob dotglob
+    if (( ${#files[*]} )) ; then
         $notify -t 1000 " Android" "Device mounted successfully"
-        ;;
-    *)
-        $notify -u critical -t 0 " Android" "Error mounting device!\nline: $line"
-        ;;
-esac
+    else
+        $notify -u critical -t 0 " Android" "Error mounting device!"
+        fusermount -u "$mtpoint" && rm -rf "$mtpoint"
+    fi
+else
+    $notify -u critical -t 0 " Android" "Error mounting device!"
+    rm -rf "$mtpoint"
+fi
