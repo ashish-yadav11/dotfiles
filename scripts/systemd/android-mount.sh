@@ -10,14 +10,14 @@ envfile=/tmp/android-mount.env
 setsid -f $mtpclean
 
 device="$(awk '
-        NR==1 {d=substr($2,14,3) substr($2,18); next}
-        NR==2 {v=tolower($2); next}
-        NR==3 {vid=$2; next}
-        NR==4 {m=tolower($2); gsub(/[ _]/,"-",m); next}
-        NR==5 {mid=$2; next}
+        NR==1 {d=substr($0,14,3) substr($0,18); next}
+        NR==2 {v=tolower($0); next}
+        NR==3 {vid=$0; next}
+        NR==4 {m=tolower($0); gsub(/[ _]/,"-",m); next}
+        NR==5 {mid=$0; next}
         END {i=index(m,v); if (i==0) {n=v"-"m} else {n=m};
             n=toupper(substr(n,1,1)) tolower(substr(n,2))
-            print n"-"d"|"vid":"mid; f=0; next}
+            print n"-"d"|"vid":"mid; f=0}
     ' "$envfile"
 )"
 rm -f "$envfile"
