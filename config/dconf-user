@@ -6,7 +6,7 @@ show-warning=false
 sort-case-sensitive=true
 window-height=586
 window-is-maximized=false
-window-width=1118
+window-width=918
 
 [org/gnome/Fractal]
 main-window-state-height=640
@@ -51,8 +51,8 @@ sort-type='ascending'
 [org/gnome/file-roller/ui]
 sidebar-width=200
 view-sidebar=false
-window-height=666
-window-width=1358
+window-height=688
+window-width=811
 
 [org/gnome/gthumb/browser]
 browser-sidebar-width=285
@@ -146,7 +146,7 @@ selected-color=(true, 1.0, 1.0, 1.0, 1.0)
 
 [org/gtk/settings/file-chooser]
 date-format='regular'
-location-mode='filename-entry'
+location-mode='path-bar'
 show-hidden=true
 show-size-column=true
 show-type-column=true
