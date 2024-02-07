@@ -129,7 +129,6 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'neomutt/neomutt.vim'
 Plug 'mbbill/undotree'
 Plug 'lervag/vimtex'
-Plug 'michaeljsmith/vim-indent-object'
 
 call plug#end()
 
