@@ -1,0 +1,2 @@
+33   sh "xdotool keydown ctrl sleep 0.1 key p keyup ctrl sleep 1 keydown ctrl sleep 0.1 key m keyup ctrl sleep 0.5 mousemove 781 474 mousedown 1 sleep 0.1 mouseup 1 sleep 0.1 mousedown 1 mousemove 584 474 mousemove 584 574 mousemove 781 574 mouseup 1", end
+58   sh "xdotool keydown ctrl sleep 0.1 key m keyup ctrl sleep 0.5 mousemove 781 474 mousedown 1 sleep 0.1 mouseup 1 sleep 0.1 mousedown 1 mousemove 584 474 mousemove 584 574 mousemove 781 574 mouseup 1", end
