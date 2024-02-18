@@ -10,8 +10,7 @@ case "$interface" in
             systemctl --no-block restart iiserlogin.service
         ;;
     wlp5s0)
-        [ "$CONNECTION_ID" = Students ] && nmcli -t device show wlp5s0 |
-         grep -qFm1 "IP4.DOMAIN[1]:iiserpune.ac.in" &&
+        { [ "$CONNECTION_ID" = Students ] || [ "$CONNECTION_ID" = Guest ] ;} &&
             systemctl --no-block restart iiserlogin.service
         ;;
 esac
