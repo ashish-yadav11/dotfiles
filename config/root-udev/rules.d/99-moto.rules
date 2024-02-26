@@ -9,4 +9,4 @@
  SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22b8|18d1", MODE="0660", GROUP="adbusers"
 
 # to automatically mount on plugging in the device in mtp mode
-#SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22b8", ATTR{idProduct}=="2e76", RUN+="/usr/bin/dash -c '[ -f /tmp/android-automount.disable ] && exit 0; printenv DEVNAME ID_VENDOR ID_VENDOR_ID ID_MODEL ID_MODEL_ID >/tmp/android-mount.env; chown ashish:ashish /tmp/android-mount.env; systemctl restart android-mount.service'"
+SUBSYSTEM=="usb", ACTION=="add", ATTR{idVendor}=="22b8", ATTR{idProduct}=="2e76", RUN+="/usr/bin/dash -c '[ -f /tmp/android-automount.disable ] && exit 0; printenv DEVNAME ID_VENDOR ID_VENDOR_ID ID_MODEL ID_MODEL_ID >/tmp/android-mount.env; chown ashish:ashish /tmp/android-mount.env; systemctl restart android-mount.service'"
