@@ -12,7 +12,7 @@ getdsknum() {
 }
 savewintitles() {
     : >"$file"
-    xwininfo -tree -root | grep '^     0' |
+    xwininfo -tree -root | grep '^     0x' |
         awk -F': \\(' '{print $1}' | grep -v -F '(has no name)' |
             while read -r winid wintitle ; do
                 desktop="$(xprop -id "$winid" _NET_WM_DESKTOP)"
