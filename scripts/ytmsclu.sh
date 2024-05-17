@@ -32,16 +32,13 @@ unlockexit() {
     exit
 }
 
-if ! urltitle="$( \
+if ! { urltitle="$( \
     sqlite3 "file:$historyfile?mode=ro&nolock=1" \
         "SELECT url,title FROM urls ORDER BY last_visit_time DESC LIMIT 30" |
-            grep -m1 "^https://music\.youtube\.com")" ; then
-    notifyerror "Error: no valid YouTube Music urls found in recent history!"
-    unlockexit
-fi
-url="${urltitle%%|*}"
-if ! echo "$url" | grep -qm1 \
-        "^https://music\.youtube\.com/watch?v=...........\($\|&\)" ; then
+            grep -m1 "^https://music\.youtube\.com")"; url="${urltitle%%|*}" ;} ||
+   ! { echo "$url" | grep -qm1 \
+        "^https://music\.youtube\.com/watch?v=...........\($\|&\)" ;} ; then
+
     nid="$(notify -p -t 1000 ytmsclu "Falling back to the 'lastplayed' script")"
     if ! urltitle="$($ytm_lastplayed)" ; then
         notifyerror "Error: something went wrong with the 'lastplayed' script!"
