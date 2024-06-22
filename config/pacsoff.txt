@@ -2,10 +2,6 @@ alacritty
 amd-ucode
 android-tools
 android-udev
-arduino
-arduino-avr-core
-arduino-cli
-arduino-docs
 at
 bash-completion
 bc
@@ -59,6 +55,7 @@ jupyter-nbconvert
 kcolorchooser
 kernel-modules-hook
 kvantum
+kvantum-qt5
 kvantum-theme-materia
 libreoffice-fresh
 libva-mesa-driver
@@ -72,6 +69,7 @@ lxqt-sudo
 maim
 man-db
 man-pages
+mate-polkit
 materia-gtk-theme
 mediainfo
 mesa-vdpau
@@ -103,7 +101,6 @@ picom
 pipewire-alsa
 pipewire-pulse
 playerctl
-polkit-kde-agent
 python-cairo
 python-google-api-python-client
 python-google-auth-httplib2
