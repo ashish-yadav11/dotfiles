@@ -98,7 +98,6 @@ pdfgrep
 pdftk
 perl-file-mimeinfo
 perl-regexp-common
-picom
 pipewire-alsa
 pipewire-pulse
 playerctl
