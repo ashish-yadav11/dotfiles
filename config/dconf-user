@@ -8,16 +8,6 @@ window-height=586
 window-is-maximized=false
 window-width=918
 
-[org/gnome/Fractal]
-main-window-state-height=640
-main-window-state-maximized=false
-main-window-state-width=860
-main-window-state-x=2
-main-window-state-y=24
-
-[org/gnome/desktop/interface]
-color-scheme='prefer-dark'
-
 [org/gnome/file-roller/dialogs/add]
 current-folder='file:///home/ashish'
 exclude-files=''
@@ -114,59 +104,6 @@ background-color='rgb(0,0,0)'
 grid-type='thirds'
 keep-aspect-ratio=true
 resize='crop'
-
-[org/gnome/nm-applet]
-disable-connected-notifications=true
-disable-disconnected-notifications=true
-disable-vpn-notifications=true
-suppress-wireless-networks-available=true
-
-[org/gnome/nm-applet/eap/08bbdb09-6a39-4ca1-adfd-b531fbba45e5]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/0e8c50d7-049f-4f64-9797-3d1069e3f6ff]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/47926fd0-7e39-4948-aa4b-df5c8b6511a7]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/4d2a352e-bbd7-4056-a778-1ab18e879bac]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gnome/nm-applet/eap/d71761bd-3c09-4eff-9b76-b3f3a6c7aa63]
-ignore-ca-cert=false
-ignore-phase2-ca-cert=false
-
-[org/gtk/settings/color-chooser]
-selected-color=(true, 1.0, 1.0, 1.0, 1.0)
-
-[org/gtk/settings/file-chooser]
-date-format='regular'
-location-mode='path-bar'
-show-hidden=true
-show-size-column=true
-show-type-column=true
-sidebar-width=179
-sort-column='name'
-sort-directories-first=true
-sort-order='ascending'
-type-format='category'
-window-position=(0, 22)
-window-size=(900, 689)
-
-[org/yorba/shotwell/crop-settings]
-last-crop-height=1
-last-crop-menu-choice=0
-last-crop-width=1
-
-[org/yorba/shotwell/preferences/window]
-direct-height=740
-direct-maximize=false
-direct-width=814
 
 [yad/settings]
 border=5
