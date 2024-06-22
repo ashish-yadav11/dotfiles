@@ -105,6 +105,12 @@ grid-type='thirds'
 keep-aspect-ratio=true
 resize='crop'
 
+[org/gnome/nm-applet]
+disable-connected-notifications=true
+disable-disconnected-notifications=true
+disable-vpn-notifications=true
+suppress-wireless-networks-available=true
+
 [yad/settings]
 border=5
 combo-always-editable=false
