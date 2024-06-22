@@ -1,5 +1,4 @@
 abook
-android-file-transfer-linux
 better-adb-sync-git
 brave-bin
 cyrus-sasl-xoauth2-git
