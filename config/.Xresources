@@ -8,7 +8,7 @@ Xft.lcdfilter:  lcddefault
 Xft.rgba: rgb
 
 ! Cursor
-Xcursor.theme: Breeze_Snow
+Xcursor.theme: capitaine-cursors-light
 
 ! Sxiv
 Sxiv.background: #1d2021

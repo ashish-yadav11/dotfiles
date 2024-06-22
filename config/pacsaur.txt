@@ -33,5 +33,4 @@ subedit
 textidote-bin
 ventoy-bin
 woeusb
-xcursor-breeze
 yay
