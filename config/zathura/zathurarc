@@ -12,12 +12,12 @@ map Q quit
 map q feedkeys "z0<S-q>"
 
 #map c feedkeys ":set recolor-keephue<Return>:<Return>"
-#map D feedkeys ':set recolor-darkcolor "#ebdbb2"<Return>:set recolor-lightcolor "#1c1c1c"<Return>:set recolor true<Return>'
+#map D feedkeys ':set recolor-darkcolor "#ebdbb2"<Return>:set recolor-lightcolor "#333333"<Return>:set recolor true<Return>'
 #map W feedkeys ':set recolor-darkcolor "#000000"<Return>:set recolor-lightcolor "#bdae93"<Return>:set recolor true<Return>'
 
 map <A-F1> set "recolor-keephue"
 map <A-F2> set 'recolor-darkcolor "#ebdbb2"'
-map <A-F3> set 'recolor-lightcolor "#1c1c1c"'
+map <A-F3> set 'recolor-lightcolor "#333333"'
 map <A-F4> set 'recolor-darkcolor "#000000"'
 map <A-F5> set 'recolor-lightcolor "#bdae93"'
 map <A-F6> set 'recolor true'
@@ -29,6 +29,7 @@ map W feedkeys "<A-F4><A-F5><A-F6>"
 
 set adjust-open width
 set font "Monospace 12"
+set link-zoom false
 set recolor true
 set recolor-keephue true
 set recolor-reverse-video true
@@ -68,7 +69,7 @@ set notification-bg             "#1d2021"
 set notification-fg             "#b8bb26"
 
 set recolor-darkcolor           "#ebdbb2"
-set recolor-lightcolor          "#1c1c1c"
+set recolor-lightcolor          "#333333"
 
 set render-loading-bg           "#1d2021"
 set render-loading-fg           "#ebdbb2"
