@@ -43,8 +43,8 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 xwallpaper --stretch /home/ashish/.config/wall* &
 {
-pidof -sq /usr/lib/polkit-kde-authentication-agent-1 ||
-    /usr/lib/polkit-kde-authentication-agent-1
+pidof -sq /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 ||
+    /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 } &
 {
 pidof -sq /usr/bin/nm-applet ||
