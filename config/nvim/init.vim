@@ -63,7 +63,7 @@ nnoremap        <silent>        <Leader>r               :call SpawnTerm("rp")<CR
 nnoremap        <silent>        <Leader>R               :call SpawnTerm("rc")<CR>
 nnoremap        <silent>        <Leader><C-r>           :call SpawnTerm("rd")<CR>
 " logs
-nnoremap                        <Leader>w               :w <C-r>=strftime("%m%d")<CR>.txt<Left><Left><Left><Left>
+nnoremap                        <Leader>w               :w <C-r>=strftime("%y%m%d")<CR>.txt<Left><Left><Left><Left>
 nnoremap                        <Leader>e               :call RenameFile()<CR>
 nnoremap        <silent>        <Leader>n               :enew<Bar>bdelete #<CR>
 nnoremap        <silent>        <Leader>d               :call DeleteBuffers(0)<CR>
