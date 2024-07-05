@@ -23,13 +23,13 @@ dictd
 dunst
 earlyoom
 elinks
+engrampa
 entr
 fd
 fdupes
 feh
 ffmpeg
 figlet
-file-roller
 fzf
 gcc-fortran
 gdb
