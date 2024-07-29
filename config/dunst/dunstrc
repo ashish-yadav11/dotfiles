@@ -456,6 +456,9 @@
 [dictionary]
     summary = "Dictionary"
     history_ignore = yes
+[dwm]
+    summary = "dwm"
+    history-ignore = yes
 [espeak]
     summary = "Espeak"
     history_ignore = yes
