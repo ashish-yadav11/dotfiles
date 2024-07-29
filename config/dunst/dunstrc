@@ -458,7 +458,7 @@
     history_ignore = yes
 [dwm]
     summary = "dwm"
-    history-ignore = yes
+    history_ignore = yes
 [espeak]
     summary = "Espeak"
     history_ignore = yes
