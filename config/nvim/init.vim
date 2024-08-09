@@ -165,6 +165,7 @@ command! -bang -nargs=* Rg
           \ --max-depth 4
           \ --hidden
           \ --smart-case
+          \ --no-ignore
           \ -- '..shellescape(<q-args>)..'; exit 0',
   \     1,
   \     fzf#vim#with_preview(),
