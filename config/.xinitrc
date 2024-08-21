@@ -61,7 +61,7 @@ pidof -sqx /home/ashish/.scripts/pulse_daemon.sh ||
 } &
 clipdaemon &
 playerctld daemon &
-unclutter &
+unclutter --timeout=2 --jitter=1 --ignore-scrolling &
 adb start-server &
 #gebaard &
 savewintitles -d &
