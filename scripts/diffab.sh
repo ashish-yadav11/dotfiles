@@ -37,11 +37,6 @@ mdiff="$(
     )"
     [[ -n "$sdiff" ]] &&
         printf "diff $dotfiles/config/crontab crontab\n%s\n" "$sdiff"
-    sdiff="$(
-        $sdiff_cmd -I "^window-position=(\|^location-mode='\|^show-hidden=" "$dotfiles/config/dconf-user" <(dconf dump /)
-    )"
-    [[ -n "$sdiff" ]] &&
-        printf "diff $dotfiles/config/dconf-user dconf-user\n%s\n" "$sdiff"
 
     prefix="$dotfiles/config/root-"
     for f in "$prefix"* ; do
