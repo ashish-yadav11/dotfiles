@@ -16,9 +16,11 @@ video/mp4=mpv.desktop
 x-scheme-handler/etcher=balena-etcher.desktop
 x-scheme-handler/http=brave-browser.desktop
 x-scheme-handler/https=brave-browser.desktop
-x-scheme-handler/tg=userapp-Telegram Desktop-W1KKW1.desktop
+x-scheme-handler/tg=org.telegram.desktop.desktop
+x-scheme-handler/tonsite=org.telegram.desktop.desktop
 
 [Added Associations]
 application/postscript=org.pwmt.zathura-ps.desktop;
 application/xml=nvim.desktop;nvim-qt.desktop;
-x-scheme-handler/tg=userapp-Telegram Desktop-SNMI90.desktop;userapp-Telegram Desktop-W1KKW1.desktop;
+x-scheme-handler/tg=org.telegram.desktop.desktop;
+x-scheme-handler/tonsite=org.telegram.desktop.desktop;
