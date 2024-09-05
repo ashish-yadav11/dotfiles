@@ -70,11 +70,33 @@ class fktouch(Command):
 
     def execute(self):
         arg = self.rest(1)
-        fname = os.path.join(self.fm.thisdir.path, arg)
-        if not os.path.lexists(fname):
-            open(fname, 'a').close()
+        fpath = os.path.join(self.fm.thisdir.path, arg)
+        if not os.path.lexists(fpath):
+            open(fpath, 'a').close()
             self.fm.thisdir.load_content(schedule=False)
-            self.fm.select_file(fname)
+            self.fm.select_file(fpath)
+        else:
+            self.fm.notify("file/directory exists!", bad=True)
+
+dotnotes_folder = "/home/ashish/Documents/.dotnotes" # without trailing slash
+
+class mkdotnote(Command):
+    """
+    :mkdotnote <basename>
+
+    Creates a note file <basename>.txt in .dotnotes, makes a link to it in the
+    current directory and selects it.
+    """
+
+    def execute(self):
+        fname = f"{self.rest(1)}.txt"
+        npath = os.path.join(dotnotes_folder, fname)
+        lpath = os.path.join(self.fm.thisdir.path, fname)
+        if not os.path.lexists(npath) and not os.path.lexists(lpath):
+            open(npath, 'a').close()
+            os.symlink(npath, lpath)
+            self.fm.thisdir.load_content(schedule=False)
+            self.fm.select_file(lpath)
         else:
             self.fm.notify("file/directory exists!", bad=True)
 
