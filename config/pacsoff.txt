@@ -20,6 +20,7 @@ cronie
 dash
 dconf-editor
 dictd
+diffpdf
 dunst
 earlyoom
 elinks
@@ -138,6 +139,7 @@ sqlite
 strace
 sxiv
 telegram-desktop
+termdown
 texlive-basic
 texlive-bibtexextra
 texlive-binextra
