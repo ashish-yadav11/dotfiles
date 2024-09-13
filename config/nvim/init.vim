@@ -76,8 +76,8 @@ nnoremap        <silent>        <Leader>lt              :call vimtex#fzf#run('ct
 " literal tab character on shift-tab
 inoremap                        <S-Tab>                 <C-v><Tab>
 " ctrl+space to insert date
-inoremap                        <C-Space>               <C-r>=strftime("%Y%m%d")<CR>
-cnoremap                        <C-Space>               <C-r>=strftime("%Y%m%d")<CR>
+inoremap                        <C-Space>               <C-r>=strftime("%y%m%d")<CR>
+cnoremap                        <C-Space>               <C-r>=strftime("%y%m%d")<CR>
 
 
 " general
