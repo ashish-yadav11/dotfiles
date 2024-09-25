@@ -1,10 +1,10 @@
 [swipe.commands.three]
 left_up = ""
 right_up = ""
-up = "sigdwm 'fclv i 0'"
+up = "sigdwm 'view ui 0'"
 left_down = ""
 right_down = ""
-down = "sigdwm 'view ui 0'"
+down = "sigdwm 'fclv i 0'"
 left = "sigdwm 'sfvw i -1'"
 right = "sigdwm 'sfvw i +1'"
 
