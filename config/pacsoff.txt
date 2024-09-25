@@ -23,6 +23,7 @@ dictd
 diffpdf
 dunst
 earlyoom
+easyeffects
 elinks
 engrampa
 entr
@@ -67,6 +68,7 @@ libvdpau-va-gl
 libxft
 lostfiles
 lsof
+lsp-plugins-lv2
 lxappearance-gtk3
 lxqt-sudo
 maim
@@ -133,7 +135,6 @@ sagemath-doc
 scrcpy
 screenkey
 shellcheck
-signal-desktop
 socat
 sqlite
 strace
