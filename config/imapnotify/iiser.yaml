@@ -1,0 +1,20 @@
+configurations:
+    -
+        host: imap.gmail.com
+        port: 993
+        tls: true
+        username: ashishkumar.yadav@students.iiserpune.ac.in
+        xoAuth2: true
+        passwordCMD: '/home/ashish/.scripts/oauth2tool.sh ashishkumar.yadav@students.iiserpune.ac.in'
+        wait: 60
+        onNewMail: 'sigdsblocks 3'
+        onDeletedMail: 'sigdsblocks 3'
+        boxes:
+            -
+                mailbox: INBOX
+            -
+                mailbox: '[Gmail]/Sent Mail'
+            -
+                mailbox: '[Gmail]/Drafts'
+            -
+                mailbox: '[Gmail]/Spam'

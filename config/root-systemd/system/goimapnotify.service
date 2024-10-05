@@ -4,6 +4,6 @@ Description=Custom goimapnotify Service
 [Service]
 Type=simple
 ExecStartPre=-sigdsblocks 3
-ExecStart=goimapnotify -conf /home/ashish/.config/imapnotify/iiser.conf
+ExecStart=goimapnotify -conf /home/ashish/.config/imapnotify/iiser.yaml
 Restart=always
 RestartSec=60
