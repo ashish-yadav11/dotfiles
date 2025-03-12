@@ -47,6 +47,8 @@ nnoremap        <silent>        yp                      :let @+=expand("%:p")<CR
 nnoremap        <silent>        yd                      :let @+=expand("%:p:h")<CR>
 " undo search highlighting
 nnoremap        <silent>        <Leader><Esc>           :nohlsearch<CR>
+" refresh syntax highlighting
+nnoremap        <silent>        <Leader>s               :syntax sync fromstart<CR>
 " switch buffers
 nnoremap        <silent>        <Leader>b               :Buffers<CR>
 nnoremap                        <Leader>B               :buffers<CR>:buffer<Space>
