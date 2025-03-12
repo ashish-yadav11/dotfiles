@@ -50,6 +50,8 @@ nnoremap        <silent>        <Leader><Esc>           :nohlsearch<CR>
 " switch buffers
 nnoremap        <silent>        <Leader>b               :Buffers<CR>
 nnoremap                        <Leader>B               :buffers<CR>:buffer<Space>
+" marks
+nnoremap        <silent>        <Leader>m               :Marks<CR>
 " edit files
 nnoremap        <silent>        <Leader>f               :Files<CR>
 nnoremap                        <Leader>F               :Files<Space>
