@@ -62,8 +62,6 @@ kvantum
 kvantum-qt5
 kvantum-theme-materia
 libreoffice-fresh
-libva-mesa-driver
-libva-vdpau-driver
 libvdpau-va-gl
 libxft
 lostfiles
@@ -77,7 +75,7 @@ man-pages
 mate-polkit
 materia-gtk-theme
 mediainfo
-mesa-vdpau
+mesa
 mkvtoolnix-gui
 mpv
 mpv-mpris
@@ -174,6 +172,7 @@ unclutter
 urlscan
 usbutils
 valgrind
+vulkan-radeon
 wmname
 xcape
 xclip
