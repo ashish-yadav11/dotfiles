@@ -172,7 +172,6 @@ unclutter
 urlscan
 usbutils
 valgrind
-vulkan-radeon
 wmname
 xcape
 xclip

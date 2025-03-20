@@ -10,7 +10,6 @@ export GOPATH=~/.local/lib/go
 #export PAGER="less -R"
 export PATH=~"/.local/bin:$PATH"
 #export QT_QPA_PLATFORMTHEME=qt5ct
-#export RADV_PERFTEST="video_decode,video_encode"
 #export RANGER_LOAD_DEFAULT_RC=FALSE
 export R_ENVIRON_USER=~/.Renviron
 #export TERMINAL=st
