@@ -15,6 +15,7 @@ menu() {
     rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
                      listview {lines: 1; columns: 9;}
                      entry {enabled: false;}' \
+         -kb-accept-entry 'Return,[172]' -kb-row-down 'Down,[122]' -kb-cancel 'Escape,[123]' \
          -dmenu -i -matching fuzzy -no-custom "$@"
 }
 
