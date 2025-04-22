@@ -11,7 +11,7 @@ if flock -n 9; then
     if [ -f "$sigfile" ] ; then
         rm -f "$sigfile"
     else
-        pactl set-sink-volume @DEFAULT_SINK@ +5%
+        pactl set-sink-volume @DEFAULT_SINK@ -5%
     fi
 else
     if ! [ -f "$sigfile" ] ; then
