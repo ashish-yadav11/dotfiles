@@ -1,7 +1,8 @@
 #!/bin/dash
+ytmsclu=/home/ashish/.scripts/ytmsclu.sh
 
-lckfile="/tmp/doubleclick.lck"
-sigfile="/tmp/doubleclick.sig"
+lckfile="/tmp/doublenext.lck"
+sigfile="/tmp/doublenext.sig"
 dt=0.3
 
 exec 9<>"$lckfile"
@@ -12,11 +13,11 @@ if flock -n 9; then
     if [ -f "$sigfile" ] ; then
         rm -f "$sigfile"
     else
-        playerctl play-pause
+        pactl set-sink-volume @DEFAULT_SINK@ +5%
     fi
 else
     if ! [ -f "$sigfile" ] ; then
         touch "$sigfile"
-        playerctl next
+        $ytmsclu
     fi
 fi
