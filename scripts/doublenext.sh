@@ -30,14 +30,12 @@ if flock -w"$ddt" 8 ; then # `-w` to handle #EDGE-CASE2
     if flock -n 9 ; then
         #EDGE-CASE2
         exec 8<&- 8<>"$lck1file"
-        { run1; exit ;}
+        run1
     else
-        { run2; exit ;}
+        run2
     fi
 elif flock -ns 8 ; then
     #EDGE-CASE2
     exec 8<&- 8<>"$lck1file"
-    flock -w"$ddt" 9 && { run1; exit ;} # `-w` to handle EDGE-CASE1
-else
-    exit
+    flock -w"$ddt" 9 && run1 # `-w` to handle EDGE-CASE1
 fi
