@@ -4,7 +4,7 @@ lck2file="/tmp/doubleprev.2.lck"
 dt=0.25
 ddt=0.003
 
-exec 8<>"$lck1file" 9<>"$lck2file"
+exec 8<"$lck1file" 9<"$lck2file"
 
 action1() {
     pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -29,14 +29,14 @@ run2() {
 if flock -w"$ddt" 8 ; then # `-w` to handle #EDGECASE2,3
     if flock -n 9 ; then
         #EDGECASE2
-        exec 8<&- 8<>"$lck1file"
+        exec 8<&- 8<"$lck1file"
         run1
     else
         run2
     fi
 elif flock -ns 8 ; then
     #EDGECASE3
-    exec 8<&- 8<>"$lck1file"
+    exec 8<&- 8<"$lck1file"
     flock -w"$ddt" 9 && { run1; exit ;} # `-w` to handle EDGECASE1
     flock -w"$ddt" 8 && { run2; exit ;} # `-w` to handle EDGECASE2
 fi
