@@ -16,7 +16,7 @@ action2() {
 run1() {
     sleep "$dt"
     if flock -ns 8 ; then
-        #EDGE-CASE1
+        #EDGECASE1
         exec 9<&- 8<&- # to make sure 9 is always free if 8 is free
         action1
     fi
@@ -26,16 +26,17 @@ run2() {
     flock -w"$dt" 9 # wait for run1 to finish sleeping
 }
 
-if flock -w"$ddt" 8 ; then # `-w` to handle #EDGE-CASE2
+if flock -w"$ddt" 8 ; then # `-w` to handle #EDGECASE2,3
     if flock -n 9 ; then
-        #EDGE-CASE2
+        #EDGECASE2
         exec 8<&- 8<>"$lck1file"
         run1
     else
         run2
     fi
 elif flock -ns 8 ; then
-    #EDGE-CASE2
+    #EDGECASE3
     exec 8<&- 8<>"$lck1file"
-    flock -w"$ddt" 9 && run1 # `-w` to handle EDGE-CASE1
+    flock -w"$ddt" 9 && { run1; exit ;} # `-w` to handle EDGECASE1
+    flock -w"$ddt" 8 && { run2; exit ;} # `-w` to handle EDGECASE2
 fi
