@@ -17,7 +17,7 @@ run1() {
     sleep "$dt"
     if flock -ns 8 ; then
         #EDGECASE1
-        exec 9<&- 8<&- # to make sure 9 is always free if 8 is free
+        exec 9<&- 8<&- # order to make sure 9 is always free if 8 is free
         action1
     fi
 }
