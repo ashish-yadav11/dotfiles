@@ -1,0 +1,1 @@
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ACTION=="bind", ATTR{product}=="USB Optical Mouse", ATTR{manufacturer}=="PixArt", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/ashish/.Xauthority", RUN+="/home/ashish/.scripts/systemd/mouse_udev.sh"

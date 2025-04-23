@@ -10,7 +10,6 @@ dwm-cust
 espeak
 etcher-bin
 gebaar-libinput-git
-gnome-icon-theme
 go-mtpfs-git
 htop-vim
 i3lock-color
