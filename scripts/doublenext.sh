@@ -1,8 +1,8 @@
 #!/bin/dash
 lck1file="/tmp/doublenext.1.lck"
 lck2file="/tmp/doublenext.2.lck"
-dt=0.24
-ddt=0.01
+dt=0.25
+ddt=0.003
 
 exec 8<>"$lck1file" 9<>"$lck2file"
 
