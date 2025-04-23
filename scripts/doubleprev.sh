@@ -8,6 +8,7 @@ exec 9<>"$lckfile"
 if flock -n 9; then
     rm -f "$sigfile"
     sleep "$dt"
+    exec 9<&-
     if [ -f "$sigfile" ] ; then
         rm -f "$sigfile"
     else
