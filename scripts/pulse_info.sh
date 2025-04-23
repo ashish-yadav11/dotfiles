@@ -13,8 +13,9 @@ pactl list sinks | awk -v sink="$sink" '
                 vr = $12
             }
         } else if ($1 == "Active" && $2 == "Port:") {
-            if (tolower($3) !~ /speaker/)
+            if (tolower($3) ~ /speaker/)
                 i += 2
+        } else if ($1 == "Formats:") {
             exit
         }
         next
