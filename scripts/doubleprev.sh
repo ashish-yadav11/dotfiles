@@ -1,11 +1,10 @@
 #!/bin/dash
 lck1file="/tmp/doubleprev.1.lck"
 lck2file="/tmp/doubleprev.2.lck"
-lck3file="/tmp/doubleprev.3.lck"
-dt=0.25
-ddt=0.025 # should be considerably > `time flock <>`
+dt=0.24
+ddt=0.01
 
-exec 7<>"$lck1file" 8<>"$lck2file" 9<>"$lck3file"
+exec 8<>"$lck1file" 9<>"$lck2file"
 
 action1() {
     pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -14,20 +13,31 @@ action2() {
     sigdwm "scrt i 2"
 }
 
-flock -w"$ddt" 9 || exit
-if flock -n 7 ; then
-    exec 9<&-
+run1() {
     sleep "$dt"
-    exec 9<>"$lck3file"; flock -w"$ddt" 9
-    # the -w"$ddt" gymnastics is to prevent the following check to happen after
-    # `if flock -n 7` fails but before the `elif flock -n 8` runs in run2
-    if flock -n 8 ; then
-        exec 7<&-
-        exec 8<&- 9<&- # free 7 before 9
+    if flock -ns 8 ; then
+        #EDGE-CASE1
+        exec 9<&- 8<&- # to make sure 9 is always free if 8 is free
         action1
     fi
-elif flock -n 8 ; then
-    exec 9<&-
-    action2 7<&- 8<&-
-    flock -w"$dt" 7 # wait for run1 to finish sleeping
+}
+run2() {
+    action2 8<&- 9<&-
+    flock -w"$dt" 9 # wait for run1 to finish sleeping
+}
+
+if flock -w"$ddt" 8 ; then # `-w` to handle #EDGE-CASE2
+    if flock -n 9 ; then
+        #EDGE-CASE2
+        exec 8<&- 8<>"$lck1file"
+        { run1; exit ;}
+    else
+        { run2; exit ;}
+    fi
+elif flock -ns 8 ; then
+    #EDGE-CASE2
+    exec 8<&- 8<>"$lck1file"
+    flock -w"$ddt" 9 && { run1; exit ;} # `-w` to handle EDGE-CASE1
+else
+    exit
 fi
