@@ -7,10 +7,10 @@ ddt=0.003
 exec 8<>"$lck1file" 9<>"$lck2file"
 
 action1() {
-    playerctl play-pause
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
 }
 action2() {
-    playerctl next
+    sigdwm "scrt i 2"
 }
 
 run1() {
