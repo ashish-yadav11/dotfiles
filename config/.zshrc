@@ -332,8 +332,12 @@ ulk() {
     title="$(ytb-title "$output")"
     echo "$title"
     arg="unlike"
-    read -r 'ans?[U]nlike/[R]emove? [U/r]: '
-    [[ "$ans" == r || "$ans" == R ]] && arg="remove"
+    read -r 'ans?[U]nlike/[R]emove/[D]elete? [U/r/d]: '
+    if [[ "$ans" == r || "$ans" == R ]] ; then
+        arg="remove"
+    elif [[ "$ans" == d || "$ans" == D ]] ; then
+        arg="delete"
+    fi
     read -r 'ans?Continue? [Y/n]: '
     [[ "$ans" == n || "$ans" == N ]] && return 2
     ~/.scripts/ytmsclu-addjob.sh "$output" "$arg" "$title"
