@@ -1,10 +1,11 @@
 #!/bin/dash
-lck1file="$XDG_RUNTIME_DIR/doubleprev.1.lck"
-lck2file="$XDG_RUNTIME_DIR/doubleprev.2.lck"
+lck7file="$XDG_RUNTIME_DIR/doubleprev.1.lck"
+lck8file="$XDG_RUNTIME_DIR/doubleprev.2.lck"
+lck9file="$XDG_RUNTIME_DIR/doubleprev.3.lck"
 dt=0.25
 ddt=0.003
 
-exec 8<>"$lck1file" 9<>"$lck2file"
+exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
 
 action1() {
     pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -12,31 +13,45 @@ action1() {
 action2() {
     sigdwm "scrt i 2"
 }
+action3() {
+    playerctl previous
+}
 
 run1() {
     sleep "$dt"
-    if flock -ns 8 ; then
-        #EDGECASE1
-        exec 9<&- 8<&- # order to make sure 9 is free before 8 is free
+    if flock -n 8 ; then # we read-lock 8 to make this check foolproof
+        exec 9<&- 8<&- # order to make sure 8's free (for read-lock) after 9
         action1
     fi
 }
 run2() {
-    action2 8<&- 9<&-
-    flock -w"$dt" 9 # wait for run1 to finish sleeping
+    t0="$(date +%s%N)"
+    if ! flock -w1 9 ; then # wait for run1 to finish sleeping
+        notify-send -u critical -t 0 dwm 'doubleprev: something went wrong!'
+        exit
+    fi
+    exec 9<&-
+    sleep "$(echo "scale=3; ($dt*10^9 + $(date +%s%N) - $t0) / 10^9" | bc)"
+    if flock -n 7 ; then # we read-lock 7 first to make this check foolproof
+        exec 8<&- 7<&- # order to make sure 7's free (for read-lock) after 8
+        action2
+    fi
+}
+run3() {
+    action3 7<&- 8<&- 9<&-
+    if ! flock -w1 8 ; then # wait for run1 to finish sleeping
+        notify-send -u critical -t 0 dwm 'doubleprev: something went wrong!'
+        exit
+    fi
+    exec 8<&- 7<&- # order to make sure 7's free (for read-lock) after 8
 }
 
-if flock -w"$ddt" 8 ; then # `-w` to handle #EDGECASE2,3
-    if flock -n 9 ; then
-        #EDGECASE2
-        exec 8<&- 8<>"$lck1file"
-        run1
-    else
-        run2
-    fi
-elif flock -ns 8 ; then
-    #EDGECASE3
-    exec 8<&- 8<>"$lck1file"
-    flock -w"$ddt" 9 && { run1; exit ;} # `-w` to handle EDGECASE1
-    flock -w"$ddt" 8 && { run2; exit ;} # `-w` to handle EDGECASE2
+# `-w"$ddt"`'s are required for very rare edge-cases...
+flock -w"$ddt" -s 7 || exit # exit if run3's running
+if flock -w"$ddt" -s 8 ; then # run2's not running
+    flock -n 9 && { exec 8<&- 7<&- 8<>"$lck8file"; run1; exit ;}
+    flock -w"$ddt" 8 && { exec 7<&- 7<>"$lck7file"; run2; exit ;}
+    flock -w"$ddt" 7 && { run3; exit ;}
+else # run2's running
+    flock -w"$ddt" 7 && { run3; exit ;}
 fi
