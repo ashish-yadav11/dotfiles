@@ -17,7 +17,7 @@ menu() {
                      listview {lines: 1; columns: 9;}
                      entry {enabled: false;}' \
          -kb-accept-entry 'Return,[172]' -kb-row-down 'Down,[122]' \
-         -kb-cancel 'Escape,semicolon,[123]' \
+         -kb-cancel 'Escape,semicolon,[123]' -no-click-to-exit \
          -dmenu -i -matching fuzzy -no-custom "$@"
 }
 
