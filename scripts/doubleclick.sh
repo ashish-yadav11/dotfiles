@@ -54,7 +54,7 @@ flock -w"$ddt" -s 7 || exit # exit if run3's running
 if flock -w"$ddt" -s 8 ; then # run2's not running
     flock -n 9 && { exec 8<&- 7<&- 8<>"$lck8file"; run1; exit ;}
     flock -w"$ddt" 8 && { exec 7<&- 7<>"$lck7file"; run2; exit ;}
-    flock -w"$ddt" 7 && { run3; exit ;}
+    flock -w"$ddt" 7 && run3
 else # run2's running
-    flock -w"$ddt" 7 && { run3; exit ;}
+    flock -w"$ddt" 7 && run3
 fi

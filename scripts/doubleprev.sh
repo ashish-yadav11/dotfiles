@@ -36,4 +36,4 @@ run2() {
 # `-w"$ddt"`'s are required for very rare edge-cases...
 flock -w"$ddt" -s 8 || exit # exit if run2's running
 flock -n 9 && { exec 8<&- 8<>"$lck8file"; run1; exit ;}
-flock -w"$ddt" 8 && { run2; exit ;}
+flock -w"$ddt" 8 && run2
