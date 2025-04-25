@@ -1,9 +1,10 @@
 #!/bin/dash
 lck8file="$XDG_RUNTIME_DIR/doubleprev.1.lck"
 lck9file="$XDG_RUNTIME_DIR/doubleprev.2.lck"
-t=0.25
-dt=0.01
-ddt=0.003
+
+t=0.25 # buffer to wait for the next click
+dt=0.03 # >> `time flock -n <fd>`
+ddt=0.003 # >> `exec <>`
 
 exec 8<>"$lck8file" 9<>"$lck9file"
 
