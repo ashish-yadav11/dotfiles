@@ -73,7 +73,7 @@ else
     title="$title [${url##*"/watch?v="}]"
 fi
 
-$ytb_isliked "$url"
+$ytb_isliked "$url" >/dev/null
 case "$?" in
     0) menuarg="Unlike\nRemove\nLike" ;;
     1) menuarg="Like\nUnlike\nRemove" ;;
