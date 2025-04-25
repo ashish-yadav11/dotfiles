@@ -36,7 +36,9 @@ run2() {
     t0="$(date +%s%N)"
     flock -w1 9 || errorexit # wait for run1 to finish sleeping
     exec 9<&-
-    sleep "$(echo "scale=3; ($t*10^9 + $(date +%s%N) - $t0) / 10^9" | bc)"
+    sleep "$(echo "scale=3
+        tl=(($t*10^9 - $(date +%s%N) + $t0) / 10^9)
+        if (tl > 0) print tl else print 0" | bc)"
     if flock -n 7 ; then # we read-lock 7 first to make this check foolproof
         exec 8<&- 7<&- # order to make sure 7's free (for read-lock) after 8
         action2
