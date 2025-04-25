@@ -4,7 +4,7 @@ lck8file="$XDG_RUNTIME_DIR/doubleclick.2.lck"
 lck9file="$XDG_RUNTIME_DIR/doubleclick.3.lck"
 
 t=0.25 # buffer to wait for the next click
-dt=0.03 # >> `time flock -n <fd>`
+dt=0.03 # >> `time flock -n <fd>` + ddt
 ddt=0.003 # >> `exec <>`
 
 exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
