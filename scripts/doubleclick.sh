@@ -2,7 +2,8 @@
 lck7file="$XDG_RUNTIME_DIR/doubleclick.1.lck"
 lck8file="$XDG_RUNTIME_DIR/doubleclick.2.lck"
 lck9file="$XDG_RUNTIME_DIR/doubleclick.3.lck"
-dt=0.25
+t=0.25
+dt=0.01
 ddt=0.003
 
 exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
@@ -17,32 +18,33 @@ action3() {
     playerctl previous
 }
 
+errorexit() {
+    notify-send -u critical -t 0 dwm 'doubleclick: something went wrong!'
+    exit
+
+}
 run1() {
-    sleep "$dt"
+    sleep "$t"
     if flock -n 8 ; then # we read-lock 8 to make this check foolproof
         exec 9<&- 8<&- # order to make sure 8's free (for read-lock) after 9
         action1
     fi
+    sleep "$dt" # to prevent the edgecase where run2 just started
 }
 run2() {
     t0="$(date +%s%N)"
-    if ! flock -w1 9 ; then # wait for run1 to finish sleeping
-        notify-send -u critical -t 0 dwm 'doubleclick: something went wrong!'
-        exit
-    fi
+    flock -w1 9 || errorexit # wait for run1 to finish sleeping
     exec 9<&-
-    sleep "$(echo "scale=3; ($dt*10^9 + $(date +%s%N) - $t0) / 10^9" | bc)"
+    sleep "$(echo "scale=3; ($t*10^9 + $(date +%s%N) - $t0) / 10^9" | bc)"
     if flock -n 7 ; then # we read-lock 7 first to make this check foolproof
         exec 8<&- 7<&- # order to make sure 7's free (for read-lock) after 8
         action2
     fi
+    sleep "$dt" # to prevent the edgecase where run3 just started
 }
 run3() {
     action3 7<&- 8<&- 9<&-
-    if ! flock -w1 8 ; then # wait for run1 to finish sleeping
-        notify-send -u critical -t 0 dwm 'doubleclick: something went wrong!'
-        exit
-    fi
+    flock -w1 8 || errorexit # wait for run2 to finish sleeping
     exec 8<&- 7<&- # order to make sure 7's free (for read-lock) after 8
 }
 

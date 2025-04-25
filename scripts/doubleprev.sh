@@ -1,10 +1,11 @@
 #!/bin/dash
-lck1file="$XDG_RUNTIME_DIR/doubleprev.1.lck"
-lck2file="$XDG_RUNTIME_DIR/doubleprev.2.lck"
-dt=0.25
+lck8file="$XDG_RUNTIME_DIR/doubleprev.1.lck"
+lck9file="$XDG_RUNTIME_DIR/doubleprev.2.lck"
+t=0.25
+dt=0.01
 ddt=0.003
 
-exec 8<>"$lck1file" 9<>"$lck2file"
+exec 8<>"$lck8file" 9<>"$lck9file"
 
 action1() {
     pactl set-sink-volume @DEFAULT_SINK@ -5%
@@ -13,20 +14,25 @@ action2() {
     sigdwm "scrt i 2"
 }
 
+errorexit() {
+    notify-send -u critical -t 0 dwm 'doubleprev: something went wrong!'
+    exit
+}
 run1() {
-    sleep "$dt"
+    sleep "$t"
     if flock -n 8 ; then # we read-lock 8 first to make this check foolproof
-        exec 9<&- 8<&- # order to make sure 9 is free before 8 is free
+        exec 9<&- 8<&- # order to make sure 8's free (for read-lock) after 9
         action1
     fi
+    sleep "$dt" # to prevent the edgecase where run2 just started
 }
 run2() {
     action2 8<&- 9<&-
-    flock -w"$dt" 9 # wait for run1 to finish sleeping
-    exec 9<&- 8<&- # order to make sure 9 is free before 8 is free
+    flock -w1 9 || errorexit # wait for run1 to finish sleeping
+    exec 9<&- 8<&- # order to make sure 8's free (for read-lock) after 9
 }
 
-# `-w`'s are required for very rare edge-cases...
-flock -w"$ddt" -s 8 || exit
-flock -w"$ddt" 9 && { exec 8<&- 8<>"$lck1file"; run1; exit ;}
+# `-w"$ddt"`'s are required for very rare edge-cases...
+flock -w"$ddt" -s 8 || exit # exit if run2's running
+flock -n 9 && { exec 8<&- 8<>"$lck8file"; run1; exit ;}
 flock -w"$ddt" 8 && { run2; exit ;}
