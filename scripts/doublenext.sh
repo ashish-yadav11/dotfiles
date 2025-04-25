@@ -13,10 +13,10 @@ action1() {
     pactl set-sink-volume @DEFAULT_SINK@ +5%
 }
 action2() {
-    setsid -f /home/ashish/.scripts/ytmsclu.sh
+    pactl set-sink-volume @DEFAULT_SINK@ +1%
 }
 action3() {
-    pactl set-sink-volume @DEFAULT_SINK@ +1%
+    setsid -f /home/ashish/.scripts/ytmsclu.sh
 }
 
 errorexit() {
