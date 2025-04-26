@@ -40,6 +40,7 @@ case "$path" in
             Remove) $ytmsclu_addjob "$url" "remove" "$title" ;;
             Like) $ytmsclu_addjob "$url" "like" "$title" ;;
             Delete) $ytmsclu_addjob "$url" "delete" "$title" ;;
+            *) notify-send -t 1000 ytmsclu-local 'ytmsclu aborted!' ;;
         esac
         ;;
     *)
