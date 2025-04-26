@@ -7,6 +7,7 @@ awk '
         plevel = -1
     }
     {
+        gsub(/"/, "\\\"")
         spc = $0
         sub(/[^ ].*/, "", spc)
         clevel = length(spc) / 4 + 1
