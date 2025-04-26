@@ -10,6 +10,6 @@ fi
 pactl subscribe |
     while IFS='' read -r event ; do
         case "$event" in
-            *" sink "*) sigdsblocks 2 ;;
+            *" sink "*) sigdsblocks 2 0 ;;
         esac
     done
