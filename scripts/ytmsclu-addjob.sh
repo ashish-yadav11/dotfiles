@@ -8,7 +8,9 @@ exec 9<>"$lockfile"
 
 if flock -n 9 || ! /usr/bin/echo "$*" 1<>"$fifofile" >"$fifofile" ; then
     $notifyerror "Error: ytmsclu-daemon not running!"
-    echo "-$(date +%Y%m%d-%H%M%S) $*" >>"$logfile"
+    success="-"
 else
-    echo "+$(date +%Y%m%d-%H%M%S) $*" >>"$logfile"
+    success="+"
 fi
+[ "$#" = 2 ] && [ "$2" = history ] && exit
+echo "$success$(date +%Y%m%d-%H%M%S) $*" >>"$logfile"
