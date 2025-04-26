@@ -1,8 +1,16 @@
 #!/bin/dash
 musicdir=/media/storage/Music
-menu="dmenu -i -matching fuzzy -no-custom"
 ytmsclu_addjob="/home/ashish/.scripts/ytmsclu-addjob.sh"
 notifyerror="notify-send -u critical -t 0 ytmsclu-local"
+
+menu() {
+    rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
+                     listview {lines: 1; columns: 9;}
+                     entry {enabled: false;}' \
+         -kb-accept-entry 'Return,[172]' -kb-row-down 'Down,[122]' \
+         -kb-cancel 'Escape,semicolon,[123]' -no-click-to-exit \
+         -dmenu -i -matching fuzzy -no-custom "$@"
+}
 
 path="$1"
 filename="${path##*/}"
@@ -27,7 +35,7 @@ case "$path" in
             "$musicdir/archive/"*) menuarg="Like\nDelete\nUnlike" ;;
                                 *) menuarg="Unlike\nRemove\nLike" ;;
         esac
-        case "$(echo "$menuarg" | $menu -p "$title")" in
+        case "$(echo "$menuarg" | menu -p "$title")" in
             Unlike) $ytmsclu_addjob "$url" "unlike" "$title" ;;
             Remove) $ytmsclu_addjob "$url" "remove" "$title" ;;
             Like) $ytmsclu_addjob "$url" "like" "$title" ;;
