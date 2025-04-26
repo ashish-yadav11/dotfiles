@@ -13,10 +13,10 @@ action1() {
     pactl set-sink-volume @DEFAULT_SINK@ +1%
 }
 action2() {
-    playerctl next
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
 }
 action3() {
-    pactl set-sink-volume @DEFAULT_SINK@ +5%
+    playerctl next
 }
 
 errorexit() {

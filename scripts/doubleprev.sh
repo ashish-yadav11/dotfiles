@@ -13,10 +13,10 @@ action1() {
     pactl set-sink-volume @DEFAULT_SINK@ -5%
 }
 action2() {
-    pactl set-sink-volume @DEFAULT_SINK@ -1%
+    sigdwm "scrt i 2"
 }
 action3() {
-    sigdwm "scrt i 2"
+    pactl set-sink-volume @DEFAULT_SINK@ -1%
 }
 
 errorexit() {
