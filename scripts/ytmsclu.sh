@@ -1,10 +1,11 @@
 #!/bin/dash
 ytmsclu_local="/home/ashish/.scripts/ytmsclu-local.sh"
 
-if [ "$(playerctl status --format '{{playerName}}')" = mpv ] ; then
-    echo "run $ytmsclu_local \${path}" | socat - /tmp/music-mpv.socket
-    exit
-fi
+case "$(playerctl status --format '{{playerName}}')" in
+    *org.mpris.MediaPlayer2.mpv*)
+        echo "run $ytmsclu_local \${path}" | socat - /tmp/music-mpv.socket
+        exit ;;
+esac
 
 lockfile="$XDG_RUNTIME_DIR/ytmsclu.lock"
 historyfile="/home/ashish/.config/BraveSoftware/Brave-Browser/Default/History"
