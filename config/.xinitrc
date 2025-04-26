@@ -55,12 +55,12 @@ pidof -sq /usr/bin/dunst ||
     dunst
 } &
 dsblocks &
-{
-pidof -sqx /home/ashish/.scripts/pulse_daemon.sh ||
-    /home/ashish/.scripts/pulse_daemon.sh
-} &
+pulse_daemon.sh &
 clipdaemon &
-playerctld daemon &
+{
+pidof -sq /home/ashish/.scripts/mprisdaemon.py ||
+    /home/ashish/.scripts/mprisdaemon.py
+} &
 unclutter --timeout=2 --jitter=1 --ignore-scrolling &
 adb start-server &
 #gebaard &

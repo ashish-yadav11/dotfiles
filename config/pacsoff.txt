@@ -104,7 +104,6 @@ perl-file-mimeinfo
 perl-regexp-common
 pipewire-alsa
 pipewire-pulse
-playerctl
 python-cairo
 python-google-api-python-client
 python-google-auth-httplib2
