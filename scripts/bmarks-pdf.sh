@@ -26,4 +26,4 @@ awk '
         }
         printf "\nBookmarkLevel: %s\nBookmarkPageNumber: %s\n", level, $NF'"+$s"'
     }
-' "$1"
+' "$file"
