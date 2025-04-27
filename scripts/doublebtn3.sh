@@ -11,7 +11,7 @@ exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
 
 playback() {
     case "$(playerctl status)" in
-        *: active) return 0 ;;
+        *": active") return 0 ;;
         *) return 1 ;;
     esac
 }
