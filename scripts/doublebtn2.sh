@@ -13,7 +13,7 @@ action1() {
     playerctl play-pause
 }
 action2() {
-    setsid -f /home/ashish/.scripts/ytmsclu.sh
+    sigdwm "fclg i 0"
 }
 action3() {
     sigdwm "scrt i 2"

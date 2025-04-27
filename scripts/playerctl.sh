@@ -15,7 +15,7 @@ case "$1" in
     play-pause)
         mprissend doaction toggle ;;
     status)
-        mprissend query player ;;
+        mprissend query "$1" ;;
     *)
         usageexit ;;
 esac

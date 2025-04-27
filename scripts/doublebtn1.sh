@@ -9,14 +9,20 @@ ddt=0.001 # >> `exec <>`
 
 exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
 
+playback() {
+    case "$(playerctl status)" in
+        *: active) return 0 ;;
+        *) return 1 ;;
+    esac
+}
 action1() {
-    pactl set-sink-volume @DEFAULT_SINK@ -1%
+    playback && pactl set-sink-volume @DEFAULT_SINK@ -1%
 }
 action2() {
-    playerctl previous
+    playback && playerctl previous
 }
 action3() {
-    pactl set-sink-volume @DEFAULT_SINK@ -5%
+    playback && pactl set-sink-volume @DEFAULT_SINK@ -5%
 }
 
 errorexit() {
