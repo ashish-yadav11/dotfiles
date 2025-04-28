@@ -6,6 +6,7 @@ awk '
         title = $0
         sub(/^ *\("/, "", title)
         sub(/" *$/, "", title)
+        gsub(/\\"/, "\"", title)
         level += 1
         next
     }
