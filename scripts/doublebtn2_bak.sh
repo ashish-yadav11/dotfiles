@@ -12,7 +12,10 @@ action1() {
     playerctl play-pause
 }
 action2() {
-    sigdwm "scrt i 2"
+    case "$(playerctl status --format '{{playerName}}')" in
+        *org.mpris.MediaPlayer2.mpv*) sigdwm "scrt i 8" ;;
+        *) sigdwm "scrt i 2" ;;
+    esac
 }
 
 errorexit() {
