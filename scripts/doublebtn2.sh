@@ -15,10 +15,10 @@ action1() {
 action2() {
     sigdwm "fclg i 0"
 }
-action3() {
-    case "$(playerctl status --format '{{playerName}}')" in
-        *org.mpris.MediaPlayer2.mpv*) sigdwm "scrt i 8" ;;
-        *) sigdwm "scrt i 2" ;;
+action2() {
+    case "$(playerctl status)" in
+        *"org.mpris.MediaPlayer2.mpv: active"*) sigdwm "scrt i 8" ;;
+                                             *) sigdwm "scrt i 2" ;;
     esac
 }
 

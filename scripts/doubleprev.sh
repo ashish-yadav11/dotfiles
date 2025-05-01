@@ -13,9 +13,9 @@ action1() {
     pactl set-sink-volume @DEFAULT_SINK@ -5%
 }
 action2() {
-    case "$(playerctl status --format '{{playerName}}')" in
-        *org.mpris.MediaPlayer2.mpv*) sigdwm "scrt i 8" ;;
-        *) sigdwm "scrt i 2" ;;
+    case "$(playerctl status)" in
+        *"org.mpris.MediaPlayer2.mpv: active"*) sigdwm "scrt i 8" ;;
+                                             *) sigdwm "scrt i 2" ;;
     esac
 }
 action3() {
