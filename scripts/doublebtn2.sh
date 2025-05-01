@@ -15,7 +15,7 @@ action1() {
 action2() {
     sigdwm "fclg i 0"
 }
-action2() {
+action3() {
     case "$(playerctl status)" in
         *"org.mpris.MediaPlayer2.mpv: active"*) sigdwm "scrt i 8" ;;
                                              *) sigdwm "scrt i 2" ;;
