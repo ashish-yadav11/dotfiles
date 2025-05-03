@@ -27,8 +27,9 @@ run1() {
     if flock -n 8 ; then # we read-lock 8 first to make this check foolproof
         exec 9<&- 8<&- # order to make sure 8's free (for read-lock) after 9
         action1
+    else
+        sleep "$dt" # to prevent the edgecase where run2 just started
     fi
-    sleep "$dt" # to prevent the edgecase where run2 just started
 }
 run2() {
     action2 8<&- 9<&-

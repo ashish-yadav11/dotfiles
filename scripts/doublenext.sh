@@ -29,8 +29,9 @@ run1() {
     if flock -n 8 ; then # we read-lock 8 to make this check foolproof
         exec 9<&- 8<&- # order to make sure 8's free (for read-lock) after 9
         action1
+    else
+        sleep "$dt" # to prevent the edgecase where run2 just started
     fi
-    sleep "$dt" # to prevent the edgecase where run2 just started
 }
 run2() {
     t0="$(date +%s%N)"
@@ -42,8 +43,9 @@ run2() {
     if flock -n 7 ; then # we read-lock 7 first to make this check foolproof
         exec 8<&- 7<&- # order to make sure 7's free (for read-lock) after 8
         action2
+    else
+        sleep "$dt" # to prevent the edgecase where run3 just started
     fi
-    sleep "$dt" # to prevent the edgecase where run3 just started
 }
 run3() {
     action3 7<&- 8<&- 9<&-
