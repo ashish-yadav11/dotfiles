@@ -9,7 +9,7 @@ esac
 
 lockfile="$XDG_RUNTIME_DIR/ytmsclu.lock"
 historyfile="/home/ashish/.config/BraveSoftware/Brave-Browser/Default/History"
-ytb_isliked="/home/ashish/.local/bin/ytb-isLiked"
+ytb_islikedlocal="/home/ashish/.local/bin/ytb-isLikedLocal"
 ytb_title="/home/ashish/.local/bin/ytb-title"
 ytm_lastplayed="/home/ashish/.local/bin/ytm-lastPlayed"
 ytmsclu_addjob="/home/ashish/.scripts/ytmsclu-addjob.sh"
@@ -80,19 +80,20 @@ else
     title="$title [${url##*"/watch?v="}]"
 fi
 
-$ytb_isliked "$url" >/dev/null
+$ytb_islikedlocal "$url" >/dev/null
 case "$?" in
-    0) menuarg="Unlike\nRemove\nLike" ;;
-    1) menuarg="Like\nUnlike\nRemove" ;;
+    0) menuarg="Unlike\nRemove\nLike*" ;;
+    1) menuarg="Like\nUnlike*\nRemove" ;;
+    2) menuarg="Like\nUnlike\nRemove" ;;
     *)
-        notifyerror "Error: something went wrong with the 'isliked' script!"
+        notifyerror "Error: something went wrong with the 'islikedlocal' script!"
         unlockexit
         ;;
 esac
 case "$(echo "$menuarg" | menu -p "$title")" in
-    Like) $ytmsclu_addjob "$url" "like" "$title";;
-    Unlike) $ytmsclu_addjob "$url" "unlike" "$title" ;;
-    Remove) $ytmsclu_addjob "$url" "remove" "$title" ;;
+    Like*) $ytmsclu_addjob "$url" "like" "$title";;
+    Unlike*) $ytmsclu_addjob "$url" "unlike" "$title" ;;
+    Remove*) $ytmsclu_addjob "$url" "remove" "$title" ;;
     *) notify -t 700 ytmsclu 'ytmsclu aborted!' ;;
 esac
 unlockexit

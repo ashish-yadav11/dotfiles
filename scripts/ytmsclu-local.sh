@@ -32,14 +32,14 @@ case "$path" in
         fi
         title="${filename%" ($id)"*} [$id]"
         case "$path" in
-            "$musicdir/archive/"*) menuarg="Like\nDelete\nUnlike" ;;
-                                *) menuarg="Unlike\nRemove\nLike" ;;
+            "$musicdir/archive/"*) menuarg="Like\nDelete\nUnlike*" ;;
+                                *) menuarg="Unlike\nRemove\nLike*" ;;
         esac
         case "$(echo "$menuarg" | menu -p "$title")" in
-            Unlike) $ytmsclu_addjob "$url" "unlike" "$title" ;;
-            Remove) $ytmsclu_addjob "$url" "remove" "$title" ;;
-            Like) $ytmsclu_addjob "$url" "like" "$title" ;;
-            Delete) $ytmsclu_addjob "$url" "delete" "$title" ;;
+            Unlike*) $ytmsclu_addjob "$url" "unlike" "$title" ;;
+            Remove*) $ytmsclu_addjob "$url" "remove" "$title" ;;
+            Like*) $ytmsclu_addjob "$url" "like" "$title" ;;
+            Delete*) $ytmsclu_addjob "$url" "delete" "$title" ;;
             *) notify-send -t 700 ytmsclu-local 'ytmsclu aborted!' ;;
         esac
         ;;
