@@ -2,7 +2,7 @@
 ytmsclu_local="/home/ashish/.scripts/ytmsclu-local.sh"
 
 case "$(playerctl status)" in
-    *"org.mpris.MediaPlayer2.mpv: active"*)
+    *"org.mpris.MediaPlayer2.mpv"*": active"*)
         echo "run $ytmsclu_local \${path}" | socat - /tmp/music-mpv.socket
         exit ;;
 esac
