@@ -6,6 +6,7 @@ lck9file="$XDG_RUNTIME_DIR/doublenext.3.lck"
 t=0.25 # buffer to wait for the next click
 dt=0.01 # >> `time flock -n <fd>` + ddt
 ddt=0.001 # >> `exec <>`
+et=1 # >> t + dt + ddt
 
 exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
 
@@ -38,7 +39,7 @@ run1() {
 }
 run2() {
     t0="$(date +%s%N)"
-    flock -w1 9 || errorexit # wait for run1 to finish sleeping
+    flock -w"$et" 9 || errorexit # wait for run1 to finish sleeping
     exec 9<&-
     sleep "$(echo "scale=3
         tl=(($t*10^9 - $(date +%s%N) + $t0) / 10^9)
@@ -52,7 +53,7 @@ run2() {
 }
 run3() {
     action3 7<&- 8<&- 9<&-
-    flock -w1 8 || errorexit # wait for run2 to finish sleeping
+    flock -w"$et" 8 || errorexit # wait for run2 to finish sleeping
     exec 8<&- 7<&- # order to make sure 7's free (for read-lock) after 8
 }
 

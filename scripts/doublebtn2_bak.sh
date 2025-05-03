@@ -5,6 +5,7 @@ lck9file="$XDG_RUNTIME_DIR/doublebtn2.2.lck"
 t=0.5 # buffer to wait for the next click
 dt=0.01 # >> `time flock -n <fd>`
 ddt=0.001 # >> `exec <>`
+et=2 # >> t + dt + ddt
 
 exec 8<>"$lck8file" 9<>"$lck9file"
 
@@ -33,7 +34,7 @@ run1() {
 }
 run2() {
     action2 8<&- 9<&-
-    flock -w1 9 || errorexit # wait for run1 to finish sleeping
+    flock -w"$et" 9 || errorexit # wait for run1 to finish sleeping
     exec 9<&- 8<&- # order to make sure 8's free (for read-lock) after 9
 }
 
