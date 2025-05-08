@@ -55,7 +55,7 @@ pidof -sq /usr/bin/dunst ||
     dunst
 } &
 dsblocks &
-pulse_daemon.sh &
+/home/ashish/.scripts/pulse_daemon.sh &
 clipdaemon &
 {
 pidof -sq /home/ashish/.scripts/mprisdaemon.py ||
