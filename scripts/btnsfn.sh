@@ -1,6 +1,6 @@
 #!/bin/dash
-getbtnsfile=/sys/class/backlight/radeon_bl0/actual_brightness
-setbtnsfile=/sys/class/backlight/radeon_bl0/brightness
+getbtnsfile=/sys/class/backlight/amdgpu_bl1/actual_brightness
+setbtnsfile=/sys/class/backlight/amdgpu_bl1/brightness
 notify="notify-send -h string:x-canonical-private-synchronous:brightness"
 
 read -r btns <"$getbtnsfile"
