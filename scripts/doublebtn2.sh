@@ -15,6 +15,7 @@ action1() {
 }
 action2() {
     sigdwm "fclg i 0"
+#   /home/ashish/.scripts/pulse_normalize.sh
 }
 action3() {
     case "$(playerctl status)" in

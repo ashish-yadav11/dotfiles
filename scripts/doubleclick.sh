@@ -17,7 +17,7 @@ action2() {
     playerctl next
 }
 action3() {
-    playerctl previous
+    /home/ashish/.scripts/pulse_normalize.sh
 }
 
 errorexit() {
