@@ -138,6 +138,11 @@ socat
 sqlite
 strace
 sxiv
+tela-circle-icon-theme-black
+tela-circle-icon-theme-manjaro
+tela-circle-icon-theme-nord
+tela-circle-icon-theme-red
+tela-circle-icon-theme-standard
 telegram-desktop
 termdown
 texlive-basic
