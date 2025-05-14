@@ -12,7 +12,6 @@ getdsknum() {
 }
 savewintitles() {
     sigdwm "wlnr i 0"
-    : >"$file"
     wmctrl -l | tac |
             while read -r w desktop m wintitle ; do
                 if [ "$desktop" -eq 0 ] ; then
@@ -35,8 +34,8 @@ savewintitles() {
                         fi
                     fi
                 fi
-                echo "$desktop $wintitle" >>"$file"
-            done
+                echo "$desktop $wintitle"
+            done >"$file"
 }
 
 case "$1" in
