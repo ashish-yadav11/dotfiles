@@ -11,14 +11,10 @@ getdsknum() {
     fi
 }
 savewintitles() {
+    sigdwm "wlnr i 0"
     : >"$file"
-    xwininfo -tree -root | grep '^     0x' |
-        awk -F': \\(' '{print $1}' | grep -v -F '(has no name)' |
-            while read -r winid wintitle ; do
-                desktop="$(xprop -id "$winid" _NET_WM_DESKTOP)"
-                [ -z "$desktop" ] && continue
-                [ "$desktop" = "_NET_WM_DESKTOP:  not found." ] && continue
-                desktop="${desktop#"_NET_WM_DESKTOP(CARDINAL) = "}"
+    wmctrl -l | tac |
+            while read -r w desktop m wintitle ; do
                 if [ "$desktop" -eq 0 ] ; then
                     desktop="S--"
                 elif [ "$desktop" -le 11 ] ; then
@@ -41,7 +37,6 @@ savewintitles() {
                 fi
                 echo "$desktop $wintitle" >>"$file"
             done
-    sort -o "$file" "$file"
 }
 
 case "$1" in
