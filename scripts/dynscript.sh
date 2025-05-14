@@ -18,7 +18,7 @@ case "$1" in
     3)
         case "$(xdotool getmouselocation)" in
             "x:970 y:430"*) ;;
-                *) xdotool mousemove --sync 970 430 click 9 ;;
+                *) xdotool mousemove --sync 970 430 click 10 ;;
         esac
         ;;
 esac

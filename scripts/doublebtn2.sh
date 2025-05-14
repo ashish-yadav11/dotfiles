@@ -14,14 +14,16 @@ action1() {
     playerctl play-pause
 }
 action2() {
-    sigdwm "fclg i 0"
-#   /home/ashish/.scripts/pulse_normalize.sh
+    sigdwm "fclv i 0"
 }
 action3() {
-    case "$(playerctl status)" in
-        *"org.mpris.MediaPlayer2.mpv"*": active"*) sigdwm "scrt i 8" ;;
-                                                *) sigdwm "scrt i 2" ;;
-    esac
+    eval $(xdotool getmouselocation --shell)
+    sigdwm "wnln i 0"
+    xdotool mousemove --sync 683 384 click 10
+    rofi -show window -no-click-to-exit \
+        -kb-accept-entry 'Control+m,Return,MouseExtra92,MouseExtra91' \
+        -kb-cancel 'Escape,Control+g,Control+bracketleft,MouseExtra93'
+    xdotool mousemove --sync "$X" "$Y" click 10
 }
 
 errorexit() {
