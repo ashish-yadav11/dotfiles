@@ -19,7 +19,7 @@ action2() {
 action3() {
     eval $(xdotool getmouselocation --shell)
     sigdwm "wnln i 0"
-    xdotool mousemove --sync 683 384 click 10
+    xdotool mousemove --sync 1010 580 click 10
     rofi -show window -no-click-to-exit \
         -kb-accept-entry 'Control+m,Return,MouseExtra92,MouseExtra91' \
         -kb-cancel 'Escape,Control+g,Control+bracketleft,MouseExtra93'
