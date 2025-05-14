@@ -20,6 +20,7 @@ nawkbinawk
 neovim-plug
 neovim-remote
 networkmanager-dispatcher-chrony
+ocrmypdf
 pam-gnupg
 pass-git-helper
 riseup-vpn

@@ -179,6 +179,7 @@ unclutter
 urlscan
 usbutils
 valgrind
+wmctrl
 wmname
 xcape
 xclip
