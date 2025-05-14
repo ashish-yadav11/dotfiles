@@ -10,20 +10,24 @@ et=2 # >> t + dt + ddt
 
 exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
 
-action1() {
-    playerctl play-pause
-}
-action2() {
-    sigdwm "fclv i 0"
-}
-action3() {
+winswitcher() {
     eval $(xdotool getmouselocation --shell)
-    sigdwm "wnln i 0"
+    sigdwm "wln$1 i 0"
     xdotool mousemove --sync 1010 580 click 10
     rofi -show window -no-click-to-exit \
         -kb-accept-entry 'Control+m,Return,MouseExtra92,MouseExtra91' \
         -kb-cancel 'Escape,Control+g,Control+bracketleft,MouseExtra93'
     xdotool mousemove --sync "$X" "$Y" click 10
+}
+
+action1() {
+    winswitcher c
+}
+action2() {
+    sigdwm "fclv i 0"
+}
+action3() {
+    winswitcher s
 }
 
 errorexit() {
