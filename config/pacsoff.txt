@@ -181,6 +181,7 @@ usbutils
 valgrind
 wmctrl
 wmname
+xautomation
 xcape
 xclip
 xcompmgr

@@ -12,12 +12,20 @@ exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
 
 winswitcher() {
     eval $(xdotool getmouselocation --shell)
+    index=0
     sigdwm "wln$1 i 0"
-    xdotool mousemove --sync 1010 580 click 10
-    rofi -show window -no-click-to-exit \
+    if [ "$1" = c ] ; then
+        awinid="$(xprop -root _NET_ACTIVE_WINDOW)"
+        awinid="${awinid#*"# "}"
+        index="$(wmctrl -l | gawk '
+                strtonum($1) == strtonum('"$awinid"') {a = NR}
+                END {if (a) print (NR - a)}')"
+    fi
+    xte "mousemove 1010 580"
+    rofi -show window -selected-row "$index" -no-click-to-exit \
         -kb-accept-entry 'Control+m,Return,MouseExtra92,MouseExtra91' \
         -kb-cancel 'Escape,Control+g,Control+bracketleft,MouseExtra93'
-    xdotool mousemove --sync "$X" "$Y" click 10
+    xte "mousemove $X $Y"
 }
 
 action1() {

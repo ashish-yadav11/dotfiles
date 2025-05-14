@@ -16,9 +16,6 @@ case "$1" in
         notify-send -t 0 dwm 'Never let the future disturb you. You will meet it, if you have to, with the same weapons of reason which today arm you against the present.\n\nIf we are not totally blind, what we are seeking is already here. This is it!\n\nSeeking what is true is not seeking what is desirable.'
         ;;
     3)
-        case "$(xdotool getmouselocation)" in
-            "x:970 y:430"*) ;;
-                *) xdotool mousemove --sync 970 430 click 10 ;;
-        esac
+        xte "mousemove 970 430"
         ;;
 esac
