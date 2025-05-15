@@ -11,6 +11,11 @@ map <C-r> reload
 map Q quit
 map q feedkeys "z0<S-q>"
 
+map J scroll half-down
+map K scroll half-up
+map <C-j> scroll full-down
+map <C-k> scroll full-up
+
 #map c feedkeys ":set recolor-keephue<Return>:<Return>"
 #map D feedkeys ':set recolor-darkcolor "#fbf1c7"<Return>:set recolor-lightcolor "#282828"<Return>:set recolor true<Return>'
 #map W feedkeys ':set recolor-darkcolor "#000000"<Return>:set recolor-lightcolor "#bdae93"<Return>:set recolor true<Return>'
