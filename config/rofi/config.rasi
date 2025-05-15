@@ -149,6 +149,9 @@ configuration {
 		directories-first: true;
 		sorting-method: "name";
 	}
+	inputchange {
+		action: "kb-row-first";
+	}
 }
 
 @theme "/home/ashish/.config/rofi/themes/gruvbox.rasi"
