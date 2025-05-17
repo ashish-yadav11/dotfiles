@@ -11,6 +11,7 @@ espeak
 etcher-bin
 gebaar-libinput-git
 go-mtpfs-git
+grub-customizer
 htop-vim
 i3lock-color
 keynav-cust

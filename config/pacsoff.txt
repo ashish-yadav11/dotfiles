@@ -46,7 +46,6 @@ go
 go-tools
 goimapnotify
 gparted
-grub-customizer
 gthumb
 gtk-engine-murrine
 guvcview
