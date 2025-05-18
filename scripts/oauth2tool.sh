@@ -25,7 +25,7 @@
 #     expiry_time=<access token expiry time from output of oauth_script>
 #     echo "$client_id" >"$data_dir/client_id"
 #     echo "$client_secret" >"$data_dir/client_secret"
-#     echo "$refresh_token" | pass insert -e "gmail-oauth2/$user/refresh_token"
+#     echo "$refresh_token" >"$data_dir/refresh_token"
 #     echo "$access_token" >"$data_dir/access_token"
 #     echo "$(( current_time + expiry_time - 60 ))" >"$data_dir/expiry_time"
 #
@@ -38,15 +38,14 @@
 #
 #     date +%s >"$data_dir/expiry_time"
 
-user="$1"
-data_dir="/home/ashish/.local/share/gmail-oauth2/$user"
+data_dir="/home/ashish/.local/share/gmail-oauth2/$1"
 
 get_access_token() {
     oauth2_script=/home/ashish/.scripts/oauth2.py
 
     IFS='' read -r client_id <"$data_dir/client_id"
     IFS='' read -r client_secret <"$data_dir/client_secret"
-    refresh_token="$(pass "gmail-oauth2/$user/refresh_token")"
+    IFS='' read -r refresh_token <"$data_dir/refresh_token"
     output="$(
         $oauth2_script \
             --client_id="$client_id" \

@@ -7,7 +7,8 @@ case "$1" in
         hotspot=/home/ashish/.scripts/hotspot.sh
 
         read -r PID <"$rundir/sleep-dine.pid" && kill "$PID" $(pgrep -P "$PID")
-        [ -s "$rundir/pomodoro.nid" ] || { read -r PID <"$rundir/pomodoro.pid" && kill "$PID" $(pgrep -P "$PID") ;}
+        [ -s "$rundir/pomodoro.nid" ] ||
+            { read -r PID <"$rundir/pomodoro.pid" && kill "$PID" $(pgrep -P "$PID") ;}
 
         $hotspot terminate
         ;;
