@@ -64,7 +64,7 @@ pidof -sq /home/ashish/.scripts/mprisdaemon.py ||
 unclutter --timeout=2 --jitter=1 --ignore-buttons 1,2,3,4,5 &
 adb start-server &
 #gebaard &
-savewintitles -d &
+[ "$XDG_VTNR" -eq 1 ] && savewintitles -d &
 /home/ashish/.scripts/ytmsclu-daemon.sh &
 xcompmgr &
 
