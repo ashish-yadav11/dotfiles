@@ -280,9 +280,8 @@ class trash_highlighted(Command):
     def execute(self):
         from functools import partial
 
-        cwd = self.fm.thisdir
         tfile = self.fm.thisfile
-        if not cwd or not tfile:
+        if not tfile:
             self.fm.notify("Error: no file highlighted for trashing!", bad=True)
             return
 
@@ -317,7 +316,7 @@ class trash_selection(Command):
             return
 
         relative_paths = ', '.join([f.relative_path for f in files])
-        if len(files) > 1 or is_directory_with_files(files[0]):
+        if len(files) > 1 or is_directory_with_files(files[0].path):
             self.fm.ui.console.ask(
                 f"Confirm trashing of: {relative_paths} (y/N)",
                 partial(self._question_callback, files, relative_paths),
@@ -337,30 +336,30 @@ class trash_selection(Command):
         self.fm.execute_command(f"trash-put -- {escaped_paths}", flags='s')
         self.fm.notify(f"Trashing {relative_paths}!")
 
+class delete(Command):
+
+    def execute(self):
+        from ranger.ext.shell_escape import shell_escape
+
+        files = self.fm.thistab.get_selection()
+        if not files:
+            self.fm.notify("Error: no file selected for deletion!", bad=True)
+            return
+
+        escaped_paths = ' '.join([shell_escape(f.path) for f in files])
+        self.fm.execute_command(f"rm -ir -- {escaped_paths}")
+
 class delete_highlighted(Command):
 
     def execute(self):
-        from functools import partial
+        from ranger.ext.shell_escape import shell_escape
 
-        cwd = self.fm.thisdir
         tfile = self.fm.thisfile
-        if not cwd or not tfile:
+        if not tfile:
             self.fm.notify("Error: no file highlighted for deletion!", bad=True)
             return
 
-        confirm = self.fm.settings.confirm_on_delete
-        if confirm == 'always' or (confirm == 'multiple' and is_directory_with_files(tfile.path)):
-            self.fm.ui.console.ask(
-                f"Confirm deletion of: {tfile.relative_path} (y/N)",
-                partial(self._question_callback, tfile.relative_path),
-                ('n', 'N', 'y', 'Y'),
-            )
-        else:
-            self.fm.delete([tfile.relative_path])
-
-    def _question_callback(self, relative_path, answer):
-        if answer == 'y' or answer == 'Y':
-            self.fm.delete([relative_path])
+        self.fm.execute_command(f"rm -ir -- {shell_escape(tfile.path)}")
 
 
 class terminal_curdir(Command):
