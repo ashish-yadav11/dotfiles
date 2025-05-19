@@ -311,15 +311,13 @@ class trash_selection(Command):
     def execute(self):
         from functools import partial
 
-        cwd = self.fm.thisdir
-        tfile = self.fm.thisfile
-        if not cwd or not tfile:
+        files = self.fm.thistab.get_selection()
+        if not files:
             self.fm.notify("Error: no file selected for trashing!", bad=True)
             return
 
-        files = self.fm.thistab.get_selection()
         relative_paths = ', '.join([f.relative_path for f in files])
-        if cwd.marked_items or is_directory_with_files(tfile.path):
+        if len(files) > 1 or is_directory_with_files(files[0]):
             self.fm.ui.console.ask(
                 f"Confirm trashing of: {relative_paths} (y/N)",
                 partial(self._question_callback, files, relative_paths),
