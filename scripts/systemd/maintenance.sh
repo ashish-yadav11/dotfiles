@@ -1,10 +1,7 @@
 #!/bin/dash
 notify="notify-send -h string:x-canonical-private-synchronous:maintenance"
 
-dm="$(date +%d%m)"
-date="${dm%??}"
-[ "$date" -le 07 ] && exit
-month="${dm#??}"
+month="$(date +%m)"
 if [ "$(( month % 2 ))" -eq 0 ] ; then
     $notify -t 0 "Time for system maintenance" "1) Upgrade\npackages, vim plugins, zsh plugins, suckless stuff\n\n2) Clean\nconfig files, dconf settings, bleachbit, cache of uninstalled packages\n\n3) Backup\n\n4) Run ytmusic stuff"
 else

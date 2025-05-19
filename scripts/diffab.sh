@@ -32,12 +32,6 @@ print_mdiff
 
 echo -e '\e[1;32mdotfiles\e[0m'
 mdiff="$(
-    sdiff="$(
-        $sdiff_cmd "$dotfiles/config/crontab" <(crontab -l)
-    )"
-    [[ -n "$sdiff" ]] &&
-        printf "diff $dotfiles/config/crontab crontab\n%s\n" "$sdiff"
-
     prefix="$dotfiles/config/root-"
     for f in "$prefix"* ; do
         name="${f#"$prefix"}"

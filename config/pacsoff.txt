@@ -17,7 +17,6 @@ capitaine-cursors
 chromium
 chrony
 clang
-cronie
 curlftpfs
 dash
 dconf-editor

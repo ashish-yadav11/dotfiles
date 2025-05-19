@@ -1,0 +1,9 @@
+[Unit]
+Description=Enable redshift at 22:00 daily
+
+[Timer]
+OnCalendar=*-*-* 22:00:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target
