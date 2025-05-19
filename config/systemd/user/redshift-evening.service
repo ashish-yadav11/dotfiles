@@ -3,5 +3,5 @@ Description=Enable reshift
 
 [Service]
 Type=oneshot
-Environment=DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+Environment=DISPLAY=:0
 ExecStart=redshift -PO 4500
