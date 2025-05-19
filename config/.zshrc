@@ -248,6 +248,7 @@ alias info="info --vi-keys"
 alias lessc="less -R"
 alias ls="ls --group-directories-first --color=auto"
 alias sudo="sudo "
+alias sysusrctl="systemctl --user"
 alias tree="tree -C"
 alias vi=nvim
 alias vim=nvim
