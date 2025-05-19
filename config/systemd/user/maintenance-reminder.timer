@@ -2,7 +2,6 @@
 Description=Reminder for maintenance
 
 [Timer]
-OnCalendar=Sat *-*-1..7 22:00:00
 OnCalendar=Sat *-*-15..21 22:00:00
 Persistent=true
 
