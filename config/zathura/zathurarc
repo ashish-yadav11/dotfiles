@@ -8,8 +8,8 @@ map R rotate rotate-ccw
 map i recolor
 map <C-r> reload
 
-map Q quit
-map q feedkeys "z0<S-q>"
+map q quit
+map Q feedkeys "z0q"
 
 map J scroll half-down
 map K scroll half-up
