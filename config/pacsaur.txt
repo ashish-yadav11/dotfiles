@@ -7,7 +7,6 @@ dict-gcide
 dict-wikt-en-all
 dict-wn
 dwm-cust
-espeak
 etcher-bin
 gebaar-libinput-git
 go-mtpfs-git
@@ -24,6 +23,7 @@ networkmanager-dispatcher-chrony
 ocrmypdf
 pam-gnupg
 pass-git-helper
+pass-secret-service-bin
 riseup-vpn
 rofi-dmenu-cust
 siji-git

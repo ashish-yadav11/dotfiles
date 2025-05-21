@@ -16,7 +16,7 @@ case "$1" in
         ;;
     *)
         read -r PID 2>/dev/null <"$pidfile" && kill "$PID" $(pgrep -P "$PID")
-        text="$(yad --image=gespeaker --no-buttons --entry --text=Espeak --entry-label="Text:")"
+        text="$(yad --image=speaker --no-buttons --entry --text=Espeak --entry-label="Text:")"
         [ -z "$text" ] && exit
         ;;
 esac

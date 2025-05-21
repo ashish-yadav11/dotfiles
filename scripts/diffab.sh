@@ -52,7 +52,7 @@ mdiff="$(
             sed -e "s/^$mdiff_str -I '\\^history\\\\|[^ ]*' /diff /"
 
     $mdiff_cmd "$dotfiles/config" /home/ashish |
-        grep -Ev '^Only in .*(config:|ashish(:|/\.gnupg: ))' |
+        grep -Ev '^Only in .*(config:|ashish(:|/\.gnupg: |/\.password-store: secret-service$))' |
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/local" /home/ashish/.local |

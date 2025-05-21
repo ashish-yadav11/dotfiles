@@ -28,6 +28,7 @@ easyeffects
 elinks
 engrampa
 entr
+espeak-ng
 fd
 fdupes
 feh
