@@ -44,7 +44,6 @@ set search-hadjust false
 set show-hidden true
 set statusbar-basename true
 set synctex true
-set vertical-center true
 set window-title-basename true
 set zoom-center true
 set zoom-step 5
