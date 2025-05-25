@@ -16,19 +16,39 @@ if [ -z "$id" ] ; then
     exit 2
 fi
 
+isdisabledpeq() {
+    pw-metadata -n filters "$id" "filter.smart.disabled" |
+        grep "key:'filter.smart.disabled' value:'true'"
+}
+enablepeq() {
+        pw-metadata -n filters "$id" "filter.smart.disabled" false Spa:String:JSON
+}
+disablepeq() {
+        pw-metadata -n filters "$id" "filter.smart.disabled" true Spa:String:JSON
+}
+
 case "$1" in
     enable)
-        pw-metadata -n filters "$id" "filter.smart.disabled" false Spa:String:JSON
+        enablepeq
         ;;
     disable)
-        pw-metadata -n filters "$id" "filter.smart.disabled" true Spa:String:JSON
+        disablepeq
+        ;;
+    toggle)
+        if isdisabledpeq ; then
+            enablepeq
+        else
+            disablepeq
+        fi
         ;;
     *)
-        if pw-metadata -n filters "$id" "filter.smart.disabled" |
-                grep "key:'filter.smart.disabled' value:'true'" ; then
-            pw-metadata -n filters "$id" "filter.smart.disabled" false Spa:String:JSON
+        if isdisabledpeq ; then
+            echo -n "PEQ is disabled. Enable it? [Y/n]: "
+            read -r input && case "$input" in n|N) exit ;; esac
+            enablepeq
         else
-            pw-metadata -n filters "$id" "filter.smart.disabled" true Spa:String:JSON
+            echo -n "PEQ is enabled. Disable it? [y/N]: "
+            read -r input && case "$input" in y|Y) disablepeq ;; esac
         fi
         ;;
 esac
