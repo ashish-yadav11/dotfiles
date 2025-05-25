@@ -3,4 +3,4 @@ Description=Empty trash older than 7 days
 
 [Service]
 Type=oneshot
-ExecStart=trash-empty -f 7
+ExecStart=gtrash prune --day 7 --force

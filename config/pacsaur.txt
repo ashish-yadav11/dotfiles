@@ -11,6 +11,7 @@ etcher-bin
 gebaar-libinput-git
 go-mtpfs-git
 grub-customizer
+gtrash
 htop-vim
 i3lock-color
 keynav-cust

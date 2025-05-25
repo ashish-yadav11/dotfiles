@@ -302,7 +302,7 @@ class trash_highlighted(Command):
         from ranger.ext.shell_escape import shell_escape
 
         escaped_path = shell_escape(tfile.path)
-        self.fm.execute_command(f"trash-put -- {escaped_path}", flags='s')
+        self.fm.execute_command(f"gtrash put -- {escaped_path}", flags='s')
         self.fm.notify(f"Trashing {tfile.relative_path}!")
 
 class trash_selection(Command):
@@ -333,7 +333,7 @@ class trash_selection(Command):
         from ranger.ext.shell_escape import shell_escape
 
         escaped_paths = ' '.join([shell_escape(f.path) for f in files])
-        self.fm.execute_command(f"trash-put -- {escaped_paths}", flags='s')
+        self.fm.execute_command(f"gtrash put -- {escaped_paths}", flags='s')
         self.fm.notify(f"Trashing {relative_paths}!")
 
 class delete(Command):

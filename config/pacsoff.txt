@@ -164,7 +164,6 @@ texlive-pstricks
 texlive-publishers
 texlive-xetex
 tldr
-trash-cli
 ttf-croscore
 ttf-droid
 ttf-fira-sans

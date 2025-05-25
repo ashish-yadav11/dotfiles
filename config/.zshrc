@@ -431,13 +431,6 @@ startx() {
     /usr/bin/startx &>>"$XLOGFILE"
 }
 
-trash-list() {
-    case "$1" in
-        -n) /usr/bin/trash-list | sort -k3,3 ;;
-         *) /usr/bin/trash-list | sort ;;
-    esac
-}
-
 ytaudio() {
     yt-dlp --extract-audio --audio-format best --audio-quality 0 \
            --output "%(title)s (%(id)s).%(ext)s" "$@"
