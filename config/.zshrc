@@ -252,6 +252,7 @@ alias pgs="pactl get-default-sink"
 alias pss="pactl set-default-sink"
 alias sudo="sudo "
 alias sysusrctl="systemctl --user"
+alias termdown="date; termdown"
 alias tree="tree -C"
 alias vi=nvim
 alias vim=nvim

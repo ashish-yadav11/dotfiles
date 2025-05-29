@@ -7,7 +7,6 @@ dict-gcide
 dict-wikt-en-all
 dict-wn
 dwm-cust
-etcher-bin
 gebaar-libinput-git
 go-mtpfs-git
 grub-customizer

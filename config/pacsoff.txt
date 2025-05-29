@@ -53,6 +53,7 @@ haveged
 imagemagick
 inkscape
 inotify-tools
+isoimagewriter
 ispell
 isync
 java-commons-lang
@@ -65,6 +66,7 @@ kvantum-theme-materia
 libreoffice-fresh
 libvdpau-va-gl
 libxft
+lldb
 lostfiles
 lsof
 lsp-plugins-lv2
@@ -210,6 +212,7 @@ zathura-cb
 zathura-djvu
 zathura-pdf-mupdf
 zathura-ps
+zig
 zsh
 zsh-completions
 zsh-syntax-highlighting

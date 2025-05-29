@@ -137,6 +137,7 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'neomutt/neomutt.vim'
 Plug 'mbbill/undotree'
 Plug 'lervag/vimtex'
+Plug 'ziglang/zig.vim'
 
 call plug#end()
 
@@ -202,6 +203,12 @@ let g:tex_flavor = 'latex'
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_view_use_temp_files = 1
 let g:vimtex_view_zathura_check_libsynctex = 0
+
+
+" zig
+
+let g:zig_fmt_autosave = 0
+
 
 " custom functions
 
