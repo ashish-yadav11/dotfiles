@@ -1,8 +1,8 @@
 #!/bin/dash
 notify="notify-send -h string:x-canonical-private-synchronous:iiserlogin"
 
-username="ashishkumar.yadav"
-password="$(pass captive-portal/ashishkumar.yadav)"
+username="$(pass captive-portal/username)"
+password="$(pass captive-portal/password)"
 
 sendloginrequest() {
     curl -m 3 -s -X POST -d "mode=191&username=$username&password=$password&a=$(date +%s)000&producttype=1" https://firewall.iiserpune.ac.in:8090/login.xml
