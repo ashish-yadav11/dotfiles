@@ -3,7 +3,7 @@ lck7file="$XDG_RUNTIME_DIR/doublebtn2.1.lck"
 lck8file="$XDG_RUNTIME_DIR/doublebtn2.2.lck"
 lck9file="$XDG_RUNTIME_DIR/doublebtn2.3.lck"
 
-t=0.4 # buffer to wait for the next click
+t=0.5 # buffer to wait for the next click
 dt=0.01 # >> `time flock -n <fd>` + ddt
 ddt=0.001 # >> `exec <>`
 et=2 # >> t + dt + ddt
