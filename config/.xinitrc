@@ -41,6 +41,7 @@ fi
 wmname LG3D &
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+/home/ashish/.scripts/systemd/mouse_udev.sh &
 xwallpaper --stretch /home/ashish/.config/wall* &
 {
 pidof -sq /usr/lib/mate-polkit/polkit-mate-authentication-agent-1 ||
