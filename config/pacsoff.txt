@@ -172,7 +172,7 @@ ttf-fira-sans
 ttf-font-awesome
 ttf-liberation
 ttf-opensans
-ttf-ubuntu-font-family
+ttf-roboto
 udisks2
 ueberzug
 unclutter
