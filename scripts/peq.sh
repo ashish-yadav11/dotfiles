@@ -17,14 +17,29 @@ if [ -z "$id" ] ; then
 fi
 
 isdisabledpeq() {
-    pw-metadata -n filters "$id" "filter.smart.disabled" |
-        grep "key:'filter.smart.disabled' value:'true'"
+    case "$(pw-metadata -n filters "$id" "filter.smart.disabled" |
+                grep -m1 "key:'filter.smart.disabled'")" in
+            *"' value:'true' type:'Spa:String:JSON'")
+            return 0
+            ;;
+        *"' value:'false' type:'Spa:String:JSON'")
+            return 1
+            ;;
+        *)
+            if pw-cli info "$id" |
+                grep -qm1 'filter.smart.disabled = "true"' ; then
+            return 0
+        else
+            return 1
+            fi
+            ;;
+    esac
 }
 enablepeq() {
-        pw-metadata -n filters "$id" "filter.smart.disabled" false Spa:String:JSON
+    pw-metadata -n filters "$id" "filter.smart.disabled" false Spa:String:JSON
 }
 disablepeq() {
-        pw-metadata -n filters "$id" "filter.smart.disabled" true Spa:String:JSON
+    pw-metadata -n filters "$id" "filter.smart.disabled" true Spa:String:JSON
 }
 
 case "$1" in
