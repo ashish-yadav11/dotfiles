@@ -1,5 +1,4 @@
-SUBSYSTEM=="power_supply", ACTION=="change", ATTR{type}=="Mains", ATTR{online}=="0", RUN+="/usr/local/bin/sigdsblocks 5 -2"
-SUBSYSTEM=="power_supply", ACTION=="change", ATTR{type}=="Mains", ATTR{online}=="1", RUN+="/usr/local/bin/sigdsblocks 5 -1"
-SUBSYSTEM=="power_supply", ACTION=="change", ATTR{type}=="Battery", RUN+="/usr/local/bin/sigdsblocks 5 $attr{capacity}"
-
 SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-1][0-9]", RUN+="/usr/bin/systemctl suspend"
+
+SUBSYSTEM=="power_supply", ACTION=="change", ATTR{type}=="Mains", RUN+="/usr/local/bin/sigdsblocks 5 $attr{online}"
+SUBSYSTEM=="power_supply", ATTR{type}=="Battery", RUN+="/usr/local/bin/sigdsblocks 5"
