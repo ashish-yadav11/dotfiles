@@ -16,5 +16,5 @@ sudo tar -zcvf /home/ashish/Documents/arbackup.tar.gz /etc /root /media/storage/
 
 read -r PID </run/user/1000/sleep-dine.pid && kill "$PID" $(pgrep -P "$PID") #kill;dine;sleep
 
-pactl set-card-profile alsa_card.usb-FIIO_JadeAudio_JA11_2020-02-20-0000-0000-0000-00 pro-audio #fiio;jade;pro
-pactl set-card-profile alsa_card.usb-FIIO_JadeAudio_JA11_2020-02-20-0000-0000-0000-00 output:analog-stereo+input:mono-fallback #fiio;jade;default
+pactl set-card-profile alsa_card.usb-TTGK_Technology_USB_AI_ENC_Audio_330213D3240523-00 pro-audio #dac;pro
+pactl set-card-profile alsa_card.usb-TTGK_Technology_USB_AI_ENC_Audio_330213D3240523-00 output:analog-stereo+input:analog-stereo #dac;default
