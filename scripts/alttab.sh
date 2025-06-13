@@ -12,9 +12,11 @@ rofi -show window -steal-focus -no-lazy-grab \
 pid=$!
 
 t=0.01
-n=30
+n=20
 i=1
 while [ "$i" -le "$n" ] ; do
     sleep "$t"
     $ismod4down || { kill "$pid" 2>/dev/null && sigdwm "fclg i 0"; exit ;}
+    kill -0 "$pid" 2>/dev/null || exit
+    i="$(( i + 1 ))"
 done
