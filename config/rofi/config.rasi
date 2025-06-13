@@ -1,6 +1,6 @@
 /* vim: set filetype=css: */
 configuration {
-	modes: "window,drun,run,combi";
+	modes: "window,drun,run,combi,keys";
 	font: "Monospace 12";
 /*	location: 0;*/
 /*	yoffset: 0;*/

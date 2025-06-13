@@ -7,5 +7,5 @@ keycode 66  = Escape Caps_Lock
 keycode 64  = Super_R
 
 add mod1 = Alt_R
-add mod3 = Super_R
-add mod4 = Super_L
+add mod3 = Super_L
+add mod4 = Super_R

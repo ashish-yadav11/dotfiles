@@ -60,7 +60,8 @@ mdiff="$(
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/scripts" /home/ashish/.scripts |
-        sed -e "s/^$mdiff_str/diff/"
+        grep -Ev '^Only in /home/ashish/.scripts[^.]*$' |
+            sed -e "s/^$mdiff_str/diff/"
 )"
 print_mdiff
 
