@@ -56,7 +56,7 @@ mdiff="$(
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/local" /home/ashish/.local |
-        grep -Ev '^Only in .*(local(:|/share(:|/applications: (brave-.*\.desktop|mimeinfo\.cache)|/icons: hicolor)|/builds(: (dwm|st)$|/keynav: keynav$|.*\.pkg\.tar\.zst$)))' |
+        grep -Ev '^Only in .*(local(:|/share(:|/applications: (brave-.*\.desktop|mimeinfo\.cache)|/icons: hicolor)|/builds(: (dwm|st)$|/keynav: keynav$|.*\.pkg\.tar\.zst$)|/bin: spotify_to_ytmusic$))' |
             sed -e "s/^$mdiff_str/diff/"
 
     $mdiff_cmd "$dotfiles/scripts" /home/ashish/.scripts |
