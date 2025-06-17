@@ -6,11 +6,18 @@ skedda_delete="/home/ashish/.scripts/skedda-delete.py"
 logfile="/tmp/skedda-log.json"
 histfile="/tmp/skedda-hist.json"
 idfile="/tmp/skedda-id.tmp"
-loginfile="/home/ashish/.config/skedda/login.json"
 cookiefile="/home/ashish/.cache/skedda.cookies"
 
-username="ashishkumar.yadav@students.iiserpune.ac.in"
+username="$(pass "skedda/username")"
 password="$(pass "skedda/$username")"
+logindata='{
+  "login": {
+    "username": "'"$username"'",
+    "password": "'"$password"'",
+    "rememberMe": true,
+    "arbitraryerrors": null
+  }
+}'
 
 nidlesec=600
 eidlesec=600
@@ -60,8 +67,7 @@ login() {
     vftkn="$(scurlc 'https://app.skedda.com/account/login' | grep 'RequestVerificationToken')" || curlfailed
     vftkn="${vftkn#*value=\"}"
     vftkn="${vftkn%\"*}"
-    jsondata="$(jq ".login.password=\"$password\"" "$loginfile")"
-    scurlc -H "X-Skedda-Requestverificationtoken: $vftkn" -H "Content-Type: application/json" -X POST -d "$jsondata" 'https://app.skedda.com/logins' || curlfailed
+    scurlc -H "X-Skedda-Requestverificationtoken: $vftkn" -H "Content-Type: application/json" -X POST -d "$logindata" 'https://app.skedda.com/logins' || curlfailed
     scurlc -H "X-Skedda-Requestverificationtoken: $vftkn" -X POST --data-urlencode "username=$username&password=$password&ReturnUrl=" 'https://app.skedda.com/account/applogin' || curlfailed
     echo -e "\nLogin successful.\n"
 }
@@ -98,9 +104,7 @@ list() {
 
 loop() {
 #   gsid="$(pass skedda/gs.id)"
-    srid="$(pass skedda/sr.id)"
 #   prvgsbook=0
-    prvsrbook=0
     rm -f "$histfile" # reset history on start
     while true ; do
         cookieexpired && login
@@ -122,7 +126,6 @@ loop() {
             prvparsed_c="$($skedda_list <(jq "{\"bookings\" : (.bookings[:1] + (.bookings[1:] | map(select(.start >= \"${curd}T00:00:00\")))), \"venueusers\" : .venueusers}" "$logfile"))"
             prvbookings="$(jq ".bookings[1:] | map(select(.start >= \"${curd}T00:00:00\"))" "$logfile")"
 #           prvgsbook="$(printf "%s" "$prvbookings" | grep -B13 "$gsid")"
-            prvsrbook="$(printf "%s" "$prvbookings" | grep -B13 "$srid")"
         fi
         prvcurd="$curd"
         output="$(scurlb -H "X-Skedda-Requestverificationtoken: $vftkn" "https://sportsiiserp.skedda.com/bookingslists?end=${ntnd}T23%3A59%3A59.999&start=${curd}T00%3A00%3A00")" || { curlwait; continue ;}
@@ -142,11 +145,8 @@ loop() {
         fi
 
 #       curgsbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$gsid")"
-        cursrbook="$(printf "%s" "$output" | jq '.bookings[1:]' | grep -B13 "$srid")"
 #       [[ "$prvgsbook" != 0 && "$curgsbook" != "$prvgsbook" ]] && telegram 'Sugar!'
-        [[ "$prvsrbook" != 0 && "$cursrbook" != "$prvsrbook" ]] && telegram 'Cherry!'
 #       prvgsbook="${curgsbook}"
-        prvsrbook="${cursrbook}"
 
         waitsleep "$nidlesec"
     done
@@ -157,7 +157,7 @@ book() {
         echo 'Usage: skedda book <slot {1:1}> <time {,7|.8|/7}>'
         exit 2
     fi
-    jsondata="$($skedda_book "$1" "$2")"
+    jsondata="$($skedda_book "$1" "$2")" || exit
 
     cookieexpired && login
     output="$(scurlb 'https://sportsiiserp.skedda.com/booking')" || curlfailed

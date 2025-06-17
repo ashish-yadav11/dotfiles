@@ -23,10 +23,9 @@ slotdict = {
 }
 slotcols = { "1": "yellow", "2": "red", "3": "blue", "4": "green" }
 
-myname = "Ashish Kumar Yadav"
-myid = 1685628
+mynm = check_output(["pass", "skedda/my.nm"]).decode("utf-8").strip()
+myid = check_output(["pass", "skedda/my.id"]).decode("utf-8").strip()
 #gsnm = check_output(["pass", "skedda/gs.nm"]).decode("utf-8").strip()
-srnm = check_output(["pass", "skedda/sr.nm"]).decode("utf-8").strip()
 
 starthr = 18
 
@@ -34,9 +33,9 @@ with open(logfile, 'r') as f:
     log = json.load(f)
 
 usernames = [f'{x["firstName"].strip()} {x["lastName"].strip()}' for x in log["venueusers"]]
-usernames.append(myname)
+usernames.append(mynm)
 userids = [int(x["id"]) for x in log["venueusers"]]
-userids.append(myid)
+userids.append(int(myid))
 
 pbookings_s = []
 if histfile and os.path.isfile(histfile):
@@ -62,12 +61,10 @@ for x in log["bookings"]:
     spc = '\t'
     time = f'{time_r[8:10]} {time_r[11:16]}'
     colslot = colored(slot, slotcols[slot[0]], attrs=["bold"], force_color=True)
-    if username == myname:
+    if username == mynm:
         colname = colored(username, "cyan", force_color=True)
 #   elif username == gsnm:
 #       colname = colored(username, "blue", force_color=True)
-    elif username == srnm:
-        colname = colored(username, "yellow", force_color=True)
     else:
         colname = username
     if pbookings_s and booking_s not in pbookings_s:
