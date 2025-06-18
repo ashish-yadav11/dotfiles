@@ -11,7 +11,7 @@ rofi -show window -steal-focus -no-lazy-grab \
     -kb-remove-char-back 'Super+BackSpace,Super+Control+h,BackSpace,Shift+BackSpace,Control+h' \
     -kb-remove-char-back 'Super+BackSpace,Super+Control+h,BackSpace,Shift+BackSpace,Control+h' \
     -kb-remove-to-sol 'Super+Control+u,Control+u' \
-    -selected-row 1 -no-plugins &
+    -selected-row "$1" -no-plugins &
 pid=$!
 
 t=0.01
