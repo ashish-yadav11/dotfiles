@@ -11,7 +11,7 @@ shift
 # if minimized to systray don't ask
 case "$name" in
     Signal) pidof -sq signal-desktop && exec "$@" ;;
-    Telegram) pidof -sq telegram-desktop && exec "$@" ;;
+    Telegram) pidof -sq Telegram && exec "$@" ;;
 esac
 
 case "$(echo "Yes\nNo" | menu -p "Launch $name?")" in
