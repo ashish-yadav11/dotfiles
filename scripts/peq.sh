@@ -3,7 +3,7 @@ id="$(pw-cli list-objects Node | awk '
         $1 == "id" && $2 ~ /^[0-9]+,/ && $3 == "type" {
             id=substr($2, 1, length($2)-1)
         }
-        $1 == "node.name" && $2 == "=" && $3 == "\"inbuilt-smartpeq_input\"" {
+        $1 == "node.name" && $2 == "=" && $3 == "\"d07dac-smartpeq_input\"" {
             found = 1
             exit
         }
@@ -12,7 +12,7 @@ id="$(pw-cli list-objects Node | awk '
         }'
 )"
 if [ -z "$id" ] ; then
-    echo "Error: couldn't find the sink inbuilt-smartpeq_input!"
+    echo "Error: couldn't find the sink d07dac-smartpeq_input!"
     exit 2
 fi
 
