@@ -1,9 +1,16 @@
 #!/bin/dash
+device="d07dac"
+case "$1" in
+    -h) echo "peq [-di/-dd] [enable/disable/toggle]"; exit ;;
+    -di) device="inbuilt"; shift ;;
+    -dd) device="d07dac"; shift ;;
+esac
+
 id="$(pw-cli list-objects Node | awk '
         $1 == "id" && $2 ~ /^[0-9]+,/ && $3 == "type" {
             id=substr($2, 1, length($2)-1)
         }
-        $1 == "node.name" && $2 == "=" && $3 == "\"d07dac-smartpeq_input\"" {
+        $1 == "node.name" && $2 == "=" && $3 == "\"'"$device"'-smartpeq_input\"" {
             found = 1
             exit
         }
@@ -12,7 +19,7 @@ id="$(pw-cli list-objects Node | awk '
         }'
 )"
 if [ -z "$id" ] ; then
-    echo "Error: couldn't find the sink d07dac-smartpeq_input!"
+    echo "Error: couldn't find the sink $device-smartpeq_input!"
     exit 2
 fi
 
@@ -58,11 +65,11 @@ case "$1" in
         ;;
     *)
         if isdisabledpeq ; then
-            echo -n "PEQ is disabled. Enable it? [Y/n]: "
+            echo -n "PEQ is disabled for $device. Enable it? [Y/n]: "
             read -r input && case "$input" in n|N) exit ;; esac
             enablepeq
         else
-            echo -n "PEQ is enabled. Disable it? [y/N]: "
+            echo -n "PEQ is enabled for $device. Disable it? [y/N]: "
             read -r input && case "$input" in y|Y) disablepeq ;; esac
         fi
         ;;
