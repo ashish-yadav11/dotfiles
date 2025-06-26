@@ -65,11 +65,11 @@ case "$1" in
         ;;
     *)
         if isdisabledpeq ; then
-            echo -n "PEQ is disabled for $device. Enable it? [Y/n]: "
+            echo -n "PEQ is disabled for <$device>. Enable it? [Y/n]: "
             read -r input && case "$input" in n|N) exit ;; esac
             enablepeq
         else
-            echo -n "PEQ is enabled for $device. Disable it? [y/N]: "
+            echo -n "PEQ is enabled for <$device>. Disable it? [y/N]: "
             read -r input && case "$input" in y|Y) disablepeq ;; esac
         fi
         ;;
