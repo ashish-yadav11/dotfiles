@@ -32,7 +32,7 @@ action1() {
     winswitcher c
 }
 action2() {
-    sigdwm "fclv i 0"
+    sigdwm "fclg i 0"
 }
 action3() {
     winswitcher s
