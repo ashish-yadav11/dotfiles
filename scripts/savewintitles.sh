@@ -1,5 +1,7 @@
 #!/bin/dash
 file="$(mktemp -p "$HOME" "windows-$(date +%y%m%d%H%M%S)$DISPLAY-XXX.txt")"
+scrdir="${HOME}/Pictures/screenshots/$(basename "$file" ".txt")"
+mkdir -p "$scrdir"
 
 getdsknum() {
     if [ "$1" -le 9 ] ; then
@@ -12,8 +14,10 @@ getdsknum() {
 }
 savewintitles() {
     sigdwm "wlnc i 0"
+    i=1
+    rm -rf "${scrdir:?}"/*
     wmctrl -l 2>/dev/null | tac |
-            while read -r w desktop m wintitle ; do
+            while read -r winid desktop m wintitle ; do
                 if [ "$desktop" -eq 0 ] ; then
                     desktop="S--"
                 elif [ "$desktop" -le 11 ] ; then
@@ -34,7 +38,10 @@ savewintitles() {
                         fi
                     fi
                 fi
-                echo "$desktop $wintitle"
+                echo "$desktop $winid $wintitle"
+                scrname="$(printf "%s/%03d-%s%s.jpg" "$scrdir" "$i" "$desktop" "$winid")"
+                maim -q -f jpg -u -i "$winid" "$scrname"
+                i="$(( i + 1))"
             done >"$file"
 }
 
@@ -45,7 +52,7 @@ case "$1" in
     -d)
         while true ; do
             savewintitles
-            sleep 300
+            sleep 600
         done
         ;;
     *)
