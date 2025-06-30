@@ -1,7 +1,6 @@
 #!/bin/dash
 file="$(mktemp -p "$HOME" "windows-$(date +%y%m%d%H%M%S)$DISPLAY-XXX.txt")"
 scrdir="${HOME}/Pictures/screenshots/$(basename "$file" ".txt")"
-mkdir -p "$scrdir"
 
 getdsknum() {
     if [ "$1" -le 9 ] ; then
@@ -15,7 +14,8 @@ getdsknum() {
 savewintitles() {
     sigdwm "wlnc i 0"
     i=1
-    rm -rf "${scrdir:?}"/*
+    rm -rf "$scrdir"
+    mkdir -p "$scrdir"
     wmctrl -l 2>/dev/null | tac |
             while read -r winid desktop m wintitle ; do
                 if [ "$desktop" -eq 0 ] ; then
