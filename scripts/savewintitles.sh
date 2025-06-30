@@ -39,7 +39,7 @@ savewintitles() {
                     fi
                 fi
                 echo "$desktop $winid $wintitle"
-                scrname="$(printf "%s/%03d-%s%s.jpg" "$scrdir" "$i" "$desktop" "$winid")"
+                scrname="$(printf "%s/%03d_%s_%s.jpg" "$scrdir" "$i" "$desktop" "$winid")"
                 maim -q -f jpg -u -i "$winid" "$scrname"
                 i="$(( i + 1))"
             done >"$file"
