@@ -136,6 +136,7 @@ scrcpy
 screenkey
 shellcheck
 socat
+sox
 sqlite
 sqlitebrowser
 strace
