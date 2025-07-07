@@ -15,6 +15,8 @@ map J scroll half-down
 map K scroll half-up
 map <C-j> scroll full-down
 map <C-k> scroll full-up
+map <Space> scroll down
+map <S-Space> scroll up
 
 #map c feedkeys ":set recolor-keephue<Return>:<Return>"
 #map D feedkeys ':set recolor-darkcolor "#fbf1c7"<Return>:set recolor-lightcolor "#282828"<Return>:set recolor true<Return>'
