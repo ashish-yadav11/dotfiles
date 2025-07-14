@@ -99,6 +99,7 @@ set number relativenumber
 set splitbelow splitright
 set termguicolors
 set title titlelen=0
+set titlestring=nvim\ '%t'%(\ %M%)%(\ \(%{expand(\"%:~:h\")}\)%)%a
 
 autocmd TabLeave * let g:lasttab = tabpagenr()
 autocmd FileType go setlocal noexpandtab shiftwidth=0
