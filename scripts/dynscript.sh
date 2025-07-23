@@ -19,7 +19,7 @@ case "$1" in
         esac
         ;;
     2)
-        notify-send -t 0 dwm 'Never let the future disturb you. You will meet it, if you have to, with the same weapons of reason which today arm you against the present.\n\nIf we are not totally blind, what we are seeking is already here. This is it!\n\nSeeking what is true is not seeking what is desirable.'
+        notify-send -t 0 dwm 'Never let the future disturb you. You will meet it, if you have to, with the same weapons of reason which today arm you against the present.\n\nIf we are not totally blind, what we are seeking is already here. This is it!\n\nSeeking what is true is not seeking what is desirable.\n\nWhen the world says give up, HOPE says TRY ONE MORE TIME.'
         ;;
     3)
         xte "mousemove 970 430"
