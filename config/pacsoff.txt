@@ -135,6 +135,7 @@ sagemath-doc
 scrcpy
 screenkey
 shellcheck
+snixembed
 socat
 sox
 sqlite
@@ -170,7 +171,6 @@ tldr
 ttf-croscore
 ttf-droid
 ttf-fira-sans
-ttf-font-awesome
 ttf-liberation
 ttf-opensans
 ttf-roboto

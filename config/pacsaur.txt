@@ -30,7 +30,6 @@ rofi-dmenu-cust
 siji-git
 simplescreenrecorder
 sioyek
-snixembed
 st-cust
 subedit
 textidote-bin
