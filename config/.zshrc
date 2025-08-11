@@ -107,6 +107,23 @@ zle -N viins-backward-delete-char
 bindkey -v '\C-h' viins-backward-delete-char
 bindkey -v '\C-?' viins-backward-delete-char
 
+function toggle-leading-space {
+    local c="$CURSOR"
+    case "$BUFFER" in
+        " "*)
+            BUFFER="${BUFFER# }"
+            (( c > 0 )) && CURSOR="$(( c - 1 ))"
+            ;;
+        *)
+            BUFFER=" $BUFFER"
+            CURSOR="$(( c + 1 ))"
+            ;;
+    esac
+    zle redisplay
+}
+zle -N toggle-leading-space
+bindkeyboth '\C- ' toggle-leading-space
+
 function cleaner-clear-screen {
     echo -ne '\e[2K' # clear current prompt
     zle clear-screen
