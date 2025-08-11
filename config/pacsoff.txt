@@ -22,6 +22,7 @@ dash
 dconf-editor
 dictd
 diffpdf
+dmidecode
 dunst
 earlyoom
 easyeffects
