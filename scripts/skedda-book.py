@@ -33,6 +33,7 @@ timestart = t.strftime("%Y-%m-%dT%H:%M:%S")
 t += dt.timedelta(hours=1)
 timeend = t.strftime("%Y-%m-%dT%H:%M:%S")
 
+myid = check_output(["pass", "skedda/my.id"]).decode("utf-8").strip()
 #mobnum = check_output(["pass", "mobnum"]).decode("utf-8").strip()
 
 slotdict = {
@@ -47,5 +48,6 @@ with open(bookingfile, 'r') as f:
 data["booking"]["spaces"][0] = slotdict[slot]
 data["booking"]["start"] = timestart
 data["booking"]["end"] = timeend
+data["booking"]["venueuser"] = myid
 #data["booking"]["customFields"][0]["value"] = int(mobnum)
 print(json.dumps(data, indent=4))
