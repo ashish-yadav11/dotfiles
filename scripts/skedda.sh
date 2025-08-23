@@ -82,7 +82,7 @@ list() {
 
     vftkn="${vftkn#*value=\"}"
     vftkn="${vftkn%\"*}"
-    if (( 10#$(date '+%H') >= 21 )) ; then
+    if (( 10#$(date '+%H') >= 22 )) ; then
         curd="$(date -d '+1 day' '+%Y-%m-%d')"
     else
         curd="$(date '+%Y-%m-%d')"
