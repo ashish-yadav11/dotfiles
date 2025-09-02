@@ -5,6 +5,7 @@ android-file-transfer
 android-tools
 android-udev
 at
+awesome-terminal-fonts
 bash-completion
 bc
 bcprov
