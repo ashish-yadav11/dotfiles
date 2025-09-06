@@ -42,7 +42,12 @@ unlockexit() {
     exit
 }
 
-if ! { urltitle="$( \
+if [ "$1" = "-l" ] ; then
+    urltitle="$($ytm_lastplayed)" || unlockexit
+    url="${urltitle%%|*}"
+    echo -n "$url" | xsel -ib
+    title="${urltitle#*|}"
+elif ! { urltitle="$( \
     sqlite3 "file:$historyfile?mode=ro&nolock=1" \
         "SELECT url,title FROM urls ORDER BY last_visit_time DESC LIMIT 30" |
             grep -m1 "^https://music\.youtube\.com")"; url="${urltitle%%|*}" ;} ||
