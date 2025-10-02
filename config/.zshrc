@@ -442,9 +442,6 @@ spull() {
 
     echo -e '\n\e[1;32mst\e[0m'
     git -C /media/storage/.temporary/suckless-software/st pull
-
-    echo -e '\n\e[1;32mscroll\e[0m'
-    git -C /media/storage/.temporary/suckless-software/scroll pull
 }
 
 startx() {
