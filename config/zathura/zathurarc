@@ -35,13 +35,13 @@ map W feedkeys "<A-F4><A-F5><A-F6>"
 
 
 set adjust-open width
+set database sqlite
 set font "Monospace 12"
 set link-zoom false
 set recolor true
 set recolor-keephue true
 set recolor-reverse-video true
 set render-loading true
-set sandbox none
 set search-hadjust false
 set show-hidden true
 set statusbar-basename true
