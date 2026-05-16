@@ -4,7 +4,7 @@ lck7file="$XDG_RUNTIME_DIR/$script.1.lck"
 lck8file="$XDG_RUNTIME_DIR/$script.2.lck"
 lck9file="$XDG_RUNTIME_DIR/$script.3.lck"
 
-t=0.3 # buffer to wait for the next click
+t=0.4 # buffer to wait for the next click
 dt=0.01 # >> `time flock -n <fd>` + ddt
 ddt=0.001 # >> `exec <>`
 et=2 # >> t + dt + ddt
@@ -37,7 +37,7 @@ action2() {
     winswitcher s
 }
 action3() {
-    sigdwm "view ui 0"
+    sigdwm "fclg i 0"
 }
 
 errorexit() {
