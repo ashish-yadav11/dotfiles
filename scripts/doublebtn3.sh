@@ -1,7 +1,8 @@
 #!/bin/dash
-lck7file="$XDG_RUNTIME_DIR/doublebtn3.1.lck"
-lck8file="$XDG_RUNTIME_DIR/doublebtn3.2.lck"
-lck9file="$XDG_RUNTIME_DIR/doublebtn3.3.lck"
+script="doublebtn3"
+lck7file="$XDG_RUNTIME_DIR/$script.1.lck"
+lck8file="$XDG_RUNTIME_DIR/$script.2.lck"
+lck9file="$XDG_RUNTIME_DIR/$script.3.lck"
 
 t=0.3 # buffer to wait for the next click
 dt=0.01 # >> `time flock -n <fd>` + ddt
@@ -27,7 +28,7 @@ action3() {
 }
 
 errorexit() {
-    notify-send -u critical -t 0 dwm 'doublebtn3: something went wrong!'
+    notify-send -u critical -t 0 dwm "$script: something went wrong!"
     exit
 
 }

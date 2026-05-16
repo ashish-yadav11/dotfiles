@@ -2,7 +2,7 @@
 
 case "$1" in
     1)
-        id="$(xinput list | awk -F'id=' '/PixArt USB Optical Mouse/ {gsub(/\t.*/, "", $2); print $2}')"
+        id="$(xinput list | awk -F'id=' '/2.4G Wireless Mouse/ {gsub(/\t.*/, "", $2); print $2}')"
         output="$(xinput list-props "$id")" || exit
         ctm="$(echo "$output" | grep -m1 'Coordinate Transformation Matrix')"
         ctm="${ctm#*"Matrix ("}"

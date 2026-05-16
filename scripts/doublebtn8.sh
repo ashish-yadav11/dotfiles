@@ -1,5 +1,5 @@
 #!/bin/dash
-script="doublebtn1"
+script="doublebtn8"
 lck7file="$XDG_RUNTIME_DIR/$script.1.lck"
 lck8file="$XDG_RUNTIME_DIR/$script.2.lck"
 lck9file="$XDG_RUNTIME_DIR/$script.3.lck"
@@ -11,20 +11,33 @@ et=2 # >> t + dt + ddt
 
 exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
 
-playback() {
-    case "$(playerctl status)" in
-        *": active") return 0 ;;
-        *) return 1 ;;
-    esac
+winswitcher() {
+    eval $(xdotool getmouselocation --shell)
+    sigdwm "wln$1 i 0"
+    if [ "$1" = c ] ; then
+        awinid="$(xprop -root _NET_ACTIVE_WINDOW)"
+        awinid="${awinid#*"# "}"
+        index="$(wmctrl -l | gawk '
+                strtonum($1) == strtonum('"$awinid"') {a = NR}
+                END {if (a) print (NR - a)}')"
+    else
+        index=2
+    fi
+    xte "mousemove 1010 580"
+    rofi -show window -selected-row "$index" -no-click-to-exit \
+        -kb-accept-entry 'Control+m,Return,MouseExtra92,MouseExtra91' \
+        -kb-cancel 'Escape,Control+g,Control+bracketleft,MouseExtra93'
+    xte "mousemove $X $Y"
 }
+
 action1() {
-    playback && pactl set-sink-volume @DEFAULT_SINK@ -1%
+    sigdwm "fclv i 0"
 }
 action2() {
-    playback && playerctl previous
+    winswitcher s
 }
 action3() {
-    playback && pactl set-sink-volume @DEFAULT_SINK@ -3%
+    sigdwm "view ui 0"
 }
 
 errorexit() {

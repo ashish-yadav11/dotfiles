@@ -7,8 +7,9 @@ menu() {
     rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
                      listview {lines: 1; columns: 9;}
                      entry {enabled: false;}' \
-         -kb-accept-entry 'Return,[172]' -kb-row-down 'Down,Control+j,[122]' \
-         -kb-cancel 'Escape,semicolon,[123]' \
+         -kb-accept-entry 'Control+m,Return,[172],MouseExtra92,MouseExtra91' \
+         -kb-cancel 'Escape,Control+g,Control+bracketleft,semicolon,[123],MouseExtra93' \
+         -kb-row-down 'Down,Control+j,[122]' -no-click-to-exit \
          -dmenu -i -matching fuzzy -no-custom "$@"
 }
 
@@ -35,6 +36,8 @@ case "$path" in
             "$musicdir/archive/"*) menuarg="Like\nDelete\nUnlike*" ;;
                                 *) menuarg="Unlike\nRemove\nLike*" ;;
         esac
+        eval $(xdotool getmouselocation --shell)
+        xte "mousemove 1350 50"
         case "$(echo "$menuarg" | menu -p "$title")" in
             Unlike*) $ytmsclu_addjob "$url" "unlike" "$title" ;;
             Remove*) $ytmsclu_addjob "$url" "remove" "$title" ;;
@@ -42,6 +45,7 @@ case "$path" in
             Delete*) $ytmsclu_addjob "$url" "delete" "$title" ;;
             *) notify-send -t 700 ytmsclu-local 'ytmsclu aborted!' ;;
         esac
+        xte "mousemove $X $Y"
         ;;
     *)
         $notifyerror "Error: not in music directory"

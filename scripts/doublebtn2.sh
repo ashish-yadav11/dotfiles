@@ -1,7 +1,11 @@
 #!/bin/dash
-lck7file="$XDG_RUNTIME_DIR/doublebtn2.1.lck"
-lck8file="$XDG_RUNTIME_DIR/doublebtn2.2.lck"
-lck9file="$XDG_RUNTIME_DIR/doublebtn2.3.lck"
+script="doublebtn2"
+lck7file="$XDG_RUNTIME_DIR/$script.1.lck"
+lck8file="$XDG_RUNTIME_DIR/$script.2.lck"
+lck9file="$XDG_RUNTIME_DIR/$script.3.lck"
+
+ytmscluytb="/home/ashish/.scripts/ytmsclu.sh"
+ytmsclumpv="/home/ashish/.scripts/ytmsclu-local.sh"
 
 t=0.5 # buffer to wait for the next click
 dt=0.01 # >> `time flock -n <fd>` + ddt
@@ -10,36 +14,29 @@ et=2 # >> t + dt + ddt
 
 exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
 
-winswitcher() {
-    eval $(xdotool getmouselocation --shell)
-    index=0
-    sigdwm "wln$1 i 0"
-    if [ "$1" = c ] ; then
-        awinid="$(xprop -root _NET_ACTIVE_WINDOW)"
-        awinid="${awinid#*"# "}"
-        index="$(wmctrl -l | gawk '
-                strtonum($1) == strtonum('"$awinid"') {a = NR}
-                END {if (a) print (NR - a)}')"
-    fi
-    xte "mousemove 1010 580"
-    rofi -show window -selected-row "$index" -no-click-to-exit \
-        -kb-accept-entry 'Control+m,Return,MouseExtra92,MouseExtra91' \
-        -kb-cancel 'Escape,Control+g,Control+bracketleft,MouseExtra93'
-    xte "mousemove $X $Y"
-}
-
 action1() {
-    winswitcher c
+    playerctl play-pause
 }
 action2() {
-    sigdwm "fclg i 0"
+    case "$(playerctl status)" in
+        *"org.mpris.MediaPlayer2.mpv"*": active"*) sigdwm "scrt i 7" ;;
+                                                *) sigdwm "scrt i 2" ;;
+    esac
 }
 action3() {
-    winswitcher s
+    case "$(playerctl status)" in
+        *"org.mpris.MediaPlayer2.mpv"*": active"*)
+            echo "run $ytmsclumpv"' ${path}' |
+                socat - /tmp/music-mpv.socket
+            ;;
+        *)
+            $ytmscluytb
+            ;;
+    esac
 }
 
 errorexit() {
-    notify-send -u critical -t 0 dwm 'doublebtn2: something went wrong!'
+    notify-send -u critical -t 0 dwm "$script: something went wrong!"
     exit
 
 }

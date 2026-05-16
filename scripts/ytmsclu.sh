@@ -23,8 +23,9 @@ menu() {
     rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
                      listview {lines: 1; columns: 9;}
                      entry {enabled: false;}' \
-         -kb-accept-entry 'Return,[172]' -kb-row-down 'Down,Control+j,[122]' \
-         -kb-cancel 'Escape,semicolon,[123]' -no-click-to-exit \
+         -kb-accept-entry 'Control+m,Return,[172],MouseExtra92,MouseExtra91' \
+         -kb-cancel 'Escape,Control+g,Control+bracketleft,semicolon,[123],MouseExtra93' \
+         -kb-row-down 'Down,Control+j,[122]' -no-click-to-exit \
          -dmenu -i -matching fuzzy -no-custom "$@"
 }
 
@@ -95,10 +96,13 @@ case "$?" in
         unlockexit
         ;;
 esac
+eval $(xdotool getmouselocation --shell)
+xte "mousemove 1350 50"
 case "$(echo "$menuarg" | menu -p "$title")" in
     Like*) $ytmsclu_addjob "$url" "like" "$title";;
     Unlike*) $ytmsclu_addjob "$url" "unlike" "$title" ;;
     Remove*) $ytmsclu_addjob "$url" "remove" "$title" ;;
     *) notify -t 700 ytmsclu 'ytmsclu aborted!' ;;
 esac
+xte "mousemove $X $Y"
 unlockexit

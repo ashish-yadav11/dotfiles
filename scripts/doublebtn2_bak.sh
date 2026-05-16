@@ -1,6 +1,7 @@
 #!/bin/dash
-lck8file="$XDG_RUNTIME_DIR/doublebtn2.1.lck"
-lck9file="$XDG_RUNTIME_DIR/doublebtn2.2.lck"
+script="doublebtn2"
+lck8file="$XDG_RUNTIME_DIR/$script.1.lck"
+lck9file="$XDG_RUNTIME_DIR/$script.2.lck"
 
 t=0.5 # buffer to wait for the next click
 dt=0.01 # >> `time flock -n <fd>`
@@ -14,13 +15,13 @@ action1() {
 }
 action2() {
     case "$(playerctl status)" in
-        *"org.mpris.MediaPlayer2.mpv"*": active"*) sigdwm "scrt i 8" ;;
+        *"org.mpris.MediaPlayer2.mpv"*": active"*) sigdwm "scrt i 7" ;;
                                                 *) sigdwm "scrt i 2" ;;
     esac
 }
 
 errorexit() {
-    notify-send -u critical -t 0 dwm 'doublebtn2: something went wrong!'
+    notify-send -u critical -t 0 dwm "$script: something went wrong!"
     exit
 }
 run1() {
