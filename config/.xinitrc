@@ -62,7 +62,7 @@ clipdaemon &
 pidof -sq /home/ashish/.scripts/mprisdaemon.py ||
     /home/ashish/.scripts/mprisdaemon.py
 } &
-unclutter --timeout=2 --jitter=1 --ignore-buttons 1,2,3,4,5 &
+unclutter --timeout=2 --jitter=1 --ignore-buttons 1,2,3,4,5,8,9 &
 adb start-server &
 #gebaard &
 [ "$XDG_VTNR" -eq 1 ] && savewintitles -d &
