@@ -23,8 +23,8 @@ menu() {
     rofi -theme-str 'window {anchor: north; location: north; width: 100%;}
                      listview {lines: 1; columns: 9;}
                      entry {enabled: false;}' \
-         -kb-accept-entry 'Control+m,Return,[172],MouseExtra92,MouseExtra91' \
-         -kb-cancel 'Escape,Control+g,Control+bracketleft,semicolon,[123],MouseExtra93' \
+         -kb-accept-entry 'Control+m,Return,[172],MouseExtra92,MouseExtra91,MouseExtra98' \
+         -kb-cancel 'Escape,Control+g,Control+bracketleft,semicolon,[123],MouseExtra93,MouseExtra99' \
          -kb-row-down 'Down,Control+j,[122]' -no-click-to-exit \
          -dmenu -i -matching fuzzy -no-custom "$@"
 }

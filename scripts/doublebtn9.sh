@@ -25,8 +25,8 @@ winswitcher() {
     fi
     xte "mousemove 1010 580"
     rofi -show window -selected-row "$index" -no-click-to-exit \
-        -kb-accept-entry 'Control+m,Return,MouseExtra92,MouseExtra91' \
-        -kb-cancel 'Escape,Control+g,Control+bracketleft,MouseExtra93'
+        -kb-accept-entry 'Control+m,Return,MouseExtra92,MouseExtra91,MouseExtra98' \
+        -kb-cancel 'Escape,Control+g,Control+bracketleft,MouseExtra93,MouseExtra99'
     xte "mousemove $X $Y"
 }
 
