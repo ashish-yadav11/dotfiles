@@ -68,7 +68,7 @@ else
     echo -n "$url" | xsel -ib
     title="${urltitle#*|}"
     title="${title%"YouTube Music"}"
-    title="${title%" - "}"
+    title="${title%" | "}"
     if [ -z "$title" ] ; then
         if ! title="$($ytb_title "$url")" ; then
             notifyerror "Error: something went wrong with the 'title' script!"
@@ -78,12 +78,13 @@ else
 fi
 ytmtitle="$(xdotool search --classname crx_cinhimbnkkaeohfgghhklpknlkffjgod getwindowname)"
 ytmtitle="${ytmtitle%"YouTube Music"}"
-ytmtitle="${ytmtitle%" - "}"
+ytmtitle="${ytmtitle%" | "}"
 ytmtitle="${ytmtitle#"YouTube Music - "}"
+titled="$title [${url##*"/watch?v="}]"
 if [ -n "$ytmtitle" ] && [ "$ytmtitle" != "$title" ] ; then
-    title="$title [${url##*"/watch?v="}] (YTM window title doesn't match!)"
+    titlem="$titled (YtM window title doesn't match!)"
 else
-    title="$title [${url##*"/watch?v="}]"
+    titlem="$titled"
 fi
 
 $ytb_islikedlocal "$url" >/dev/null
@@ -98,10 +99,10 @@ case "$?" in
 esac
 eval $(xdotool getmouselocation --shell)
 xte "mousemove 1350 50"
-case "$(echo "$menuarg" | menu -p "$title")" in
-    Like*) $ytmsclu_addjob "$url" "like" "$title";;
-    Unlike*) $ytmsclu_addjob "$url" "unlike" "$title" ;;
-    Remove*) $ytmsclu_addjob "$url" "remove" "$title" ;;
+case "$(echo "$menuarg" | menu -p "$titlem")" in
+    Like*) $ytmsclu_addjob "$url" "like" "$titled";;
+    Unlike*) $ytmsclu_addjob "$url" "unlike" "$titled" ;;
+    Remove*) $ytmsclu_addjob "$url" "remove" "$titled" ;;
     *) notify -t 700 ytmsclu 'ytmsclu aborted!' ;;
 esac
 xte "mousemove $X $Y"
