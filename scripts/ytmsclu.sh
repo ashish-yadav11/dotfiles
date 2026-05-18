@@ -43,48 +43,54 @@ unlockexit() {
     exit
 }
 
-if [ "$1" = "-l" ] ; then
-    urltitle="$($ytm_lastplayed)" || unlockexit
-    url="${urltitle%%|*}"
-    echo -n "$url" | xsel -ib
-    title="${urltitle#*|}"
-elif ! { urltitle="$( \
-    sqlite3 "file:$historyfile?mode=ro&nolock=1" \
-        "SELECT url,title FROM urls ORDER BY last_visit_time DESC LIMIT 30" |
-            grep -m1 "^https://music\.youtube\.com")"; url="${urltitle%%|*}" ;} ||
-   ! { echo "$url" | grep -qm1 \
-        "^https://music\.youtube\.com/watch?v=...........\($\|&\)" ;} ; then
+geturltitle() {
+    if [ "$1" = "-l" ] ; then
+        urltitle="$($ytm_lastplayed)" || unlockexit
+        url="${urltitle%%|*}"
+        echo -n "$url" | xsel -ib
+        title="${urltitle#*|}"
+    elif ! { urltitle="$( \
+        sqlite3 "file:$historyfile?mode=ro&nolock=1" \
+            "SELECT url,title FROM urls ORDER BY last_visit_time DESC LIMIT 30" |
+                grep -m1 "^https://music\.youtube\.com")"; url="${urltitle%%|*}" ;} ||
+       ! { echo "$url" | grep -qm1 \
+            "^https://music\.youtube\.com/watch?v=...........\($\|&\)" ;} ; then
 
-    nid="$(notify -p -t 1000 ytmsclu "Falling back to the 'lastplayed' script")"
-    if ! urltitle="$($ytm_lastplayed)" ; then
-        notifyerror "Error: something went wrong with the 'lastplayed' script!"
-        unlockexit
-    fi
-    url="${urltitle%%|*}"
-    echo -n "$url" | xsel -ib
-    title="${urltitle#*|}"
-else
-    url="${url%%&*}"
-    echo -n "$url" | xsel -ib
-    title="${urltitle#*|}"
-    title="${title%"YouTube Music"}"
-    title="${title%" | "}"
-    if [ -z "$title" ] ; then
-        if ! title="$($ytb_title "$url")" ; then
-            notifyerror "Error: something went wrong with the 'title' script!"
+        nid="$(notify -p -t 1000 ytmsclu "Falling back to the 'lastplayed' script")"
+        if ! urltitle="$($ytm_lastplayed)" ; then
+            notifyerror "Error: something went wrong with the 'lastplayed' script!"
             unlockexit
         fi
+        url="${urltitle%%|*}"
+        echo -n "$url" | xsel -ib
+        title="${urltitle#*|}"
+    else
+        url="${url%%&*}"
+        echo -n "$url" | xsel -ib
+        title="${urltitle#*|}"
+        title="${title%"YouTube Music"}"
+        title="${title%" | "}"
+        if [ -z "$title" ] ; then
+            if ! title="$($ytb_title "$url")" ; then
+                notifyerror "Error: something went wrong with the 'title' script!"
+                unlockexit
+            fi
+        fi
     fi
-fi
+    titled="$title [${url##*"/watch?v="}]"
+    titlem="$titled"
+}
+
+geturltitle "$1"
 ytmtitle="$(xdotool search --classname crx_cinhimbnkkaeohfgghhklpknlkffjgod getwindowname)"
 ytmtitle="${ytmtitle%"YouTube Music"}"
 ytmtitle="${ytmtitle%" | "}"
 ytmtitle="${ytmtitle#"YouTube Music - "}"
-titled="$title [${url##*"/watch?v="}]"
 if [ -n "$ytmtitle" ] && [ "$ytmtitle" != "$title" ] ; then
-    titlem="$titled (YtM window title doesn't match!)"
-else
-    titlem="$titled"
+    geturltitle -l
+    if [ "$ytmtitle" != "$title" ] ; then
+        titlem="$titlem (YtM window title doesn't match!)"
+    fi
 fi
 
 $ytb_islikedlocal "$url" >/dev/null
