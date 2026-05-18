@@ -9,6 +9,7 @@ esac
 
 lockfile="$XDG_RUNTIME_DIR/ytmsclu.lock"
 historyfile="/home/ashish/.config/BraveSoftware/Brave-Browser/Default/History"
+logfile="/home/ashish/.cache/ytmsclu-daemon.log"
 ytb_islikedlocal="/home/ashish/.local/bin/ytb-isLikedLocal"
 ytb_title="/home/ashish/.local/bin/ytb-title"
 ytm_lastplayed="/home/ashish/.local/bin/ytm-lastPlayed"
@@ -91,6 +92,9 @@ if [ -n "$ytmtitle" ] && [ "$ytmtitle" != "$title" ] ; then
     if [ "$ytmtitle" != "$title" ] ; then
         titlem="$titlem (YtM window title doesn't match!)"
     fi
+fi
+if [ "$(awk 'p && NF {l = $2}; {p = (NF==0)}; END {print l}' "$logfile")" = "$url" ] ; then
+    titlem="$titlem*"
 fi
 
 $ytb_islikedlocal "$url" >/dev/null

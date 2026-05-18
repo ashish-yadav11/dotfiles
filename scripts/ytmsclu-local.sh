@@ -1,5 +1,6 @@
 #!/bin/dash
 musicdir=/media/storage/Music
+logfile="/home/ashish/.cache/ytmsclu-daemon.log"
 ytmsclu_addjob="/home/ashish/.scripts/ytmsclu-addjob.sh"
 notifyerror="notify-send -u critical -t 0 ytmsclu-local"
 
@@ -32,6 +33,9 @@ case "$path" in
             exit
         fi
         title="${filename%" ($id)"*} [$id]"
+        if [ "$(awk 'p && NF {l = $2}; {p = (NF==0)}; END {print l}' "$logfile")" = "$url" ] ; then
+            title="$title*"
+        fi
         case "$path" in
             "$musicdir/archive/"*) menuarg="Like\nDelete\nUnlike*" ;;
                                 *) menuarg="Unlike\nRemove\nLike*" ;;
