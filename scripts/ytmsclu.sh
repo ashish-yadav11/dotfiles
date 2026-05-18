@@ -49,12 +49,11 @@ geturltitle() {
         url="${urltitle%%|*}"
         echo -n "$url" | xsel -ib
         title="${urltitle#*|}"
-    elif ! { urltitle="$( \
+    elif ! urltitle="$( \
         sqlite3 "file:$historyfile?mode=ro&nolock=1" \
             "SELECT url,title FROM urls ORDER BY last_visit_time DESC LIMIT 30" |
-                grep -m1 "^https://music\.youtube\.com")"; url="${urltitle%%|*}" ;} ||
-       ! { echo "$url" | grep -qm1 \
-            "^https://music\.youtube\.com/watch?v=...........\($\|&\)" ;} ; then
+                grep -m1 "^https://music\.youtube\.com/watch?v=...........[|&]"
+        )" ; then
 
         nid="$(notify -p -t 1000 ytmsclu "Falling back to the 'lastplayed' script")"
         if ! urltitle="$($ytm_lastplayed)" ; then
@@ -65,6 +64,7 @@ geturltitle() {
         echo -n "$url" | xsel -ib
         title="${urltitle#*|}"
     else
+        url="${urltitle%%|*}"
         url="${url%%&*}"
         echo -n "$url" | xsel -ib
         title="${urltitle#*|}"
