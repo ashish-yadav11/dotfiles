@@ -52,4 +52,3 @@ case "$path" in
         exit
         ;;
 esac
-
