@@ -82,17 +82,24 @@ geturltitle() {
     titlem="$titled"
 }
 
-geturltitle "$1"
-ytmtitle="$(xdotool search --classname crx_cinhimbnkkaeohfgghhklpknlkffjgod getwindowname)"
-ytmtitle="${ytmtitle%"YouTube Music"}"
-ytmtitle="${ytmtitle%" | "}"
-ytmtitle="${ytmtitle#"YouTube Music - "}"
-if [ -n "$ytmtitle" ] && [ "$ytmtitle" != "$title" ] ; then
-    geturltitle -l
-    if [ "$ytmtitle" != "$title" ] ; then
-        titlem="$titlem (YtM window title doesn't match!)"
-    fi
-fi
+case "$(playerctl status)" in
+    *"org.mpris.MediaPlayer2.brave"*": active"*)
+        geturltitle "$1"
+        ytmtitle="$(xdotool search --classname crx_cinhimbnkkaeohfgghhklpknlkffjgod getwindowname)"
+        ytmtitle="${ytmtitle%"YouTube Music"}"
+        ytmtitle="${ytmtitle%" | "}"
+        ytmtitle="${ytmtitle#"YouTube Music - "}"
+        if [ -n "$ytmtitle" ] && [ "$ytmtitle" != "$title" ] ; then
+            geturltitle -l
+            if [ "$ytmtitle" != "$title" ] ; then
+                titlem="$titlem (YtM window title doesn't match!)"
+            fi
+        fi
+        ;;
+    *)
+        geturltitle -l
+        ;;
+esac
 if [ "$(awk 'p && NF {l = $2}; {p = (NF==0)}; END {print l}' "$logfile")" = "$url" ] ; then
     titlem="$titlem*"
 fi
