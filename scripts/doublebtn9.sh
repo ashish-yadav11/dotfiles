@@ -11,30 +11,14 @@ et=2 # >> t + dt + ddt
 
 exec 7<>"$lck7file" 8<>"$lck8file" 9<>"$lck9file"
 
-winswitcher() {
-    eval $(xdotool getmouselocation --shell)
-    sigdwm "wln$1 i 0"
-    if [ "$1" = c ] ; then
-        awinid="$(xprop -root _NET_ACTIVE_WINDOW)"
-        awinid="${awinid#*"# "}"
-        index="$(wmctrl -l | gawk '
-                strtonum($1) == strtonum('"$awinid"') {a = NR}
-                END {if (a) print (NR - a)}')"
-    else
-        index=2
-    fi
-    xte "mousemove 1010 580"
-    rofi -show window -selected-row "$index" -no-click-to-exit \
-        -kb-accept-entry 'Control+m,Return,MouseExtra92,MouseExtra91,MouseExtra98' \
-        -kb-cancel 'Escape,Control+g,Control+bracketleft,MouseExtra93,MouseExtra99'
-    xte "mousemove $X $Y"
-}
-
 action1() {
     sigdwm "view ui 0"
 }
 action2() {
-    winswitcher c
+    case "$(playerctl status)" in
+        *"org.mpris.MediaPlayer2.mpv"*": active"*) sigdwm "scrt i 7" ;;
+                                                *) sigdwm "scrt i 2" ;;
+    esac
 }
 action3() {
     playerctl play-pause

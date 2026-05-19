@@ -37,7 +37,7 @@ action2() {
     winswitcher s
 }
 action3() {
-    sigdwm "fclg i 0"
+    sigdwm "shdv ui 0"
 }
 
 errorexit() {
