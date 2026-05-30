@@ -38,6 +38,7 @@ savewintitles() {
                         fi
                     fi
                 fi
+                [ -n "$1" ] && [ "$1" != "$dsknum" ] && continue
                 echo "$desktop $winid $wintitle"
                 scrname="$(printf "%s/%03d_%s_%s.jpg" "$scrdir" "$i" "$desktop" "$winid")"
                 maim -q -f jpg -u -i "$winid" "$scrname"
@@ -48,6 +49,11 @@ savewintitles() {
 case "$1" in
     -h)
         echo "savewintitles [-h|d]"
+        ;;
+    -n[0-9])
+        n="0${1#-n}"
+        [ "$n" = 00 ] && n=10
+        savewintitles "$n"
         ;;
     -d)
         while true ; do
