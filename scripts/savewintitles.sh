@@ -18,11 +18,15 @@ savewintitles() {
     mkdir -p "$scrdir"
     wmctrl -l 2>/dev/null | tac |
             while read -r winid desktop dummy wintitle ; do
-                n=z
+                n1to0=z
                 if [ "$desktop" -eq 0 ] ; then
                     desktop="S--"
                 elif [ "$desktop" -le 11 ] ; then
-                    [ "$desktop" -le 10 ] && n="$(( desktop - 1 ))"
+                    if [ "$desktop" -le 9 ] ; then
+                        n1to0="$desktop"
+                    elif [ "$desktop" -eq 10 ] ; then
+                        n1to0=0
+                    fi
                     getdsknum "$desktop"
                     desktop="${dsknum}N"
                 else
@@ -42,7 +46,7 @@ savewintitles() {
                 fi
                 case "$1" in
                     "") : ;;
-                    *",$n"*) : ;;
+                    *",$n1to0"*) : ;;
                     *) continue ;;
                 esac
                 echo "$desktop $winid $wintitle"
@@ -54,7 +58,7 @@ savewintitles() {
 
 case "$1" in
     -h)
-        echo "savewintitles [-h|-d|-n<comma separated #desktop from 0-9>]"
+        echo "savewintitles [-h|-d|-n<comma separated #desktop from 1,...,9,0>]"
         ;;
     -n[0-9]*)
         savewintitles ",${1#-n}"
