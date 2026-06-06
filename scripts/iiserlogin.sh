@@ -1,19 +1,8 @@
 #!/bin/dash
 notify="notify-send -h string:x-canonical-private-synchronous:iiserlogin"
 
-GEN204URL="http://clients3.google.com/generate_204"
-case "$(curl -s -m1 -o /dev/null -w '%{http_code}' -L "$GEN204URL" || echo 000)" in
-    000)
-        $notify -t 2000 "Curl check for IISER captive portal failed!"
-        exit
-        ;;
-    204)
-        if [ "$1" != logout ] ; then
-            $notify -h int:transient:1 -t 2000 "Already logged in IISER captive portal!"
-            exit
-        fi
-        ;;
-esac
+livedt=180
+brutedt=3600
 
 username="$(pass captive-portal/username)"
 password="$(pass captive-portal/password)"
@@ -77,9 +66,17 @@ fi
 
 while true ; do
     output="$(sendliverequest)" || break
-    printf '%s' "$output" | grep -qFm1 "<ack><![CDATA[live_off]]></ack>" && break
-    printf '%s' "$output" | grep -qFm1 "<ack><![CDATA[ack]]></ack>" && continue
+    if printf '%s' "$output" | grep -qFm1 "<ack><![CDATA[live_off]]></ack>" ; then
+        while true ; do
+            sleep "$brutedt"
+            output="$(sendloginrequest)" || exit
+            printf '%s' "$output" | grep -qvF "Login failed" || exit
+        done
+    fi
+    if printf '%s' "$output" | grep -qFm1 "<ack><![CDATA[ack]]></ack>" ; then
+        sleep "$livedt"
+        continue
+    fi
     output="$(sendloginrequest)" || break
     printf '%s' "$output" | grep -qvF "Login failed" || loginfailed
-    sleep 180
 done
