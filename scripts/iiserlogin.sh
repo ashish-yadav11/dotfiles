@@ -38,7 +38,7 @@ sendlogoutrequest() {
         --data-urlencode "a=$(date +%s)000" \
         --data-urlencode "producttype=$PRODUCTTYPE"
 }
-if [ "$1" = logout ] ; then
+if [ "$1" = "logout" ] ; then
     sendlogoutrequest
     exit
 fi
@@ -63,10 +63,12 @@ if printf '%s' "$output" | grep -qvF "Login failed" ; then
 else
     loginfailed
 fi
+[ "$1" = "oneshot" ] && exit
 
 while true ; do
     output="$(sendliverequest)" || break
     if printf '%s' "$output" | grep -qFm1 "<ack><![CDATA[live_off]]></ack>" ; then
+        [ "$1" != "daemon" ] && exit
         while true ; do
             sleep "$brutedt"
             output="$(sendloginrequest)" || exit
