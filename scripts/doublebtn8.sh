@@ -37,7 +37,6 @@ action2() {
     winswitcher s
 }
 action3() {
-#   sigdwm "shdv ui 0"
     xte "mousemove 970 430"
 }
 
