@@ -29,7 +29,7 @@ map <A-F4> set 'recolor-darkcolor "#000000"'
 map <A-F5> set 'recolor-lightcolor "#bdae93"'
 map <A-F6> set 'recolor true'
 
-map c feedkeys "<A-F1>:<Return>"
+map C feedkeys "<A-F1>:<Return>"
 map D feedkeys "<A-F2><A-F3><A-F6>"
 map W feedkeys "<A-F4><A-F5><A-F6>"
 
