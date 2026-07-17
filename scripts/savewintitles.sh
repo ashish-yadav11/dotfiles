@@ -1,4 +1,7 @@
 #!/bin/dash
+[ "$1" = -h ] &&
+    { echo "savewintitles [-h|-d|-n<comma separated #desktop from 1,...,9,0>]"; exit ;}
+
 file="$(mktemp -p "$HOME" "windows-$(date +%y%m%d%H%M%S)$DISPLAY-XXX.txt")"
 scrdir="${HOME}/Pictures/screenshots/$(basename "$file" ".txt")"
 
@@ -57,9 +60,6 @@ savewintitles() {
 }
 
 case "$1" in
-    -h)
-        echo "savewintitles [-h|-d|-n<comma separated #desktop from 1,...,9,0>]"
-        ;;
     -n[0-9]*)
         savewintitles ",${1#-n}"
         ;;
